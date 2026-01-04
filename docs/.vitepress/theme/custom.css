@@ -1,0 +1,65 @@
+/**
+ * Corp Components - VitePress Theme
+ */
+
+:root {
+  /* Primary - Laranja */
+  --vp-c-brand-1: #FF7133;
+  --vp-c-brand-2: #E6641C;
+  --vp-c-brand-3: #FF854D;
+  --vp-c-brand-soft: rgba(255, 113, 51, 0.14);
+
+  /* Background */
+  --vp-c-bg: #ffffff;
+  --vp-c-bg-soft: #f6f6f7;
+  --vp-c-bg-muted: #e8ecf0;
+
+  /* Text */
+  --vp-c-text-1: #050914;
+  --vp-c-text-2: #64748b;
+
+  /* Hero gradient */
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(135deg, #FF7133 0%, #E6641C 100%);
+
+  /* Button */
+  --vp-button-brand-border: #FF7133;
+  --vp-button-brand-text: #ffffff;
+  --vp-button-brand-bg: #FF7133;
+  --vp-button-brand-hover-border: #E6641C;
+  --vp-button-brand-hover-text: #ffffff;
+  --vp-button-brand-hover-bg: #E6641C;
+  --vp-button-brand-active-border: #FF854D;
+  --vp-button-brand-active-text: #ffffff;
+  --vp-button-brand-active-bg: #FF854D;
+}
+
+.dark {
+  /* Primary - Laranja */
+  --vp-c-brand-1: #FF7133;
+  --vp-c-brand-2: #FF854D;
+  --vp-c-brand-3: #E6641C;
+  --vp-c-brand-soft: rgba(255, 113, 51, 0.16);
+
+  /* Background - GitHub style dark */
+  --vp-c-bg: #1c2128;
+  --vp-c-bg-soft: #22272e;
+  --vp-c-bg-muted: #2a2f36;
+
+  /* Text */
+  --vp-c-text-1: #e6edf3;
+  --vp-c-text-2: #7d8590;
+}
+
+/* Hero title gradient */
+.VPHero .name {
+  background: var(--vp-home-hero-name-background);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Search highlight */
+.VPLocalSearchBox .result mark {
+  background-color: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+}

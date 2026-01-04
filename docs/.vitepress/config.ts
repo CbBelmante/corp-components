@@ -5,6 +5,27 @@ export default defineConfig({
   description: 'Biblioteca de componentes Vue 3 para projetos corporativos',
   
   themeConfig: {
+    search: {
+      provider: 'local',
+      options: {
+        translations: {
+          button: {
+            buttonText: 'Buscar',
+            buttonAriaLabel: 'Buscar'
+          },
+          modal: {
+            noResultsText: 'Nenhum resultado para',
+            resetButtonTitle: 'Limpar busca',
+            footer: {
+              selectText: 'selecionar',
+              navigateText: 'navegar',
+              closeText: 'fechar'
+            }
+          }
+        }
+      }
+    },
+
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Componentes', link: '/components/button' },
@@ -26,7 +47,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/user/corp-components' }
+      { icon: 'github', link: 'https://github.com/CbBelmante/corp-components' }
     ]
   }
 })
