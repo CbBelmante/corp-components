@@ -4,7 +4,5 @@
  * stringUtils, dateUtils, logger, validators, etc.
  */
 
-// Will export utils here
-// export * from './stringUtils';
-// export * from './dateUtils';
-// export * from './logger';
+// Placeholder - será preenchido na migração
+export {};

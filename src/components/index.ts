@@ -1,8 +1,15 @@
 /**
- * Corp Components - All components
+ * Corp Components Library - All components
  */
 
-export * from './forms';
+// UI components (shadcn)
 export * from './ui';
-export * from './feedback';
+
+// Forms components
+export * from './forms';
+
+// Layout components
 export * from './layout';
+
+// Feedback components
+export * from './feedback';
