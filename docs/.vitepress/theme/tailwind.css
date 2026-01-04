@@ -1,0 +1,6 @@
+/**
+ * Tailwind CSS para documentacao VitePress
+ * Importa os estilos do componente real (main.css)
+ */
+
+@import '../../../src/assets/main.css';

@@ -1,8 +1,17 @@
 import { defineConfig } from 'vitepress'
+import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
   title: 'Corp Components',
   description: 'Biblioteca de componentes Vue 3 para projetos corporativos',
+
+  vite: {
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('../../src', import.meta.url))
+      }
+    }
+  },
   
   themeConfig: {
     search: {

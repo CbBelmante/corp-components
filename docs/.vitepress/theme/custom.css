@@ -3,24 +3,43 @@
  */
 
 :root {
-  /* Primary - Laranja */
+  /* Primary - Laranja CbAdmin */
   --vp-c-brand-1: #FF7133;
   --vp-c-brand-2: #E6641C;
   --vp-c-brand-3: #FF854D;
   --vp-c-brand-soft: rgba(255, 113, 51, 0.14);
 
-  /* Background */
+  /* Background - Azulado CbAdmin */
   --vp-c-bg: #ffffff;
-  --vp-c-bg-soft: #f6f6f7;
-  --vp-c-bg-muted: #e8ecf0;
+  --vp-c-bg-soft: #F0F4F7;          /* table-background azulado */
+  --vp-c-bg-alt: #e8ecf0;           /* background principal azulado */
+  --vp-c-bg-elv: #ffffff;
+
+  /* Grays - Tons azulados */
+  --vp-c-gray-1: #dce4ec;
+  --vp-c-gray-2: #cdd5dc;
+  --vp-c-gray-3: #bac5d0;
+  --vp-c-gray-soft: rgba(186, 197, 208, 0.14);
+
+  /* Dividers - Azulado */
+  --vp-c-divider: #D1DCE5;
+  --vp-c-divider-light: #e8ecf0;
 
   /* Text */
   --vp-c-text-1: #050914;
   --vp-c-text-2: #64748b;
+  --vp-c-text-3: #7A9AB8;           /* accent azul */
+
+  /* Sidebar */
+  --vp-sidebar-bg-color: #F0F4F7;
+
+  /* Code blocks - Azulado */
+  --vp-code-block-bg: #f0f4f8;
 
   /* Hero gradient */
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: linear-gradient(135deg, #FF7133 0%, #E6641C 100%);
+  --vp-home-hero-image-background-image: linear-gradient(135deg, #FFF4F0 0%, #e8ecf0 100%);
 
   /* Button */
   --vp-button-brand-border: #FF7133;
@@ -32,6 +51,14 @@
   --vp-button-brand-active-border: #FF854D;
   --vp-button-brand-active-text: #ffffff;
   --vp-button-brand-active-bg: #FF854D;
+
+  /* Alt button - Azulado */
+  --vp-button-alt-border: transparent;
+  --vp-button-alt-text: #050914;
+  --vp-button-alt-bg: #D1DCE5;
+  --vp-button-alt-hover-border: transparent;
+  --vp-button-alt-hover-text: #050914;
+  --vp-button-alt-hover-bg: #B8CAD9;
 }
 
 .dark {
@@ -44,11 +71,39 @@
   /* Background - GitHub style dark */
   --vp-c-bg: #1c2128;
   --vp-c-bg-soft: #22272e;
+  --vp-c-bg-alt: #161b22;
+  --vp-c-bg-elv: #2a2f36;
   --vp-c-bg-muted: #2a2f36;
+
+  /* Grays - Dark */
+  --vp-c-gray-1: #3d444d;
+  --vp-c-gray-2: #30363d;
+  --vp-c-gray-3: #21262d;
+  --vp-c-gray-soft: rgba(48, 54, 61, 0.4);
+
+  /* Dividers - Dark */
+  --vp-c-divider: #30363d;
+  --vp-c-divider-light: #21262d;
 
   /* Text */
   --vp-c-text-1: #e6edf3;
   --vp-c-text-2: #7d8590;
+  --vp-c-text-3: #6e7681;
+
+  /* Sidebar - Dark */
+  --vp-sidebar-bg-color: #161b22;
+
+  /* Code blocks - Dark */
+  --vp-code-block-bg: #161b22;
+  --vp-code-bg: #22272e;
+
+  /* Alt button - Dark */
+  --vp-button-alt-border: transparent;
+  --vp-button-alt-text: #e6edf3;
+  --vp-button-alt-bg: #30363d;
+  --vp-button-alt-hover-border: transparent;
+  --vp-button-alt-hover-text: #e6edf3;
+  --vp-button-alt-hover-bg: #3d444d;
 }
 
 /* Hero title gradient */
@@ -62,4 +117,16 @@
 .VPLocalSearchBox .result mark {
   background-color: var(--vp-c-brand-soft);
   color: var(--vp-c-brand-1);
+}
+
+/* Component preview box */
+.componentPreview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--vp-c-divider);
+  margin: 1rem 0;
+  background-color: var(--vp-code-block-bg);
 }

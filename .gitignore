@@ -58,3 +58,7 @@ coverage/
 
 # Claude
 .claude/
+
+# VitePress
+docs/.vitepress/cache/
+docs/.vitepress/dist/
