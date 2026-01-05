@@ -11,8 +11,8 @@
 
   /* Background - Azulado CbAdmin */
   --vp-c-bg: #ffffff;
-  --vp-c-bg-soft: #F0F4F7;          /* table-background azulado */
-  --vp-c-bg-alt: #e8ecf0;           /* background principal azulado */
+  --vp-c-bg-soft: #F0F4F7;
+  --vp-c-bg-alt: #e8ecf0;
   --vp-c-bg-elv: #ffffff;
 
   /* Grays - Tons azulados */
@@ -28,7 +28,7 @@
   /* Text */
   --vp-c-text-1: #050914;
   --vp-c-text-2: #64748b;
-  --vp-c-text-3: #7A9AB8;           /* accent azul */
+  --vp-c-text-3: #7A9AB8;
 
   /* Sidebar */
   --vp-sidebar-bg-color: #F0F4F7;
@@ -129,4 +129,10 @@
   border: 1px solid var(--vp-c-divider);
   margin: 1rem 0;
   background-color: var(--vp-code-block-bg);
+}
+
+/* Fix: VitePress base.css aplica "border: 0" em todos os buttons */
+.componentPreview button,
+.codePreview button {
+  border-style: solid;
 }

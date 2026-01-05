@@ -3,6 +3,7 @@ export default {
   darkMode: ['class'],
   content: [
     './index.html',
+    './playground/**/*.{vue,js,ts,tsx,html}',
     './src/**/*.{vue,js,ts,jsx,tsx}',
     './docs/**/*.{md,vue}',
     './docs/.vitepress/**/*.{js,ts,vue}'
@@ -11,6 +12,7 @@ export default {
   	extend: {
   		colors: {
   			border: 'hsl(var(--border))',
+  			'button-outline': 'hsl(var(--button-outline-border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
   			background: 'hsl(var(--background))',

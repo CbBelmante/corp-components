@@ -2,4 +2,5 @@
  * UI Components (shadcn customizados)
  */
 
-export * from './button';
+export * from './corpbutton';
+export * from './icon';

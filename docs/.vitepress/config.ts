@@ -1,14 +1,27 @@
 import { defineConfig } from 'vitepress'
 import { fileURLToPath, URL } from 'node:url'
+import tailwindcss from 'tailwindcss'
+import autoprefixer from 'autoprefixer'
 
 export default defineConfig({
   title: 'Corp Components',
   description: 'Biblioteca de componentes Vue 3 para projetos corporativos',
 
   vite: {
+    css: {
+      postcss: {
+        plugins: [
+          tailwindcss(),
+          autoprefixer(),
+        ],
+      },
+    },
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('../../src', import.meta.url))
+        '@': fileURLToPath(new URL('../../src', import.meta.url)),
+        '@docs': fileURLToPath(new URL('../../docs', import.meta.url)),
+        '@assets': fileURLToPath(new URL('../../src/assets', import.meta.url)),
+        '@components': fileURLToPath(new URL('../../src/components', import.meta.url))
       }
     }
   },
@@ -51,6 +64,7 @@ export default defineConfig({
         text: 'UI Components',
         items: [
           { text: 'Button', link: '/components/button' },
+          { text: 'Icon', link: '/components/icon' },
         ]
       }
     ],
