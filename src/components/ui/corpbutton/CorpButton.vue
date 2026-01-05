@@ -18,6 +18,11 @@ import { cn } from "@/lib/utils"
 import { buttonVariants, type ButtonVariants } from "."
 import CorpIcon from "@components/ui/icon/CorpIcon.vue"
 
+// ============== TIPOS ==============
+
+type RoundedPreset = 'default' | 'none' | 'sm' | 'lg' | 'xl' | 'full'
+const roundedPresets: RoundedPreset[] = ['default', 'none', 'sm', 'lg', 'xl', 'full']
+
 // ============== PROPS ==============
 
 const props = defineProps({
@@ -31,7 +36,8 @@ const props = defineProps({
     default: "default",
   },
   rounded: {
-    type: String as PropType<ButtonVariants["rounded"]>,
+    // Aceita presets (default, none, sm, lg, xl, full) OU valores custom (rounded-3xl, 10px, etc)
+    type: String,
     default: "default",
   },
 
@@ -120,15 +126,35 @@ const currentPrependIcon = computed(() => {
   return props.prependIcon
 })
 
+// Verifica se rounded é preset ou custom
+const isRoundedPreset = computed(() => roundedPresets.includes(props.rounded as RoundedPreset))
+
+// Classes custom de rounded (quando não é preset)
+const customRoundedClass = computed(() => {
+  if (isRoundedPreset.value) return ''
+  // Se começa com "rounded", é classe Tailwind
+  if (props.rounded.startsWith('rounded')) return props.rounded
+  // Senão, assume que é valor CSS (será aplicado via style)
+  return ''
+})
+
+// Style custom de rounded (quando é valor CSS tipo "10px", "1rem")
+const customRoundedStyle = computed(() => {
+  if (isRoundedPreset.value) return {}
+  if (props.rounded.startsWith('rounded')) return {}
+  return { borderRadius: props.rounded }
+})
+
 const buttonClasses = computed(() => {
   return cn(
     buttonVariants({
       variant: props.variant,
       size: props.size,
-      rounded: props.rounded,
+      rounded: isRoundedPreset.value ? props.rounded as RoundedPreset : undefined,
       block: props.block,
       stacked: props.stacked,
     }),
+    customRoundedClass.value,
     props.class
   )
 })
@@ -144,6 +170,7 @@ const computedIconSize = computed(() => props.iconSize || "1em")
     :type="type"
     :disabled="isDisabled"
     :class="buttonClasses"
+    :style="customRoundedStyle"
   >
     <!-- Prepend: Slot > Loading/Icon -->
     <slot name="prepend">

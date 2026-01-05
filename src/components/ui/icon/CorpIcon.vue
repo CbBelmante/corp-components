@@ -1,19 +1,30 @@
 <script setup lang="ts">
 /**
- * 🧩 CorpIcon - Componente Universal de Ícones
+ * 🧩 CorpIcon - Ícones Lucide com presets de tamanho
  *
- * Renderiza ícones Lucide com controle de tamanho, cor e stroke.
+ * Suporta size presets (x-small, small, default, large, x-large) ou valores custom.
  *
  * 🔗 DEPENDÊNCIAS:
  * - lucide-vue-next
  * - useLucideIcon (composable)
  */
 
-// ============== DEPENDÊNCIAS EXTERNAS ==============
 import { computed, type PropType } from 'vue'
-
-// ============== DEPENDÊNCIAS INTERNAS ==============
 import { getLucideIcon } from '@/composables/useLucideIcon'
+
+// ============== TIPOS ==============
+
+type IconSize = 'x-small' | 'small' | 'default' | 'large' | 'x-large' | (string & {}) | number
+
+// ============== SIZE PRESETS ==============
+
+const sizePresets: Record<string, string> = {
+  'x-small': '12px',
+  'small': '16px',
+  'default': '24px',
+  'large': '32px',
+  'x-large': '40px',
+}
 
 // ============== PROPS ==============
 
@@ -23,8 +34,8 @@ const props = defineProps({
     required: true,
   },
   size: {
-    type: [Number, String],
-    default: '1em',
+    type: [Number, String] as PropType<IconSize>,
+    default: 'default',
   },
   color: {
     type: String,
@@ -67,7 +78,13 @@ const emit = defineEmits<{
 const iconComponent = computed(() => getLucideIcon(props.name))
 
 const computedSize = computed(() => {
+  // Verifica se é um preset
+  if (typeof props.size === 'string' && props.size in sizePresets) {
+    return sizePresets[props.size]
+  }
+  // Se for número, converte pra px
   if (typeof props.size === 'number') return `${props.size}px`
+  // Retorna como está (valores custom como '2rem', '1.5em', etc)
   return props.size
 })
 
