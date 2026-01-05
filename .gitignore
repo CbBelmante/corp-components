@@ -1,6 +1,12 @@
 # Dependencies
 node_modules/
 
+# Lock files (usando bun)
+package-lock.json
+package-lock.json.backup
+yarn.lock
+pnpm-lock.yaml
+
 # Build
 dist/
 dist-ssr/
