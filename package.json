@@ -18,12 +18,12 @@
     "dist"
   ],
   "scripts": {
-    "dev": "concurrently \"vite\" \"vitepress dev docs --port 5174\"",
-    "devDocs": "vitepress dev docs",
+    "dev": "concurrently \"vite\" \"vitepress dev docs/public --port 2224\"",
+    "devDocs": "vitepress dev docs/public --port 2224",
     "devPlayground": "vite",
     "build": "vite build && vue-tsc --emitDeclarationOnly",
-    "buildDocs": "vitepress build docs",
-    "preview": "vitepress preview docs",
+    "buildDocs": "vitepress build docs/public",
+    "preview": "vitepress preview docs/public",
     "typecheck": "vue-tsc --noEmit",
     "prepublishOnly": "npm run build"
   },
