@@ -7,7 +7,10 @@ import { resolve } from 'path';
 export default defineConfig({
   plugins: [vue()],
 
-  // Dev server para testar componentes
+  // Playground como root do dev server
+  root: 'playground',
+
+  // Dev server
   server: {
     port: 2223,
     host: true,
@@ -16,6 +19,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@playground': fileURLToPath(new URL('./playground', import.meta.url)),
+      '@docs': fileURLToPath(new URL('./docs', import.meta.url)),
+      '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
       '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
       '@base': fileURLToPath(new URL('./src/components/base', import.meta.url)),
       '@shadcn': fileURLToPath(new URL('./src/components/base/shadcn', import.meta.url)),

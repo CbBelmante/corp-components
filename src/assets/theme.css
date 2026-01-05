@@ -445,35 +445,12 @@
   color: var(--status-error);
 }
 
-/* Links e texto interativo */
+/* Links e texto interativo - use classes, nao estilos globais */
 .text-link {
   color: var(--text-link);
 }
 .link-hover:hover {
   color: var(--text-link);
-}
-
-/* Links HTML nativos - alta especificidade */
-a,
-a:link,
-a:visited {
-  color: var(--text-link) !important;
-  text-decoration-color: var(--text-link) !important;
-}
-
-a:hover,
-a:active {
-  color: var(--text-link) !important;
-  opacity: 0.8;
-}
-
-/* Links em elementos comuns */
-p a,
-div a,
-span a,
-li a {
-  color: var(--text-link) !important;
-  text-decoration-color: var(--text-link) !important;
 }
 
 /* Backgrounds utilitários */
