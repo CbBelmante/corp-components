@@ -1,0 +1,35 @@
+# Build outputs
+dist/
+dist-ssr/
+coverage/
+
+# Dependencies
+node_modules/
+
+# Generated files
+.vitepress/cache/
+.vitepress/dist/
+
+# Environment files
+.env
+.env.*
+
+# Lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Other
+*.min.js
+*.min.css

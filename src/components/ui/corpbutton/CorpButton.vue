@@ -10,35 +10,33 @@
  */
 
 // ============== DEPENDÊNCIAS EXTERNAS ==============
-import { Primitive } from "reka-ui"
+import { Primitive } from 'reka-ui';
 
 // ============== DEPENDÊNCIAS INTERNAS ==============
-import { computed, useSlots, type PropType } from "vue"
-import { cn } from "@/lib/utils"
-import { buttonVariants, type ButtonVariants } from "."
-import CorpIcon from "@components/ui/icon/CorpIcon.vue"
+import { computed, useSlots, type PropType } from 'vue';
+import { cn } from '@/lib/utils';
+import { buttonVariants, type ButtonVariants } from '.';
+import CorpIcon from '@components/ui/icon/CorpIcon.vue';
 
 // ============== TIPOS ==============
 
-type RoundedPreset = 'default' | 'none' | 'sm' | 'lg' | 'xl' | 'full'
-const roundedPresets: RoundedPreset[] = ['default', 'none', 'sm', 'lg', 'xl', 'full']
-
+type RoundedPreset = 'default' | 'none' | 'sm' | 'lg' | 'xl' | 'full';
 // ============== PROPS ==============
 
 const props = defineProps({
   // CVA Variants
   variant: {
-    type: String as PropType<ButtonVariants["variant"]>,
-    default: "default",
+    type: String as PropType<ButtonVariants['variant']>,
+    default: 'default',
   },
   size: {
-    type: String as PropType<ButtonVariants["size"]>,
-    default: "default",
+    type: String as PropType<ButtonVariants['size']>,
+    default: 'default',
   },
   rounded: {
     // Aceita presets (default, none, sm, lg, xl, full) OU valores custom (rounded-3xl, 10px, etc)
     type: String,
-    default: "default",
+    default: 'default',
   },
 
   // Layout Props
@@ -54,7 +52,7 @@ const props = defineProps({
   // Primitive Props
   as: {
     type: [String, Object] as PropType<string | object>,
-    default: "button",
+    default: 'button',
   },
   asChild: {
     type: Boolean,
@@ -89,8 +87,8 @@ const props = defineProps({
 
   // HTML
   type: {
-    type: String as PropType<"button" | "submit" | "reset">,
-    default: "button",
+    type: String as PropType<'button' | 'submit' | 'reset'>,
+    default: 'button',
   },
 
   // Class override
@@ -98,69 +96,82 @@ const props = defineProps({
     type: [String, Object, Array] as PropType<string | object | unknown[]>,
     default: undefined,
   },
-})
+});
+
+const roundedPresets: RoundedPreset[] = [
+  'default',
+  'none',
+  'sm',
+  'lg',
+  'xl',
+  'full',
+];
 
 // ============== SLOTS ==============
 
-const slots = useSlots()
+const slots = useSlots();
 
 // ============== COMPUTED ==============
 
-const isDisabled = computed(() => props.disabled || props.loading)
+const isDisabled = computed(() => props.disabled || props.loading);
 
-const showPrependSlot = computed(() => !!slots.prepend)
+const showPrependSlot = computed(() => !!slots.prepend);
 const showPrependIcon = computed(() => {
-  if (showPrependSlot.value) return false
-  return props.loading || !!props.prependIcon
-})
+  if (showPrependSlot.value) return false;
+  return props.loading || !!props.prependIcon;
+});
 
-const showAppendSlot = computed(() => !!slots.append)
+const showAppendSlot = computed(() => !!slots.append);
 const showAppendIcon = computed(() => {
-  if (showAppendSlot.value) return false
-  if (props.loading) return false
-  return !!props.appendIcon
-})
+  if (showAppendSlot.value) return false;
+  if (props.loading) return false;
+  return !!props.appendIcon;
+});
 
 const currentPrependIcon = computed(() => {
-  if (props.loading) return "luc-loader-2"
-  return props.prependIcon
-})
+  if (props.loading) return 'luc-loader-2';
+  return props.prependIcon;
+});
 
 // Verifica se rounded é preset ou custom
-const isRoundedPreset = computed(() => roundedPresets.includes(props.rounded as RoundedPreset))
+const isRoundedPreset = computed(() =>
+  roundedPresets.includes(props.rounded as RoundedPreset)
+);
 
 // Classes custom de rounded (quando não é preset)
 const customRoundedClass = computed(() => {
-  if (isRoundedPreset.value) return ''
+  if (isRoundedPreset.value) return '';
   // Se começa com "rounded", é classe Tailwind
-  if (props.rounded.startsWith('rounded')) return props.rounded
+  if (props.rounded.startsWith('rounded')) return props.rounded;
   // Senão, assume que é valor CSS (será aplicado via style)
-  return ''
-})
+  return '';
+});
 
 // Style custom de rounded (quando é valor CSS tipo "10px", "1rem")
 const customRoundedStyle = computed(() => {
-  if (isRoundedPreset.value) return {}
-  if (props.rounded.startsWith('rounded')) return {}
-  return { borderRadius: props.rounded }
-})
+  if (isRoundedPreset.value) return {};
+  if (props.rounded.startsWith('rounded')) return {};
+  return { borderRadius: props.rounded };
+});
 
 const buttonClasses = computed(() => {
   return cn(
     buttonVariants({
       variant: props.variant,
       size: props.size,
-      rounded: isRoundedPreset.value ? props.rounded as RoundedPreset : undefined,
+      rounded: isRoundedPreset.value
+        ? (props.rounded as RoundedPreset)
+        : undefined,
       block: props.block,
       stacked: props.stacked,
     }),
     customRoundedClass.value,
     props.class
-  )
-})
+  );
+});
 
 // Tamanho do ícone: prop > default (1em herda do texto)
-const computedIconSize = computed(() => props.iconSize || "1em")
+const computedIconSize = computed(() => props.iconSize || '1em');
 </script>
 
 <template>

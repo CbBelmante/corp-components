@@ -60,17 +60,7 @@ npm run devPlayground    # Apenas playground (localhost:2223)
 npm run devDocs          # Apenas showcase (localhost:2224)
 ```
 
-### **Scripts**
-
-| Script | Descrição |
-|--------|-----------|
-| `npm run dev` | Playground (2223) + Showcase (2224) em paralelo |
-| `npm run devPlayground` | Apenas playground de desenvolvimento |
-| `npm run devDocs` | Apenas showcase VitePress |
-| `npm run build` | Build da biblioteca (dist/) |
-| `npm run buildDocs` | Build da documentação |
-| `npm run typecheck` | Verificar tipos TypeScript |
-| `npm run preview` | Preview do build da documentação |
+> 📖 **Lista completa de scripts**: Veja [README.md - Scripts Disponíveis](../../README.md#scripts-disponíveis)
 
 ### **Estrutura de Branches**
 
@@ -322,6 +312,11 @@ npm run typecheck
 ```bash
 git add .
 git commit -m "feat: adiciona CorpInput component"
+
+# Git hooks automáticos (Husky + lint-staged):
+# ✓ ESLint --fix nos arquivos alterados
+# ✓ Prettier nos arquivos alterados
+# ✓ Commit só prossegue se tudo estiver OK
 ```
 
 ### **5. Push**

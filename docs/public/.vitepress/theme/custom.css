@@ -3,13 +3,13 @@
  */
 
 :root {
-  /* Primary - Laranja CbAdmin */
+  /* Primary - Laranja */
   --vp-c-brand-1: #FF7133;
   --vp-c-brand-2: #E6641C;
   --vp-c-brand-3: #FF854D;
   --vp-c-brand-soft: rgba(255, 113, 51, 0.14);
 
-  /* Background - Azulado CbAdmin */
+  /* Background - Azulado */
   --vp-c-bg: #ffffff;
   --vp-c-bg-soft: #F0F4F7;
   --vp-c-bg-alt: #e8ecf0;

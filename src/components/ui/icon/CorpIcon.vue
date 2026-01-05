@@ -9,22 +9,19 @@
  * - useLucideIcon (composable)
  */
 
-import { computed, type PropType } from 'vue'
-import { getLucideIcon } from '@/composables/useLucideIcon'
+import { computed, type PropType } from 'vue';
+import { getLucideIcon } from '@/composables/useLucideIcon';
 
 // ============== TIPOS ==============
 
-type IconSize = 'x-small' | 'small' | 'default' | 'large' | 'x-large' | (string & {}) | number
-
-// ============== SIZE PRESETS ==============
-
-const sizePresets: Record<string, string> = {
-  'x-small': '12px',
-  'small': '16px',
-  'default': '24px',
-  'large': '32px',
-  'x-large': '40px',
-}
+type IconSize =
+  | 'x-small'
+  | 'small'
+  | 'default'
+  | 'large'
+  | 'x-large'
+  | (string & {})
+  | number;
 
 // ============== PROPS ==============
 
@@ -65,48 +62,64 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 
 // ============== EMITS ==============
 
 const emit = defineEmits<{
-  click: [event: MouseEvent]
-}>()
+  click: [event: MouseEvent];
+}>();
+
+// ============== SIZE PRESETS ==============
+
+const sizePresets: Record<string, string> = {
+  'x-small': '12px',
+  small: '16px',
+  default: '24px',
+  large: '32px',
+  'x-large': '40px',
+};
 
 // ============== COMPUTED ==============
 
-const iconComponent = computed(() => getLucideIcon(props.name))
+const iconComponent = computed(() => getLucideIcon(props.name));
 
 const computedSize = computed(() => {
   // Verifica se é um preset
   if (typeof props.size === 'string' && props.size in sizePresets) {
-    return sizePresets[props.size]
+    return sizePresets[props.size];
   }
   // Se for número, converte pra px
-  if (typeof props.size === 'number') return `${props.size}px`
+  if (typeof props.size === 'number') return `${props.size}px`;
   // Retorna como está (valores custom como '2rem', '1.5em', etc)
-  return props.size
-})
+  return props.size;
+});
 
 const isSpinner = computed(() => {
-  const spinnerIcons = ['luc-loader-2', 'luc-loader', 'luc-refresh-cw', 'loader-2', 'loader']
-  return spinnerIcons.includes(props.name)
-})
+  const spinnerIcons = [
+    'luc-loader-2',
+    'luc-loader',
+    'luc-refresh-cw',
+    'loader-2',
+    'loader',
+  ];
+  return spinnerIcons.includes(props.name);
+});
 
 const iconStyles = computed(() => ({
   width: computedSize.value,
   height: computedSize.value,
   color: props.color,
   flexShrink: '0',
-}))
+}));
 
 // ============== METHODS ==============
 
 const handleClick = (event: MouseEvent) => {
   if (props.clickable && !props.disabled) {
-    emit('click', event)
+    emit('click', event);
   }
-}
+};
 </script>
 
 <template>
@@ -137,7 +150,9 @@ const handleClick = (event: MouseEvent) => {
   align-items: center;
   justify-content: center;
   vertical-align: middle;
-  transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  transition:
+    color 0.2s ease-in-out,
+    opacity 0.2s ease-in-out;
 }
 
 .isStart {

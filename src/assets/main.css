@@ -5,16 +5,16 @@
 @tailwind utilities;
 
 /**
- * Variáveis shadcn/Tailwind - Cores CbAdmin
+ * Variáveis shadcn/Tailwind - Cores
  * Formato HSL sem hsl() para Tailwind processar
  * IMPORTANTE: Fora de @layer para ter prioridade sobre theme.css
  */
 
-/* Light Mode - Inspirado CbAdmin */
+/* Light Mode */
 :root {
   --radius: 0.5rem;
 
-  /* Primary - Laranja CbAdmin #FF7133 */
+  /* Primary - Laranja #FF7133 */
   --primary: 20 100% 60%;
   --primary-foreground: 0 0% 100%;
 
@@ -53,7 +53,7 @@
   --button-outline-border: 214 25% 60%;
 }
 
-/* Dark Mode - GitHub style CbAdmin */
+/* Dark Mode - GitHub style */
 .dark {
   /* Primary - Laranja */
   --primary: 20 100% 60%;

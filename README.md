@@ -151,15 +151,23 @@ npm run dev  # Playground (2223) + Showcase (2224)
 
 > 📖 **Guia completo**: Veja [Contributing Guide](docs/dev/contributing.md) para setup detalhado e workflow de contribuição.
 
-### Scripts Principais
+### Scripts Disponíveis
 
-```bash
-npm run dev         # Desenvolvimento (playground + showcase)
-npm run build       # Build da biblioteca
-npm run typecheck   # Verificar tipos TypeScript
-```
-
-> 📖 **Todos os scripts**: Veja [Contributing Guide](docs/dev/contributing.md#scripts)
+| Script | Descrição |
+|--------|-----------|
+| `npm run dev` | Playground (2223) + Showcase (2224) em paralelo |
+| `npm run devPlayground` | Apenas playground de desenvolvimento |
+| `npm run devDocs` | Apenas showcase VitePress |
+| `npm run build` | Build da biblioteca (dist/) |
+| `npm run buildDocs` | Build da documentação |
+| `npm run typecheck` | Verificar tipos TypeScript |
+| `npm run tscw` | TypeScript watch mode (verifica tipos em tempo real) |
+| `npm run syncAliases` | Sincronizar aliases do config/aliases.ts para tsconfig.json |
+| `npm run lint` | Verificar código com ESLint |
+| `npm run lintFix` | Corrigir problemas de ESLint automaticamente |
+| `npm run format` | Formatar código com Prettier |
+| `npm run format:check` | Verificar formatação sem alterar arquivos |
+| `npm run preview` | Preview do build da documentação |
 
 ## 📚 Documentação
 

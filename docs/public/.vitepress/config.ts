@@ -1,7 +1,7 @@
-import { defineConfig } from 'vitepress'
-import { fileURLToPath, URL } from 'node:url'
-import tailwindcss from 'tailwindcss'
-import autoprefixer from 'autoprefixer'
+import { defineConfig } from 'vitepress';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+import { getAliases } from '../../../src/config';
 
 export default defineConfig({
   title: 'Corp Components',
@@ -10,22 +10,14 @@ export default defineConfig({
   vite: {
     css: {
       postcss: {
-        plugins: [
-          tailwindcss(),
-          autoprefixer(),
-        ],
+        plugins: [tailwindcss(), autoprefixer()],
       },
     },
     resolve: {
-      alias: {
-        '@': fileURLToPath(new URL('../../src', import.meta.url)),
-        '@docs': fileURLToPath(new URL('../../docs', import.meta.url)),
-        '@assets': fileURLToPath(new URL('../../src/assets', import.meta.url)),
-        '@components': fileURLToPath(new URL('../../src/components', import.meta.url))
-      }
-    }
+      alias: getAliases(new URL('../../../', import.meta.url)),
+    },
   },
-  
+
   themeConfig: {
     search: {
       provider: 'local',
@@ -33,7 +25,7 @@ export default defineConfig({
         translations: {
           button: {
             buttonText: 'Buscar',
-            buttonAriaLabel: 'Buscar'
+            buttonAriaLabel: 'Buscar',
           },
           modal: {
             noResultsText: 'Nenhum resultado para',
@@ -41,11 +33,11 @@ export default defineConfig({
             footer: {
               selectText: 'selecionar',
               navigateText: 'navegar',
-              closeText: 'fechar'
-            }
-          }
-        }
-      }
+              closeText: 'fechar',
+            },
+          },
+        },
+      },
     },
 
     nav: [
@@ -56,21 +48,19 @@ export default defineConfig({
     sidebar: [
       {
         text: 'Introducao',
-        items: [
-          { text: 'Instalacao', link: '/getting-started' },
-        ]
+        items: [{ text: 'Instalacao', link: '/getting-started' }],
       },
       {
         text: 'UI Components',
         items: [
           { text: 'Button', link: '/components/button' },
           { text: 'Icon', link: '/components/icon' },
-        ]
-      }
+        ],
+      },
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/CbBelmante/corp-components' }
-    ]
-  }
-})
+      { icon: 'github', link: 'https://github.com/CbBelmante/corp-components' },
+    ],
+  },
+});

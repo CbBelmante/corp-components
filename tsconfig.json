@@ -27,20 +27,42 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    /* Paths (mesmo padrão do CbAdmin) */
+    /* Paths*/
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@playground/*": ["./playground/*"],
-      "@docs/*": ["./docs/*"],
-      "@assets/*": ["./src/assets/*"],
-      "@components/*": ["./src/components/*"],
-      "@base/*": ["./src/components/base/*"],
-      "@shadcn/*": ["./src/components/base/shadcn/*"],
-      "@corp/*": ["./src/components/corp/*"],
-      "@composables/*": ["./src/composables/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@types/*": ["./src/types/*"]
+          "@/*": [
+                "./src/*"
+          ],
+          "@playground/*": [
+                "./playground/*"
+          ],
+          "@docs/*": [
+                "./docs/*"
+          ],
+          "@assets/*": [
+                "./src/assets/*"
+          ],
+          "@components/*": [
+                "./src/components/*"
+          ],
+          "@base/*": [
+                "./src/components/base/*"
+          ],
+          "@shadcn/*": [
+                "./src/components/base/shadcn/*"
+          ],
+          "@corp/*": [
+                "./src/components/corp/*"
+          ],
+          "@composables/*": [
+                "./src/composables/*"
+          ],
+          "@utils/*": [
+                "./src/utils/*"
+          ],
+          "@types/*": [
+                "./src/types/*"
+          ]
     },
 
     /* Build info */

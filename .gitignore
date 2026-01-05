@@ -60,5 +60,7 @@ coverage/
 .claude/
 
 # VitePress
-docs/.vitepress/cache/
-docs/.vitepress/dist/
+docs/public/.vitepress/cache/
+docs/public/.vitepress/dist/
+.vitepress/cache/
+.vitepress/dist/

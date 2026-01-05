@@ -9,8 +9,8 @@
  */
 
 // ============== DEPENDÊNCIAS EXTERNAS ==============
-import * as LucideIcons from 'lucide-vue-next'
-import { Search } from 'lucide-vue-next'
+import * as LucideIcons from 'lucide-vue-next';
+import { Search } from 'lucide-vue-next';
 
 // ============== HELPER FUNCTIONS ==============
 
@@ -19,17 +19,17 @@ import { Search } from 'lucide-vue-next'
  */
 const toPascalCase = (str: string): string => {
   if (!/[-_\s]/.test(str)) {
-    return str.charAt(0).toUpperCase() + str.slice(1)
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   return str
     .split(/[-_\s]/)
     .map(word => {
-      if (/^\d+$/.test(word)) return word
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      if (/^\d+$/.test(word)) return word;
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
     })
-    .join('')
-}
+    .join('');
+};
 
 // ============== MAIN FUNCTION ==============
 
@@ -42,11 +42,11 @@ const toPascalCase = (str: string): string => {
  * getLucideIcon('user-plus')   // kebab-case
  */
 export const getLucideIcon = (iconName: string) => {
-  const cleanName = iconName.replace(/^luc-/, '')
-  const pascalName = toPascalCase(cleanName)
+  const cleanName = iconName.replace(/^luc-/, '');
+  const pascalName = toPascalCase(cleanName);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const IconComponent = (LucideIcons as any)[pascalName]
+  const IconComponent = (LucideIcons as any)[pascalName];
 
-  return IconComponent || Search
-}
+  return IconComponent || Search;
+};

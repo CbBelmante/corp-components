@@ -5,21 +5,21 @@
  * Exibe componentes com toggle para mostrar/esconder código fonte.
  * Animação suave de expand/collapse.
  */
-import { ref } from 'vue'
-import { CorpButton } from '@components/ui/corpbutton'
+import { ref } from 'vue';
+import { CorpButton } from '@components/ui/corpbutton';
 
-const showCode = ref(false)
-const copied = ref(false)
-const codeAreaRef = ref<HTMLElement>()
+const showCode = ref(false);
+const copied = ref(false);
+const codeAreaRef = ref<HTMLElement>();
 
 const copyCode = async () => {
-  const codeEl = codeAreaRef.value?.querySelector('pre code')
-  if (!codeEl) return
+  const codeEl = codeAreaRef.value?.querySelector('pre code');
+  if (!codeEl) return;
 
-  await navigator.clipboard.writeText(codeEl.textContent || '')
-  copied.value = true
-  setTimeout(() => copied.value = false, 2000)
-}
+  await navigator.clipboard.writeText(codeEl.textContent || '');
+  copied.value = true;
+  setTimeout(() => (copied.value = false), 2000);
+};
 </script>
 
 <template>
@@ -97,7 +97,7 @@ const copyCode = async () => {
   border-top: 1px solid var(--vp-c-divider, #e2e8f0);
 }
 
-.codeArea :deep(div[class*="language-"]) {
+.codeArea :deep(div[class*='language-']) {
   margin: 0;
   border-radius: 0;
 }

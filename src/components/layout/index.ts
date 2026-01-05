@@ -1,1 +1,1 @@
-export { default as CodePreview } from './CodePreview.vue'
+export { default as CodePreview } from './CodePreview.vue';

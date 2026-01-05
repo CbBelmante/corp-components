@@ -4,7 +4,7 @@
  * Interfaces, types, enums, etc.
  */
 
-// Base types (will be populated from CbAdmin)
+// Base types
 export interface BaseProps {
   /** Component ID */
   id?: string;

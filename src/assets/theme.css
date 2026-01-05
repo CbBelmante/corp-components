@@ -1,6 +1,6 @@
 /*
  * ===================================================================
- * 🎨 CBADMIN THEME SYSTEM - SISTEMA ADMINISTRATIVO GENÉRICO
+ * 🎨 THEME SYSTEM - SISTEMA ADMINISTRATIVO GENÉRICO
  * ===================================================================
  *
  * Sistema de CSS Variables para interface administrativa profissional
@@ -216,7 +216,7 @@
   --tooltip-border: #334155; /* Borda sutil */
 
   /* ===================================================================
-   * 11. MULTICOMPANY - Isolamento visual entre empresas (extensão CbAdmin)
+   * 11. MULTICOMPANY - Isolamento visual entre empresas
    * =================================================================== */
   --company-border: var(--primary); /* Bordas indicativas de empresa */
   --company-background: var(--primary-soft); /* Background sutil empresa */
@@ -409,7 +409,7 @@
   --tooltip-border: #1e3a5f; /* Borda mais visível */
 
   /* ===================================================================
-   * 11. MULTICOMPANY - Isolamento visual dark (extensão CbAdmin)
+   * 11. MULTICOMPANY - Isolamento visual dark
    * =================================================================== */
   --company-border: var(--primary); /* Bordas empresa */
   --company-background: var(--primary-soft); /* Background empresa */
@@ -469,7 +469,7 @@
   border-color: var(--border-muted);
 }
 
-/* MultiCompany utilities (extensão CbAdmin) */
+/* MultiCompany utilities */
 .company-context {
   border-left: 3px solid var(--company-border);
 }

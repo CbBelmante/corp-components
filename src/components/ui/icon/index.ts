@@ -1,1 +1,1 @@
-export { default as CorpIcon } from './CorpIcon.vue'
+export { default as CorpIcon } from './CorpIcon.vue';

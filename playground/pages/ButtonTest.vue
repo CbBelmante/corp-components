@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { CorpButton as Button } from '@/components/ui/corpbutton'
+import { ref } from 'vue';
+import { CorpButton as Button } from '@/components/ui/corpbutton';
 
-const clickCount = ref(0)
-const loading = ref(false)
+const clickCount = ref(0);
+const loading = ref(false);
 
 const simulateLoading = () => {
-  loading.value = true
+  loading.value = true;
   setTimeout(() => {
-    loading.value = false
-  }, 2000)
-}
+    loading.value = false;
+  }, 2000);
+};
 </script>
 
 <template>
@@ -23,7 +23,9 @@ const simulateLoading = () => {
     <!-- Variantes -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">Variantes</h2>
-      <div class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg">
+      <div
+        class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
+      >
         <Button>Default</Button>
         <Button variant="secondary">Secondary</Button>
         <Button variant="destructive">Destructive</Button>
@@ -36,7 +38,9 @@ const simulateLoading = () => {
     <!-- Tamanhos -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">Tamanhos</h2>
-      <div class="flex flex-wrap items-center gap-4 p-4 bg-card border border-border rounded-lg">
+      <div
+        class="flex flex-wrap items-center gap-4 p-4 bg-card border border-border rounded-lg"
+      >
         <Button size="sm">Small</Button>
         <Button size="default">Default</Button>
         <Button size="lg">Large</Button>
@@ -47,7 +51,9 @@ const simulateLoading = () => {
     <!-- Estados -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">Estados</h2>
-      <div class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg">
+      <div
+        class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
+      >
         <Button disabled>Disabled</Button>
         <Button :disabled="loading" @click="simulateLoading">
           {{ loading ? 'Loading...' : 'Click to Load' }}
@@ -58,13 +64,11 @@ const simulateLoading = () => {
     <!-- Interatividade -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">Interatividade</h2>
-      <div class="flex flex-wrap items-center gap-4 p-4 bg-card border border-border rounded-lg">
-        <Button @click="clickCount++">
-          Clicado {{ clickCount }}x
-        </Button>
-        <Button variant="outline" @click="clickCount = 0">
-          Reset
-        </Button>
+      <div
+        class="flex flex-wrap items-center gap-4 p-4 bg-card border border-border rounded-lg"
+      >
+        <Button @click="clickCount++">Clicado {{ clickCount }}x</Button>
+        <Button variant="outline" @click="clickCount = 0">Reset</Button>
       </div>
     </section>
 
@@ -72,7 +76,9 @@ const simulateLoading = () => {
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">Sandbox</h2>
       <div class="p-4 border border-dashed border-border rounded-lg min-h-32">
-        <p class="text-muted-foreground text-sm mb-4">Adicione seus testes aqui...</p>
+        <p class="text-muted-foreground text-sm mb-4">
+          Adicione seus testes aqui...
+        </p>
         <!-- Adicione componentes para testar -->
       </div>
     </section>
