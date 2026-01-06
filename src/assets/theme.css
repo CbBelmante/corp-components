@@ -210,6 +210,25 @@
   --alert-border: var(--blockquote-border); /* Alias */
   --alert-background: var(--blockquote-background); /* Alias */
 
+  /* CodePreview specific */
+  --code-preview-border: #D1DCE5; /* Borda do componente */
+  --code-preview-bg: #D1DCE5; /* Background container */
+  --code-preview-shadow: none; /* Sem sombra */
+  --code-preview-header-bg: #D1DCE5; /* Background header */
+  --code-preview-title-text: #050914; /* Texto do título */
+  --code-preview-badge-bg: #FFF4F0; /* Background language badge */
+  --code-preview-badge-text: #FF7133; /* Texto language badge */
+  --code-preview-preview-bg: #ffffff; /* Background área de preview */
+  --code-preview-actions-bg: #E0E8F0; /* Background da área de ações (botão mostrar código) - mais leve */
+  --code-preview-code-bg: #C5D4E0; /* Background área de código */
+  --code-preview-tab-text: #64748b; /* Texto tabs inativas */
+  --code-preview-tab-hover-bg: #D1DCE5; /* Background tab hover */
+  --code-preview-tab-active-bg: #C5D4E0; /* Background tab ativa - mesma cor do código */
+  --code-preview-tab-active-text: #FF7133; /* Texto tab ativa */
+  --code-preview-tab-indicator: #FF7133; /* Barra indicadora tab ativa */
+  --code-preview-copy-btn-bg: #ffffff; /* Background botão copy */
+  --code-preview-copy-btn-border: #D1DCE5; /* Borda botão copy */
+
   /* === TOOLTIPS - Cores específicas harmonizadas === */
   --tooltip-background: #1e293b; /* Azul escuro profundo */
   --tooltip-foreground: #e2e8f0; /* Texto claro igual mensagens */
@@ -402,6 +421,25 @@
   --blockquote-background: #1c1917; /* Background aviso escuro */
   --alert-border: var(--blockquote-border); /* Alias */
   --alert-background: var(--blockquote-background); /* Alias */
+
+  /* CodePreview specific */
+  --code-preview-border: #30363d; /* Borda do componente */
+  --code-preview-bg: #22272e; /* Background container */
+  --code-preview-shadow: none; /* Sem sombra */
+  --code-preview-header-bg: #22272e; /* Background header */
+  --code-preview-title-text: #e6edf3; /* Texto do título */
+  --code-preview-badge-bg: #4A2416; /* Background language badge */
+  --code-preview-badge-text: #FF7133; /* Texto language badge */
+  --code-preview-preview-bg: #1c2128; /* Background área de preview */
+  --code-preview-actions-bg: #22272e; /* Background da área de ações (botão mostrar código) */
+  --code-preview-code-bg: #161b22; /* Background área de código */
+  --code-preview-tab-text: #7d8590; /* Texto tabs inativas */
+  --code-preview-tab-hover-bg: #1c2128; /* Background tab hover */
+  --code-preview-tab-active-bg: #161b22; /* Background tab ativa */
+  --code-preview-tab-active-text: #FF7133; /* Texto tab ativa */
+  --code-preview-tab-indicator: #FF7133; /* Barra indicadora tab ativa */
+  --code-preview-copy-btn-bg: #22272e; /* Background botão copy */
+  --code-preview-copy-btn-border: #30363d; /* Borda botão copy */
 
   /* === TOOLTIPS - Cores específicas dark mode === */
   --tooltip-background: #0f0f23; /* Azul muito escuro elegante */

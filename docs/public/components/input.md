@@ -732,7 +732,7 @@ O `CorpInput` usa `inject('corpValidation')` para acessar o contexto de validaç
 Sem `useForm()` no componente pai, as `:rules` NÃO funcionam!
 :::
 
-<CodePreview>
+<CodePreview :config="{ tabs: ['script', 'template'] }">
   <div class="space-y-4 max-w-md">
     <CorpInput
       v-model="form.email3"
@@ -749,9 +749,9 @@ Sem `useForm()` no componente pai, as `:rules` NÃO funcionam!
     />
   </div>
 
-  <template #code>
+  <template #code-script>
 
-```vue
+```ts
 <script setup>
 import { CorpInput } from 'corp-components'
 import { useForm } from '@/composables/useForm'
@@ -768,7 +768,13 @@ const { form } = useForm({
 
 const rules = useValidationRules()
 </script>
+```
 
+  </template>
+
+  <template #code-template>
+
+```vue-html
 <template>
   <CorpInput
     v-model="form.email"
@@ -1065,7 +1071,7 @@ O componente suporta navegação completa por teclado:
 
 Campos com máscaras brasileiras e validação.
 
-<CodePreview>
+<CodePreview :config="{ tabs: ['script', 'template'] }">
   <div class="max-w-md space-y-4">
     <CorpInput
       v-model="form.cpf3"
@@ -1085,9 +1091,9 @@ Campos com máscaras brasileiras e validação.
     />
   </div>
 
-  <template #code>
+  <template #code-script>
 
-```vue
+```ts
 <script setup>
 import { CorpInput } from 'corp-components'
 import { useForm } from '@/composables/useForm'
@@ -1104,7 +1110,13 @@ const { form } = useForm({
 
 const rules = useValidationRules()
 </script>
+```
 
+  </template>
+
+  <template #code-template>
+
+```vue-html
 <template>
   <div class="max-w-md space-y-4">
     <CorpInput
