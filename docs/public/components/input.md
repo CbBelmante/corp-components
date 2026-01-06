@@ -238,7 +238,7 @@ import { CorpInput } from 'corp-components'
 import { useForm } from '@/composables/useForm'
 import { useValidationRules } from '@/validations/rules'
 
-// ✅ useForm() fornece contexto de validação (OBRIGATÓRIO!)
+// useForm() fornece contexto de validação (OBRIGATÓRIO!)
 const { form } = useForm({
   initialValues: {
     email: '',
@@ -313,19 +313,19 @@ const { form } = useForm({
   formName: 'CustomRulesExample',
 })
 
-// ✅ Rule customizada: usuário deve começar com @
+// Rule customizada: usuário deve começar com @
 const startsWithAt = (value: string) => {
   if (!value) return true // Permite vazio (use required separadamente)
   return value.startsWith('@') || 'Usuário deve começar com @'
 }
 
-// ✅ Rule customizada: apenas letras minúsculas
+// Rule customizada: apenas letras minúsculas
 const onlyLowercase = (value: string) => {
   if (!value) return true
   return value === value.toLowerCase() || 'Apenas letras minúsculas'
 }
 
-// ✅ Combinando múltiplas rules
+// Combinando múltiplas rules
 const usernameRules = [startsWithAt, onlyLowercase]
 </script>
 
@@ -354,7 +354,7 @@ const { form } = useForm({
   formName: 'AsyncValidation',
 })
 
-// ✅ Rule assíncrona
+// Rule assíncrona
 const emailAvailable = async (value: string) => {
   if (!value) return true
 
@@ -756,7 +756,7 @@ Mensagens de ajuda abaixo do input.
       name="password2"
       label="Senha"
       type="password"
-      hint="Mínimo 8 caracteres, 1 maiúscula e 1 número"
+      hint="isso é um hint"
     />
   </div>
 
@@ -919,7 +919,7 @@ import { CorpInput } from 'corp-components'
 import { useForm } from '@/composables/useForm'
 import { useValidationRules } from '@/validations/rules'
 
-// ✅ useForm() necessário para validação funcionar
+// seForm() necessário para validação funcionar
 const { form } = useForm({
   initialValues: {
     cpf: '',
@@ -1035,19 +1035,77 @@ Exemplo completo de formulário com validação, submit e botões de ação.
 
 ```vue
 <script setup>
-import { ref } from 'vue'
 import { CorpInput } from 'corp-components'
+import { CorpButton } from 'corp-components'
+import { useForm } from '@/composables/useForm'
+import { useValidationRules } from '@/validations/rules'
 
-const name = ref('')
+const { form, validateForm } = useForm({
+  initialValues: {
+    nameForm: '',
+    emailForm: '',
+    passwordForm: '',
+  },
+  formName: 'CompleteForm',
+})
+
+const rules = useValidationRules()
+
+const handleSubmit = () => {
+  const schema = {
+    nameForm: [rules.required, rules.minLength(3)],
+    emailForm: [rules.required, rules.email],
+    passwordForm: [rules.required, rules.minLength(6)],
+  }
+
+  const isValid = validateForm(schema)
+
+  if (isValid) {
+    alert('Formulário válido e enviado!')
+  } else {
+    alert('Formulário inválido! Verifique os campos.')
+  }
+}
+
+const handleClear = () => {
+  form.nameForm = ''
+  form.emailForm = ''
+  form.passwordForm = ''
+}
 </script>
 
 <template>
-  <CorpInput
-    v-model="name"
-    name="name"
-    label="Nome"
-    placeholder="Digite seu nome"
-  />
+  <div class="max-w-md space-y-4">
+    <CorpInput
+      v-model="form.nameForm"
+      name="nameForm"
+      label="Nome completo"
+      :rules="[rules.required, rules.minLength(3)]"
+      clearable
+    />
+    <CorpInput
+      v-model="form.emailForm"
+      name="emailForm"
+      label="Email"
+      type="email"
+      prepend-icon="luc-mail"
+      :rules="[rules.required, rules.email]"
+      clearable
+    />
+    <CorpInput
+      v-model="form.passwordForm"
+      name="passwordForm"
+      label="Senha"
+      type="password"
+      prepend-icon="luc-lock"
+      :rules="[rules.required, rules.minLength(6)]"
+    />
+
+    <div class="flex gap-2 justify-center">
+      <CorpButton @click="handleSubmit">Enviar</CorpButton>
+      <CorpButton variant="outline" @click="handleClear">Limpar</CorpButton>
+    </div>
+  </div>
 </template>
 ```
 

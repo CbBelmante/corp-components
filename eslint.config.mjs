@@ -19,6 +19,7 @@ export default [
       '**/node_modules/**',
       '**/.vitepress/cache/**',
       '**/.vitepress/dist/**',
+      '**/.history/**',
     ],
   },
 
