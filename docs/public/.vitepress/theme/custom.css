@@ -9,9 +9,9 @@
   --vp-c-brand-3: #FF854D;
   --vp-c-brand-soft: rgba(255, 113, 51, 0.14);
 
-  /* Background - Azulado */
-  --vp-c-bg: #ffffff;
-  --vp-c-bg-soft: #F0F4F7;
+  /* Background - Azulado (igual theme.css) */
+  --vp-c-bg: #e8ecf0;
+  --vp-c-bg-soft: #D1DCE5;
   --vp-c-bg-alt: #e8ecf0;
   --vp-c-bg-elv: #ffffff;
 
@@ -34,7 +34,9 @@
   --vp-sidebar-bg-color: #F0F4F7;
 
   /* Code blocks - Azulado */
-  --vp-code-block-bg: #f0f4f8;
+  --vp-code-block-bg: #e3ebf2;
+
+  --vp-component-preview-bg: #F0F4F7;
 
   /* Hero gradient */
   --vp-home-hero-name-color: transparent;
@@ -97,6 +99,8 @@
   --vp-code-block-bg: #161b22;
   --vp-code-bg: #22272e;
 
+  --vp-component-preview-bg: #2a2f36;
+
   /* Alt button - Dark */
   --vp-button-alt-border: transparent;
   --vp-button-alt-text: #e6edf3;
@@ -128,11 +132,86 @@
   border-radius: 0.5rem;
   border: 1px solid var(--vp-c-divider);
   margin: 1rem 0;
-  background-color: var(--vp-code-block-bg);
+  background-color: var(--vp-component-preview-bg);
+}
+
+/* CodePreview component */
+.previewArea {
+  background: var(--vp-component-preview-bg) !important;
 }
 
 /* Fix: VitePress base.css aplica "border: 0" em todos os buttons */
 .componentPreview button,
 .codePreview button {
   border-style: solid;
+}
+
+/* Fix: VitePress aplica cor de link em botões renderizados como <a> */
+.componentPreview a[class*="inline-flex"],
+.codePreview a[class*="inline-flex"] {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+/* ============================================= */
+/* Table Styling - Tabelas centralizadas */
+/* ============================================= */
+
+/* tableContainer - Tabela centralizada com cantos arredondados */
+.vp-doc table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  margin: 1.5rem auto 2.5rem auto !important;
+  width: fit-content !important;
+}
+
+/* tableHeader - Header AZULADO (CbAdmin style) */
+.vp-doc thead {
+  background-color: #D1DCE5 !important;
+}
+
+.vp-doc thead th {
+  background-color: #D1DCE5 !important;
+  color: #111827 !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  padding: 12px 16px !important;
+  border: none !important;
+}
+
+/* Primeiro th - canto superior esquerdo arredondado */
+.vp-doc thead tr:first-child th:first-child {
+  border-top-left-radius: 7px !important;
+}
+
+/* Último th - canto superior direito arredondado */
+.vp-doc thead tr:first-child th:last-child {
+  border-top-right-radius: 7px !important;
+}
+
+/* tableBodyCell - Células centralizadas */
+.vp-doc tbody td {
+  text-align: center !important;
+  padding: 10px 16px !important;
+}
+
+/* Última linha - cantos inferiores arredondados */
+.vp-doc tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 7px !important;
+}
+
+.vp-doc tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 7px !important;
+}
+
+/* darkMode - Header azulado no escuro */
+.dark .vp-doc thead {
+  background-color: #3d444d !important;
+}
+
+.dark .vp-doc thead th {
+  background-color: #3d444d !important;
+  color: #e6edf3 !important;
 }

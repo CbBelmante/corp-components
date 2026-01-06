@@ -66,7 +66,7 @@ const showCode = ref(false);
   justify-content: center;
   gap: 12px;
   padding: 24px;
-  background: var(--vp-c-bg);
+  background: var(--vp-component-preview-bg);
 }
 
 .previewActions {

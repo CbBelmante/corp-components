@@ -24,6 +24,13 @@ import { RouterLink, RouterView } from 'vue-router';
             >
               Buttons
             </RouterLink>
+            <RouterLink
+              to="/inputs"
+              class="text-muted-foreground hover:text-foreground transition-colors"
+              active-class="text-primary font-medium"
+            >
+              Inputs
+            </RouterLink>
           </nav>
         </div>
         <a

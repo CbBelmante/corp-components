@@ -4,37 +4,41 @@ import { resolve } from 'path';
 import { getAliases, config } from './src/config';
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [vue()],
+export default defineConfig(async () => {
+  const aliases = await getAliases(import.meta.url);
 
-  // Playground como root do dev server
-  root: 'playground',
+  return {
+    plugins: [vue()],
 
-  // Dev server
-  server: {
-    port: config.devServer.playgroundPort,
-    host: true,
-  },
+    // Playground como root do dev server
+    root: 'playground',
 
-  resolve: {
-    alias: getAliases(import.meta.url),
-  },
-
-  // Build em library mode
-  build: {
-    lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
-      name: config.build.libName,
-      fileName: config.build.libFileName,
+    // Dev server
+    server: {
+      port: config.devServer.playgroundPort,
+      host: true,
     },
-    rollupOptions: {
-      // Dependências externas (não incluir no bundle)
-      external: ['vue'],
-      output: {
-        globals: {
-          vue: 'Vue',
+
+    resolve: {
+      alias: aliases,
+    },
+
+    // Build em library mode
+    build: {
+      lib: {
+        entry: resolve(__dirname, 'src/index.ts'),
+        name: config.build.libName,
+        fileName: config.build.libFileName,
+      },
+      rollupOptions: {
+        // Dependências externas (não incluir no bundle)
+        external: ['vue'],
+        output: {
+          globals: {
+            vue: 'Vue',
+          },
         },
       },
     },
-  },
+  };
 });

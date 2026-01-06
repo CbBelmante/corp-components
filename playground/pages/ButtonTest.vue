@@ -72,6 +72,40 @@ const simulateLoading = () => {
       </div>
     </section>
 
+    <!-- Polimorfismo (as="a") -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Polimorfismo (as="a")
+      </h2>
+      <div
+        class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
+      >
+        <Button as="a" href="https://github.com" target="_blank">
+          GitHub (Link)
+        </Button>
+        <Button
+          as="a"
+          href="https://vuejs.org"
+          target="_blank"
+          variant="outline"
+        >
+          Vue.js (Link)
+        </Button>
+        <Button
+          as="a"
+          href="https://vitejs.dev"
+          target="_blank"
+          variant="secondary"
+        >
+          Vite (Link)
+        </Button>
+      </div>
+      <p class="text-xs text-muted-foreground">
+        Botões renderizados como &lt;a&gt; devem ter cor normal (não laranja de
+        link)
+      </p>
+    </section>
+
     <!-- Sandbox -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">Sandbox</h2>

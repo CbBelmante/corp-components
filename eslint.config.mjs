@@ -43,7 +43,8 @@ export default [
       'vue/no-unused-vars': 'error',
       'vue/component-definition-name-casing': ['error', 'PascalCase'],
       'vue/component-name-in-template-casing': ['error', 'PascalCase'],
-      'vue/custom-event-name-casing': ['error', 'camelCase'],
+      // Permite eventos com ':' (padrão Vuetify: click:append, update:modelValue, etc)
+      'vue/custom-event-name-casing': 'off',
       'vue/define-macros-order': [
         'error',
         {
@@ -89,7 +90,7 @@ export default [
         },
       ],
       '@typescript-eslint/consistent-type-imports': 'error',
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-explicit-any': 'off', // Permitido quando necessário
     },
   },
 
@@ -102,6 +103,15 @@ export default [
       'no-console': 'off', // Permitido para desenvolvimento e debug
       'no-debugger': 'warn',
       'no-unused-vars': 'off', // Handled by @typescript-eslint/no-unused-vars
+    },
+  },
+
+  {
+    name: 'app/corplogger-rules',
+    files: ['**/CorpLogger.ts'],
+    rules: {
+      // Logger precisa de @ts-nocheck para tipos flexíveis
+      '@typescript-eslint/ban-ts-comment': 'off',
     },
   },
 ];

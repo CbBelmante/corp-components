@@ -49,6 +49,9 @@
   --input: 214 30% 80%;
   --ring: 20 100% 60%;
 
+  /* Input Background - azul claro harmonizado (CbAdmin) */
+  --input-background: #D1DCE5;
+
   /* Button Outline - borda mais visivel */
   --button-outline-border: 214 25% 60%;
 }
@@ -89,6 +92,9 @@
   --border: 217 30% 35%;
   --input: 217 30% 35%;
   --ring: 20 100% 60%;
+
+  /* Input Background - escuro */
+  --input-background: #1c2128;
 
   /* Button Outline - borda mais visivel */
   --button-outline-border: 217 25% 55%;

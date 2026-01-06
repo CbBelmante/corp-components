@@ -1,0 +1,1175 @@
+<script setup>
+import { CorpInput } from '@components/ui/input'
+import { CorpButton } from '@components/ui/corpbutton'
+import { useForm } from '@/composables/useForm'
+import { useValidationRules } from '@/validations/rules'
+
+// ============== VALIDATION CONTEXT (OBRIGATÓRIO) ==============
+// useForm() fornece contexto de validação via provide('corpValidation')
+// SEM isso, as rules NÃO funcionam!
+const { form, validateForm } = useForm({
+  initialValues: {
+    nameUsage: '',
+    name1: '',
+    email1: '',
+    name2: '',
+    email2: '',
+    email3: '',
+    cpf1: '',
+    cpf2: '',
+    cpf3: '',
+    phone1: '',
+    phone2: '',
+    email4: '',
+    search1: '',
+    search2: '',
+    name3: '',
+    email5: '',
+    bio: '',
+    name4: '',
+    password1: '',
+    password2: '',
+    name5: '',
+    email6: '',
+    name6: '',
+    name7: '',
+    email7: '',
+    password3: '',
+    nameForm: '',
+    emailForm: '',
+    passwordForm: '',
+  },
+  formName: 'InputDocs',
+})
+
+const rules = useValidationRules()
+
+// ============== FORM HANDLERS ==============
+const handleSubmit = () => {
+  const schema = {
+    nameForm: [rules.required, rules.minLength(3)],
+    emailForm: [rules.required, rules.email],
+    passwordForm: [rules.required, rules.minLength(6)],
+  }
+
+  const isValid = validateForm(schema)
+
+  if (isValid) {
+    alert('Formulário válido e enviado!')
+  } else {
+    alert('Formulário inválido! Verifique os campos.')
+  }
+}
+
+const handleClear = () => {
+  form.nameForm = ''
+  form.emailForm = ''
+  form.passwordForm = ''
+}
+</script>
+
+# Input
+
+O componente `CorpInput` é um campo de entrada de texto avançado com validação integrada, máscaras brasileiras (CPF, CNPJ, telefone, CEP), sistema de ícones e slots flexíveis.
+
+## Uso
+
+Inputs em sua forma mais simples contêm apenas um label e placeholder.
+
+<CodePreview>
+  <CorpInput
+    v-model="form.nameUsage"
+    name="nameUsage"
+    label="Nome"
+    placeholder="Digite seu nome"
+  />
+
+  <template #code>
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const name = ref('')
+</script>
+
+<template>
+  <CorpInput
+    v-model="name"
+    name="name"
+    label="Nome"
+    placeholder="Digite seu nome"
+  />
+</template>
+```
+
+  </template>
+</CodePreview>
+
+---
+
+## API
+
+### CorpInput
+
+Componente principal para campos de entrada de texto com validação e máscaras.
+
+---
+
+## Anatomia
+
+O `CorpInput` é composto por múltiplas áreas de conteúdo:
+
+| Elemento | Descrição |
+|----------|-----------|
+| **Label** (opcional) | Texto descritivo acima do input, suporta asterisco para campos obrigatórios |
+| **Prepend Outer** (opcional) | Ícone ou conteúdo externo à esquerda do input |
+| **Prepend Inner** (opcional) | Ícone ou conteúdo interno à esquerda (dentro da borda) |
+| **Input** | Campo de entrada principal |
+| **Append Inner** (opcional) | Ícone ou conteúdo interno à direita (botão clear, ícones) |
+| **Append Outer** (opcional) | Ícone ou conteúdo externo à direita do input |
+| **Hint/Error** (opcional) | Mensagens de ajuda ou erro abaixo do input |
+| **Counter** (opcional) | Contador de caracteres |
+
+---
+
+## Guia
+
+O componente `CorpInput` centraliza todas as funcionalidades necessárias para formulários: validação reativa, máscaras automáticas, sistema de ícones com 4 slots e integração com `useForm`.
+
+```vue
+<CorpInput
+  v-model="form.email1"
+  name="email"
+  label="Email"
+  :rules="[rules.required, rules.email]"
+/>
+```
+
+---
+
+## Props
+
+### Label & Placeholder
+
+Use `label` para o texto descritivo e `placeholder` para dicas dentro do campo.
+
+<CodePreview>
+  <div class="space-y-4 max-w-md">
+    <CorpInput
+      v-model="form.name1"
+      name="name1"
+      label="Nome completo"
+      placeholder="Ex: João da Silva"
+    />
+    <CorpInput
+      v-model="form.email1"
+      name="email1"
+      label="Email"
+      prepend-icon="luc-mail"
+      placeholder="seu@email.com"
+    />
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const name = ref('')
+const email = ref('')
+</script>
+
+<template>
+  <CorpInput
+    v-model="name"
+    name="name"
+    label="Nome completo"
+    placeholder="Ex: João da Silva"
+  />
+
+  <CorpInput
+    v-model="email"
+    name="email"
+    label="Email"
+    prepend-icon="luc-mail"
+    placeholder="seu@email.com"
+  />
+</template>
+```
+
+  </template>
+</CodePreview>
+
+### Validation
+
+Integração completa com `useForm` e validação reativa. Erros aparecem após blur. O asterisco vermelho (\*) aparece automaticamente quando você usa `rules.required`.
+
+:::warning ⚠️ IMPORTANTE: `useForm()` é OBRIGATÓRIO para validação funcionar!
+O `CorpInput` usa `inject('corpValidation')` para acessar o contexto de validação.
+Sem `useForm()` no componente pai, as `:rules` NÃO funcionam!
+:::
+
+<CodePreview>
+  <div class="space-y-4 max-w-md">
+    <CorpInput
+      v-model="form.email3"
+      name="email3"
+      label="Email"
+      :rules="[rules.required, rules.email]"
+    />
+    <CorpInput
+      v-model="form.cpf1"
+      name="cpf1"
+      label="CPF"
+      :rules="[rules.required, rules.cpf]"
+      mask="cpf"
+    />
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { CorpInput } from 'corp-components'
+import { useForm } from '@/composables/useForm'
+import { useValidationRules } from '@/validations/rules'
+
+// ✅ useForm() fornece contexto de validação (OBRIGATÓRIO!)
+const { form } = useForm({
+  initialValues: {
+    email: '',
+    cpf: '',
+  },
+  formName: 'ValidationExample',
+})
+
+const rules = useValidationRules()
+</script>
+
+<template>
+  <CorpInput
+    v-model="form.email"
+    name="email"
+    label="Email"
+    :rules="[rules.required, rules.email]"
+  />
+
+  <CorpInput
+    v-model="form.cpf"
+    name="cpf"
+    label="CPF"
+    :rules="[rules.required, rules.cpf]"
+    mask="cpf"
+  />
+</template>
+```
+
+  </template>
+</CodePreview>
+
+#### Regras de Validação Disponíveis
+
+O `useValidationRules()` fornece regras prontas para uso. Uma **rule** é uma função que retorna `true` (válido) ou uma `string` com mensagem de erro.
+
+**Regras Básicas:**
+- `rules.required` - Campo obrigatório
+- `rules.email` - Email válido
+- `rules.url` - URL válida
+- `rules.integer` - Número inteiro
+- `rules.positive` - Número positivo
+
+**Regras com Parâmetros:**
+- `rules.minLength(n)` - Mínimo de caracteres
+- `rules.maxLength(n)` - Máximo de caracteres
+- `rules.min(n)` - Valor mínimo
+- `rules.max(n)` - Valor máximo
+
+**Regras Brasileiras:**
+- `rules.cpf` - CPF válido
+- `rules.cnpj` - CNPJ válido
+- `rules.cep` - CEP válido
+- `rules.phone` - Telefone válido
+
+**Regras de Data:**
+- `rules.date` - Data válida
+- `rules.dateMin(date)` - Data mínima
+- `rules.dateMax(date)` - Data máxima
+
+#### Regras Customizadas
+
+Você pode criar suas próprias regras. Uma rule é uma função que retorna `true` ou `string`:
+
+```vue
+<script setup>
+import { CorpInput } from 'corp-components'
+import { useForm } from '@/composables/useForm'
+
+const { form } = useForm({
+  initialValues: { username: '' },
+  formName: 'CustomRulesExample',
+})
+
+// ✅ Rule customizada: usuário deve começar com @
+const startsWithAt = (value: string) => {
+  if (!value) return true // Permite vazio (use required separadamente)
+  return value.startsWith('@') || 'Usuário deve começar com @'
+}
+
+// ✅ Rule customizada: apenas letras minúsculas
+const onlyLowercase = (value: string) => {
+  if (!value) return true
+  return value === value.toLowerCase() || 'Apenas letras minúsculas'
+}
+
+// ✅ Combinando múltiplas rules
+const usernameRules = [startsWithAt, onlyLowercase]
+</script>
+
+<template>
+  <CorpInput
+    v-model="form.username"
+    name="username"
+    label="Username"
+    :rules="usernameRules"
+    hint="Deve começar com @ e ser minúsculo"
+  />
+</template>
+```
+
+#### Validação Assíncrona
+
+Para validações que precisam consultar API (ex: verificar se email existe):
+
+```vue
+<script setup>
+import { CorpInput } from 'corp-components'
+import { useForm } from '@/composables/useForm'
+
+const { form } = useForm({
+  initialValues: { email: '' },
+  formName: 'AsyncValidation',
+})
+
+// ✅ Rule assíncrona
+const emailAvailable = async (value: string) => {
+  if (!value) return true
+
+  const response = await fetch(`/api/check-email?email=${value}`)
+  const { available } = await response.json()
+
+  return available || 'Email já cadastrado'
+}
+</script>
+
+<template>
+  <CorpInput
+    v-model="form.email"
+    name="email"
+    label="Email"
+    :rules="[emailAvailable]"
+  />
+</template>
+```
+
+### Masks
+
+Máscaras brasileiras aplicadas automaticamente durante digitação.
+
+<CodePreview>
+  <div class="space-y-4 max-w-md">
+    <CorpInput
+      v-model="form.cpf2"
+      name="cpf2"
+      label="CPF"
+      mask="cpf"
+      placeholder="000.000.000-00"
+    />
+    <CorpInput
+      v-model="form.phone1"
+      name="phone1"
+      label="Telefone"
+      mask="phone"
+      placeholder="(00) 00000-0000"
+    />
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const cpf = ref('')
+const phone = ref('')
+</script>
+
+<template>
+  <CorpInput
+    v-model="cpf"
+    name="cpf"
+    label="CPF"
+    mask="cpf"
+    placeholder="000.000.000-00"
+  />
+
+  <CorpInput
+    v-model="phone"
+    name="phone"
+    label="Telefone"
+    mask="phone"
+    placeholder="(00) 00000-0000"
+  />
+</template>
+```
+
+  </template>
+</CodePreview>
+
+| Máscara | Formato | Uso |
+|---------|---------|-----|
+| `cpf` | 000.000.000-00 | CPF brasileiro |
+| `cnpj` | 00.000.000/0000-00 | CNPJ brasileiro |
+| `phone` | (00) 00000-0000 | Celular/telefone |
+| `cep` | 00000-000 | CEP brasileiro |
+
+### Icons
+
+Sistema de 4 posições para ícones:
+- `prepend-outer-icon`: Ícone externo à esquerda (fora da borda) - **clicável por padrão**
+- `prepend-icon`: Ícone interno à esquerda (dentro da borda) - **não clicável por padrão** (decorativo)
+- `append-icon`: Ícone interno à direita (dentro da borda) - **clicável por padrão**
+- `append-outer-icon`: Ícone externo à direita (fora da borda) - **clicável por padrão**
+
+<CodePreview>
+  <div class="space-y-4 max-w-md">
+    <CorpInput
+      v-model="form.email4"
+      name="email4"
+      label="Ícone interno decorativo (não clicável)"
+      prepend-icon="luc-mail"
+      placeholder="seu@email.com"
+    />
+    <CorpInput
+      v-model="form.search1"
+      name="search1"
+      label="Ícones clicáveis"
+      prepend-outer-icon="luc-search"
+      append-icon="luc-sliders-horizontal"
+      @click:prepend-outer="() => alert('Buscar clicado')"
+      @click:append="() => alert('Filtros clicado')"
+    />
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const email = ref('')
+const search = ref('')
+</script>
+
+<template>
+  <!-- Ícone decorativo (prepend-icon não é clicável por padrão) -->
+  <CorpInput
+    v-model="email"
+    name="email"
+    label="Email"
+    prepend-icon="luc-mail"
+    placeholder="seu@email.com"
+  />
+
+  <!-- Ícones clicáveis com eventos -->
+  <CorpInput
+    v-model="search"
+    name="search"
+    label="Buscar"
+    prepend-outer-icon="luc-search"
+    append-icon="luc-sliders-horizontal"
+    @click:prepend-outer="handleSearch"
+    @click:append="openFilters"
+  />
+</template>
+```
+
+  </template>
+</CodePreview>
+
+**Controle de clicabilidade:**
+
+Use as props `*IconClickable` para controlar se um ícone é clicável:
+
+<CodePreview>
+  <div class="space-y-4 max-w-md">
+    <CorpInput
+      v-model="form.name6"
+      name="clickable1"
+      label="Prepend-icon clicável (padrão é false)"
+      prepend-icon="luc-user"
+      :prepend-icon-clickable="true"
+      @click:prepend="() => alert('Prepend clicado!')"
+    />
+    <CorpInput
+      v-model="form.name7"
+      name="clickable2"
+      label="Append-icon não clicável (padrão é true)"
+      append-icon="luc-info"
+      :append-icon-clickable="false"
+    />
+  </div>
+
+  <template #code>
+
+```vue
+<!-- Tornar prepend-icon clicável -->
+<CorpInput
+  prepend-icon="luc-user"
+  :prepend-icon-clickable="true"
+  @click:prepend="selectUser"
+/>
+
+<!-- Desabilitar clique em append-icon -->
+<CorpInput
+  append-icon="luc-info"
+  :append-icon-clickable="false"
+/>
+```
+
+  </template>
+</CodePreview>
+
+### Clearable
+
+Botão "X" para limpar o campo rapidamente.
+
+<CodePreview>
+  <div class="space-y-4 max-w-md">
+    <CorpInput
+      v-model="form.name3"
+      name="name3"
+      label="Nome"
+      clearable
+    />
+    <CorpInput
+      v-model="form.email5"
+      name="email5"
+      label="Email"
+      prepend-icon="luc-mail"
+      clearable
+    />
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const name = ref('')
+const email = ref('')
+</script>
+
+<template>
+  <CorpInput
+    v-model="name"
+    name="name"
+    label="Nome"
+    clearable
+  />
+
+  <CorpInput
+    v-model="email"
+    name="email"
+    label="Email"
+    prepend-icon="luc-mail"
+    clearable
+  />
+</template>
+```
+
+  </template>
+</CodePreview>
+
+### Counter
+
+Contador de caracteres, com ou sem limite.
+
+<CodePreview>
+  <div class="space-y-4 max-w-md">
+    <CorpInput
+      v-model="form.bio"
+      name="bio1"
+      label="Bio"
+      :counter="200"
+      placeholder="Conte sobre você..."
+    />
+    <CorpInput
+      v-model="form.name4"
+      name="name4"
+      label="Nome"
+      counter
+    />
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const bio = ref('')
+const name = ref('')
+</script>
+
+<template>
+  <!-- Counter com limite (200 caracteres) -->
+  <CorpInput
+    v-model="bio"
+    name="bio"
+    label="Bio"
+    :counter="200"
+    placeholder="Conte sobre você..."
+  />
+
+  <!-- Counter sem limite (apenas mostra quantidade) -->
+  <CorpInput
+    v-model="name"
+    name="name"
+    label="Nome"
+    counter
+  />
+</template>
+```
+
+  </template>
+</CodePreview>
+
+### Password
+
+Use `type="password"` para campos de senha.
+
+<CodePreview>
+  <div class="max-w-md">
+    <CorpInput
+      v-model="form.password1"
+      name="password1"
+      label="Senha"
+      type="password"
+      prepend-icon="luc-lock"
+    />
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const password = ref('')
+</script>
+
+<template>
+  <CorpInput
+    v-model="password"
+    name="password"
+    label="Senha"
+    type="password"
+    prepend-icon="luc-lock"
+  />
+</template>
+```
+
+  </template>
+</CodePreview>
+
+### States
+
+Estados de `disabled` e `readonly`.
+
+<CodePreview>
+  <div class="space-y-4 max-w-md">
+    <CorpInput
+      v-model="form.name5"
+      name="name5"
+      label="Desabilitado"
+      disabled
+      model-value="Campo desabilitado"
+    />
+    <CorpInput
+      v-model="form.email6"
+      name="email6"
+      label="Somente leitura"
+      readonly
+      model-value="campo@readonly.com"
+    />
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const name = ref('Campo desabilitado')
+const email = ref('campo@readonly.com')
+</script>
+
+<template>
+  <CorpInput
+    v-model="name"
+    name="name"
+    label="Desabilitado"
+    disabled
+  />
+
+  <CorpInput
+    v-model="email"
+    name="email"
+    label="Somente leitura"
+    readonly
+  />
+</template>
+```
+
+  </template>
+</CodePreview>
+
+### Hint
+
+Mensagens de ajuda abaixo do input.
+
+<CodePreview>
+  <div class="max-w-md">
+    <CorpInput
+      v-model="form.password2"
+      name="password2"
+      label="Senha"
+      type="password"
+      hint="Mínimo 8 caracteres, 1 maiúscula e 1 número"
+    />
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const password = ref('')
+</script>
+
+<template>
+  <CorpInput
+    v-model="password"
+    name="password"
+    label="Senha"
+    type="password"
+    hint="Mínimo 8 caracteres, 1 maiúscula e 1 número"
+  />
+</template>
+```
+
+  </template>
+</CodePreview>
+
+---
+
+## Slots
+
+O componente `CorpInput` oferece 4 slots para customização total.
+
+| Slot | Descrição |
+|------|-----------|
+| **prepend** | Conteúdo externo à esquerda do input (fora da borda) |
+| **prepend-inner** | Conteúdo interno à esquerda (dentro da borda) |
+| **append-inner** | Conteúdo interno à direita (dentro da borda) |
+| **append** | Conteúdo externo à direita do input (fora da borda) |
+
+### Slot Prepend Inner
+
+Use para adicionar conteúdo customizado dentro do input à esquerda.
+
+<CodePreview>
+  <div class="max-w-md">
+    <CorpInput
+      v-model="form.name6"
+      name="name6"
+      label="Website"
+    >
+      <template #prepend-inner>
+        <span class="text-xs text-muted-foreground">https://</span>
+      </template>
+    </CorpInput>
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const website = ref('')
+</script>
+
+<template>
+  <CorpInput
+    v-model="website"
+    name="website"
+    label="Website"
+  >
+    <template #prepend-inner>
+      <span class="text-xs text-muted-foreground">https://</span>
+    </template>
+  </CorpInput>
+</template>
+```
+
+  </template>
+</CodePreview>
+
+### Slot Append Inner
+
+Use para adicionar conteúdo customizado dentro do input à direita.
+
+<CodePreview>
+  <div class="max-w-md">
+    <CorpInput
+      v-model="form.name7"
+      name="name7"
+      label="Domínio"
+    >
+      <template #append-inner>
+        <span class="text-xs text-muted-foreground">.com.br</span>
+      </template>
+    </CorpInput>
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const domain = ref('')
+</script>
+
+<template>
+  <CorpInput
+    v-model="domain"
+    name="domain"
+    label="Domínio"
+  >
+    <template #append-inner>
+      <span class="text-xs text-muted-foreground">.com.br</span>
+    </template>
+  </CorpInput>
+</template>
+```
+
+  </template>
+</CodePreview>
+
+---
+
+## Exemplos
+
+### Formulário com Máscaras
+
+Campos com máscaras brasileiras e validação.
+
+<CodePreview>
+  <div class="max-w-md space-y-4">
+    <CorpInput
+      v-model="form.cpf3"
+      name="cpf3"
+      label="CPF"
+      mask="cpf"
+      :rules="[rules.required, rules.cpf]"
+      clearable
+    />
+    <CorpInput
+      v-model="form.phone2"
+      name="phone2"
+      label="Celular"
+      mask="phone"
+      :rules="[rules.required]"
+      clearable
+    />
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { CorpInput } from 'corp-components'
+import { useForm } from '@/composables/useForm'
+import { useValidationRules } from '@/validations/rules'
+
+// ✅ useForm() necessário para validação funcionar
+const { form } = useForm({
+  initialValues: {
+    cpf: '',
+    phone: '',
+  },
+  formName: 'MasksForm',
+})
+
+const rules = useValidationRules()
+</script>
+
+<template>
+  <div class="max-w-md space-y-4">
+    <CorpInput
+      v-model="form.cpf"
+      name="cpf"
+      label="CPF"
+      mask="cpf"
+      :rules="[rules.required, rules.cpf]"
+      clearable
+    />
+    <CorpInput
+      v-model="form.phone"
+      name="phone"
+      label="Celular"
+      mask="phone"
+      :rules="[rules.required]"
+      clearable
+    />
+  </div>
+</template>
+```
+
+  </template>
+</CodePreview>
+
+### Campo de Busca
+
+Input com ícones e clearable para busca.
+
+<CodePreview>
+  <div class="max-w-md">
+    <CorpInput
+      v-model="form.search2"
+      name="search2"
+      placeholder="Buscar produtos, categorias..."
+      prepend-icon="luc-search"
+      clearable
+    />
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const search = ref('')
+</script>
+
+<template>
+  <CorpInput
+    v-model="search"
+    name="search"
+    placeholder="Buscar produtos, categorias..."
+    prepend-icon="luc-search"
+    clearable
+  />
+</template>
+```
+
+  </template>
+</CodePreview>
+
+### Formulário Completo com Submit
+
+Exemplo completo de formulário com validação, submit e botões de ação.
+
+<CodePreview>
+  <div class="max-w-md space-y-4">
+    <CorpInput
+      v-model="form.nameForm"
+      name="nameForm"
+      label="Nome completo"
+      :rules="[rules.required, rules.minLength(3)]"
+      clearable
+    />
+    <CorpInput
+      v-model="form.emailForm"
+      name="emailForm"
+      label="Email"
+      type="email"
+      prepend-icon="luc-mail"
+      :rules="[rules.required, rules.email]"
+      clearable
+    />
+    <CorpInput
+      v-model="form.passwordForm"
+      name="passwordForm"
+      label="Senha"
+      type="password"
+      prepend-icon="luc-lock"
+      :rules="[rules.required, rules.minLength(6)]"
+    />
+    <div class="flex gap-2 justify-center">
+      <CorpButton @click="handleSubmit">Enviar</CorpButton>
+      <CorpButton variant="outline" @click="handleClear">Limpar</CorpButton>
+    </div>
+  </div>
+
+  <template #code>
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const name = ref('')
+</script>
+
+<template>
+  <CorpInput
+    v-model="name"
+    name="name"
+    label="Nome"
+    placeholder="Digite seu nome"
+  />
+</template>
+```
+
+  </template>
+</CodePreview>
+
+---
+
+## Acessibilidade
+
+O componente `CorpInput` segue as melhores práticas de acessibilidade.
+
+### Labels Acessíveis
+
+Sempre forneça um `label` ou `aria-label` para leitores de tela:
+
+```vue
+<!-- Com label visível (recomendado) -->
+<CorpInput
+  v-model="form.name1"
+  name="name"
+  label="Nome completo"
+/>
+
+<!-- Sem label visível (usar aria-label) -->
+<CorpInput
+  v-model="search"
+  name="search"
+  aria-label="Buscar no site"
+  placeholder="Buscar..."
+/>
+```
+
+### Campos Obrigatórios
+
+Use `rules.required` para indicar campos obrigatórios (o asterisco aparece automaticamente):
+
+```vue
+<CorpInput
+  v-model="form.email1"
+  name="email"
+  label="Email"
+  :rules="[rules.required]"
+  aria-required="true"
+/>
+```
+
+### Mensagens de Erro
+
+Erros são automaticamente associados ao input via `aria-describedby`:
+
+```vue
+<CorpInput
+  v-model="form.email1"
+  name="email"
+  label="Email"
+  :rules="[rules.required, rules.email]"
+  hint="Digite um email válido"
+/>
+<!-- aria-describedby é automaticamente adicionado quando há erro -->
+```
+
+### Navegação por Teclado
+
+O componente suporta navegação completa por teclado:
+
+- **Tab**: Move foco para o input
+- **Shift + Tab**: Move foco para elemento anterior
+- **Esc**: Limpa o campo (se `clearable`)
+
+---
+
+## API Reference
+
+### Props
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `name` | `string` | **required** | Nome do campo (identificador único) |
+| `label` | `string` | `''` | Label acima do input |
+| `modelValue` | `string \| number` | `undefined` | Valor do input (v-model) |
+| `type` | `string` | `'text'` | Tipo HTML do input (text, password, email, etc) |
+| `placeholder` | `string` | `''` | Texto de placeholder |
+| `hint` | `string` | `''` | Mensagem de ajuda abaixo do input |
+| `rules` | `ValidationRule[]` | `[]` | Array de regras de validação (asterisco aparece automaticamente com `rules.required`) |
+| `disabled` | `boolean` | `false` | Desabilita o input |
+| `readonly` | `boolean` | `false` | Input somente leitura |
+| `mask` | `'cpf' \| 'cnpj' \| 'phone' \| 'cep' \| Function` | `undefined` | Máscara a ser aplicada |
+| `prependOuterIcon` | `string` | `undefined` | Ícone externo à esquerda (fora da borda) |
+| `prependIcon` | `string` | `undefined` | Ícone interno à esquerda (dentro da borda) |
+| `appendIcon` | `string` | `undefined` | Ícone interno à direita (dentro da borda) |
+| `appendOuterIcon` | `string` | `undefined` | Ícone externo à direita (fora da borda) |
+| `prependOuterIconClickable` | `boolean` | `true` | Se ícone prepend-outer é clicável |
+| `prependIconClickable` | `boolean` | `false` | Se ícone prepend é clicável |
+| `appendIconClickable` | `boolean` | `true` | Se ícone append é clicável |
+| `appendOuterIconClickable` | `boolean` | `true` | Se ícone append-outer é clicável |
+| `prependOuterIconColor` | `string` | `undefined` | Cor do ícone prepend-outer (sobrescreve iconColor) |
+| `prependIconColor` | `string` | `undefined` | Cor do ícone prepend (sobrescreve iconColor) |
+| `appendIconColor` | `string` | `undefined` | Cor do ícone append (sobrescreve iconColor) |
+| `appendOuterIconColor` | `string` | `undefined` | Cor do ícone append-outer (sobrescreve iconColor) |
+| `clearable` | `boolean` | `false` | Mostra botão para limpar campo |
+| `counter` | `boolean \| number` | `false` | Contador de caracteres (true = apenas mostra, number = limite) |
+| `hideDetails` | `boolean` | `false` | Oculta hint/error/counter |
+| `iconSize` | `number` | `16` | Tamanho dos ícones em pixels |
+| `iconColor` | `string` | `'text-muted-foreground'` | Cor padrão dos ícones |
+
+### Slots
+
+| Slot | Descrição |
+|------|-----------|
+| `prepend` | Conteúdo externo à esquerda (fora da borda) |
+| `prepend-inner` | Conteúdo interno à esquerda (dentro da borda) |
+| `append-inner` | Conteúdo interno à direita (dentro da borda) |
+| `append` | Conteúdo externo à direita (fora da borda) |
+
+### Events
+
+| Event | Payload | Descrição |
+|-------|---------|-----------|
+| `update:modelValue` | `string \| number` | Emitido quando o valor muda |
+| `click:prepend-outer` | - | Clique no ícone prepend-outer (se clickable) |
+| `click:prepend` | - | Clique no ícone prepend |
+| `click:append` | - | Clique no ícone append |
+| `click:append-outer` | - | Clique no ícone append-outer (se clickable) |
+| `click:clear` | - | Clique no botão clear |

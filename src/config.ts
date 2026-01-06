@@ -6,10 +6,7 @@
  *
  * 🔗 DEPENDÊNCIAS:
  * - Vite (import.meta.env)
- * - Node.js URL API
  */
-
-import { fileURLToPath, URL } from 'node:url';
 
 // ============== TYPES & INTERFACES ==============
 
@@ -85,6 +82,7 @@ const ALIAS_DEFINITIONS = {
   '@composables': './src/composables',
   '@utils': './src/utils',
   '@types': './src/types',
+  '@locales': './src/locales',
 } as const;
 
 // ============== CONSTANTES COMPARTILHADAS ==============
@@ -238,10 +236,18 @@ export const config: Readonly<ICorpComponentsConfig> =
 /**
  * Converte definições de aliases para formato Vite/VitePress
  *
+ * ⚠️ IMPORTANTE: Apenas para uso em arquivos de config (Vite/VitePress)
+ * Não é incluído no bundle da biblioteca (tree-shaking).
+ *
  * @param baseUrl - URL base do projeto (import.meta.url)
  * @returns Objeto com aliases resolvidos como paths absolutos
  */
-export function getAliases(baseUrl: string | URL): Record<string, string> {
+export async function getAliases(
+  baseUrl: string | URL
+): Promise<Record<string, string>> {
+  // Import dinâmico apenas quando função é chamada
+  const { fileURLToPath } = await import('node:url');
+
   const aliases: Record<string, string> = {};
 
   for (const [alias, path] of Object.entries(config.aliases)) {

@@ -45,7 +45,6 @@ export const getLucideIcon = (iconName: string) => {
   const cleanName = iconName.replace(/^luc-/, '');
   const pascalName = toPascalCase(cleanName);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const IconComponent = (LucideIcons as any)[pascalName];
 
   return IconComponent || Search;

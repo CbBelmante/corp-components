@@ -4,5 +4,5 @@
  * stringUtils, dateUtils, logger, validators, etc.
  */
 
-// Placeholder - será preenchido na migração
-export {};
+export * from './stringUtils';
+export * from './CorpLogger';

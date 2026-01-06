@@ -18,11 +18,15 @@ import { RouterLink } from 'vue-router';
         <p class="text-sm text-muted-foreground">Testar variantes de botoes</p>
       </RouterLink>
 
-      <!-- Adicione mais cards conforme criar componentes -->
-      <div class="p-6 border border-dashed border-border rounded-lg opacity-50">
-        <h3 class="font-semibold text-foreground mb-1">Input</h3>
-        <p class="text-sm text-muted-foreground">Em breve...</p>
-      </div>
+      <RouterLink
+        to="/inputs"
+        class="p-6 border border-border rounded-lg hover:border-primary hover:bg-accent/50 transition-colors"
+      >
+        <h3 class="font-semibold text-foreground mb-1">Inputs</h3>
+        <p class="text-sm text-muted-foreground">
+          Testar inputs com validacao e mascaras
+        </p>
+      </RouterLink>
 
       <div class="p-6 border border-dashed border-border rounded-lg opacity-50">
         <h3 class="font-semibold text-foreground mb-1">Select</h3>
