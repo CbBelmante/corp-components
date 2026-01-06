@@ -1,19 +1,3 @@
-<script setup>
-import { ref } from 'vue'
-import { CorpButton } from '@components/ui/corpbutton'
-import { CorpIcon } from '@components/ui/icon'
-
-const loading = ref(false)
-const clickCount = ref(0)
-
-const simulateLoading = () => {
-  loading.value = true
-  setTimeout(() => {
-    loading.value = false
-  }, 2000)
-}
-</script>
-
 # Button
 
 O componente `CorpButton` substitui o botão HTML padrão com um design consistente e uma infinidade de opções. Qualquer variante pode ser combinada com tamanhos, ícones e estados de loading.
@@ -39,40 +23,6 @@ import { CorpButton } from 'corp-components'
 
   </template>
 </CodePreview>
-
----
-
-## API
-
-### CorpButton
-
-Componente principal para renderização de botões.
-
----
-
-## Anatomia
-
-O posicionamento recomendado de elementos dentro do `CorpButton` é:
-
-- Coloque o texto no centro
-- Coloque conteúdo visual (ícones) ao redor do texto
-
-| Elemento | Descrição |
-|----------|-----------|
-| **Container** | Além do texto, o container do Button tipicamente contém ícones via props ou slots |
-| **Prepend** (opcional) | Área de conteúdo antes do texto, ideal para ícones de contexto |
-| **Text** | Área de conteúdo principal para texto e elementos inline |
-| **Append** (opcional) | Área de conteúdo após o texto, ideal para setas ou indicadores |
-
----
-
-## Guia
-
-O componente `CorpButton` é essencial para qualquer aplicação. É usado para tudo, desde navegação até submissão de formulários, e pode ser estilizado de várias maneiras através de props.
-
-```vue
-<CorpButton>Button</CorpButton>
-```
 
 ---
 
@@ -289,11 +239,11 @@ Icon buttons são comumente usados em toolbars, cards e ações inline.
 Usando a prop `loading`, você pode notificar o usuário que há processamento ocorrendo. Um spinner substitui automaticamente o `prepend-icon` quando ativo.
 
 <CodePreview>
-  <CorpButton :loading="loading" @click="simulateLoading">
-    {{ loading ? 'Aguarde...' : 'Clique aqui' }}
+  <CorpButton :loading="loadingButton" @click="simulateLoadingButton">
+    {{ loadingButton ? 'Aguarde...' : 'Clique aqui' }}
   </CorpButton>
-  <CorpButton :loading="loading" prepend-icon="luc-mail" @click="simulateLoading">
-    {{ loading ? 'Enviando...' : 'Enviar Email' }}
+  <CorpButton :loading="loadingButton" prepend-icon="luc-mail" @click="simulateLoadingButton">
+    {{ loadingButton ? 'Enviando...' : 'Enviar Email' }}
   </CorpButton>
 
   <template #code>
@@ -434,6 +384,71 @@ Use o slot `append` para conteúdo customizado após o texto:
 
   </template>
 </CodePreview>
+
+---
+
+## Acessibilidade
+
+O componente `CorpButton` é uma extensão do elemento button nativo e suporta todos os mesmos recursos de acessibilidade.
+
+### Atributos ARIA
+
+Por padrão, o componente inclui atributos WAI-ARIA relevantes. O componente é automaticamente atribuído com `type="button"`, que indica seu propósito para tecnologias assistivas.
+
+### Navegação por Teclado
+
+O componente é nativamente focável e responde a eventos de teclado:
+
+- **Enter** ou **Space**: Dispara a ação do botão
+- **Tab**: Move o foco para o próximo elemento focável
+
+### Labels Acessíveis
+
+Ao usar icon buttons (botões apenas com ícone), é essencial fornecer uma alternativa de texto para usuários de leitores de tela. Adicione um atributo `aria-label`:
+
+```vue
+<CorpButton
+  size="icon"
+  variant="ghost"
+  prepend-icon="luc-trash"
+  aria-label="Excluir item"
+/>
+```
+
+### Tamanho da Área de Toque
+
+Certifique-se de que seus botões tenham um tamanho de área de toque adequado, especialmente em dispositivos touch. Uma área de toque maior melhora a usabilidade:
+
+```vue
+<!-- Mínimo recomendado: 44x44px -->
+<CorpButton size="lg">Large Button</CorpButton>
+
+<!-- Para mobile, considere block -->
+<CorpButton block size="lg">Full Width Button</CorpButton>
+```
+
+### Estados Visuais
+
+O componente fornece estados visuais claros para:
+
+- **Hover**: Mudança de cor/elevação
+- **Focus**: Anel de foco visível (`focus-visible:ring`)
+- **Active**: Feedback visual ao pressionar
+- **Disabled**: Aparência reduzida e `pointer-events: none`
+
+### Botões de Loading
+
+Quando um botão está em estado de loading, considere:
+
+```vue
+<CorpButton
+  :loading="isLoading"
+  :disabled="isLoading"
+  aria-busy="true"
+>
+  {{ isLoading ? 'Processando...' : 'Enviar' }}
+</CorpButton>
+```
 
 ---
 
@@ -588,71 +603,6 @@ Icon buttons em uma toolbar:
 
   </template>
 </CodePreview>
-
----
-
-## Acessibilidade
-
-O componente `CorpButton` é uma extensão do elemento button nativo e suporta todos os mesmos recursos de acessibilidade.
-
-### Atributos ARIA
-
-Por padrão, o componente inclui atributos WAI-ARIA relevantes. O componente é automaticamente atribuído com `type="button"`, que indica seu propósito para tecnologias assistivas.
-
-### Navegação por Teclado
-
-O componente é nativamente focável e responde a eventos de teclado:
-
-- **Enter** ou **Space**: Dispara a ação do botão
-- **Tab**: Move o foco para o próximo elemento focável
-
-### Labels Acessíveis
-
-Ao usar icon buttons (botões apenas com ícone), é essencial fornecer uma alternativa de texto para usuários de leitores de tela. Adicione um atributo `aria-label`:
-
-```vue
-<CorpButton
-  size="icon"
-  variant="ghost"
-  prepend-icon="luc-trash"
-  aria-label="Excluir item"
-/>
-```
-
-### Tamanho da Área de Toque
-
-Certifique-se de que seus botões tenham um tamanho de área de toque adequado, especialmente em dispositivos touch. Uma área de toque maior melhora a usabilidade:
-
-```vue
-<!-- Mínimo recomendado: 44x44px -->
-<CorpButton size="lg">Large Button</CorpButton>
-
-<!-- Para mobile, considere block -->
-<CorpButton block size="lg">Full Width Button</CorpButton>
-```
-
-### Estados Visuais
-
-O componente fornece estados visuais claros para:
-
-- **Hover**: Mudança de cor/elevação
-- **Focus**: Anel de foco visível (`focus-visible:ring`)
-- **Active**: Feedback visual ao pressionar
-- **Disabled**: Aparência reduzida e `pointer-events: none`
-
-### Botões de Loading
-
-Quando um botão está em estado de loading, considere:
-
-```vue
-<CorpButton
-  :loading="isLoading"
-  :disabled="isLoading"
-  aria-busy="true"
->
-  {{ isLoading ? 'Processando...' : 'Enviar' }}
-</CorpButton>
-```
 
 ---
 

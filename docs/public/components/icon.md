@@ -48,19 +48,9 @@ import { CorpIcon } from 'corp-components'
 
 ---
 
-## API
+## Props
 
-### CorpIcon
-
-Componente principal para renderização de ícones Lucide.
-
----
-
-## Exemplos
-
-### Props
-
-#### Size
+### Size
 
 Use a prop `size` para controlar o tamanho. Aceita presets ou valores custom:
 
@@ -89,7 +79,7 @@ Use a prop `size` para controlar o tamanho. Aceita presets ou valores custom:
   </template>
 </CodePreview>
 
-#### Color
+### Color
 
 Usando a prop `color` você pode alterar a cor de um ícone. O padrão é `currentColor` (herda do texto pai).
 
@@ -113,7 +103,7 @@ Usando a prop `color` você pode alterar a cor de um ícone. O padrão é `curre
   </template>
 </CodePreview>
 
-#### Stroke Width
+### Stroke Width
 
 Controle a espessura do traço do ícone com `stroke-width`. O padrão é `2`.
 
@@ -133,7 +123,7 @@ Controle a espessura do traço do ícone com `stroke-width`. O padrão é `2`.
   </template>
 </CodePreview>
 
-#### Start / End
+### Start / End
 
 Use `start` ou `end` para adicionar margem quando o ícone é usado junto com texto. Útil para botões e labels.
 
@@ -154,7 +144,7 @@ Use `start` ou `end` para adicionar margem quando o ícone é usado junto com te
   </template>
 </CodePreview>
 
-#### Clickable
+### Clickable
 
 Ícones clicáveis ganham cursor pointer e hover effect. Emite evento `@click`.
 
@@ -182,7 +172,7 @@ const clickCount = ref(0)
   </template>
 </CodePreview>
 
-#### Disabled
+### Disabled
 
 Aplica `opacity: 0.5` e desabilita interações.
 
@@ -200,7 +190,7 @@ Aplica `opacity: 0.5` e desabilita interações.
   </template>
 </CodePreview>
 
-#### Tag
+### Tag
 
 Mude o elemento HTML renderizado. O padrão é `<i>`.
 
@@ -222,9 +212,55 @@ Mude o elemento HTML renderizado. O padrão é `<i>`.
 
 ---
 
-### Misc
+## Acessibilidade
 
-#### Buttons
+Ícones podem transmitir todos os tipos de informações significativas, então é importante que eles alcancem o maior número possível de pessoas. Existem dois casos de uso a considerar:
+
+### Ícones Decorativos
+
+Se seus ícones são puramente decorativos, o componente já adiciona `aria-hidden="true"` automaticamente através do elemento wrapper.
+
+```vue
+<!-- Decorativo - aria-hidden é aplicado automaticamente -->
+<CorpIcon name="luc-star" />
+```
+
+### Ícones Semânticos
+
+Se seus ícones têm significado semântico, adicione `aria-label` ao elemento pai ou use um `<span>` com texto alternativo:
+
+```vue
+<!-- Opção 1: aria-label no botão pai -->
+<button aria-label="Favoritar item">
+  <CorpIcon name="luc-heart" />
+</button>
+
+<!-- Opção 2: Texto visualmente escondido -->
+<button>
+  <CorpIcon name="luc-heart" />
+  <span class="sr-only">Favoritar item</span>
+</button>
+```
+
+### Ícones Clicáveis
+
+Para ícones `clickable` que funcionam como botões, sempre forneça contexto:
+
+```vue
+<CorpIcon
+  name="luc-trash"
+  clickable
+  @click="deleteItem"
+  aria-label="Excluir item"
+  role="button"
+/>
+```
+
+---
+
+## Exemplos
+
+### Ícones em Botões
 
 Ícones podem ser usados dentro de botões para adicionar ênfase à ação. Use as props `prepend-icon` e `append-icon` do `CorpButton`:
 
@@ -246,7 +282,7 @@ Mude o elemento HTML renderizado. O padrão é `<i>`.
   </template>
 </CodePreview>
 
-#### Icon Buttons
+### Icon Buttons
 
 Botões apenas com ícone usando `size="icon"`:
 
@@ -266,7 +302,7 @@ Botões apenas com ícone usando `size="icon"`:
   </template>
 </CodePreview>
 
-#### Spinners
+### Spinners
 
 Alguns ícones de loading giram automaticamente:
 
@@ -287,9 +323,7 @@ Alguns ícones de loading giram automaticamente:
   </template>
 </CodePreview>
 
----
-
-## Formatos de Nome
+### Formatos de Nome
 
 O `CorpIcon` aceita múltiplos formatos de nome para flexibilidade:
 
@@ -316,80 +350,20 @@ O `CorpIcon` aceita múltiplos formatos de nome para flexibilidade:
 
 > **Recomendação:** Use o prefixo `luc-` para consistência e clareza no código.
 
----
-
-## Lucide Icons
+### Lucide Icons
 
 O `CorpIcon` usa [Lucide](https://lucide.dev/) como biblioteca de ícones. Lucide é um fork do Feather Icons com mais de 1400 ícones.
 
-### Por que Lucide?
+**Por que Lucide?**
 
 - **Leve:** Ícones SVG otimizados
 - **Consistente:** Todos os ícones seguem o mesmo estilo
 - **Acessível:** Projetado com acessibilidade em mente
 - **Tree-shakeable:** Apenas os ícones usados são incluídos no bundle
 
-### Encontrando Ícones
+**Encontrando Ícones:**
 
 Visite [lucide.dev/icons](https://lucide.dev/icons/) para buscar e visualizar todos os ícones disponíveis.
-
----
-
-## Acessibilidade
-
-Ícones podem transmitir todos os tipos de informações significativas, então é importante que eles alcancem o maior número possível de pessoas. Existem dois casos de uso a considerar:
-
-### Ícones Decorativos
-
-São usados apenas para reforço visual ou de marca. Se fossem removidos da página, os usuários ainda entenderiam e poderiam usar sua página.
-
-### Ícones Semânticos
-
-São aqueles que você está usando para transmitir significado, não apenas decoração pura. Isso inclui ícones sem texto ao lado deles usados como controles interativos — botões, elementos de formulário, toggles, etc.
-
----
-
-### Implementação de Acessibilidade
-
-#### Ícones Decorativos
-
-Se seus ícones são puramente decorativos, o componente já adiciona `aria-hidden="true"` automaticamente através do elemento wrapper.
-
-```vue
-<!-- Decorativo - aria-hidden é aplicado automaticamente -->
-<CorpIcon name="luc-star" />
-```
-
-#### Ícones Semânticos
-
-Se seus ícones têm significado semântico, adicione `aria-label` ao elemento pai ou use um `<span>` com texto alternativo:
-
-```vue
-<!-- Opção 1: aria-label no botão pai -->
-<button aria-label="Favoritar item">
-  <CorpIcon name="luc-heart" />
-</button>
-
-<!-- Opção 2: Texto visualmente escondido -->
-<button>
-  <CorpIcon name="luc-heart" />
-  <span class="sr-only">Favoritar item</span>
-</button>
-```
-
-#### Ícones Clicáveis
-
-Para ícones `clickable` que funcionam como botões, sempre forneça contexto:
-
-```vue
-<CorpIcon
-  name="luc-trash"
-  clickable
-  @click="deleteItem"
-  aria-label="Excluir item"
-  role="button"
-/>
-```
 
 ---
 
@@ -414,7 +388,3 @@ Para ícones `clickable` que funcionam como botões, sempre forneça contexto:
 | Event | Payload | Descrição |
 |-------|---------|-----------|
 | `click` | `MouseEvent` | Emitido quando `clickable` está ativo e o ícone é clicado |
-
-### Slots
-
-O componente não possui slots. O ícone é renderizado internamente baseado na prop `name`.

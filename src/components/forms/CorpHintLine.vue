@@ -30,6 +30,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  persistentHint: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // ============== COMPUTED ==============
@@ -47,16 +51,20 @@ const hasError = computed(() => props.errorMessages.length > 0);
   >
     <!-- Error messages -->
     <div v-if="hasError" class="text-red-500">
-      {{ errorMessages[0] }}
+      {{ errorMessages.join(', ') }}
     </div>
 
-    <!-- Hint -->
-    <div v-else-if="hint" class="text-muted-foreground">
+    <!-- Hint (sempre visível se persistentHint=true, senão só quando não tem erro) -->
+    <div
+      v-if="hint && (persistentHint || !hasError)"
+      class="text-muted-foreground"
+      :class="{ 'mt-1': hasError && persistentHint }"
+    >
       {{ hint }}
     </div>
 
     <!-- Debug mode -->
-    <div v-else-if="debug" class="text-gray-400 italic">
+    <div v-else-if="debug && !hint" class="text-gray-400 italic">
       [Área reservada para hint/error]
     </div>
   </div>

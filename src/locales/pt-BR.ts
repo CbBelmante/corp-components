@@ -22,10 +22,28 @@ export default {
     positive: 'Deve ser um número positivo',
 
     // Documentos Brasileiros
-    cpf: 'CPF inválido',
-    cnpj: 'CNPJ inválido',
-    cep: 'CEP inválido',
-    phone: 'Telefone inválido',
+    brazil: {
+      cpf: {
+        required: 'CPF é obrigatório',
+        invalid: 'CPF inválido',
+        invalidFormat: 'Formato inválido. Use: 000.000.000-00',
+      },
+      cnpj: {
+        required: 'CNPJ é obrigatório',
+        invalid: 'CNPJ inválido',
+        invalidFormat: 'Formato inválido. Use: 00.000.000/0000-00',
+      },
+      cep: {
+        required: 'CEP é obrigatório',
+        invalid: 'CEP inválido',
+        invalidFormat: 'Formato inválido. Use: 00000-000',
+      },
+      phone: {
+        required: 'Telefone é obrigatório',
+        invalid: 'Telefone inválido',
+        invalidFormat: 'Formato inválido. Use: (00) 00000-0000',
+      },
+    },
 
     // Datas
     date: 'Data inválida',

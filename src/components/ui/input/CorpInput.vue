@@ -173,6 +173,22 @@ const props = defineProps({
     type: [Boolean, Number] as PropType<boolean | number>,
     default: false,
   },
+  prefix: {
+    type: String,
+    default: undefined,
+  },
+  suffix: {
+    type: String,
+    default: undefined,
+  },
+  persistentHint: {
+    type: Boolean,
+    default: false,
+  },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
 
   // Class override
   class: {
@@ -321,6 +337,13 @@ const handleAppendOuterClick = (): void => {
   emit('click:append-outer');
 };
 
+// ============== CONSTANTES DE PADDING ==============
+
+// Constantes para ajuste fácil de espaçamento de prefix/suffix
+const PREFIX_SUFFIX_BASE = 0.75; // Padding base inicial (posição left-3 ou right-2)
+const PREFIX_SUFFIX_GAP = 0.75; // Gap entre o prefix/suffix e o texto digitado
+const PREFIX_SUFFIX_CHAR_WIDTH = 0.3; // Largura aproximada por caractere em text-sm
+
 // ============== COMPUTED ==============
 
 const showClearButton = computed(() => {
@@ -343,19 +366,56 @@ const counterDisplay = computed(() => {
 const inputPaddingClasses = computed(() => {
   const hasPrependIcon = !!props.prependIcon;
   const hasPrependSlot = !!slots['prepend-inner'];
+  const hasPrefix = !!props.prefix && !hasPrependSlot;
   const hasAppendIcon = !!props.appendIcon;
   const hasAppendSlot = !!slots['append-inner'];
+  const hasSuffix = !!props.suffix && !hasAppendSlot;
   const hasBothAppendIcons = showClearButton.value && hasAppendIcon;
 
   return {
-    'pl-10': hasPrependIcon && !hasPrependSlot,
+    'pl-10': hasPrependIcon && !hasPrependSlot && !hasPrefix,
     'pl-16': hasPrependSlot,
     'pr-10':
       (hasAppendIcon || showClearButton.value) &&
       !hasBothAppendIcons &&
-      !hasAppendSlot,
+      !hasAppendSlot &&
+      !hasSuffix,
     'pr-16': hasBothAppendIcons || hasAppendSlot,
   };
+});
+
+const inputDynamicPadding = computed(() => {
+  const hasPrependSlot = !!slots['prepend-inner'];
+  const hasAppendSlot = !!slots['append-inner'];
+  const hasPrefix = !!props.prefix && !hasPrependSlot;
+  const hasSuffix = !!props.suffix && !hasAppendSlot;
+
+  const style: Record<string, string> = {};
+
+  // Padding left: BASE + (caracteres × largura) + GAP
+  if (hasPrefix) {
+    const prefixLength = props.prefix?.length || 0;
+    const textWidth = prefixLength * PREFIX_SUFFIX_CHAR_WIDTH;
+    const paddingLeft = PREFIX_SUFFIX_BASE + textWidth + PREFIX_SUFFIX_GAP;
+    style.paddingLeft = `${paddingLeft}rem`;
+  }
+
+  // Padding right: BASE + (caracteres × largura) + GAP + ícones
+  if (hasSuffix) {
+    const suffixLength = props.suffix?.length || 0;
+    const textWidth = suffixLength * PREFIX_SUFFIX_CHAR_WIDTH;
+    const clearWidth = showClearButton.value ? 2 : 0;
+    const appendWidth = props.appendIcon ? 2 : 0;
+    const paddingRight =
+      PREFIX_SUFFIX_BASE +
+      textWidth +
+      PREFIX_SUFFIX_GAP +
+      clearWidth +
+      appendWidth;
+    style.paddingRight = `${paddingRight}rem`;
+  }
+
+  return style;
 });
 </script>
 
@@ -445,6 +505,14 @@ const inputPaddingClasses = computed(() => {
           />
         </div>
 
+        <!-- Prefix (só se NÃO tiver slot prepend-inner) -->
+        <span
+          v-if="prefix && !$slots['prepend-inner']"
+          class="absolute left-3 top-1/2 -translate-y-1/2 z-10 text-sm text-muted-foreground pointer-events-none"
+        >
+          {{ prefix }}
+        </span>
+
         <!-- Input -->
         <input
           :id="name"
@@ -464,7 +532,10 @@ const inputPaddingClasses = computed(() => {
               props.class
             )
           "
-          style="background-color: var(--input-background)"
+          :style="{
+            'background-color': 'var(--input-background)',
+            ...inputDynamicPadding,
+          }"
           @input="handleInput"
           @focus="handleFocus"
           @blur="handleBlur"
@@ -478,11 +549,19 @@ const inputPaddingClasses = computed(() => {
           <slot name="append-inner" />
         </div>
 
-        <!-- Clear + Append Icon -->
+        <!-- Suffix + Clear + Append Icon + Loading -->
         <div
-          v-else-if="showClearButton || appendIcon"
+          v-else-if="suffix || showClearButton || appendIcon || loading"
           class="absolute right-2 top-1/2 -translate-y-1/2 z-10 flex items-center gap-1"
         >
+          <!-- Suffix (só se NÃO tiver slot append-inner) -->
+          <span
+            v-if="suffix && !$slots['append-inner']"
+            class="text-sm text-muted-foreground pointer-events-none"
+          >
+            {{ suffix }}
+          </span>
+
           <button
             v-if="showClearButton"
             type="button"
@@ -499,8 +578,19 @@ const inputPaddingClasses = computed(() => {
             />
           </button>
 
+          <!-- Loading Spinner (substitui append-icon quando loading=true) -->
+          <div v-if="loading" class="corp-icon-wrapper">
+            <CorpIcon
+              name="luc-loader-circle"
+              :size="iconSize"
+              :class="iconColor"
+              class="animate-spin"
+            />
+          </div>
+
+          <!-- Append Icon (só se NÃO tiver loading) -->
           <button
-            v-if="appendIcon && appendIconClickable"
+            v-else-if="appendIcon && appendIconClickable"
             type="button"
             class="corp-icon-button corp-icon-wrapper cursor-pointer hover:bg-accent"
             :disabled="disabled"
@@ -571,6 +661,7 @@ const inputPaddingClasses = computed(() => {
             :hint="hint"
             :hide-details="hideDetails"
             :debug="debug"
+            :persistent-hint="persistentHint"
           />
         </div>
 
