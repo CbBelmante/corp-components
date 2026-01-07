@@ -4,6 +4,23 @@ import { cva } from 'class-variance-authority';
 export { default as CorpButton } from './CorpButton.vue';
 export { default as Button } from './CorpButton.vue'; // alias
 
+// ============== CONSTANTS ==============
+
+/**
+ * Cores semânticas disponíveis no sistema
+ */
+export const SEMANTIC_COLORS = [
+  'primary',
+  'secondary',
+  'destructive',
+  'success',
+  'warning',
+  'error',
+  'info',
+] as const;
+
+export type SemanticColor = (typeof SEMANTIC_COLORS)[number];
+
 export const buttonVariants = cva(
   [
     // Layout
@@ -24,17 +41,22 @@ export const buttonVariants = cva(
   ],
   {
     variants: {
+      // Variant = Estilo visual (não define cor!)
       variant: {
-        default:
-          'bg-primary text-primary-foreground shadow hover:bg-primary/90',
-        destructive:
-          'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
-        outline:
-          'border-2 border-button-outline text-button-outline bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground',
-        secondary:
-          'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+        solid: 'shadow',
+        outline: 'border-2 bg-transparent shadow-sm',
+        ghost: '',
+        link: 'underline-offset-4 hover:underline',
+      },
+      // Color = Cor semântica
+      color: {
+        primary: '',
+        secondary: '',
+        destructive: '',
+        success: '',
+        warning: '',
+        error: '',
+        info: '',
       },
       size: {
         default: 'h-9 px-4 py-2',
@@ -71,8 +93,158 @@ export const buttonVariants = cva(
         6: 'shadow-xl hover:enabled:shadow-2xl hover:enabled:-translate-y-1 active:enabled:translate-y-0',
       },
     },
+    compoundVariants: [
+      // ========== SOLID VARIANTS ==========
+      {
+        variant: 'solid',
+        color: 'primary',
+        class: 'bg-primary text-primary-foreground hover:bg-primary/90',
+      },
+      {
+        variant: 'solid',
+        color: 'secondary',
+        class: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+      },
+      {
+        variant: 'solid',
+        color: 'destructive',
+        class: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+      },
+      {
+        variant: 'solid',
+        color: 'success',
+        class: 'bg-success text-white hover:bg-success/90',
+      },
+      {
+        variant: 'solid',
+        color: 'warning',
+        class: 'bg-warning text-white hover:bg-warning/90',
+      },
+      {
+        variant: 'solid',
+        color: 'error',
+        class: 'bg-error text-white hover:bg-error/90',
+      },
+      {
+        variant: 'solid',
+        color: 'info',
+        class: 'bg-info text-white hover:bg-info/90',
+      },
+
+      // ========== OUTLINE VARIANTS ==========
+      {
+        variant: 'outline',
+        color: 'primary',
+        class: 'border-primary text-primary hover:bg-primary/10',
+      },
+      {
+        variant: 'outline',
+        color: 'secondary',
+        class: 'border-secondary text-secondary hover:bg-secondary/10',
+      },
+      {
+        variant: 'outline',
+        color: 'destructive',
+        class: 'border-destructive text-destructive hover:bg-destructive/10',
+      },
+      {
+        variant: 'outline',
+        color: 'success',
+        class: 'border-success text-success hover:bg-success/10',
+      },
+      {
+        variant: 'outline',
+        color: 'warning',
+        class: 'border-warning text-warning hover:bg-warning/10',
+      },
+      {
+        variant: 'outline',
+        color: 'error',
+        class: 'border-error text-error hover:bg-error/10',
+      },
+      {
+        variant: 'outline',
+        color: 'info',
+        class: 'border-info text-info hover:bg-info/10',
+      },
+
+      // ========== GHOST VARIANTS ==========
+      {
+        variant: 'ghost',
+        color: 'primary',
+        class: 'hover:bg-primary/10 hover:text-primary',
+      },
+      {
+        variant: 'ghost',
+        color: 'secondary',
+        class: 'hover:bg-secondary/10 hover:text-secondary',
+      },
+      {
+        variant: 'ghost',
+        color: 'destructive',
+        class: 'hover:bg-destructive/10 hover:text-destructive',
+      },
+      {
+        variant: 'ghost',
+        color: 'success',
+        class: 'hover:bg-success/10 hover:text-success',
+      },
+      {
+        variant: 'ghost',
+        color: 'warning',
+        class: 'hover:bg-warning/10 hover:text-warning',
+      },
+      {
+        variant: 'ghost',
+        color: 'error',
+        class: 'hover:bg-error/10 hover:text-error',
+      },
+      {
+        variant: 'ghost',
+        color: 'info',
+        class: 'hover:bg-info/10 hover:text-info',
+      },
+
+      // ========== LINK VARIANTS ==========
+      {
+        variant: 'link',
+        color: 'primary',
+        class: 'text-primary',
+      },
+      {
+        variant: 'link',
+        color: 'secondary',
+        class: 'text-secondary',
+      },
+      {
+        variant: 'link',
+        color: 'destructive',
+        class: 'text-destructive',
+      },
+      {
+        variant: 'link',
+        color: 'success',
+        class: 'text-success',
+      },
+      {
+        variant: 'link',
+        color: 'warning',
+        class: 'text-warning',
+      },
+      {
+        variant: 'link',
+        color: 'error',
+        class: 'text-error',
+      },
+      {
+        variant: 'link',
+        color: 'info',
+        class: 'text-info',
+      },
+    ],
     defaultVariants: {
-      variant: 'default',
+      variant: 'solid',
+      color: 'primary',
       size: 'default',
       rounded: 'default',
       block: false,

@@ -15,7 +15,7 @@ import { Primitive } from 'reka-ui';
 // ============== DEPENDÊNCIAS INTERNAS ==============
 import { computed, useSlots, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
-import { buttonVariants, type ButtonVariants } from '.';
+import { buttonVariants, type ButtonVariants, SEMANTIC_COLORS } from '.';
 import CorpIcon from '@components/ui/icon/CorpIcon.vue';
 import { resolveColor } from '@/utils/CorpColorUtils';
 
@@ -30,11 +30,25 @@ const props = defineProps({
   // CVA Variants
   variant: {
     type: String as PropType<ButtonVariants['variant']>,
-    default: 'default',
+    default: 'solid',
+  },
+  color: {
+    type: String as PropType<ButtonVariants['color'] | string>,
+    default: 'primary',
   },
   size: {
     type: String as PropType<ButtonVariants['size']>,
     default: 'default',
+  },
+
+  // Custom color overrides
+  bgColor: {
+    type: String,
+    default: undefined,
+  },
+  textColor: {
+    type: String,
+    default: undefined,
   },
   rounded: {
     // Aceita presets (default, none, sm, lg, xl, full) OU valores custom (rounded-3xl, 10px, etc)
@@ -193,10 +207,54 @@ const customElevatedClass = computed(() => {
   return '';
 });
 
+// Verifica se color é preset (semântico) ou custom
+const isColorPreset = computed(() => {
+  return SEMANTIC_COLORS.includes(props.color as any);
+});
+
+// Custom color styles (bgColor/textColor overrides OU color não-preset)
+const customColorStyle = computed(() => {
+  const styles: Record<string, string> = {};
+
+  // bgColor tem prioridade sobre color
+  if (props.bgColor) {
+    styles.backgroundColor = resolveColor(props.bgColor);
+  } else if (!isColorPreset.value && props.color) {
+    // Color customizado (não-preset) - aplica conforme variant
+    const resolvedColor = resolveColor(props.color);
+
+    if (props.variant === 'solid') {
+      styles.backgroundColor = resolvedColor;
+      styles.color = 'white'; // texto branco em fundo colorido
+    } else if (props.variant === 'outline') {
+      styles.borderColor = resolvedColor;
+      styles.color = resolvedColor;
+    } else if (props.variant === 'ghost' || props.variant === 'link') {
+      styles.color = resolvedColor;
+    }
+  }
+
+  // textColor tem prioridade final
+  if (props.textColor) {
+    styles.color = resolveColor(props.textColor);
+  }
+
+  return styles;
+});
+
+// Combina custom rounded + custom color styles
+const buttonStyle = computed(() => {
+  return {
+    ...customRoundedStyle.value,
+    ...customColorStyle.value,
+  };
+});
+
 const buttonClasses = computed(() => {
   return cn(
     buttonVariants({
       variant: props.variant,
+      color: isColorPreset.value ? (props.color as ButtonVariants['color']) : undefined,
       size: props.size,
       rounded: isRoundedPreset.value
         ? (props.rounded as RoundedPreset)
@@ -233,7 +291,7 @@ const resolvedAppendIconColor = computed(() =>
     :type="type"
     :disabled="isDisabled"
     :class="buttonClasses"
-    :style="customRoundedStyle"
+    :style="buttonStyle"
   >
     <!-- Prepend: Slot > Loading/Icon -->
     <slot name="prepend">

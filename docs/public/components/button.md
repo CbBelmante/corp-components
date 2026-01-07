@@ -18,12 +18,10 @@ Uma ampla variedade de props pode ser empregada para modificar a aparência e fu
 
 ### Variant
 
-A prop `variant` dá acesso fácil a vários estilos de botão diferentes.
+A prop `variant` define o **estilo visual** do botão (sólido, outline, ghost, link).
 
 :::corp-code
-<CorpButton>Default</CorpButton>
-<CorpButton variant="secondary">Secondary</CorpButton>
-<CorpButton variant="destructive">Destructive</CorpButton>
+<CorpButton variant="solid">Solid (Default)</CorpButton>
 <CorpButton variant="outline">Outline</CorpButton>
 <CorpButton variant="ghost">Ghost</CorpButton>
 <CorpButton variant="link">Link</CorpButton>
@@ -31,12 +29,76 @@ A prop `variant` dá acesso fácil a vários estilos de botão diferentes.
 
 | Variant | Descrição |
 |---------|-----------|
-| `default` | Cor primária com fundo sólido e texto contrastante |
-| `secondary` | Cor secundária, menos proeminente que o default |
-| `destructive` | Vermelho/perigo, para ações destrutivas como deletar |
-| `outline` | Borda fina sem fundo, hover revela preenchimento |
-| `ghost` | Sem fundo ou borda, apenas texto com hover sutil |
-| `link` | Estilo de link com underline no hover |
+| `solid` | Fundo sólido com sombra (padrão) |
+| `outline` | Borda com fundo transparente |
+| `ghost` | Sem fundo/borda, hover sutil |
+| `link` | Estilo de link com underline |
+
+### Color
+
+A prop `color` define a **cor semântica** do botão. Pode ser combinada com qualquer `variant`.
+
+:::corp-code
+<CorpButton color="primary">Primary</CorpButton>
+<CorpButton color="secondary">Secondary</CorpButton>
+<CorpButton color="destructive">Destructive</CorpButton>
+<CorpButton color="success">Success</CorpButton>
+<CorpButton color="warning">Warning</CorpButton>
+<CorpButton color="error">Error</CorpButton>
+<CorpButton color="info">Info</CorpButton>
+:::
+
+| Color | Descrição | Cor |
+|-------|-----------|-----|
+| `primary` | Cor principal (padrão) | Laranja `#FF7133` |
+| `secondary` | Cor secundária | Azul acinzentado |
+| `destructive` | Ação destrutiva | Vermelho |
+| `success` | Sucesso/confirmação | Verde |
+| `warning` | Aviso/atenção | Amarelo |
+| `error` | Erro/perigo | Vermelho |
+| `info` | Informação | Azul |
+
+#### Combinando Variant + Color
+
+Você pode combinar **qualquer variant** com **qualquer color**:
+
+:::corp-code
+<!-- Solid + cores -->
+<CorpButton variant="solid" color="success">Salvar</CorpButton>
+<CorpButton variant="solid" color="destructive">Deletar</CorpButton>
+
+<!-- Outline + cores -->
+<CorpButton variant="outline" color="primary">Editar</CorpButton>
+<CorpButton variant="outline" color="warning">Atenção</CorpButton>
+
+<!-- Ghost + cores -->
+<CorpButton variant="ghost" color="info">Info</CorpButton>
+<CorpButton variant="ghost" color="error">Cancelar</CorpButton>
+:::
+
+#### Cores Customizadas
+
+Você pode usar **qualquer cor** (HEX, RGB, variável CSS):
+
+:::corp-code
+<!-- Cor HEX -->
+<CorpButton color="#8b5cf6" variant="solid">Roxo</CorpButton>
+<CorpButton color="#ec4899" variant="outline">Rosa Outline</CorpButton>
+
+<!-- Variável CSS -->
+<CorpButton color="var(--info)" variant="ghost">Info Custom</CorpButton>
+:::
+
+#### bgColor e textColor
+
+Para controle total, use `bgColor` e `textColor`:
+
+:::corp-code
+<CorpButton bgColor="#22c55e" textColor="white">Custom Background</CorpButton>
+<CorpButton variant="outline" bgColor="transparent" textColor="#f59e0b">Custom Outline</CorpButton>
+:::
+
+> **Nota:** `bgColor` e `textColor` sobrescrevem `color`.
 
 ### Size
 
@@ -100,7 +162,7 @@ Também aceita classes Tailwind ou valores CSS:
 :::corp-code
 <CorpButton stacked prepend-icon="luc-home">Home</CorpButton>
 <CorpButton stacked prepend-icon="luc-settings" variant="outline">Config</CorpButton>
-<CorpButton stacked prepend-icon="luc-user" variant="secondary">Perfil</CorpButton>
+<CorpButton stacked prepend-icon="luc-user" color="secondary">Perfil</CorpButton>
 <CorpButton stacked prepend-icon="luc-mail" variant="ghost">Email</CorpButton>
 :::
 
@@ -110,7 +172,7 @@ Use `prepend-icon` e `append-icon` para adicionar ícones Lucide ao botão. Os �
 
 :::corp-code
 <CorpButton prepend-icon="luc-mail">Login com Email</CorpButton>
-<CorpButton variant="secondary" append-icon="luc-chevron-right">Próximo</CorpButton>
+<CorpButton color="secondary" append-icon="luc-chevron-right">Próximo</CorpButton>
 <CorpButton variant="outline" prepend-icon="luc-download" append-icon="luc-external-link">Download</CorpButton>
 :::
 
@@ -132,7 +194,7 @@ Personalize a cor dos ícones usando `p-icon-color` (prepend) e `ap-icon-color` 
 
 :::corp-code
 <CorpButton prepend-icon="luc-star" p-icon-color="text-yellow-500">Favorito</CorpButton>
-<CorpButton variant="secondary" prepend-icon="luc-heart" p-icon-color="#ef4444">Curtir</CorpButton>
+<CorpButton color="secondary" prepend-icon="luc-heart" p-icon-color="#ef4444">Curtir</CorpButton>
 <CorpButton variant="outline" prepend-icon="luc-check" p-icon-color="text-green-500" append-icon="luc-arrow-right" ap-icon-color="text-blue-500">Confirmar</CorpButton>
 
 <!-- @disp-code -->
@@ -152,7 +214,7 @@ import { CorpButton } from 'corp-components'
 
   <!-- Cor HEX -->
   <CorpButton
-    variant="secondary"
+    color="secondary"
     prepend-icon="luc-heart"
     p-icon-color="#ef4444"
   >
@@ -224,9 +286,9 @@ const handleClick = () => {
 Botões desabilitados não respondem a interações e têm aparência reduzida.
 
 :::corp-code
-<CorpButton disabled>Default</CorpButton>
-<CorpButton variant="secondary" disabled>Secondary</CorpButton>
-<CorpButton variant="destructive" disabled>Destructive</CorpButton>
+<CorpButton disabled>Primary</CorpButton>
+<CorpButton color="secondary" disabled>Secondary</CorpButton>
+<CorpButton color="destructive" disabled>Destructive</CorpButton>
 <CorpButton variant="outline" disabled>Outline</CorpButton>
 <CorpButton variant="ghost" disabled>Ghost</CorpButton>
 :::
@@ -355,7 +417,7 @@ Exemplos de combinações frequentes de props:
 
 :::corp-code
 <CorpButton prepend-icon="luc-plus">Adicionar Item</CorpButton>
-<CorpButton variant="destructive" prepend-icon="luc-trash">Excluir</CorpButton>
+<CorpButton color="destructive" prepend-icon="luc-trash">Excluir</CorpButton>
 <CorpButton variant="outline" append-icon="luc-external-link">Ver mais</CorpButton>
 <CorpButton variant="ghost" size="sm" prepend-icon="luc-edit">Editar</CorpButton>
 :::
@@ -373,12 +435,16 @@ Botões são frequentemente usados em dialogs para confirmar ou cancelar ações
 
 ### Ações Destrutivas
 
-Para ações perigosas, combine `variant="destructive"` com confirmação:
+Para ações perigosas, combine `color="destructive"` com confirmação:
 
 :::corp-code
 <div class="flex gap-2">
   <CorpButton variant="ghost">Cancelar</CorpButton>
-  <CorpButton variant="destructive" prepend-icon="luc-trash">Excluir Permanentemente</CorpButton>
+  <CorpButton color="destructive" prepend-icon="luc-trash">Excluir Permanentemente</CorpButton>
+
+  <!-- Ghost com hover vermelho tonalizado (background 10% + texto 100%) -->
+  <CorpButton variant="ghost" color="destructive" prepend-icon="luc-trash">Remover</CorpButton>
+  <CorpButton variant="ghost" color="destructive" prepend-icon="luc-ban">Bloquear</CorpButton>
 </div>
 :::
 
@@ -389,23 +455,40 @@ Exemplo de botão em contexto de formulário com ícones FontAwesome:
 :::corp-code
 <div class="w-64 space-y-3">
   <CorpButton block prepend-icon="luc-mail">Continuar com Email</CorpButton>
-  <CorpButton block variant="outline" prepend-icon="fa-fab fa-github">Continuar com GitHub</CorpButton>
-  <CorpButton block variant="outline" prepend-icon="fa-fab fa-google" style="--tw-text-opacity: 1; color: rgb(219 68 55);">Continuar com Google</CorpButton>
-  <CorpButton block variant="outline" prepend-icon="fa-fab fa-discord" style="color: #5865F2;">Continuar com Discord</CorpButton>
+
+  <!-- Variável CSS do tema (se adapta ao light/dark) -->
+  <CorpButton block variant="outline" prepend-icon="fa-fab fa-github" p-icon-color="var(--foreground)" text-color="var(--foreground)">Continuar com GitHub</CorpButton>
+
+  <!-- RGB para ícone, HEX para texto -->
+  <CorpButton block variant="outline" prepend-icon="fa-fab fa-google" p-icon-color="rgb(219, 68, 55)" text-color="#db4437">Continuar com Google</CorpButton>
+
+  <!-- Nome CSS para ícone, variável CSS para texto -->
+  <CorpButton block variant="outline" prepend-icon="fa-fab fa-discord" p-icon-color="#5865F2" text-color="var(--info)">Continuar com Discord</CorpButton>
 </div>
 :::
 
 ### Social Buttons
 
-Botões com ícones de redes sociais usando FontAwesome Brands:
+Botões com ícones de redes sociais usando FontAwesome Brands e cores oficiais:
 
 :::corp-code
-<CorpButton variant="outline" prepend-icon="fa-fab fa-twitter" />
-<CorpButton variant="outline" prepend-icon="fa-fab fa-facebook" />
-<CorpButton variant="outline" prepend-icon="fa-fab fa-instagram" />
-<CorpButton variant="outline" prepend-icon="fa-fab fa-linkedin" />
-<CorpButton variant="outline" prepend-icon="fa-fab fa-youtube" />
-<CorpButton variant="outline" prepend-icon="fa-fab fa-twitch" />
+<!-- HEX -->
+<CorpButton variant="outline" prepend-icon="fa-fab fa-twitter" p-icon-color="#1DA1F2" />
+
+<!-- RGBA com opacidade -->
+<CorpButton variant="outline" prepend-icon="fa-fab fa-facebook" p-icon-color="rgba(24, 119, 242, 0.9)" />
+
+<!-- HSL -->
+<CorpButton variant="outline" prepend-icon="fa-fab fa-instagram" p-icon-color="hsl(329, 70%, 58%)" />
+
+<!-- Variável CSS do tema -->
+<CorpButton variant="outline" prepend-icon="fa-fab fa-linkedin" p-icon-color="var(--info)" />
+
+<!-- RGB -->
+<CorpButton variant="outline" prepend-icon="fa-fab fa-youtube" p-icon-color="rgb(255, 0, 0)" />
+
+<!-- Nome de cor CSS -->
+<CorpButton variant="outline" prepend-icon="fa-fab fa-twitch" p-icon-color="purple" />
 :::
 
 ### Bottom Navigation
@@ -445,7 +528,10 @@ Icon buttons em uma toolbar:
 
 | Prop | Tipo | Default | Descrição |
 |------|------|---------|-----------|
-| `variant` | `'default' \| 'secondary' \| 'destructive' \| 'outline' \| 'ghost' \| 'link'` | `'default'` | Estilo visual do botão |
+| `variant` | `'solid' \| 'outline' \| 'ghost' \| 'link'` | `'solid'` | Estilo visual do botão |
+| `color` | `'primary' \| 'secondary' \| 'destructive' \| 'success' \| 'warning' \| 'error' \| 'info' \| string` | `'primary'` | Cor semântica (aceita HEX, RGB, variável CSS) |
+| `bgColor` | `string` | `undefined` | Override do background (HEX, RGB, variável CSS) |
+| `textColor` | `string` | `undefined` | Override da cor do texto (HEX, RGB, variável CSS) |
 | `size` | `'default' \| 'sm' \| 'lg' \| 'xs' \| 'icon' \| 'icon-sm' \| 'icon-lg'` | `'default'` | Tamanho do botão |
 | `rounded` | `'default' \| 'none' \| 'sm' \| 'lg' \| 'xl' \| 'full' \| string` | `'default'` | Preset ou valor custom (Tailwind class ou CSS) |
 | `block` | `boolean` | `false` | Largura total (100%) |

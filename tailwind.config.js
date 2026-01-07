@@ -11,6 +11,12 @@ export default {
     './docs/**/*.{md,vue}',
     './docs/.vitepress/**/*.{js,ts,vue}',
   ],
+  safelist: [
+    // Button semantic colors - garantir que Tailwind gere todas as classes
+    {
+      pattern: /^(bg|text|border|hover:bg|hover:text)-(success|warning|error|info)(\/\d+)?$/,
+    },
+  ],
   theme: {
     extend: {
       colors: {
@@ -42,6 +48,11 @@ export default {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
         },
+        // Semantic status colors
+        success: 'hsl(var(--success))',
+        warning: 'hsl(var(--warning))',
+        error: 'hsl(var(--error))',
+        info: 'hsl(var(--info))',
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
