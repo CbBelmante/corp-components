@@ -466,7 +466,7 @@ export const themeDefinition = {
   'switch-unchecked': {
     light: '#bac5d0',
     dark: '#3d444d',
-    type: THEME_COLOR_TYPES.BOTH,
+    type: THEME_COLOR_TYPES.ONLY_THEME,
   },
   'switch-unchecked-disabled-bg': {
     light: '#e8ecf0',

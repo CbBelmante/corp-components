@@ -19,6 +19,12 @@ export default {
         `^(bg|text|border|hover:bg|hover:text)-(${SEMANTIC_COLORS.join('|')})(/\\d+)?$`
       ),
     },
+    // Switch semantic colors - data-[state=checked]:bg-{color}
+    {
+      pattern: new RegExp(
+        `^data-\\[state=checked\\]:bg-(${SEMANTIC_COLORS.join('|')})$`
+      ),
+    },
     // Custom color arbitrary values - cores customizadas (HEX, RGB, var(), etc)
     'bg-[var(--corp-btn-color)]',
     'hover:bg-[var(--corp-btn-color-hover)]',
@@ -26,6 +32,9 @@ export default {
     'text-[var(--corp-btn-color)]',
     'hover:text-[var(--corp-btn-color)]',
     'border-[var(--corp-btn-color)]',
+    // Switch colors (checked e unchecked)
+    'data-[state=checked]:bg-[var(--switch-custom-color)]',
+    'data-[state=unchecked]:bg-[var(--switch-unchecked)]',
   ],
   theme: {
     extend: {

@@ -12,6 +12,7 @@ import { CorpCode } from '@components/layout';
 import { CorpButton } from '@components/ui/button';
 import { CorpInput } from '@components/ui/input';
 import { CorpSelect } from '@components/ui/select';
+import { CorpSwitch } from '@components/ui/switch';
 import { CorpIcon } from '@components/ui/icon';
 
 // i18n centralizado (igual playground)
@@ -29,6 +30,7 @@ export default {
     app.component('CorpButton', CorpButton);
     app.component('CorpInput', CorpInput);
     app.component('CorpSelect', CorpSelect);
+    app.component('CorpSwitch', CorpSwitch);
     app.component('CorpIcon', CorpIcon);
 
     // ============== PLUGINS ==============

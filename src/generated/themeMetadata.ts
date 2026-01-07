@@ -82,7 +82,7 @@ export const CSS_VARIABLES: Record<string, string> = {
 
 /**
  * Cores tipo 'tailwind' que precisam de hsl() wrapper
- * Total: 68 variáveis
+ * Total: 67 variáveis
  */
 export const HSL_VARIABLES = new Set([
   'primary',
@@ -141,7 +141,6 @@ export const HSL_VARIABLES = new Set([
   'checkbox-unchecked',
   'checkbox-unchecked-disabled-border',
   'checkbox-unchecked-border',
-  'switch-unchecked',
   'code-background',
   'blockquote-border',
   'blockquote-background',
@@ -157,7 +156,7 @@ export const HSL_VARIABLES = new Set([
 
 /**
  * Cores tipo 'theme' que usam valor direto (sem wrapper)
- * Total: 64 variáveis
+ * Total: 65 variáveis
  */
 export const HEX_VARIABLES = new Set([
   'surface',
@@ -186,6 +185,7 @@ export const HEX_VARIABLES = new Set([
   'checkbox-checked-disabled-bg',
   'checkbox-checked-disabled-border',
   'checkbox-unchecked-disabled-bg',
+  'switch-unchecked',
   'switch-unchecked-disabled-bg',
   'switch-checked-disabled',
   'switch-thumb',

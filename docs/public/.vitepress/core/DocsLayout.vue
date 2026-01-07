@@ -158,6 +158,49 @@ const { form: selectForm, validateForm: validateSelectFormFn } = useForm({
   formName: 'SelectForm',
 });
 
+// ============== SWITCH.MD - Estados ==============
+const { form: switchForm } = useForm({
+  initialValues: {
+    active: false,
+    notifications: true,
+    newsletter: false,
+    disabled1: false,
+    disabled2: true,
+    readonly1: false,
+    readonly2: true,
+    saveConfigEnabled: false,
+    loading2: true,
+    primary: true,
+    secondary: true,
+    destructive: true,
+    success: true,
+    warning: true,
+    info: true,
+    purple: true,
+    pink: true,
+    cyan: true,
+    orange: true,
+    status: 'active',
+    nivel: 1,
+    terms: false,
+    emailNotifications: true,
+    pushNotifications: false,
+    smsNotifications: false,
+    twoFactor: false,
+  },
+  formName: 'SwitchForm',
+});
+
+// ============== SWITCH.MD - Loading State ==============
+const loadingSwitch = ref(false);
+
+const simulateLoadingSwitch = () => {
+  loadingSwitch.value = true;
+  setTimeout(() => {
+    loadingSwitch.value = false;
+  }, 2000);
+};
+
 const validationRules = [
   rules.required,
   (value: string[] | undefined) =>
@@ -202,6 +245,11 @@ injectDocsContext({
   selectForm,
   validationRules,
   validateSelectForm,
+
+  // Switch.md
+  switchForm,
+  loadingSwitch,
+  simulateLoadingSwitch,
 });
 </script>
 

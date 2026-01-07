@@ -37,6 +37,16 @@ import { RouterLink } from 'vue-router';
           Testar selects com multiple, chips e validacao
         </p>
       </RouterLink>
+
+      <RouterLink
+        to="/switches"
+        class="p-6 border border-border rounded-lg hover:border-primary hover:bg-accent/50 transition-colors"
+      >
+        <h3 class="font-semibold text-foreground mb-1">Switches</h3>
+        <p class="text-sm text-muted-foreground">
+          Testar switches com cores, estados e validacao
+        </p>
+      </RouterLink>
     </div>
   </div>
 </template>

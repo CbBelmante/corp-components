@@ -79,6 +79,7 @@ export default defineConfig(async () => {
             { text: 'Icon', link: '/components/icon' },
             { text: 'Input', link: '/components/input' },
             { text: 'Select', link: '/components/select' },
+            { text: 'Switch', link: '/components/switch' },
           ],
         },
       ],

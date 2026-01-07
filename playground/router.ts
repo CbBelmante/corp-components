@@ -3,6 +3,7 @@ import Home from './pages/Home.vue';
 import ButtonTest from './pages/ButtonTest.vue';
 import InputTest from './pages/InputTest.vue';
 import SelectTest from './pages/SelectTest.vue';
+import SwitchTest from './pages/SwitchTest.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/selects',
       name: 'selects',
       component: SelectTest,
+    },
+    {
+      path: '/switches',
+      name: 'switches',
+      component: SwitchTest,
     },
   ],
 });
