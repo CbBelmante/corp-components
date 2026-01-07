@@ -6,23 +6,9 @@ O componente `CorpButton` substitui o botão HTML padrão com um design consiste
 
 Botões em sua forma mais simples contêm texto, uma leve elevação no hover e efeito de transição ao clicar.
 
-<CodePreview>
-  <CorpButton>Button</CorpButton>
-
-  <template #code>
-
-```vue
-<script setup>
-import { CorpButton } from 'corp-components'
-</script>
-
-<template>
-  <CorpButton>Button</CorpButton>
-</template>
-```
-
-  </template>
-</CodePreview>
+:::corp-code
+<CorpButton>Button</CorpButton>
+:::
 
 ---
 
@@ -34,27 +20,14 @@ Uma ampla variedade de props pode ser empregada para modificar a aparência e fu
 
 A prop `variant` dá acesso fácil a vários estilos de botão diferentes.
 
-<CodePreview>
-  <CorpButton>Default</CorpButton>
-  <CorpButton variant="secondary">Secondary</CorpButton>
-  <CorpButton variant="destructive">Destructive</CorpButton>
-  <CorpButton variant="outline">Outline</CorpButton>
-  <CorpButton variant="ghost">Ghost</CorpButton>
-  <CorpButton variant="link">Link</CorpButton>
-
-  <template #code>
-
-```vue
+:::corp-code
 <CorpButton>Default</CorpButton>
 <CorpButton variant="secondary">Secondary</CorpButton>
 <CorpButton variant="destructive">Destructive</CorpButton>
 <CorpButton variant="outline">Outline</CorpButton>
 <CorpButton variant="ghost">Ghost</CorpButton>
 <CorpButton variant="link">Link</CorpButton>
-```
-
-  </template>
-</CodePreview>
+:::
 
 | Variant | Descrição |
 |---------|-----------|
@@ -69,23 +42,12 @@ A prop `variant` dá acesso fácil a vários estilos de botão diferentes.
 
 A prop `size` controla o tamanho do botão. O tamanho padrão é `default`.
 
-<CodePreview>
-  <CorpButton size="xs">Extra Small</CorpButton>
-  <CorpButton size="sm">Small</CorpButton>
-  <CorpButton size="default">Default</CorpButton>
-  <CorpButton size="lg">Large</CorpButton>
-
-  <template #code>
-
-```vue
+:::corp-code
 <CorpButton size="xs">Extra Small</CorpButton>
 <CorpButton size="sm">Small</CorpButton>
 <CorpButton size="default">Default</CorpButton>
 <CorpButton size="lg">Large</CorpButton>
-```
-
-  </template>
-</CodePreview>
+:::
 
 | Size | Altura | Uso recomendado |
 |------|--------|-----------------|
@@ -98,21 +60,12 @@ A prop `size` controla o tamanho do botão. O tamanho padrão é `default`.
 
 Botões block estendem toda a largura disponível do seu container. Útil para criar botões que abrangem toda a largura de um card ou dialog.
 
-<CodePreview>
-  <div class="w-full space-y-2">
-    <CorpButton block>Block Button</CorpButton>
-    <CorpButton block variant="outline">Block Outline</CorpButton>
-  </div>
-
-  <template #code>
-
-```vue
-<CorpButton block>Block Button</CorpButton>
-<CorpButton block variant="outline">Block Outline</CorpButton>
-```
-
-  </template>
-</CodePreview>
+:::corp-code
+<div class="w-full space-y-2">
+  <CorpButton block>Block Button</CorpButton>
+  <CorpButton block variant="outline">Block Outline</CorpButton>
+</div>
+:::
 
 > **Nota:** Block aplica `width: 100%` o que pode causar problemas de overflow dentro de um flex container com espaço limitado.
 
@@ -120,117 +73,56 @@ Botões block estendem toda a largura disponível do seu container. Útil para c
 
 Use a prop `rounded` para controlar o border radius. Aceita presets ou valores custom:
 
-<CodePreview>
-  <CorpButton rounded="none">None</CorpButton>
-  <CorpButton rounded="sm">Small</CorpButton>
-  <CorpButton rounded="default">Default</CorpButton>
-  <CorpButton rounded="lg">Large</CorpButton>
-  <CorpButton rounded="xl">XL</CorpButton>
-  <CorpButton rounded="full">Full (Pill)</CorpButton>
-
-  <template #code>
-
-```vue
-<!-- Presets -->
+:::corp-code
 <CorpButton rounded="none">None</CorpButton>
 <CorpButton rounded="sm">Small</CorpButton>
 <CorpButton rounded="default">Default</CorpButton>
 <CorpButton rounded="lg">Large</CorpButton>
 <CorpButton rounded="xl">XL</CorpButton>
 <CorpButton rounded="full">Full (Pill)</CorpButton>
-```
-
-  </template>
-</CodePreview>
+:::
 
 #### Rounded Custom
 
 Também aceita classes Tailwind ou valores CSS:
 
-<CodePreview>
-  <CorpButton rounded="rounded-3xl">Tailwind</CorpButton>
-  <CorpButton rounded="rounded-tl-xl rounded-br-xl">Corners</CorpButton>
-  <CorpButton rounded="20px">20px</CorpButton>
-  <CorpButton rounded="50% 0">50% 0</CorpButton>
-
-  <template #code>
-
-```vue
-<!-- Classes Tailwind -->
+:::corp-code
 <CorpButton rounded="rounded-3xl">Tailwind</CorpButton>
 <CorpButton rounded="rounded-tl-xl rounded-br-xl">Corners</CorpButton>
-
-<!-- Valores CSS -->
 <CorpButton rounded="20px">20px</CorpButton>
 <CorpButton rounded="50% 0">50% 0</CorpButton>
-```
-
-  </template>
-</CodePreview>
+:::
 
 ### Stacked
 
 Ícone acima do texto (layout vertical). Útil para navegação bottom ou ações com ícones proeminentes.
 
-<CodePreview>
-  <CorpButton stacked prepend-icon="luc-home">Home</CorpButton>
-  <CorpButton stacked prepend-icon="luc-settings" variant="outline">Config</CorpButton>
-  <CorpButton stacked prepend-icon="luc-user" variant="secondary">Perfil</CorpButton>
-  <CorpButton stacked prepend-icon="luc-mail" variant="ghost">Email</CorpButton>
-
-  <template #code>
-
-```vue
+:::corp-code
 <CorpButton stacked prepend-icon="luc-home">Home</CorpButton>
 <CorpButton stacked prepend-icon="luc-settings" variant="outline">Config</CorpButton>
 <CorpButton stacked prepend-icon="luc-user" variant="secondary">Perfil</CorpButton>
 <CorpButton stacked prepend-icon="luc-mail" variant="ghost">Email</CorpButton>
-```
-
-  </template>
-</CodePreview>
+:::
 
 ### Icons
 
 Use `prepend-icon` e `append-icon` para adicionar ícones Lucide ao botão. Os ícones são automaticamente dimensionados e posicionados.
 
-<CodePreview>
-  <CorpButton prepend-icon="luc-mail">Login com Email</CorpButton>
-  <CorpButton variant="secondary" append-icon="luc-chevron-right">Próximo</CorpButton>
-  <CorpButton variant="outline" prepend-icon="luc-download" append-icon="luc-external-link">Download</CorpButton>
-
-  <template #code>
-
-```vue
+:::corp-code
 <CorpButton prepend-icon="luc-mail">Login com Email</CorpButton>
 <CorpButton variant="secondary" append-icon="luc-chevron-right">Próximo</CorpButton>
-<CorpButton variant="outline" prepend-icon="luc-download" append-icon="luc-external-link">
-  Download
-</CorpButton>
-```
-
-  </template>
-</CodePreview>
+<CorpButton variant="outline" prepend-icon="luc-download" append-icon="luc-external-link">Download</CorpButton>
+:::
 
 ### Icon Buttons
 
 Ícones podem ser usados como conteúdo principal de um botão. Use os tamanhos `icon-sm`, `icon` ou `icon-lg`:
 
-<CodePreview>
-  <CorpButton size="icon-sm" variant="outline" prepend-icon="luc-settings" />
-  <CorpButton size="icon" variant="outline" prepend-icon="luc-chevron-right" />
-  <CorpButton size="icon-lg" variant="outline" prepend-icon="luc-mail" />
-
-  <template #code>
-
-```vue
+:::corp-code
 <CorpButton size="icon-sm" variant="outline" prepend-icon="luc-settings" />
 <CorpButton size="icon" variant="outline" prepend-icon="luc-chevron-right" />
 <CorpButton size="icon-lg" variant="outline" prepend-icon="luc-mail" />
-```
-
-  </template>
-</CodePreview>
+:::
 
 Icon buttons são comumente usados em toolbars, cards e ações inline.
 
@@ -238,16 +130,15 @@ Icon buttons são comumente usados em toolbars, cards e ações inline.
 
 Usando a prop `loading`, você pode notificar o usuário que há processamento ocorrendo. Um spinner substitui automaticamente o `prepend-icon` quando ativo.
 
-<CodePreview>
-  <CorpButton :loading="loadingButton" @click="simulateLoadingButton">
-    {{ loadingButton ? 'Aguarde...' : 'Clique aqui' }}
-  </CorpButton>
-  <CorpButton :loading="loadingButton" prepend-icon="luc-mail" @click="simulateLoadingButton">
-    {{ loadingButton ? 'Enviando...' : 'Enviar Email' }}
-  </CorpButton>
+:::corp-code
+<CorpButton :loading="loadingButton" @click="simulateLoadingButton">
+  {{ loadingButton ? 'Aguarde...' : 'Clique aqui' }}
+</CorpButton>
+<CorpButton :loading="loadingButton" prepend-icon="luc-mail" @click="simulateLoadingButton">
+  {{ loadingButton ? 'Enviando...' : 'Enviar Email' }}
+</CorpButton>
 
-  <template #code>
-
+<!-- @disp-code -->
 ```vue
 <script setup>
 import { ref } from 'vue'
@@ -271,51 +162,28 @@ const handleClick = () => {
   </CorpButton>
 </template>
 ```
-
-  </template>
-</CodePreview>
+:::
 
 ### Disabled
 
 Botões desabilitados não respondem a interações e têm aparência reduzida.
 
-<CodePreview>
-  <CorpButton disabled>Default</CorpButton>
-  <CorpButton variant="secondary" disabled>Secondary</CorpButton>
-  <CorpButton variant="destructive" disabled>Destructive</CorpButton>
-  <CorpButton variant="outline" disabled>Outline</CorpButton>
-  <CorpButton variant="ghost" disabled>Ghost</CorpButton>
-
-  <template #code>
-
-```vue
+:::corp-code
 <CorpButton disabled>Default</CorpButton>
 <CorpButton variant="secondary" disabled>Secondary</CorpButton>
 <CorpButton variant="destructive" disabled>Destructive</CorpButton>
 <CorpButton variant="outline" disabled>Outline</CorpButton>
 <CorpButton variant="ghost" disabled>Ghost</CorpButton>
-```
-
-  </template>
-</CodePreview>
+:::
 
 ### As (Polimorfismo)
 
 Use a prop `as` para renderizar o botão como outro elemento HTML, como `<a>` para links:
 
-<CodePreview>
-  <CorpButton as="a" href="https://github.com" target="_blank">GitHub</CorpButton>
-  <CorpButton as="a" href="https://vuejs.org" target="_blank" variant="outline">Vue.js</CorpButton>
-
-  <template #code>
-
-```vue
+:::corp-code
 <CorpButton as="a" href="https://github.com" target="_blank">GitHub</CorpButton>
 <CorpButton as="a" href="https://vuejs.org" target="_blank" variant="outline">Vue.js</CorpButton>
-```
-
-  </template>
-</CodePreview>
+:::
 
 ---
 
@@ -335,55 +203,27 @@ Slots dão maior controle para customizar o conteúdo do `CorpButton` enquanto a
 
 Use o slot `prepend` para conteúdo customizado antes do texto:
 
-<CodePreview>
-  <CorpButton>
-    <template #prepend>
-      <span class="text-xs bg-white/20 px-1 rounded">NEW</span>
-    </template>
-    Funcionalidade
-  </CorpButton>
-
-  <template #code>
-
-```vue
+:::corp-code
 <CorpButton>
   <template #prepend>
     <span class="text-xs bg-white/20 px-1 rounded">NEW</span>
   </template>
   Funcionalidade
 </CorpButton>
-```
-
-  </template>
-</CodePreview>
+:::
 
 ### Slot Append
 
 Use o slot `append` para conteúdo customizado após o texto:
 
-<CodePreview>
-  <CorpButton variant="outline">
-    Notificações
-    <template #append>
-      <span class="bg-destructive text-destructive-foreground text-xs px-1.5 py-0.5 rounded-full">5</span>
-    </template>
-  </CorpButton>
-
-  <template #code>
-
-```vue
+:::corp-code
 <CorpButton variant="outline">
   Notificações
   <template #append>
-    <span class="bg-destructive text-destructive-foreground text-xs px-1.5 py-0.5 rounded-full">
-      5
-    </span>
+    <span class="bg-destructive text-destructive-foreground text-xs px-1.5 py-0.5 rounded-full">5</span>
   </template>
 </CorpButton>
-```
-
-  </template>
-</CodePreview>
+:::
 
 ---
 
@@ -406,26 +246,26 @@ O componente é nativamente focável e responde a eventos de teclado:
 
 Ao usar icon buttons (botões apenas com ícone), é essencial fornecer uma alternativa de texto para usuários de leitores de tela. Adicione um atributo `aria-label`:
 
-```vue
+:::corp-code{no-preview}
 <CorpButton
   size="icon"
   variant="ghost"
   prepend-icon="luc-trash"
   aria-label="Excluir item"
 />
-```
+:::
 
 ### Tamanho da Área de Toque
 
 Certifique-se de que seus botões tenham um tamanho de área de toque adequado, especialmente em dispositivos touch. Uma área de toque maior melhora a usabilidade:
 
-```vue
+:::corp-code{no-preview}
 <!-- Mínimo recomendado: 44x44px -->
 <CorpButton size="lg">Large Button</CorpButton>
 
 <!-- Para mobile, considere block -->
 <CorpButton block size="lg">Full Width Button</CorpButton>
-```
+:::
 
 ### Estados Visuais
 
@@ -440,7 +280,7 @@ O componente fornece estados visuais claros para:
 
 Quando um botão está em estado de loading, considere:
 
-```vue
+:::corp-code{no-preview}
 <CorpButton
   :loading="isLoading"
   :disabled="isLoading"
@@ -448,7 +288,7 @@ Quando um botão está em estado de loading, considere:
 >
   {{ isLoading ? 'Processando...' : 'Enviar' }}
 </CorpButton>
-```
+:::
 
 ---
 
@@ -458,138 +298,79 @@ Quando um botão está em estado de loading, considere:
 
 Exemplos de combinações frequentes de props:
 
-<CodePreview>
-  <CorpButton prepend-icon="luc-plus">Adicionar Item</CorpButton>
-  <CorpButton variant="destructive" prepend-icon="luc-trash">Excluir</CorpButton>
-  <CorpButton variant="outline" append-icon="luc-external-link">Ver mais</CorpButton>
-  <CorpButton variant="ghost" size="sm" prepend-icon="luc-edit">Editar</CorpButton>
-
-  <template #code>
-
-```vue
+:::corp-code
 <CorpButton prepend-icon="luc-plus">Adicionar Item</CorpButton>
 <CorpButton variant="destructive" prepend-icon="luc-trash">Excluir</CorpButton>
 <CorpButton variant="outline" append-icon="luc-external-link">Ver mais</CorpButton>
 <CorpButton variant="ghost" size="sm" prepend-icon="luc-edit">Editar</CorpButton>
-```
-
-  </template>
-</CodePreview>
+:::
 
 ### Ações de Dialog
 
 Botões são frequentemente usados em dialogs para confirmar ou cancelar ações:
 
-<CodePreview>
-  <div class="flex gap-2">
-    <CorpButton variant="outline">Cancelar</CorpButton>
-    <CorpButton>Confirmar</CorpButton>
-  </div>
-
-  <template #code>
-
-```vue
+:::corp-code
 <div class="flex gap-2">
   <CorpButton variant="outline">Cancelar</CorpButton>
   <CorpButton>Confirmar</CorpButton>
 </div>
-```
-
-  </template>
-</CodePreview>
+:::
 
 ### Ações Destrutivas
 
 Para ações perigosas, combine `variant="destructive"` com confirmação:
 
-<CodePreview>
-  <div class="flex gap-2">
-    <CorpButton variant="ghost">Cancelar</CorpButton>
-    <CorpButton variant="destructive" prepend-icon="luc-trash">Excluir Permanentemente</CorpButton>
-  </div>
-
-  <template #code>
-
-```vue
+:::corp-code
 <div class="flex gap-2">
   <CorpButton variant="ghost">Cancelar</CorpButton>
-  <CorpButton variant="destructive" prepend-icon="luc-trash">
-    Excluir Permanentemente
-  </CorpButton>
+  <CorpButton variant="destructive" prepend-icon="luc-trash">Excluir Permanentemente</CorpButton>
 </div>
-```
-
-  </template>
-</CodePreview>
+:::
 
 ### Formulário de Login
 
-Exemplo de botão em contexto de formulário:
+Exemplo de botão em contexto de formulário com ícones FontAwesome:
 
-<CodePreview>
-  <div class="w-64 space-y-3">
-    <CorpButton block prepend-icon="luc-mail">Continuar com Email</CorpButton>
-    <CorpButton block variant="outline" prepend-icon="luc-github">Continuar com GitHub</CorpButton>
-  </div>
-
-  <template #code>
-
-```vue
+:::corp-code
 <div class="w-64 space-y-3">
   <CorpButton block prepend-icon="luc-mail">Continuar com Email</CorpButton>
-  <CorpButton block variant="outline" prepend-icon="luc-github">
-    Continuar com GitHub
-  </CorpButton>
+  <CorpButton block variant="outline" prepend-icon="fa-fab fa-github">Continuar com GitHub</CorpButton>
+  <CorpButton block variant="outline" prepend-icon="fa-fab fa-google" style="--tw-text-opacity: 1; color: rgb(219 68 55);">Continuar com Google</CorpButton>
+  <CorpButton block variant="outline" prepend-icon="fa-fab fa-discord" style="color: #5865F2;">Continuar com Discord</CorpButton>
 </div>
-```
+:::
 
-  </template>
-</CodePreview>
+### Social Buttons
+
+Botões com ícones de redes sociais usando FontAwesome Brands:
+
+:::corp-code
+<CorpButton variant="outline" prepend-icon="fa-fab fa-twitter" />
+<CorpButton variant="outline" prepend-icon="fa-fab fa-facebook" />
+<CorpButton variant="outline" prepend-icon="fa-fab fa-instagram" />
+<CorpButton variant="outline" prepend-icon="fa-fab fa-linkedin" />
+<CorpButton variant="outline" prepend-icon="fa-fab fa-youtube" />
+<CorpButton variant="outline" prepend-icon="fa-fab fa-twitch" />
+:::
 
 ### Bottom Navigation
 
 Use `stacked` para criar navegação com ícones e labels:
 
-<CodePreview>
-  <div class="flex gap-1 p-2 bg-muted rounded-lg">
-    <CorpButton stacked variant="ghost" prepend-icon="luc-home" class="flex-1">Home</CorpButton>
-    <CorpButton stacked variant="ghost" prepend-icon="luc-search" class="flex-1">Buscar</CorpButton>
-    <CorpButton stacked variant="ghost" prepend-icon="luc-bell" class="flex-1">Alertas</CorpButton>
-    <CorpButton stacked variant="ghost" prepend-icon="luc-user" class="flex-1">Perfil</CorpButton>
-  </div>
-
-  <template #code>
-
-```vue
+:::corp-code
 <div class="flex gap-1 p-2 bg-muted rounded-lg">
   <CorpButton stacked variant="ghost" prepend-icon="luc-home" class="flex-1">Home</CorpButton>
   <CorpButton stacked variant="ghost" prepend-icon="luc-search" class="flex-1">Buscar</CorpButton>
   <CorpButton stacked variant="ghost" prepend-icon="luc-bell" class="flex-1">Alertas</CorpButton>
   <CorpButton stacked variant="ghost" prepend-icon="luc-user" class="flex-1">Perfil</CorpButton>
 </div>
-```
-
-  </template>
-</CodePreview>
+:::
 
 ### Toolbar Actions
 
 Icon buttons em uma toolbar:
 
-<CodePreview>
-  <div class="flex items-center gap-1 p-2 bg-muted rounded-lg">
-    <CorpButton size="icon" variant="ghost" prepend-icon="luc-bold" />
-    <CorpButton size="icon" variant="ghost" prepend-icon="luc-italic" />
-    <CorpButton size="icon" variant="ghost" prepend-icon="luc-underline" />
-    <div class="w-px h-6 bg-border mx-1" />
-    <CorpButton size="icon" variant="ghost" prepend-icon="luc-align-left" />
-    <CorpButton size="icon" variant="ghost" prepend-icon="luc-align-center" />
-    <CorpButton size="icon" variant="ghost" prepend-icon="luc-align-right" />
-  </div>
-
-  <template #code>
-
-```vue
+:::corp-code
 <div class="flex items-center gap-1 p-2 bg-muted rounded-lg">
   <CorpButton size="icon" variant="ghost" prepend-icon="luc-bold" />
   <CorpButton size="icon" variant="ghost" prepend-icon="luc-italic" />
@@ -599,10 +380,7 @@ Icon buttons em uma toolbar:
   <CorpButton size="icon" variant="ghost" prepend-icon="luc-align-center" />
   <CorpButton size="icon" variant="ghost" prepend-icon="luc-align-right" />
 </div>
-```
-
-  </template>
-</CodePreview>
+:::
 
 ---
 
@@ -619,8 +397,8 @@ Icon buttons em uma toolbar:
 | `stacked` | `boolean` | `false` | Layout vertical (ícone acima do texto) |
 | `disabled` | `boolean` | `false` | Desabilita o botão |
 | `loading` | `boolean` | `false` | Exibe spinner e desabilita o botão |
-| `prependIcon` | `string` | `undefined` | Nome do ícone Lucide à esquerda |
-| `appendIcon` | `string` | `undefined` | Nome do ícone Lucide à direita |
+| `prependIcon` | `string` | `undefined` | Nome do ícone à esquerda |
+| `appendIcon` | `string` | `undefined` | Nome do ícone à direita |
 | `iconSize` | `number \| string` | `'1em'` | Tamanho dos ícones |
 | `as` | `string` | `'button'` | Elemento HTML a ser renderizado |
 | `asChild` | `boolean` | `false` | Mescla props com elemento filho |

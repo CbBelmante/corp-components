@@ -322,7 +322,7 @@ const removeChip = (value: string | number): void => {
                 class="ml-1 hover:bg-muted-foreground/20 rounded-sm pointer-events-auto"
                 :aria-label="`Remover ${item.label}`"
               >
-                <CorpIcon name="luc-x" :size="12" />
+                <CorpIcon icon="luc-x" :size="12" />
               </button>
             </CorpBadge>
           </div>
@@ -344,7 +344,7 @@ const removeChip = (value: string | number): void => {
           aria-label="Limpar seleção"
         >
           <CorpIcon
-            name="luc-x"
+            icon="luc-x"
             :size="16"
             class="text-muted-foreground"
             :disabled="disabled || readonly"

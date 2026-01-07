@@ -6,17 +6,16 @@ O componente `CorpSelect` é um select avançado com validação integrada, sele
 
 Selects em sua forma mais simples contêm um label e uma lista de opções.
 
-<CodePreview>
-  <CorpSelect
-    v-model="selectForm.frameworkUsage"
-    name="frameworkUsage"
-    :items="['Vue', 'React', 'Angular', 'Svelte']"
-    label="Framework"
-    placeholder="Escolha um framework"
-  />
+:::corp-code
+<CorpSelect
+  v-model="selectForm.frameworkUsage"
+  name="frameworkUsage"
+  :items="['Vue', 'React', 'Angular', 'Svelte']"
+  label="Framework"
+  placeholder="Escolha um framework"
+/>
 
-  <template #code>
-
+<!-- @disp-code -->
 ```vue
 <script setup>
 import { ref } from 'vue'
@@ -35,9 +34,7 @@ const framework = ref('')
   />
 </template>
 ```
-
-  </template>
-</CodePreview>
+:::
 
 ---
 
@@ -47,18 +44,17 @@ const framework = ref('')
 
 A prop `items` aceita dois formatos: **array de strings** ou **array de objetos** com `{value, label}`.
 
-<CodePreview>
-  <CorpSelect
-    v-model="selectForm.status"
-    name="status"
-    :items="['Ativo', 'Inativo', 'Pendente']"
-    label="Status (array simples)"
-    placeholder="Selecione o status"
-    class="max-w-md"
-  />
+:::corp-code
+<CorpSelect
+  v-model="selectForm.status"
+  name="status"
+  :items="['Ativo', 'Inativo', 'Pendente']"
+  label="Status (array simples)"
+  placeholder="Selecione o status"
+  class="max-w-md"
+/>
 
-  <template #code>
-
+<!-- @disp-code -->
 ```vue
 <script setup>
 const statusOptions = ['Ativo', 'Inativo', 'Pendente']
@@ -87,9 +83,7 @@ const stateOptions = [
   />
 </template>
 ```
-
-  </template>
-</CodePreview>
+:::
 
 | Formato | Exemplo | v-model |
 |---------|---------|---------|
@@ -102,19 +96,18 @@ const stateOptions = [
 
 Use `multiple` para habilitar seleção múltipla. O `v-model` passa a ser um array.
 
-<CodePreview>
-  <CorpSelect
-    v-model="selectForm.multipleFrameworks"
-    name="multipleFrameworks"
-    :items="['Vue', 'React', 'Angular', 'Svelte', 'Solid']"
-    label="Frameworks (seleção múltipla)"
-    placeholder="Selecione múltiplos frameworks"
-    multiple
-    class="max-w-md"
-  />
+:::corp-code
+<CorpSelect
+  v-model="selectForm.multipleFrameworks"
+  name="multipleFrameworks"
+  :items="['Vue', 'React', 'Angular', 'Svelte', 'Solid']"
+  label="Frameworks (seleção múltipla)"
+  placeholder="Selecione múltiplos frameworks"
+  multiple
+  class="max-w-md"
+/>
 
-  <template #code>
-
+<!-- @disp-code -->
 ```vue
 <script setup>
 const frameworks = ['Vue', 'React', 'Angular', 'Svelte', 'Solid']
@@ -131,9 +124,7 @@ const frameworks = ['Vue', 'React', 'Angular', 'Svelte', 'Solid']
   />
 </template>
 ```
-
-  </template>
-</CodePreview>
+:::
 
 > **Nota:** Com `multiple`, o valor do `v-model` é um array de strings/numbers.
 
@@ -141,20 +132,19 @@ const frameworks = ['Vue', 'React', 'Angular', 'Svelte', 'Solid']
 
 Combine `multiple` com `chips` para exibir os itens selecionados como badges removíveis.
 
-<CodePreview>
-  <CorpSelect
-    v-model="selectForm.skills"
-    name="skills"
-    :items="['TypeScript', 'JavaScript', 'Python', 'Go', 'Rust', 'Java']"
-    label="Skills (multiple com chips)"
-    placeholder="Selecione suas habilidades"
-    multiple
-    chips
-    class="max-w-md"
-  />
+:::corp-code
+<CorpSelect
+  v-model="selectForm.skills"
+  name="skills"
+  :items="['TypeScript', 'JavaScript', 'Python', 'Go', 'Rust', 'Java']"
+  label="Skills (multiple com chips)"
+  placeholder="Selecione suas habilidades"
+  multiple
+  chips
+  class="max-w-md"
+/>
 
-  <template #code>
-
+<!-- @disp-code -->
 ```vue
 <script setup>
 const skills = ['TypeScript', 'JavaScript', 'Python', 'Go', 'Rust']
@@ -172,9 +162,7 @@ const skills = ['TypeScript', 'JavaScript', 'Python', 'Go', 'Rust']
   />
 </template>
 ```
-
-  </template>
-</CodePreview>
+:::
 
 > **Interatividade:** Cada chip possui um botão X para remover o item individualmente.
 
@@ -182,19 +170,18 @@ const skills = ['TypeScript', 'JavaScript', 'Python', 'Go', 'Rust']
 
 Adiciona botão (X) para limpar a seleção rapidamente.
 
-<CodePreview>
-  <CorpSelect
-    v-model="selectForm.frameworkClear"
-    name="frameworkClear"
-    :items="['Vue', 'React', 'Angular', 'Svelte']"
-    label="Framework (clearable)"
-    placeholder="Escolha um framework"
-    clearable
-    class="max-w-md"
-  />
+:::corp-code
+<CorpSelect
+  v-model="selectForm.frameworkClear"
+  name="frameworkClear"
+  :items="['Vue', 'React', 'Angular', 'Svelte']"
+  label="Framework (clearable)"
+  placeholder="Escolha um framework"
+  clearable
+  class="max-w-md"
+/>
 
-  <template #code>
-
+<!-- @disp-code -->
 ```vue
 <template>
   <!-- Single select clearable -->
@@ -218,9 +205,7 @@ Adiciona botão (X) para limpar a seleção rapidamente.
   />
 </template>
 ```
-
-  </template>
-</CodePreview>
+:::
 
 > **Comportamento:** No single-select, limpa para `undefined`. No multiple, limpa para `[]`.
 
@@ -228,18 +213,17 @@ Adiciona botão (X) para limpar a seleção rapidamente.
 
 Estados de desabilitado e somente leitura.
 
-<CodePreview>
-  <CorpSelect
-    name="frameworkDisabled"
-    :items="['Vue', 'React', 'Angular']"
-    label="Disabled"
-    modelValue="Vue"
-    disabled
-    class="max-w-md"
-  />
+:::corp-code
+<CorpSelect
+  name="frameworkDisabled"
+  :items="['Vue', 'React', 'Angular']"
+  label="Disabled"
+  modelValue="Vue"
+  disabled
+  class="max-w-md"
+/>
 
-  <template #code>
-
+<!-- @disp-code -->
 ```vue
 <template>
   <CorpSelect
@@ -259,9 +243,7 @@ Estados de desabilitado e somente leitura.
   />
 </template>
 ```
-
-  </template>
-</CodePreview>
+:::
 
 | Estado | Descrição |
 |--------|-----------|
@@ -275,25 +257,24 @@ Estados de desabilitado e somente leitura.
 
 Integração automática com `useForm` para validação. Detecta automaticamente se `rules` contém `required`.
 
-<CodePreview>
-  <CorpSelect
-    v-model="selectForm.country"
-    name="country"
-    :items="[
-      { value: 'br', label: 'Brasil' },
-      { value: 'us', label: 'Estados Unidos' },
-      { value: 'uk', label: 'Reino Unido' }
-    ]"
-    label="País"
-    :rules="[rules.required]"
-    placeholder="Selecione seu país"
-    hint="Campo obrigatório com validação"
-    clearable
-    class="max-w-md"
-  />
+:::corp-code
+<CorpSelect
+  v-model="selectForm.country"
+  name="country"
+  :items="[
+    { value: 'br', label: 'Brasil' },
+    { value: 'us', label: 'Estados Unidos' },
+    { value: 'uk', label: 'Reino Unido' }
+  ]"
+  label="País"
+  :rules="[rules.required]"
+  placeholder="Selecione seu país"
+  hint="Campo obrigatório com validação"
+  clearable
+  class="max-w-md"
+/>
 
-  <template #code>
-
+<!-- @disp-code -->
 ```vue
 <script setup>
 const countries = [
@@ -328,9 +309,7 @@ const countries = [
   />
 </template>
 ```
-
-  </template>
-</CodePreview>
+:::
 
 > **Auto-detect Required:** Se `rules` contém `required`, adiciona `*` vermelho no label automaticamente.
 

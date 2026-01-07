@@ -436,7 +436,7 @@ const inputDynamicPadding = computed(() => {
         @click="handlePrependOuterClick"
       >
         <CorpIcon
-          :name="prependOuterIcon"
+          :icon="prependOuterIcon"
           :size="iconSize"
           :class="prependOuterIconColor || iconColor"
           :disabled="disabled"
@@ -450,7 +450,7 @@ const inputDynamicPadding = computed(() => {
         class="corp-icon-wrapper flex-shrink-0"
       >
         <CorpIcon
-          :name="prependOuterIcon"
+          :icon="prependOuterIcon"
           :size="iconSize"
           :class="prependOuterIconColor || iconColor"
           :disabled="disabled"
@@ -481,7 +481,7 @@ const inputDynamicPadding = computed(() => {
           @click="handlePrependClick"
         >
           <CorpIcon
-            :name="prependIcon"
+            :icon="prependIcon"
             :size="iconSize"
             :class="prependIconColor || iconColor"
             :disabled="disabled || readonly"
@@ -493,7 +493,7 @@ const inputDynamicPadding = computed(() => {
           class="corp-icon-wrapper absolute left-2 top-1/2 -translate-y-1/2 z-10"
         >
           <CorpIcon
-            :name="prependIcon"
+            :icon="prependIcon"
             :size="iconSize"
             :class="prependIconColor || iconColor"
             :disabled="disabled || readonly"
@@ -566,7 +566,7 @@ const inputDynamicPadding = computed(() => {
             @click="handleClear"
           >
             <CorpIcon
-              name="X"
+              icon="luc-x"
               :size="iconSize"
               :class="iconColor"
               :disabled="disabled || readonly"
@@ -576,7 +576,7 @@ const inputDynamicPadding = computed(() => {
           <!-- Loading Spinner (substitui append-icon quando loading=true) -->
           <div v-if="loading" class="corp-icon-wrapper">
             <CorpIcon
-              name="luc-loader-circle"
+              icon="luc-loader-circle"
               :size="iconSize"
               :class="iconColor"
               class="animate-spin"
@@ -592,7 +592,7 @@ const inputDynamicPadding = computed(() => {
             @click="handleAppendClick"
           >
             <CorpIcon
-              :name="appendIcon"
+              :icon="appendIcon"
               :size="iconSize"
               :class="appendIconColor || iconColor"
               :disabled="disabled || readonly"
@@ -604,7 +604,7 @@ const inputDynamicPadding = computed(() => {
             class="corp-icon-wrapper"
           >
             <CorpIcon
-              :name="appendIcon"
+              :icon="appendIcon"
               :size="iconSize"
               :class="appendIconColor || iconColor"
               :disabled="disabled || readonly"
@@ -627,7 +627,7 @@ const inputDynamicPadding = computed(() => {
         @click="handleAppendOuterClick"
       >
         <CorpIcon
-          :name="appendOuterIcon"
+          :icon="appendOuterIcon"
           :size="iconSize"
           :class="appendOuterIconColor || iconColor"
           :disabled="disabled"
@@ -639,7 +639,7 @@ const inputDynamicPadding = computed(() => {
         class="corp-icon-wrapper flex-shrink-0"
       >
         <CorpIcon
-          :name="appendOuterIcon"
+          :icon="appendOuterIcon"
           :size="iconSize"
           :class="appendOuterIconColor || iconColor"
           :disabled="disabled"

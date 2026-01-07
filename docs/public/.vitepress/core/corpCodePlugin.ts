@@ -79,7 +79,10 @@ interface IDispCodeResult {
  * Separa conteudo em preview e display code
  * Detecta <!-- @disp-code --> como separador
  */
-function parseDispCode(content: string, defaultLang: string): IDispCodeResult | null {
+function parseDispCode(
+  content: string,
+  defaultLang: string
+): IDispCodeResult | null {
   const separator = '<!-- @disp-code -->';
   const idx = content.indexOf(separator);
 
@@ -270,7 +273,9 @@ ${tabSlots}
       const renderedCode = md.render(codeBlock);
 
       const configAttr =
-        configParts.length > 0 ? ` :config="{ ${configParts.join(', ')} }"` : '';
+        configParts.length > 0
+          ? ` :config="{ ${configParts.join(', ')} }"`
+          : '';
 
       return `<CorpCode${configAttr}>
 ${dispCode.preview}
