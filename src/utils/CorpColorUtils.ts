@@ -233,9 +233,43 @@ export const lighten = (color: string, percent: number = 20): string => {
 /**
  * 🎨 Resolve nomes de cores para valores reais (client-side)
  *
+ * ⚠️ IMPLEMENTAÇÃO ATUAL: HARDCODED
+ * Este mapeamento é manual e precisa ser atualizado quando novas cores são adicionadas.
+ *
+ * 🔄 TODO: Implementar Auto-Discovery
+ * Deveria ler automaticamente todas as CSS variables do :root no runtime:
+ *
+ * @example Auto-Discovery (futuro)
+ * ```typescript
+ * const discoverCSSVariables = (): Record<string, string> => {
+ *   if (!isClientSide()) return {};
+ *   const styles = getComputedStyle(document.documentElement);
+ *   const vars: Record<string, string> = {};
+ *   for (let i = 0; i < styles.length; i++) {
+ *     const prop = styles[i];
+ *     if (prop.startsWith('--')) {
+ *       vars[prop.slice(2)] = `var(${prop})`;
+ *     }
+ *   }
+ *   return vars;
+ * }
+ * ```
+ *
+ * ⚠️ VARIÁVEIS FALTANDO NO MAPEAMENTO:
+ * Existem no main.css mas NÃO estão mapeadas aqui:
+ * - primary-foreground, secondary-foreground, destructive-foreground
+ * - muted-foreground, accent-foreground
+ * - card, card-foreground
+ * - popover, popover-foreground
+ * - border, input, ring
+ * - input-background, button-outline-border
+ *
+ * ⚠️ VARIÁVEIS MAPEADAS MAS NÃO EXISTEM NO CSS:
+ * - success (não existe no main.css - precisa adicionar!)
+ * - warning (não existe no main.css - precisa adicionar!)
+ *
  * Converte nomes de cores CSS ou variáveis Tailwind para valores computados.
  * Útil para processar cores antes de manipulações.
- * Evita HSL - retorna sempre RGB ou valores diretos.
  *
  * @param {string} color - Nome da cor ou valor já válido
  * @returns {string} Cor resolvida em formato válido
@@ -253,18 +287,20 @@ export const resolveColor = (color: string): string => {
     return color;
   }
 
-  // Mapeamento de nomes comuns para variáveis CSS
+  // ⚠️ HARDCODED: Mapeamento manual de nomes para variáveis CSS
+  // TODO: Substituir por auto-discovery para eliminar duplicação
   const cssVariables: Record<string, string> = {
     primary: 'var(--primary)',
     secondary: 'var(--secondary)',
     accent: 'var(--accent)',
     destructive: 'var(--destructive)',
     muted: 'var(--muted)',
-    success: 'var(--success)',
-    warning: 'var(--warning)',
-    error: 'var(--destructive)',
+    success: 'var(--success)', // ⚠️ NÃO EXISTE no main.css!
+    warning: 'var(--warning)', // ⚠️ NÃO EXISTE no main.css!
+    error: 'var(--destructive)', // Alias
     background: 'var(--background)',
     foreground: 'var(--foreground)',
+    // TODO: Adicionar as variáveis faltantes (ver lista acima)
   };
 
   return cssVariables[color] ?? color;

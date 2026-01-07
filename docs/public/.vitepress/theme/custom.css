@@ -30,8 +30,12 @@
   --vp-c-text-2: #64748b;
   --vp-c-text-3: #7A9AB8;
 
-  /* Sidebar */
+  /* Sidebar Esquerda - Compacta (padrão: 272px) */
+  --vp-sidebar-width: 220px;
   --vp-sidebar-bg-color: #F0F4F7;
+
+  /* Layout - Conteúdo mais largo */
+  --vp-layout-max-width: 1600px;
 
   /* Code blocks - Azulado */
   --vp-code-block-bg: #e3ebf2;

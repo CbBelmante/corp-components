@@ -17,10 +17,13 @@ import { computed, useSlots, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import { buttonVariants, type ButtonVariants } from '.';
 import CorpIcon from '@components/ui/icon/CorpIcon.vue';
+import { resolveColor } from '@/utils/CorpColorUtils';
 
 // ============== TIPOS ==============
 
 type RoundedPreset = 'default' | 'none' | 'sm' | 'lg' | 'xl' | 'full';
+type ElevatedPreset = 0 | 1 | 2 | 3 | 4 | 6;
+
 // ============== PROPS ==============
 
 const props = defineProps({
@@ -37,6 +40,11 @@ const props = defineProps({
     // Aceita presets (default, none, sm, lg, xl, full) OU valores custom (rounded-3xl, 10px, etc)
     type: String,
     default: 'default',
+  },
+  elevated: {
+    // Aceita presets (0, 1, 2, 3, 4, 6) OU classes Tailwind custom (shadow-2xl, shadow-[...])
+    type: [Number, String],
+    default: undefined,
   },
 
   // Layout Props
@@ -84,6 +92,16 @@ const props = defineProps({
     type: [Number, String],
     default: undefined,
   },
+  /** Cor do ícone prepend (aceita: hex, rgb, 'primary', 'var(--accent)', etc) */
+  pIconColor: {
+    type: String,
+    default: undefined,
+  },
+  /** Cor do ícone append (aceita: hex, rgb, 'primary', 'var(--accent)', etc) */
+  apIconColor: {
+    type: String,
+    default: undefined,
+  },
 
   // HTML
   type: {
@@ -106,6 +124,8 @@ const roundedPresets: RoundedPreset[] = [
   'xl',
   'full',
 ];
+
+const elevatedPresets: ElevatedPreset[] = [0, 1, 2, 3, 4, 6];
 
 // ============== SLOTS ==============
 
@@ -154,6 +174,21 @@ const customRoundedStyle = computed(() => {
   return { borderRadius: props.rounded };
 });
 
+// Verifica se elevated é preset ou custom
+const isElevatedPreset = computed(() => {
+  if (props.elevated === undefined) return false;
+  const numValue = typeof props.elevated === 'string' ? parseInt(props.elevated) : props.elevated;
+  return elevatedPresets.includes(numValue as ElevatedPreset);
+});
+
+// Classes custom de elevated (quando não é preset)
+const customElevatedClass = computed(() => {
+  if (!props.elevated || isElevatedPreset.value) return '';
+  // Se começa com "shadow", é classe Tailwind
+  if (String(props.elevated).startsWith('shadow')) return String(props.elevated);
+  return '';
+});
+
 const buttonClasses = computed(() => {
   return cn(
     buttonVariants({
@@ -162,16 +197,29 @@ const buttonClasses = computed(() => {
       rounded: isRoundedPreset.value
         ? (props.rounded as RoundedPreset)
         : undefined,
+      elevated: isElevatedPreset.value
+        ? (props.elevated as ElevatedPreset)
+        : undefined,
       block: props.block,
       stacked: props.stacked,
     }),
     customRoundedClass.value,
+    customElevatedClass.value,
     props.class
   );
 });
 
 // Tamanho do ícone: prop > default (1em herda do texto)
 const computedIconSize = computed(() => props.iconSize || '1em');
+
+// Cores resolvidas dos ícones (suporta nomes, hex, rgb, variáveis CSS)
+const resolvedPrependIconColor = computed(() =>
+  props.pIconColor ? resolveColor(props.pIconColor) : 'currentColor'
+);
+
+const resolvedAppendIconColor = computed(() =>
+  props.apIconColor ? resolveColor(props.apIconColor) : 'currentColor'
+);
 </script>
 
 <template>
@@ -189,6 +237,7 @@ const computedIconSize = computed(() => props.iconSize || '1em');
         v-if="showPrependIcon && currentPrependIcon"
         :icon="currentPrependIcon"
         :size="computedIconSize"
+        :color="resolvedPrependIconColor"
       />
     </slot>
 
@@ -201,6 +250,7 @@ const computedIconSize = computed(() => props.iconSize || '1em');
         v-if="showAppendIcon && appendIcon"
         :icon="appendIcon"
         :size="computedIconSize"
+        :color="resolvedAppendIconColor"
       />
     </slot>
   </Primitive>

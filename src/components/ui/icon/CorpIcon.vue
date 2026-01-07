@@ -16,6 +16,7 @@
 import { computed, type PropType } from 'vue';
 import { getLucideIcon } from '@/composables/useLucideIcon';
 import { getFontAwesomeIcon } from '@/composables/useFontAwesome';
+import { resolveColor } from '@/utils/CorpColorUtils';
 
 // ============== TIPOS ==============
 
@@ -181,10 +182,18 @@ const isSpinner = computed(() => {
   return spinnerIcons.includes(resolvedIcon.value);
 });
 
+/**
+ * Resolve a cor do ícone (suporta nomes, hex, rgb, variáveis CSS)
+ */
+const resolvedColor = computed(() => {
+  if (!props.color || props.color === 'currentColor') return 'currentColor';
+  return resolveColor(props.color);
+});
+
 const iconStyles = computed(() => ({
   width: computedSize.value,
   height: computedSize.value,
-  color: props.color,
+  color: resolvedColor.value,
   flexShrink: '0',
 }));
 

@@ -19,10 +19,6 @@ export const buttonVariants = cva(
     // Disabled
     'disabled:pointer-events-none disabled:opacity-50',
 
-    // Hover Elevation Effect
-    'hover:enabled:-translate-y-px hover:enabled:shadow-md',
-    'active:enabled:translate-y-0 active:enabled:shadow-sm',
-
     // SVG handling
     '[&_svg]:pointer-events-none [&_svg]:shrink-0',
   ],
@@ -65,6 +61,15 @@ export const buttonVariants = cva(
         true: 'flex-col gap-1 h-auto py-2',
         false: '',
       },
+      // Elevation (Material Design inspired)
+      elevated: {
+        0: 'shadow-none hover:enabled:shadow-none',
+        1: 'shadow-sm hover:enabled:shadow hover:enabled:-translate-y-0.5 active:enabled:translate-y-0',
+        2: 'shadow hover:enabled:shadow-md hover:enabled:-translate-y-px active:enabled:translate-y-0',
+        3: 'shadow-md hover:enabled:shadow-lg hover:enabled:-translate-y-px active:enabled:translate-y-0',
+        4: 'shadow-lg hover:enabled:shadow-xl hover:enabled:-translate-y-0.5 active:enabled:translate-y-0',
+        6: 'shadow-xl hover:enabled:shadow-2xl hover:enabled:-translate-y-1 active:enabled:translate-y-0',
+      },
     },
     defaultVariants: {
       variant: 'default',
@@ -72,6 +77,7 @@ export const buttonVariants = cva(
       rounded: 'default',
       block: false,
       stacked: false,
+      elevated: undefined,
     },
   }
 );
