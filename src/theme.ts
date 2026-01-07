@@ -327,22 +327,17 @@ export const themeDefinition = {
   // ==================== STATUS COLORS ====================
   success: {
     light: '#16a34a', // Verde mais terroso/floresta (green-600)
-    dark: '#22c55e',  // Verde suave (green-500)
+    dark: '#22c55e', // Verde suave (green-500)
     type: THEME_COLOR_TYPES.BOTH,
   },
   warning: {
     light: '#d97706', // Laranja/âmbar terroso (amber-600)
-    dark: '#f59e0b',  // Âmbar médio (amber-500)
-    type: THEME_COLOR_TYPES.BOTH,
-  },
-  error: {
-    light: '#dc2626', // Vermelho tijolo (red-600)
-    dark: '#ef4444',  // Vermelho médio (red-500)
+    dark: '#f59e0b', // Âmbar médio (amber-500)
     type: THEME_COLOR_TYPES.BOTH,
   },
   info: {
     light: '#0284c7', // Azul sky terroso (sky-600)
-    dark: '#0ea5e9',  // Azul sky médio (sky-500)
+    dark: '#0ea5e9', // Azul sky médio (sky-500)
     type: THEME_COLOR_TYPES.BOTH,
   },
   pending: {

@@ -17,7 +17,7 @@ import { computed, useSlots, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import { buttonVariants, type ButtonVariants, SEMANTIC_COLORS } from '.';
 import CorpIcon from '@components/ui/icon/CorpIcon.vue';
-import { resolveColor } from '@/utils/CorpColorUtils';
+import { resolveColor, toRgba } from '@/utils/CorpColorUtils';
 
 // ============== TIPOS ==============
 
@@ -209,7 +209,7 @@ const customElevatedClass = computed(() => {
 
 // Verifica se color é preset (semântico) ou custom
 const isColorPreset = computed(() => {
-  return SEMANTIC_COLORS.includes(props.color as any);
+  return SEMANTIC_COLORS.includes(props.color as ButtonVariants['color']);
 });
 
 // Custom color styles (bgColor/textColor overrides OU color não-preset)
@@ -220,18 +220,11 @@ const customColorStyle = computed(() => {
   if (props.bgColor) {
     styles.backgroundColor = resolveColor(props.bgColor);
   } else if (!isColorPreset.value && props.color) {
-    // Color customizado (não-preset) - aplica conforme variant
-    const resolvedColor = resolveColor(props.color);
-
-    if (props.variant === 'solid') {
-      styles.backgroundColor = resolvedColor;
-      styles.color = 'white'; // texto branco em fundo colorido
-    } else if (props.variant === 'outline') {
-      styles.borderColor = resolvedColor;
-      styles.color = resolvedColor;
-    } else if (props.variant === 'ghost' || props.variant === 'link') {
-      styles.color = resolvedColor;
-    }
+    // Color customizado (não-preset) - injeta CSS variables com diferentes opacities
+    // IMPORTANTE: toRgba() ANTES de resolveColor() para processar var() corretamente
+    styles['--corp-btn-color'] = resolveColor(props.color);
+    styles['--corp-btn-color-hover'] = toRgba(props.color, 0.9); // 90% para solid
+    styles['--corp-btn-color-light'] = toRgba(props.color, 0.1); // 10% para outline/ghost
   }
 
   // textColor tem prioridade final
@@ -240,6 +233,32 @@ const customColorStyle = computed(() => {
   }
 
   return styles;
+});
+
+// Custom color classes (Tailwind arbitrary values para hover/focus)
+const customColorClasses = computed(() => {
+  // Só aplica se cor não é preset E existe
+  if (isColorPreset.value || !props.color) return [];
+
+  const color = 'var(--corp-btn-color)';
+  const colorHover = 'var(--corp-btn-color-hover)';
+  const colorLight = 'var(--corp-btn-color-light)';
+
+  if (props.variant === 'solid') {
+    return [`bg-[${color}]`, `hover:bg-[${colorHover}]`, 'text-white'];
+  } else if (props.variant === 'outline') {
+    return [`border-[${color}]`, `text-[${color}]`, `hover:bg-[${colorLight}]`];
+  } else if (props.variant === 'ghost') {
+    return [
+      `text-[${color}]`,
+      `hover:bg-[${colorLight}]`,
+      `hover:text-[${color}]`,
+    ];
+  } else if (props.variant === 'link') {
+    return [`text-[${color}]`];
+  }
+
+  return [];
 });
 
 // Combina custom rounded + custom color styles
@@ -254,7 +273,9 @@ const buttonClasses = computed(() => {
   return cn(
     buttonVariants({
       variant: props.variant,
-      color: isColorPreset.value ? (props.color as ButtonVariants['color']) : undefined,
+      color: isColorPreset.value
+        ? (props.color as ButtonVariants['color'])
+        : undefined,
       size: props.size,
       rounded: isRoundedPreset.value
         ? (props.rounded as RoundedPreset)
@@ -267,6 +288,7 @@ const buttonClasses = computed(() => {
     }),
     customRoundedClass.value,
     customElevatedClass.value,
+    customColorClasses.value,
     props.class
   );
 });

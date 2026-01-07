@@ -1,5 +1,6 @@
 import tailwindcssAnimate from 'tailwindcss-animate';
 import typography from '@tailwindcss/typography';
+import { SEMANTIC_COLORS } from './src/constants/semanticColors.js';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -14,8 +15,17 @@ export default {
   safelist: [
     // Button semantic colors - garantir que Tailwind gere todas as classes
     {
-      pattern: /^(bg|text|border|hover:bg|hover:text)-(success|warning|error|info)(\/\d+)?$/,
+      pattern: new RegExp(
+        `^(bg|text|border|hover:bg|hover:text)-(${SEMANTIC_COLORS.join('|')})(/\\d+)?$`
+      ),
     },
+    // Custom color arbitrary values - cores customizadas (HEX, RGB, var(), etc)
+    'bg-[var(--corp-btn-color)]',
+    'hover:bg-[var(--corp-btn-color-hover)]',
+    'hover:bg-[var(--corp-btn-color-light)]',
+    'text-[var(--corp-btn-color)]',
+    'hover:text-[var(--corp-btn-color)]',
+    'border-[var(--corp-btn-color)]',
   ],
   theme: {
     extend: {

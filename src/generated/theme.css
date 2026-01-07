@@ -69,7 +69,6 @@
   --table-cell-border: #E5E7EB;
   --success: #16a34a;
   --warning: #d97706;
-  --error: #dc2626;
   --info: #0284c7;
   --pending: #7c3aed;
   --hover-overlay: rgba(0, 0, 0, 0.04);
@@ -203,7 +202,6 @@
   --table-cell-border: #30363d;
   --success: #22c55e;
   --warning: #f59e0b;
-  --error: #ef4444;
   --info: #0ea5e9;
   --pending: #8b5cf6;
   --hover-overlay: rgba(255, 255, 255, 0.04);

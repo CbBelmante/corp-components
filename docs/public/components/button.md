@@ -44,7 +44,6 @@ A prop `color` define a **cor semântica** do botão. Pode ser combinada com qua
 <CorpButton color="destructive">Destructive</CorpButton>
 <CorpButton color="success">Success</CorpButton>
 <CorpButton color="warning">Warning</CorpButton>
-<CorpButton color="error">Error</CorpButton>
 <CorpButton color="info">Info</CorpButton>
 :::
 
@@ -52,10 +51,9 @@ A prop `color` define a **cor semântica** do botão. Pode ser combinada com qua
 |-------|-----------|-----|
 | `primary` | Cor principal (padrão) | Laranja `#FF7133` |
 | `secondary` | Cor secundária | Azul acinzentado |
-| `destructive` | Ação destrutiva | Vermelho |
+| `destructive` | Ação destrutiva/perigo | Vermelho |
 | `success` | Sucesso/confirmação | Verde |
 | `warning` | Aviso/atenção | Amarelo |
-| `error` | Erro/perigo | Vermelho |
 | `info` | Informação | Azul |
 
 #### Combinando Variant + Color
@@ -73,7 +71,7 @@ Você pode combinar **qualquer variant** com **qualquer color**:
 
 <!-- Ghost + cores -->
 <CorpButton variant="ghost" color="info">Info</CorpButton>
-<CorpButton variant="ghost" color="error">Cancelar</CorpButton>
+<CorpButton variant="ghost" color="destructive">Cancelar</CorpButton>
 :::
 
 #### Cores Customizadas
@@ -87,7 +85,13 @@ Você pode usar **qualquer cor** (HEX, RGB, variável CSS):
 
 <!-- Variável CSS -->
 <CorpButton color="var(--info)" variant="ghost">Info Custom</CorpButton>
+<!-- Nomes CSS -->
+<CorpButton color="cyan" variant="ghost">Cyan</CorpButton>
+<CorpButton color="pink" variant="outline">Pink</CorpButton>
+<CorpButton color="orange" variant="solid">Orange</CorpButton>
 :::
+
+> **Hover funciona!** Cores customizadas (HEX, RGB, HSL, var(), nomes CSS) suportam hover/focus. Nomes CSS são convertidos automaticamente usando Canvas API.
 
 #### bgColor e textColor
 
@@ -529,7 +533,7 @@ Icon buttons em uma toolbar:
 | Prop | Tipo | Default | Descrição |
 |------|------|---------|-----------|
 | `variant` | `'solid' \| 'outline' \| 'ghost' \| 'link'` | `'solid'` | Estilo visual do botão |
-| `color` | `'primary' \| 'secondary' \| 'destructive' \| 'success' \| 'warning' \| 'error' \| 'info' \| string` | `'primary'` | Cor semântica (aceita HEX, RGB, variável CSS) |
+| `color` | `'primary' \| 'secondary' \| 'destructive' \| 'success' \| 'warning' \| 'info' \| string` | `'primary'` | Cor semântica (aceita HEX, RGB, variável CSS) |
 | `bgColor` | `string` | `undefined` | Override do background (HEX, RGB, variável CSS) |
 | `textColor` | `string` | `undefined` | Override da cor do texto (HEX, RGB, variável CSS) |
 | `size` | `'default' \| 'sm' \| 'lg' \| 'xs' \| 'icon' \| 'icon-sm' \| 'icon-lg'` | `'default'` | Tamanho do botão |

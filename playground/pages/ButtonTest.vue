@@ -51,12 +51,16 @@ const simulateLoading = () => {
 
     <!-- Variantes + Cores -->
     <section class="space-y-4">
-      <h2 class="text-lg font-semibold text-foreground">Combinações Variant + Color</h2>
+      <h2 class="text-lg font-semibold text-foreground">
+        Combinações Variant + Color
+      </h2>
       <div class="space-y-3">
         <!-- Solid -->
         <div class="space-y-2">
           <p class="text-sm text-muted-foreground font-medium">Solid</p>
-          <div class="flex flex-wrap gap-2 p-3 bg-card border border-border rounded">
+          <div
+            class="flex flex-wrap gap-2 p-3 bg-card border border-border rounded"
+          >
             <Button variant="solid" color="success">Salvar</Button>
             <Button variant="solid" color="destructive">Deletar</Button>
             <Button variant="solid" color="warning">Aviso</Button>
@@ -67,7 +71,9 @@ const simulateLoading = () => {
         <!-- Outline -->
         <div class="space-y-2">
           <p class="text-sm text-muted-foreground font-medium">Outline</p>
-          <div class="flex flex-wrap gap-2 p-3 bg-card border border-border rounded">
+          <div
+            class="flex flex-wrap gap-2 p-3 bg-card border border-border rounded"
+          >
             <Button variant="outline" color="primary">Editar</Button>
             <Button variant="outline" color="secondary">Cancelar</Button>
             <Button variant="outline" color="destructive">Remover</Button>
@@ -78,7 +84,9 @@ const simulateLoading = () => {
         <!-- Ghost -->
         <div class="space-y-2">
           <p class="text-sm text-muted-foreground font-medium">Ghost</p>
-          <div class="flex flex-wrap gap-2 p-3 bg-card border border-border rounded">
+          <div
+            class="flex flex-wrap gap-2 p-3 bg-card border border-border rounded"
+          >
             <Button variant="ghost" color="info">Detalhes</Button>
             <Button variant="ghost" color="warning">Atenção</Button>
             <Button variant="ghost" color="error">Fechar</Button>
@@ -89,14 +97,88 @@ const simulateLoading = () => {
 
     <!-- Cores Customizadas -->
     <section class="space-y-4">
-      <h2 class="text-lg font-semibold text-foreground">Cores Customizadas (HEX)</h2>
-      <div
-        class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
-      >
-        <Button color="#8b5cf6" variant="solid">Roxo</Button>
-        <Button color="#ec4899" variant="outline">Rosa</Button>
-        <Button color="#06b6d4" variant="ghost">Ciano</Button>
-        <Button bgColor="#22c55e" textColor="white">Custom BG</Button>
+      <h2 class="text-lg font-semibold text-foreground">
+        Cores Customizadas com Hover
+      </h2>
+
+      <!-- HEX -->
+      <div class="space-y-2">
+        <h3 class="text-sm font-medium text-muted-foreground">HEX Colors</h3>
+        <div
+          class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
+        >
+          <Button color="#8b5cf6" variant="solid">HEX Solid</Button>
+          <Button color="#8b5cf6" variant="outline">
+            HEX Outline (hover!)
+          </Button>
+          <Button color="#8b5cf6" variant="ghost">HEX Ghost (hover!)</Button>
+          <Button color="#ec4899" variant="ghost">Rosa Ghost</Button>
+        </div>
+      </div>
+
+      <!-- RGB -->
+      <div class="space-y-2">
+        <h3 class="text-sm font-medium text-muted-foreground">RGB Colors</h3>
+        <div
+          class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
+        >
+          <Button color="rgb(139, 92, 246)" variant="solid">RGB Solid</Button>
+          <Button color="rgb(139, 92, 246)" variant="outline">
+            RGB Outline (hover!)
+          </Button>
+          <Button color="rgb(139, 92, 246)" variant="ghost">
+            RGB Ghost (hover!)
+          </Button>
+        </div>
+      </div>
+
+      <!-- CSS Variables -->
+      <div class="space-y-2">
+        <h3 class="text-sm font-medium text-muted-foreground">CSS Variables</h3>
+        <div
+          class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
+        >
+          <Button color="var(--info)" variant="solid">var(--info) Solid</Button>
+          <Button color="var(--info)" variant="outline">
+            var(--info) Outline (hover!)
+          </Button>
+          <Button color="var(--info)" variant="ghost">
+            var(--info) Ghost (hover!)
+          </Button>
+          <Button color="var(--success)" variant="ghost">
+            var(--success) Ghost
+          </Button>
+        </div>
+      </div>
+
+      <!-- CSS Named Colors -->
+      <div class="space-y-2">
+        <h3 class="text-sm font-medium text-muted-foreground">
+          CSS Named Colors
+        </h3>
+        <div
+          class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
+        >
+          <Button color="cyan" variant="solid">Cyan Solid</Button>
+          <Button color="cyan" variant="outline">Cyan Outline (hover!)</Button>
+          <Button color="cyan" variant="ghost">Cyan Ghost (hover!)</Button>
+          <Button color="pink" variant="ghost">Pink Ghost</Button>
+          <Button color="orange" variant="ghost">Orange Ghost</Button>
+          <Button color="teal" variant="outline">Teal Outline</Button>
+        </div>
+      </div>
+
+      <!-- bgColor/textColor (mantém inline style) -->
+      <div class="space-y-2">
+        <h3 class="text-sm font-medium text-muted-foreground">
+          bgColor/textColor Props
+        </h3>
+        <div
+          class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
+        >
+          <Button bgColor="#22c55e" textColor="white">Custom BG</Button>
+          <Button bgColor="var(--error)" textColor="white">Error BG</Button>
+        </div>
       </div>
     </section>
 
@@ -133,7 +215,9 @@ const simulateLoading = () => {
         class="flex flex-wrap items-center gap-4 p-4 bg-card border border-border rounded-lg"
       >
         <Button @click="clickCount++">Clicado {{ clickCount }}x</Button>
-        <Button variant="outline" color="secondary" @click="clickCount = 0">Reset</Button>
+        <Button variant="outline" color="secondary" @click="clickCount = 0">
+          Reset
+        </Button>
       </div>
     </section>
 
@@ -145,7 +229,12 @@ const simulateLoading = () => {
       <div
         class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
       >
-        <Button as="a" href="https://github.com" target="_blank" color="primary">
+        <Button
+          as="a"
+          href="https://github.com"
+          target="_blank"
+          color="primary"
+        >
           GitHub (Link)
         </Button>
         <Button

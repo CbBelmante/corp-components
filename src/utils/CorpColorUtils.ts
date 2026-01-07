@@ -211,13 +211,31 @@ export const toRgba = (color: string, opacity: number): string => {
 
       // Se encontrou um valor, processa recursivamente
       if (value) {
+        // HEX: #FF5733
         if (value.startsWith('#')) {
           const rgb = hexToRgb(value);
           return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacity})`;
         }
+
+        // RGB/RGBA: rgb(255, 87, 51) ou rgba(255, 87, 51, 1)
         if (value.startsWith('rgb')) {
           return value.replace('rgb', 'rgba').replace(')', `, ${opacity})`);
         }
+
+        // HSL com wrapper: hsl(200 98% 39%)
+        if (value.startsWith('hsl')) {
+          const rgb = hslToRgb(value);
+          return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacity})`;
+        }
+
+        // HSL SEM wrapper (Tailwind format): 200 98% 39%
+        // Detecta: começa com número e contém %
+        if (/^\d+\s+\d+%\s+\d+%/.test(value)) {
+          const rgb = hslToRgb(value);
+          return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacity})`;
+        }
+
+        // Variável aninhada: var(--outra-var)
         if (value.startsWith('var(--')) {
           return toRgba(value, opacity);
         }
@@ -225,7 +243,8 @@ export const toRgba = (color: string, opacity: number): string => {
     }
 
     // Fallback para SSR ou valor não encontrado
-    return `rgba(var(${varName}), ${opacity})`;
+    // Retorna cor sem opacity (melhor que sintaxe inválida)
+    return color;
   }
 
   // Se for HEX
@@ -244,8 +263,110 @@ export const toRgba = (color: string, opacity: number): string => {
     return color.replace(/,\s*[\d.]+\)$/, `, ${opacity})`);
   }
 
+  // Se for HSL
+  if (color.startsWith('hsl')) {
+    const rgb = hslToRgb(color);
+    return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacity})`;
+  }
+
+  // Se for nome de cor CSS (cyan, pink, red, etc)
+  // Tenta converter usando Canvas API
+  const rgb = cssNameToRgb(color);
+  if (rgb) {
+    return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacity})`;
+  }
+
   // Para outros casos, retorna como está
   return color;
+};
+
+/**
+ * 🎨 Converte nome de cor CSS para RGB usando Canvas API
+ *
+ * Suporta todos os 140 nomes de cores CSS3.
+ * SSR-safe: retorna null no servidor.
+ *
+ * @param {string} colorName - Nome da cor CSS (ex: 'cyan', 'pink', 'red')
+ * @returns {RgbColor | null} Objeto RGB ou null se inválido/SSR
+ *
+ * @example
+ * cssNameToRgb('cyan')    // { r: 0, g: 255, b: 255 }
+ * cssNameToRgb('pink')    // { r: 255, g: 192, b: 203 }
+ * cssNameToRgb('red')     // { r: 255, g: 0, b: 0 }
+ */
+export const cssNameToRgb = (colorName: string): RgbColor | null => {
+  // SSR-safe
+  if (!isClientSide()) return null;
+
+  // Cria canvas temporário
+  const canvas = document.createElement('canvas');
+  canvas.width = 1;
+  canvas.height = 1;
+  const ctx = canvas.getContext('2d');
+
+  if (!ctx) return null;
+
+  // Aplica cor e pega pixel
+  ctx.fillStyle = colorName;
+  ctx.fillRect(0, 0, 1, 1);
+  const imageData = ctx.getImageData(0, 0, 1, 1).data;
+
+  return {
+    r: imageData[0],
+    g: imageData[1],
+    b: imageData[2],
+  };
+};
+
+/**
+ * 🎨 Converte HSL para RGB
+ *
+ * Aceita tanto formato com wrapper quanto sem wrapper.
+ *
+ * @param {string} hsl - String HSL (com ou sem wrapper)
+ * @returns {RgbColor} Objeto com componentes RGB (0-255)
+ *
+ * @example
+ * hslToRgb('200 98% 39%')         // { r: 2, g: 132, b: 199 }
+ * hslToRgb('hsl(200 98% 39%)')    // { r: 2, g: 132, b: 199 }
+ * hslToRgb('hsl(200, 98%, 39%)')  // { r: 2, g: 132, b: 199 }
+ */
+export const hslToRgb = (hsl: string): RgbColor => {
+  // Remove wrapper se presente
+  hsl = hsl.replace('hsl(', '').replace(')', '').trim();
+
+  // Parse: suporta "200 98% 39%" ou "200, 98%, 39%"
+  const parts = hsl.split(/[\s,]+/).filter(Boolean);
+  const h = parseInt(parts[0]) / 360;
+  const s = parseInt(parts[1]) / 100;
+  const l = parseInt(parts[2]) / 100;
+
+  let r: number, g: number, b: number;
+
+  if (s === 0) {
+    r = g = b = l; // achromatic
+  } else {
+    const hue2rgb = (p: number, q: number, t: number) => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    };
+
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1 / 3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1 / 3);
+  }
+
+  return {
+    r: Math.round(r * 255),
+    g: Math.round(g * 255),
+    b: Math.round(b * 255),
+  };
 };
 
 // ============== COLOR MANIPULATION ==============

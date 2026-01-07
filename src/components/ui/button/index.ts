@@ -1,5 +1,6 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
+import { SEMANTIC_COLORS as SEMANTIC_COLORS_RAW } from '@/constants/semanticColors.js';
 
 export { default as CorpButton } from './CorpButton.vue';
 export { default as Button } from './CorpButton.vue'; // alias
@@ -8,16 +9,9 @@ export { default as Button } from './CorpButton.vue'; // alias
 
 /**
  * Cores semânticas disponíveis no sistema
+ * Importadas de /src/constants/semanticColors.js (compartilhado com tailwind.config.js)
  */
-export const SEMANTIC_COLORS = [
-  'primary',
-  'secondary',
-  'destructive',
-  'success',
-  'warning',
-  'error',
-  'info',
-] as const;
+export const SEMANTIC_COLORS = SEMANTIC_COLORS_RAW;
 
 export type SemanticColor = (typeof SEMANTIC_COLORS)[number];
 
@@ -55,7 +49,6 @@ export const buttonVariants = cva(
         destructive: '',
         success: '',
         warning: '',
-        error: '',
         info: '',
       },
       size: {
@@ -108,7 +101,8 @@ export const buttonVariants = cva(
       {
         variant: 'solid',
         color: 'destructive',
-        class: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+        class:
+          'bg-destructive text-destructive-foreground hover:bg-destructive/90',
       },
       {
         variant: 'solid',
@@ -119,11 +113,6 @@ export const buttonVariants = cva(
         variant: 'solid',
         color: 'warning',
         class: 'bg-warning text-white hover:bg-warning/90',
-      },
-      {
-        variant: 'solid',
-        color: 'error',
-        class: 'bg-error text-white hover:bg-error/90',
       },
       {
         variant: 'solid',
@@ -159,11 +148,6 @@ export const buttonVariants = cva(
       },
       {
         variant: 'outline',
-        color: 'error',
-        class: 'border-error text-error hover:bg-error/10',
-      },
-      {
-        variant: 'outline',
         color: 'info',
         class: 'border-info text-info hover:bg-info/10',
       },
@@ -196,11 +180,6 @@ export const buttonVariants = cva(
       },
       {
         variant: 'ghost',
-        color: 'error',
-        class: 'hover:bg-error/10 hover:text-error',
-      },
-      {
-        variant: 'ghost',
         color: 'info',
         class: 'hover:bg-info/10 hover:text-info',
       },
@@ -230,11 +209,6 @@ export const buttonVariants = cva(
         variant: 'link',
         color: 'warning',
         class: 'text-warning',
-      },
-      {
-        variant: 'link',
-        color: 'error',
-        class: 'text-error',
       },
       {
         variant: 'link',
