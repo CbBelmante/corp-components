@@ -1,1 +1,4 @@
-export { default as CodePreview } from './CodePreview.vue';
+export { default as CorpCode } from './CorpCode.vue';
+
+// Alias para compatibilidade (deprecated)
+export { default as CodePreview } from './CorpCode.vue';

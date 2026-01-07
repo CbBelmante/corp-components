@@ -187,7 +187,7 @@ const computedIconSize = computed(() => props.iconSize || '1em');
     <slot name="prepend">
       <CorpIcon
         v-if="showPrependIcon && currentPrependIcon"
-        :name="currentPrependIcon"
+        :icon="currentPrependIcon"
         :size="computedIconSize"
       />
     </slot>
@@ -199,7 +199,7 @@ const computedIconSize = computed(() => props.iconSize || '1em');
     <slot name="append">
       <CorpIcon
         v-if="showAppendIcon && appendIcon"
-        :name="appendIcon"
+        :icon="appendIcon"
         :size="computedIconSize"
       />
     </slot>

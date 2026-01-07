@@ -9,6 +9,7 @@ import { defineConfig } from 'vitepress';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 import { getAliases } from '../../../../src/config';
+import { corpCodePlugin } from './corpCodePlugin';
 
 export default defineConfig(async () => {
   const aliases = await getAliases(new URL('../../../../', import.meta.url));
@@ -16,6 +17,12 @@ export default defineConfig(async () => {
   return {
     title: 'Corp Components',
     description: 'Biblioteca de componentes Vue 3 para projetos corporativos',
+
+    markdown: {
+      config: (md: any) => {
+        md.use(corpCodePlugin);
+      },
+    },
 
     vite: {
       css: {

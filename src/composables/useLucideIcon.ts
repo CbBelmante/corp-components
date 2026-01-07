@@ -1,16 +1,23 @@
 /**
  * 🔧 useLucideIcon - Sistema de Ícones Lucide Corp Components
  *
- * Import automático dinâmico de ícones Lucide Vue Next.
+ * Import dinâmico lazy de ícones Lucide Vue Next.
  * ZERO MANUTENÇÃO: Aceita qualquer ícone do lucide-vue-next automaticamente.
  *
  * 🔗 DEPENDÊNCIAS:
  * - lucide-vue-next
  */
 
-// ============== DEPENDÊNCIAS EXTERNAS ==============
-import * as LucideIcons from 'lucide-vue-next';
-import { Search } from 'lucide-vue-next';
+import { h, type Component, defineAsyncComponent } from 'vue';
+
+// ============== TIPOS ==============
+
+type ILucideIconModule = Record<string, Component>;
+
+// ============== CACHE ==============
+
+let lucideIcons: ILucideIconModule | null = null;
+let loadPromise: Promise<ILucideIconModule> | null = null;
 
 // ============== HELPER FUNCTIONS ==============
 
@@ -31,21 +38,65 @@ const toPascalCase = (str: string): string => {
     .join('');
 };
 
+// ============== LAZY LOADING ==============
+
+/**
+ * Carrega Lucide icons sob demanda (lazy)
+ */
+const loadLucideIcons = async (): Promise<ILucideIconModule> => {
+  if (lucideIcons) return lucideIcons;
+
+  if (!loadPromise) {
+    loadPromise = import('lucide-vue-next').then(module => {
+      lucideIcons = module as unknown as ILucideIconModule;
+      return lucideIcons;
+    });
+  }
+
+  return loadPromise;
+};
+
 // ============== MAIN FUNCTION ==============
 
 /**
- * Retorna componente Lucide por nome dinâmico
+ * Retorna componente Lucide por nome dinâmico (lazy loaded)
  *
  * @example
  * getLucideIcon('User')        // PascalCase
  * getLucideIcon('luc-user')    // Com prefixo
  * getLucideIcon('user-plus')   // kebab-case
  */
-export const getLucideIcon = (iconName: string) => {
+export const getLucideIcon = (iconName: string): Component => {
   const cleanName = iconName.replace(/^luc-/, '');
   const pascalName = toPascalCase(cleanName);
 
-  const IconComponent = (LucideIcons as any)[pascalName];
+  // Retorna AsyncComponent que carrega Lucide sob demanda
+  return defineAsyncComponent({
+    loader: async () => {
+      const icons = await loadLucideIcons();
+      const IconComponent = icons[pascalName];
 
-  return IconComponent || Search;
+      if (!IconComponent) {
+        // Fallback para Search se não encontrar
+        return (
+          icons['Search'] || {
+            render: () => h('span', '?'),
+          }
+        );
+      }
+
+      return IconComponent;
+    },
+    loadingComponent: {
+      render: () => h('span', { style: { opacity: 0.3 } }, '...'),
+    },
+    delay: 0,
+  });
+};
+
+/**
+ * Pré-carrega os ícones Lucide (opcional, para evitar flash)
+ */
+export const preloadLucideIcons = (): Promise<ILucideIconModule> => {
+  return loadLucideIcons();
 };

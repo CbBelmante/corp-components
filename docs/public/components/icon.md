@@ -1,50 +1,110 @@
-<script setup>
-import { ref } from 'vue'
-import { CorpIcon } from '@components/ui/icon'
-import { CorpButton } from '@components/ui/button'
-
-const clickCount = ref(0)
-</script>
-
 # Icon
 
-O componente `CorpIcon` fornece um grande conjunto de ícones [Lucide](https://lucide.dev/icons/) para dar contexto a vários aspectos da sua aplicação. Para uma lista de todos os ícones disponíveis, visite a [página oficial do Lucide Icons](https://lucide.dev/icons/). Para usar qualquer um desses ícones, simplesmente use o prefixo `luc-` seguido do nome do ícone.
+O componente `CorpIcon` suporta duas bibliotecas de icones:
+
+- **[Lucide Icons](https://lucide.dev/icons/)** - Padrao, +1400 icones SVG
+- **[FontAwesome](https://fontawesome.com/icons/)** - Opcional, via prefixo `fa-`
 
 ## Uso
 
-Os ícones vêm em cinco tamanhos diferentes:
+Use a prop `icon` para especificar o icone:
+
+:::corp-code{lang=vue no-preview}
+<!-- Lucide (padrao) -->
+<CorpIcon icon="luc-home" />
+
+<!-- FontAwesome -->
+<CorpIcon icon="fa-fas fa-user" />
+<CorpIcon icon="fa-fab fa-github" />
+:::
+
+### Tamanhos
+
+Os icones vem em cinco tamanhos predefinidos:
 
 - `x-small` (12px)
 - `small` (16px)
-- `default` (24px) - padrão
+- `default` (24px) - padrao
 - `large` (32px)
 - `x-large` (40px)
 
-### Configuração
+:::corp-code
+<CorpIcon icon="luc-home" />
+:::
 
-| Propriedade | Descrição |
-|-------------|-----------|
-| `size` | Define o tamanho do ícone (preset ou valor custom) |
-| `color` | Define a cor do ícone |
-| `name` | Nome do ícone Lucide a ser exibido |
+---
 
-<CodePreview>
-  <CorpIcon name="luc-home" />
+## Bibliotecas de Icones
 
-  <template #code>
+### Lucide Icons (Padrao)
 
-```vue
-<script setup>
-import { CorpIcon } from 'corp-components'
-</script>
+[Lucide](https://lucide.dev/) e a biblioteca padrao com +1400 icones SVG otimizados.
 
-<template>
-  <CorpIcon name="luc-home" />
-</template>
+**Formatos aceitos:**
+
+:::corp-code
+<CorpIcon icon="luc-user" />
+<CorpIcon icon="user" />
+<CorpIcon icon="User" />
+<CorpIcon icon="user-plus" />
+<CorpIcon icon="UserPlus" />
+:::
+
+> **Recomendacao:** Use o prefixo `luc-` para clareza no codigo.
+
+### FontAwesome (Opcional)
+
+Para usar FontAwesome, instale as dependencias base:
+
+:::corp-code{tabs no-preview}
+```bash [bun]
+bun add @fortawesome/fontawesome-svg-core @fortawesome/vue-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/free-brands-svg-icons
 ```
 
-  </template>
-</CodePreview>
+```bash [npm]
+npm install @fortawesome/fontawesome-svg-core @fortawesome/vue-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/free-brands-svg-icons
+```
+
+```bash [yarn]
+yarn add @fortawesome/fontawesome-svg-core @fortawesome/vue-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/free-brands-svg-icons
+```
+:::
+
+Os icones **solid (fas)** e **brands (fab)** funcionam automaticamente apos instalacao.
+
+#### Pacote Adicional (Regular)
+
+Para usar icones **regular (far)**, instale e registre manualmente:
+
+:::corp-code{tabs no-preview}
+```bash [bun]
+bun add @fortawesome/free-regular-svg-icons
+```
+
+```bash [npm]
+npm install @fortawesome/free-regular-svg-icons
+```
+
+```bash [yarn]
+yarn add @fortawesome/free-regular-svg-icons
+```
+:::
+
+:::corp-code{lang=ts no-preview}
+// main.ts
+import { registerFontAwesomePack } from 'corp-components'
+import { far } from '@fortawesome/free-regular-svg-icons'
+
+registerFontAwesomePack(far)
+:::
+
+#### Uso com prefixo `fa-`
+
+:::corp-code
+<CorpIcon icon="fa-fas fa-user" />
+<CorpIcon icon="fa-fas fa-heart" />
+<CorpIcon icon="fa-fas fa-star" />
+:::
 
 ---
 
@@ -52,110 +112,57 @@ import { CorpIcon } from 'corp-components'
 
 ### Size
 
-Use a prop `size` para controlar o tamanho. Aceita presets ou valores custom:
+Use a prop `size` para controlar o tamanho:
 
-<CodePreview>
-  <CorpIcon name="luc-star" size="x-small" />
-  <CorpIcon name="luc-star" size="small" />
-  <CorpIcon name="luc-star" size="default" />
-  <CorpIcon name="luc-star" size="large" />
-  <CorpIcon name="luc-star" size="x-large" />
-
-  <template #code>
-
-```vue
-<!-- Presets -->
-<CorpIcon name="luc-star" size="x-small" />   <!-- 12px -->
-<CorpIcon name="luc-star" size="small" />     <!-- 16px -->
-<CorpIcon name="luc-star" size="default" />   <!-- 24px -->
-<CorpIcon name="luc-star" size="large" />     <!-- 32px -->
-<CorpIcon name="luc-star" size="x-large" />   <!-- 40px -->
-
-<!-- Valores custom -->
-<CorpIcon name="luc-star" :size="20" />       <!-- 20px -->
-<CorpIcon name="luc-star" size="1.5rem" />    <!-- 1.5rem -->
-```
-
-  </template>
-</CodePreview>
+:::corp-code
+<CorpIcon icon="luc-star" size="x-small" />
+<CorpIcon icon="luc-star" size="small" />
+<CorpIcon icon="luc-star" size="default" />
+<CorpIcon icon="luc-star" size="large" />
+<CorpIcon icon="luc-star" size="x-large" />
+:::
 
 ### Color
 
-Usando a prop `color` você pode alterar a cor de um ícone. O padrão é `currentColor` (herda do texto pai).
+Use a prop `color` para alterar a cor. O padrao e `currentColor`:
 
-<CodePreview>
-  <CorpIcon name="luc-heart" color="red" />
-  <CorpIcon name="luc-check" color="green" />
-  <CorpIcon name="luc-alert-circle" color="orange" />
-  <CorpIcon name="luc-info" color="blue" />
-  <CorpIcon name="luc-star" color="hsl(var(--primary))" />
-
-  <template #code>
-
-```vue
-<CorpIcon name="luc-heart" color="red" />
-<CorpIcon name="luc-check" color="green" />
-<CorpIcon name="luc-alert-circle" color="orange" />
-<CorpIcon name="luc-info" color="blue" />
-<CorpIcon name="luc-star" color="hsl(var(--primary))" />
-```
-
-  </template>
-</CodePreview>
+:::corp-code
+<CorpIcon icon="luc-heart" color="red" />
+<CorpIcon icon="luc-check" color="green" />
+<CorpIcon icon="luc-alert-circle" color="orange" />
+<CorpIcon icon="luc-info" color="blue" />
+:::
 
 ### Stroke Width
 
-Controle a espessura do traço do ícone com `stroke-width`. O padrão é `2`.
+Controle a espessura do traco (apenas Lucide). Padrao e `2`:
 
-<CodePreview>
-  <CorpIcon name="luc-circle" :stroke-width="1" size="large" />
-  <CorpIcon name="luc-circle" :stroke-width="2" size="large" />
-  <CorpIcon name="luc-circle" :stroke-width="3" size="large" />
-
-  <template #code>
-
-```vue
-<CorpIcon name="luc-circle" :stroke-width="1" />
-<CorpIcon name="luc-circle" :stroke-width="2" />  <!-- Default -->
-<CorpIcon name="luc-circle" :stroke-width="3" />
-```
-
-  </template>
-</CodePreview>
+:::corp-code
+<CorpIcon icon="luc-circle" :stroke-width="1" size="large" />
+<CorpIcon icon="luc-circle" :stroke-width="2" size="large" />
+<CorpIcon icon="luc-circle" :stroke-width="3" size="large" />
+:::
 
 ### Start / End
 
-Use `start` ou `end` para adicionar margem quando o ícone é usado junto com texto. Útil para botões e labels.
+Adiciona margem quando usado com texto:
 
-<CodePreview>
-  <span class="flex items-center"><CorpIcon name="luc-mail" start />Enviar email</span>
-  <span class="flex items-center">Próximo<CorpIcon name="luc-chevron-right" end /></span>
-
-  <template #code>
-
-```vue
-<!-- Margem à direita (início do texto) -->
-<span><CorpIcon name="luc-mail" start />Enviar email</span>
-
-<!-- Margem à esquerda (fim do texto) -->
-<span>Próximo<CorpIcon name="luc-chevron-right" end /></span>
-```
-
-  </template>
-</CodePreview>
+:::corp-code
+<span class="flex items-center"><CorpIcon icon="luc-mail" start />Enviar email</span>
+<span class="flex items-center">Proximo<CorpIcon icon="luc-chevron-right" end /></span>
+:::
 
 ### Clickable
 
-Ícones clicáveis ganham cursor pointer e hover effect. Emite evento `@click`.
+Icones clicaveis ganham cursor pointer e hover effect:
 
-<CodePreview>
-  <CorpIcon name="luc-heart" clickable @click="clickCount++" />
-  <CorpIcon name="luc-trash" clickable color="red" />
-  <CorpIcon name="luc-settings" clickable />
-  <span class="ml-4 text-sm text-muted-foreground">Cliques: {{ clickCount }}</span>
+:::corp-code
+<CorpIcon icon="luc-heart" clickable @click="incrementCount" />
+<CorpIcon icon="luc-trash" clickable color="red" />
+<CorpIcon icon="luc-settings" clickable />
+<span class="ml-4 text-sm text-muted-foreground">Cliques: {{ clickCount }}</span>
 
-  <template #code>
-
+<!-- @disp-code -->
 ```vue
 <script setup>
 import { ref } from 'vue'
@@ -163,207 +170,93 @@ const clickCount = ref(0)
 </script>
 
 <template>
-  <CorpIcon name="luc-heart" clickable @click="clickCount++" />
-  <CorpIcon name="luc-trash" clickable color="red" />
-  <CorpIcon name="luc-settings" clickable />
+  <CorpIcon icon="luc-heart" clickable @click="clickCount++" />
+  <CorpIcon icon="luc-trash" clickable color="red" />
+  <CorpIcon icon="luc-settings" clickable />
 </template>
 ```
-
-  </template>
-</CodePreview>
+:::
 
 ### Disabled
 
-Aplica `opacity: 0.5` e desabilita interações.
+Aplica `opacity: 0.5` e desabilita interacoes:
 
-<CodePreview>
-  <CorpIcon name="luc-star" />
-  <CorpIcon name="luc-star" disabled />
-
-  <template #code>
-
-```vue
-<CorpIcon name="luc-star" />
-<CorpIcon name="luc-star" disabled />
-```
-
-  </template>
-</CodePreview>
+:::corp-code
+<CorpIcon icon="luc-star" />
+<CorpIcon icon="luc-star" disabled />
+:::
 
 ### Tag
 
-Mude o elemento HTML renderizado. O padrão é `<i>`.
+Muda o elemento HTML. Padrao e `<i>`:
 
-<CodePreview>
-  <CorpIcon name="luc-star" tag="i" />
-  <CorpIcon name="luc-star" tag="span" />
-  <CorpIcon name="luc-star" tag="div" />
-
-  <template #code>
-
-```vue
-<CorpIcon name="luc-star" tag="i" />    <!-- Default -->
-<CorpIcon name="luc-star" tag="span" />
-<CorpIcon name="luc-star" tag="div" />
-```
-
-  </template>
-</CodePreview>
-
----
-
-## Acessibilidade
-
-Ícones podem transmitir todos os tipos de informações significativas, então é importante que eles alcancem o maior número possível de pessoas. Existem dois casos de uso a considerar:
-
-### Ícones Decorativos
-
-Se seus ícones são puramente decorativos, o componente já adiciona `aria-hidden="true"` automaticamente através do elemento wrapper.
-
-```vue
-<!-- Decorativo - aria-hidden é aplicado automaticamente -->
-<CorpIcon name="luc-star" />
-```
-
-### Ícones Semânticos
-
-Se seus ícones têm significado semântico, adicione `aria-label` ao elemento pai ou use um `<span>` com texto alternativo:
-
-```vue
-<!-- Opção 1: aria-label no botão pai -->
-<button aria-label="Favoritar item">
-  <CorpIcon name="luc-heart" />
-</button>
-
-<!-- Opção 2: Texto visualmente escondido -->
-<button>
-  <CorpIcon name="luc-heart" />
-  <span class="sr-only">Favoritar item</span>
-</button>
-```
-
-### Ícones Clicáveis
-
-Para ícones `clickable` que funcionam como botões, sempre forneça contexto:
-
-```vue
-<CorpIcon
-  name="luc-trash"
-  clickable
-  @click="deleteItem"
-  aria-label="Excluir item"
-  role="button"
-/>
-```
+:::corp-code
+<CorpIcon icon="luc-star" tag="i" />
+<CorpIcon icon="luc-star" tag="span" />
+<CorpIcon icon="luc-star" tag="div" />
+:::
 
 ---
 
 ## Exemplos
 
-### Ícones em Botões
+### Icones em Botoes
 
-Ícones podem ser usados dentro de botões para adicionar ênfase à ação. Use as props `prepend-icon` e `append-icon` do `CorpButton`:
-
-<CodePreview>
-  <CorpButton prepend-icon="luc-mail">Enviar</CorpButton>
-  <CorpButton variant="secondary" append-icon="luc-chevron-right">Próximo</CorpButton>
-  <CorpButton variant="outline" prepend-icon="luc-download" append-icon="luc-external-link">Download</CorpButton>
-
-  <template #code>
-
-```vue
+:::corp-code
 <CorpButton prepend-icon="luc-mail">Enviar</CorpButton>
-<CorpButton variant="secondary" append-icon="luc-chevron-right">Próximo</CorpButton>
-<CorpButton variant="outline" prepend-icon="luc-download" append-icon="luc-external-link">
-  Download
-</CorpButton>
-```
-
-  </template>
-</CodePreview>
+<CorpButton variant="secondary" append-icon="luc-chevron-right">Proximo</CorpButton>
+<CorpButton variant="outline" prepend-icon="luc-download">Download</CorpButton>
+:::
 
 ### Icon Buttons
 
-Botões apenas com ícone usando `size="icon"`:
-
-<CodePreview>
-  <CorpButton size="icon-sm" variant="outline" prepend-icon="luc-settings" />
-  <CorpButton size="icon" variant="outline" prepend-icon="luc-plus" />
-  <CorpButton size="icon-lg" variant="outline" prepend-icon="luc-trash" />
-
-  <template #code>
-
-```vue
+:::corp-code
 <CorpButton size="icon-sm" variant="outline" prepend-icon="luc-settings" />
 <CorpButton size="icon" variant="outline" prepend-icon="luc-plus" />
 <CorpButton size="icon-lg" variant="outline" prepend-icon="luc-trash" />
-```
-
-  </template>
-</CodePreview>
+:::
 
 ### Spinners
 
-Alguns ícones de loading giram automaticamente:
+Alguns icones de loading giram automaticamente:
 
-<CodePreview>
-  <CorpIcon name="luc-loader-2" />
-  <CorpIcon name="luc-loader" />
-  <CorpIcon name="luc-refresh-cw" />
+:::corp-code
+<CorpIcon icon="luc-loader-2" />
+<CorpIcon icon="luc-loader" />
+<CorpIcon icon="fa-fas fa-spinner" />
+:::
 
-  <template #code>
+### Icones de Tecnologias
 
-```vue
-<!-- Giram automaticamente -->
-<CorpIcon name="luc-loader-2" />
-<CorpIcon name="luc-loader" />
-<CorpIcon name="luc-refresh-cw" />
-```
+Icones de tecnologias usando FontAwesome Brands:
 
-  </template>
-</CodePreview>
+:::corp-code
+<CorpIcon icon="fa-fab fa-npm" size="large" color="#CB3837" />
+<CorpIcon icon="fa-fab fa-js" size="large" color="#F7DF1E" />
+<CorpIcon icon="fa-fab fa-vuejs" size="large" color="#4FC08D" />
+<CorpIcon icon="fa-fab fa-react" size="large" color="#61DAFB" />
+<CorpIcon icon="fa-fab fa-css3-alt" size="large" color="#1572B6" />
+<CorpIcon icon="fa-fab fa-html5" size="large" color="#E34F26" />
+<CorpIcon icon="fa-fab fa-node-js" size="large" color="#339933" />
+<CorpIcon icon="fa-fab fa-github" size="large" />
+<CorpIcon icon="fa-fab fa-docker" size="large" color="#2496ED" />
+<CorpIcon icon="fa-fab fa-python" size="large" color="#3776AB" />
+:::
 
-### Formatos de Nome
+### Comparando Bibliotecas
 
-O `CorpIcon` aceita múltiplos formatos de nome para flexibilidade:
-
-<CodePreview>
-  <CorpIcon name="luc-user" />
-  <CorpIcon name="user" />
-  <CorpIcon name="User" />
-  <CorpIcon name="user-plus" />
-  <CorpIcon name="UserPlus" />
-
-  <template #code>
-
-```vue
-<!-- Todos funcionam: -->
-<CorpIcon name="luc-user" />     <!-- Prefixo luc- (recomendado) -->
-<CorpIcon name="user" />         <!-- lowercase -->
-<CorpIcon name="User" />         <!-- PascalCase -->
-<CorpIcon name="user-plus" />    <!-- kebab-case -->
-<CorpIcon name="UserPlus" />     <!-- PascalCase composto -->
-```
-
-  </template>
-</CodePreview>
-
-> **Recomendação:** Use o prefixo `luc-` para consistência e clareza no código.
-
-### Lucide Icons
-
-O `CorpIcon` usa [Lucide](https://lucide.dev/) como biblioteca de ícones. Lucide é um fork do Feather Icons com mais de 1400 ícones.
-
-**Por que Lucide?**
-
-- **Leve:** Ícones SVG otimizados
-- **Consistente:** Todos os ícones seguem o mesmo estilo
-- **Acessível:** Projetado com acessibilidade em mente
-- **Tree-shakeable:** Apenas os ícones usados são incluídos no bundle
-
-**Encontrando Ícones:**
-
-Visite [lucide.dev/icons](https://lucide.dev/icons/) para buscar e visualizar todos os ícones disponíveis.
+:::corp-code
+<div class="flex gap-4 items-center">
+  <div class="text-center">
+    <CorpIcon icon="luc-home" size="large" />
+    <p class="text-xs mt-1">Lucide</p>
+  </div>
+  <div class="text-center">
+    <CorpIcon icon="fa-fas fa-home" size="large" />
+    <p class="text-xs mt-1">FontAwesome</p>
+  </div>
+</div>
+:::
 
 ---
 
@@ -371,20 +264,35 @@ Visite [lucide.dev/icons](https://lucide.dev/icons/) para buscar e visualizar to
 
 ### Props
 
-| Prop | Tipo | Default | Descrição |
+| Prop | Tipo | Default | Descricao |
 |------|------|---------|-----------|
-| `name` | `string` | **required** | Nome do ícone Lucide (ex: `luc-home`, `user`, `UserPlus`) |
-| `size` | `'x-small' \| 'small' \| 'default' \| 'large' \| 'x-large' \| number \| string` | `'default'` | Preset (12/16/24/32/40px) ou valor custom |
-| `color` | `string` | `'currentColor'` | Cor do ícone (CSS color) |
-| `strokeWidth` | `number` | `2` | Espessura do traço SVG |
-| `tag` | `'i' \| 'span' \| 'div'` | `'i'` | Elemento HTML wrapper |
-| `start` | `boolean` | `false` | Adiciona margem à direita (para início de texto) |
-| `end` | `boolean` | `false` | Adiciona margem à esquerda (para fim de texto) |
-| `clickable` | `boolean` | `false` | Habilita cursor pointer e hover effect |
-| `disabled` | `boolean` | `false` | Aplica opacity 0.5 e desabilita interações |
+| `icon` | `string` | **required** | Identificador do icone |
+| `size` | `'x-small' \| 'small' \| 'default' \| 'large' \| 'x-large' \| number \| string` | `'default'` | Tamanho |
+| `color` | `string` | `'currentColor'` | Cor do icone |
+| `strokeWidth` | `number` | `2` | Espessura do traco (Lucide) |
+| `tag` | `'i' \| 'span' \| 'div'` | `'i'` | Elemento HTML |
+| `start` | `boolean` | `false` | Margem a direita |
+| `end` | `boolean` | `false` | Margem a esquerda |
+| `clickable` | `boolean` | `false` | Habilita clique |
+| `disabled` | `boolean` | `false` | Desabilita |
 
 ### Events
 
-| Event | Payload | Descrição |
+| Event | Payload | Descricao |
 |-------|---------|-----------|
-| `click` | `MouseEvent` | Emitido quando `clickable` está ativo e o ícone é clicado |
+| `click` | `MouseEvent` | Emitido quando clicavel |
+
+### Prefixos
+
+| Prefixo | Biblioteca | Exemplo |
+|---------|------------|---------|
+| `luc-` | Lucide | `luc-home` |
+| `fa-` | FontAwesome | `fa-fas fa-user` |
+
+### FontAwesome Sets
+
+| Set | Prefixo | Pacote |
+|-----|---------|--------|
+| Solid | `fas` | `@fortawesome/free-solid-svg-icons` |
+| Regular | `far` | `@fortawesome/free-regular-svg-icons` |
+| Brands | `fab` | `@fortawesome/free-brands-svg-icons` |

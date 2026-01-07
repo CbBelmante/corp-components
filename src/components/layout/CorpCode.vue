@@ -1,11 +1,11 @@
 <script setup lang="ts">
 /**
- * 🧩 CodePreview - Preview de Componentes com Código
+ * CorpCode - Componente de Codigo com Preview
  *
- * Componente moderno para exibir exemplos de código com tabs, preview e copy.
- * Suporta múltiplos arquivos, package managers, e SFC separado.
+ * Exibe exemplos de codigo com tabs, preview interativo e copy.
+ * Suporta multiplos arquivos, package managers, e SFC.
  *
- * 🔗 DEPENDÊNCIAS:
+ * DEPENDENCIAS:
  * - CorpButton
  * - CorpIcon
  */
@@ -25,21 +25,21 @@ interface ICodeTab {
   language?: string; // Linguagem do código (opcional)
 }
 
-interface ICodePreviewConfig {
+interface ICorpCodeConfig {
   preview?: boolean; // Mostrar preview (default: true)
-  tabs?: string[] | ICodeTab[]; // Tabs de código
+  tabs?: string[] | ICodeTab[]; // Tabs de codigo
   language?: string; // Language badge global
-  copyable?: boolean; // Botão copy (default: true)
-  title?: string; // Título opcional
+  copyable?: boolean; // Botao copy (default: true)
+  title?: string; // Titulo opcional
   defaultTab?: number; // Index da tab inicial (default: 0)
-  hideHeader?: boolean; // Forçar esconder header (default: false)
+  hideHeader?: boolean; // Forcar esconder header (default: false)
 }
 
 // ============== PROPS ==============
 
 const props = defineProps({
   config: {
-    type: Object as PropType<ICodePreviewConfig>,
+    type: Object as PropType<ICorpCodeConfig>,
     default: () => ({}),
   },
 });
@@ -55,17 +55,15 @@ const codeAreaRef = ref<HTMLElement>();
 // ============== COMPUTED ==============
 
 // Merge com defaults
-const cfg = computed<Required<ICodePreviewConfig> & { tabs: ICodeTab[] }>(
-  () => ({
-    preview: props.config?.preview ?? true,
-    tabs: normalizedTabs.value,
-    language: props.config?.language ?? '',
-    copyable: props.config?.copyable ?? true,
-    title: props.config?.title ?? '',
-    defaultTab: props.config?.defaultTab ?? 0,
-    hideHeader: props.config?.hideHeader ?? false,
-  })
-);
+const cfg = computed<Required<ICorpCodeConfig> & { tabs: ICodeTab[] }>(() => ({
+  preview: props.config?.preview ?? true,
+  tabs: normalizedTabs.value,
+  language: props.config?.language ?? '',
+  copyable: props.config?.copyable ?? true,
+  title: props.config?.title ?? '',
+  defaultTab: props.config?.defaultTab ?? 0,
+  hideHeader: props.config?.hideHeader ?? false,
+}));
 
 // Determinar se header deve aparecer
 const showHeader = computed(() => {
@@ -76,6 +74,11 @@ const showHeader = computed(() => {
 // Direção da animação (next = avançar, prev = voltar)
 const slideDirection = computed(() => {
   return activeTab.value > prevTab.value ? 'next' : 'prev';
+});
+
+// Codigo expandido: sempre true se nao tem preview, senao depende do toggle
+const isCodeExpanded = computed(() => {
+  return !cfg.value.preview || showCode.value;
 });
 
 // Normalizar tabs para ICodeTab[]
@@ -142,8 +145,8 @@ if (props.config?.defaultTab !== undefined) {
       <slot />
     </div>
 
-    <!-- Actions -->
-    <div class="previewActions">
+    <!-- Actions (só mostra se tem preview) -->
+    <div v-if="cfg.preview" class="previewActions">
       <CorpButton
         variant="ghost"
         size="icon-sm"
@@ -153,7 +156,7 @@ if (props.config?.defaultTab !== undefined) {
     </div>
 
     <!-- Code Area -->
-    <div class="codeAreaWrapper" :class="{ expanded: showCode }">
+    <div class="codeAreaWrapper" :class="{ expanded: isCodeExpanded }">
       <div ref="codeAreaRef" class="codeArea">
         <!-- Tabs (se houver) -->
         <div v-if="cfg.tabs.length > 0" class="codeTabs">
@@ -164,7 +167,7 @@ if (props.config?.defaultTab !== undefined) {
             :class="{ active: activeTab === idx }"
             @click="switchTab(idx)"
           >
-            <CorpIcon v-if="tab.icon" :name="tab.icon" size="small" start />
+            <CorpIcon v-if="tab.icon" :icon="tab.icon" size="small" start />
             <span>{{ tab.name }}</span>
           </button>
         </div>

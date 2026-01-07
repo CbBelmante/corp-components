@@ -8,7 +8,7 @@ import './tailwind.css'; // 2º - importa main.css com variáveis shadcn (--prim
 import DocsLayout from '../core/DocsLayout.vue';
 
 // Componentes globais para docs
-import { CodePreview } from '@components/layout';
+import { CorpCode } from '@components/layout';
 import { CorpButton } from '@components/ui/button';
 import { CorpInput } from '@components/ui/input';
 import { CorpSelect } from '@components/ui/select';
@@ -24,7 +24,8 @@ export default {
   enhanceApp({ app }) {
     // ============== COMPONENTES GLOBAIS ==============
     // Registra componentes para uso direto nos .md (sem imports)
-    app.component('CodePreview', CodePreview);
+    app.component('CorpCode', CorpCode);
+    app.component('CodePreview', CorpCode); // Alias para compatibilidade
     app.component('CorpButton', CorpButton);
     app.component('CorpInput', CorpInput);
     app.component('CorpSelect', CorpSelect);
