@@ -15,7 +15,7 @@ export default {
     extend: {
       colors: {
         border: 'hsl(var(--border))',
-        'button-outline': 'hsl(var(--button-outline-border))',
+        'button-outline': 'hsl(var(--button-outline))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',

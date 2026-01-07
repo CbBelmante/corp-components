@@ -126,6 +126,61 @@ Use `prepend-icon` e `append-icon` para adicionar ícones Lucide ao botão. Os �
 
 Icon buttons são comumente usados em toolbars, cards e ações inline.
 
+### Icon Colors
+
+Personalize a cor dos ícones usando `p-icon-color` (prepend) e `ap-icon-color` (append). Aceita cores CSS ou classes Tailwind.
+
+:::corp-code
+<CorpButton prepend-icon="luc-star" p-icon-color="text-yellow-500">Favorito</CorpButton>
+<CorpButton variant="secondary" prepend-icon="luc-heart" p-icon-color="#ef4444">Curtir</CorpButton>
+<CorpButton variant="outline" prepend-icon="luc-check" p-icon-color="text-green-500" append-icon="luc-arrow-right" ap-icon-color="text-blue-500">Confirmar</CorpButton>
+
+<!-- @disp-code -->
+```vue
+<script setup>
+import { CorpButton } from 'corp-components'
+</script>
+
+<template>
+  <!-- Cor Tailwind CSS -->
+  <CorpButton
+    prepend-icon="luc-star"
+    p-icon-color="text-yellow-500"
+  >
+    Favorito
+  </CorpButton>
+
+  <!-- Cor HEX -->
+  <CorpButton
+    variant="secondary"
+    prepend-icon="luc-heart"
+    p-icon-color="#ef4444"
+  >
+    Curtir
+  </CorpButton>
+
+  <!-- Múltiplas cores -->
+  <CorpButton
+    variant="outline"
+    prepend-icon="luc-check"
+    p-icon-color="text-green-500"
+    append-icon="luc-arrow-right"
+    ap-icon-color="text-blue-500"
+  >
+    Confirmar
+  </CorpButton>
+</template>
+```
+:::
+
+::: tip Cores suportadas
+- Classes Tailwind: `text-red-500`, `text-primary`, etc
+- HEX: `#ef4444`, `#3b82f6`
+- RGB: `rgb(239, 68, 68)`
+- HSL: `hsl(0, 84%, 60%)`
+- Nomes CSS: `red`, `blue`, `currentColor`
+:::
+
 ### Loading
 
 Usando a prop `loading`, você pode notificar o usuário que há processamento ocorrendo. Um spinner substitui automaticamente o `prepend-icon` quando ativo.
@@ -400,6 +455,8 @@ Icon buttons em uma toolbar:
 | `prependIcon` | `string` | `undefined` | Nome do ícone à esquerda |
 | `appendIcon` | `string` | `undefined` | Nome do ícone à direita |
 | `iconSize` | `number \| string` | `'1em'` | Tamanho dos ícones |
+| `pIconColor` | `string` | `'currentColor'` | Cor do prepend-icon (Tailwind, HEX, RGB, HSL ou CSS) |
+| `apIconColor` | `string` | `'currentColor'` | Cor do append-icon (Tailwind, HEX, RGB, HSL ou CSS) |
 | `as` | `string` | `'button'` | Elemento HTML a ser renderizado |
 | `asChild` | `boolean` | `false` | Mescla props com elemento filho |
 | `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | Tipo HTML do botão |

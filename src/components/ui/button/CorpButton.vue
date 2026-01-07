@@ -177,7 +177,10 @@ const customRoundedStyle = computed(() => {
 // Verifica se elevated é preset ou custom
 const isElevatedPreset = computed(() => {
   if (props.elevated === undefined) return false;
-  const numValue = typeof props.elevated === 'string' ? parseInt(props.elevated) : props.elevated;
+  const numValue =
+    typeof props.elevated === 'string'
+      ? parseInt(props.elevated)
+      : props.elevated;
   return elevatedPresets.includes(numValue as ElevatedPreset);
 });
 
@@ -185,7 +188,8 @@ const isElevatedPreset = computed(() => {
 const customElevatedClass = computed(() => {
   if (!props.elevated || isElevatedPreset.value) return '';
   // Se começa com "shadow", é classe Tailwind
-  if (String(props.elevated).startsWith('shadow')) return String(props.elevated);
+  if (String(props.elevated).startsWith('shadow'))
+    return String(props.elevated);
   return '';
 });
 

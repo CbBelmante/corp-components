@@ -39,8 +39,14 @@
           "@docs/*": [
                 "./docs/*"
           ],
+          "@scripts/*": [
+                "./scripts/*"
+          ],
           "@assets/*": [
                 "./src/assets/*"
+          ],
+          "@generated/*": [
+                "./src/generated/*"
           ],
           "@components/*": [
                 "./src/components/*"
@@ -63,8 +69,8 @@
           "@types/*": [
                 "./src/types/*"
           ],
-          "@locales/*": [
-                "./src/locales/*"
+          "@locales": [
+                "./src/locales/index"
           ]
     },
 

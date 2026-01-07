@@ -1,0 +1,307 @@
+/*
+ * ===================================================================
+ * 🎨 THEME SYSTEM - GERADO AUTOMATICAMENTE
+ * ===================================================================
+ *
+ * ⚠️ NÃO ADICIONE AQUI! ⚠️
+ * Arquivo gerado no build ou via: bun run generateTheme
+ *
+ * Este arquivo é gerado automaticamente de src/theme.ts
+ * Para modificar cores, edite src/theme.ts e rode:
+ * `bun run generateTheme`
+ */
+
+/* ===================================================================
+ * LIGHT THEME
+ * =================================================================== */
+
+:root {
+  --primary: #FF7133;
+  --primary-foreground: #ffffff;
+  --primary-soft: #FFF4F0;
+  --primary-hover: #E6641C;
+  --primary-muted: #FFB399;
+  --secondary: #334155;
+  --secondary-foreground: #fafafa;
+  --secondary-soft: #f1f3f5;
+  --secondary-hover: #001a33;
+  --secondary-muted: #cdd1d6;
+  --background: #f8fafc;
+  --background-gradient-start: #f1f5f9;
+  --background-gradient-end: #f8fafc;
+  --foreground: #1e293b;
+  --container-background: transparent;
+  --surface: #ffffff;
+  --surface-elevated: #f5f7f9;
+  --surface-muted: #cdd5dc;
+  --sidebar-background: rgba(0, 0, 0, 0.2);
+  --sidebar-header: rgba(0, 0, 0, 0.25);
+  --card: #ffffff;
+  --card-foreground: #050914;
+  --muted: #dae0e6;
+  --muted-foreground: #737373;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+  --input-border: #eef1f4;
+  --input-background: #D1DCE5;
+  --input-ring: #FF7133;
+  --ring-width: 2px;
+  --select-border: #eef1f4;
+  --select-background: #D1DCE5;
+  --select-ring: #FF7133;
+  --text: #050914;
+  --text-muted: #64748b;
+  --text-accent: #FF7133;
+  --text-link: #3b82f6;
+  --border: #bac5d0;
+  --border-muted: #c9d2db;
+  --table-background: #F0F4F7;
+  --card-content-background: #F0F4F7;
+  --table-header: #D1DCE5;
+  --table-header-text: #111827;
+  --table-header-border: #BAC5D0;
+  --table-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+  --table-row-odd: #FFFFFF;
+  --table-row-even: #F8FAFC;
+  --table-row-active: #E0F2FE;
+  --table-cell-text: #111827;
+  --table-border: #EEF1F4;
+  --table-cell-border: #E5E7EB;
+  --success: #22c55e;
+  --warning: #eab308;
+  --error: #ef4444;
+  --info: #3b82f6;
+  --pending: #7c3aed;
+  --hover-overlay: rgba(0, 0, 0, 0.04);
+  --active-overlay: rgba(0, 0, 0, 0.08);
+  --focus-ring: #FF7133;
+  --button-translucent: rgba(0, 0, 0, 0.05);
+  --button-translucent-hover: rgba(0, 0, 0, 0.1);
+  --button-translucent-text: #050914;
+  --button-ghost: rgba(0, 0, 0, 0.05);
+  --button-ghost-hover: rgba(0, 0, 0, 0.1);
+  --button-ghost-text: #050914;
+  --button-chat-input: #FF7133;
+  --button-chat-input-hover: #E6641C;
+  --button-chat-input-text: #ffffff;
+  --disabled-background: #b8c5d1;
+  --disabled-foreground: #64748b;
+  --disabled-border: #94a3b8;
+  --checkbox-checked-disabled-bg: #FF9999;
+  --checkbox-checked-disabled-border: #FFB399;
+  --checkbox-unchecked: #bac5d0;
+  --checkbox-unchecked-disabled-bg: #e8ecf0;
+  --checkbox-unchecked-disabled-border: #c1cdd8;
+  --checkbox-unchecked-border: #94a3b8;
+  --switch-unchecked: #bac5d0;
+  --switch-unchecked-disabled-bg: #e8ecf0;
+  --switch-checked-disabled: #FF9999;
+  --switch-thumb: white;
+  --audio-waves-color: #ffffff;
+  --audio-waves-progress-played: rgba(107, 114, 128, 0.35);
+  --code-background: #f0f4f8;
+  --code-text: #3b82f6;
+  --highlight-admin: #fdf4e2;
+  --blockquote-border: #FF7133;
+  --blockquote-background: #fefce8;
+  --alert-border: #FF7133;
+  --alert-background: #fefce8;
+  --code-preview-border: #D1DCE5;
+  --code-preview-bg: #D1DCE5;
+  --code-preview-shadow: none;
+  --code-preview-header-bg: #D1DCE5;
+  --code-preview-title-text: #050914;
+  --code-preview-badge-bg: #FFF4F0;
+  --code-preview-badge-text: #FF7133;
+  --code-preview-preview-bg: #ffffff;
+  --code-preview-actions-bg: #E0E8F0;
+  --code-preview-code-bg: #C5D4E0;
+  --code-preview-tab-text: #64748b;
+  --code-preview-tab-hover-bg: #D1DCE5;
+  --code-preview-tab-active-bg: #C5D4E0;
+  --code-preview-tab-active-text: #FF7133;
+  --code-preview-tab-indicator: #FF7133;
+  --code-preview-copy-btn-bg: #ffffff;
+  --code-preview-copy-btn-border: #D1DCE5;
+  --tooltip-background: #1e293b;
+  --tooltip-foreground: #e2e8f0;
+  --tooltip-border: #334155;
+  --chat-bubble-user: #F0F4F7;
+  --chat-bubble-user-text: #050914;
+  --chat-bubble-user-hover: #E4EBF2;
+  --chat-bubble-assistant: transparent;
+  --chat-bubble-assistant-text: #050914;
+  --chat-bubble-hover: rgba(0, 0, 0, 0.02);
+  --chat-input-background: #F0F4F7;
+  --chat-input-bottom-background: rgba(0, 0, 0, 0.05);
+  --textarea-background: transparent;
+  --chat-container-background: rgba(0, 0, 0, 0.1);
+  --company-border: #FF7133;
+  --company-background: #FFF4F0;
+  --company-indicator: #FF7133;
+  --radius: 0.5rem;
+  --label-text-size: 0.875rem;
+  --hint-text-size: 0.75rem;
+  --error-text-size: 0.75rem;
+}
+
+/* ===================================================================
+ * DARK THEME
+ * =================================================================== */
+
+.dark {
+  --primary: #FF7133;
+  --primary-foreground: #ffffff;
+  --primary-soft: #4A2416;
+  --primary-hover: #FF854D;
+  --primary-muted: #A54E24;
+  --secondary: #1e3a5f;
+  --secondary-foreground: #fafafa;
+  --secondary-soft: #172e47;
+  --secondary-hover: #254670;
+  --secondary-muted: #3a4a5c;
+  --background: #1c2128;
+  --background-gradient-start: #1C1D23;
+  --background-gradient-end: #212229;
+  --foreground: #e6edf3;
+  --container-background: transparent;
+  --surface: #22272e;
+  --surface-elevated: #2a2f36;
+  --surface-muted: #0a0e14;
+  --sidebar-background: rgba(0, 0, 0, 0.2);
+  --sidebar-header: rgba(0, 0, 0, 0.25);
+  --card: #22272e;
+  --card-foreground: #e6edf3;
+  --muted: #1c2128;
+  --muted-foreground: #7d8590;
+  --destructive: #f85149;
+  --destructive-foreground: #fafafa;
+  --input-border: #191e25;
+  --input-background: #1c2128;
+  --input-ring: #FF7133;
+  --ring-width: 2px;
+  --select-border: #191e25;
+  --select-background: #1c2128;
+  --select-ring: #FF7133;
+  --text: #e6edf3;
+  --text-muted: #7d8590;
+  --text-accent: #FF7133;
+  --text-link: #60a5fa;
+  --border: #3d444d;
+  --border-muted: #21262d;
+  --table-background: #1a1f25;
+  --card-content-background: #161B22;
+  --table-header: #1d242d;
+  --table-header-text: #F1F5F9;
+  --table-header-border: #1c2128;
+  --table-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.4);
+  --table-row-odd: #21262d;
+  --table-row-even: #1c2128;
+  --table-row-active: #2d333b;
+  --table-cell-text: #F1F5F9;
+  --table-border: #10141B;
+  --table-cell-border: #30363d;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --error: #f87171;
+  --info: #60a5fa;
+  --pending: #8b5cf6;
+  --hover-overlay: rgba(255, 255, 255, 0.04);
+  --active-overlay: rgba(255, 255, 255, 0.08);
+  --focus-ring: #FF7133;
+  --button-translucent: rgba(255, 255, 255, 0.08);
+  --button-translucent-hover: rgba(255, 255, 255, 0.12);
+  --button-translucent-text: #f3f4f6;
+  --button-ghost: rgba(255, 255, 255, 0.08);
+  --button-ghost-hover: rgba(255, 255, 255, 0.12);
+  --button-ghost-text: #f3f4f6;
+  --button-chat-input: #FF7133;
+  --button-chat-input-hover: #FF854D;
+  --button-chat-input-text: #ffffff;
+  --disabled-background: #0a0e14;
+  --disabled-foreground: #6e7681;
+  --disabled-border: #30363d;
+  --checkbox-checked-disabled-bg: #7F3319;
+  --checkbox-checked-disabled-border: #A54E24;
+  --checkbox-unchecked: #3d444d;
+  --checkbox-unchecked-disabled-bg: #0d1117;
+  --checkbox-unchecked-disabled-border: #3d444d;
+  --checkbox-unchecked-border: #484f58;
+  --switch-unchecked: #3d444d;
+  --switch-unchecked-disabled-bg: #0d1117;
+  --switch-checked-disabled: #7F3319;
+  --switch-thumb: white;
+  --audio-waves-color: #ffffff;
+  --audio-waves-progress-played: rgba(107, 114, 128, 0.35);
+  --code-background: #1a211a;
+  --code-text: #60a5fa;
+  --highlight-admin: #422006;
+  --blockquote-border: #FF7133;
+  --blockquote-background: #1c1917;
+  --alert-border: #FF7133;
+  --alert-background: #1c1917;
+  --code-preview-border: #30363d;
+  --code-preview-bg: #22272e;
+  --code-preview-shadow: none;
+  --code-preview-header-bg: #22272e;
+  --code-preview-title-text: #e6edf3;
+  --code-preview-badge-bg: #4A2416;
+  --code-preview-badge-text: #FF7133;
+  --code-preview-preview-bg: #1c2128;
+  --code-preview-actions-bg: #22272e;
+  --code-preview-code-bg: #161b22;
+  --code-preview-tab-text: #7d8590;
+  --code-preview-tab-hover-bg: #1c2128;
+  --code-preview-tab-active-bg: #161b22;
+  --code-preview-tab-active-text: #FF7133;
+  --code-preview-tab-indicator: #FF7133;
+  --code-preview-copy-btn-bg: #22272e;
+  --code-preview-copy-btn-border: #30363d;
+  --tooltip-background: #0f0f23;
+  --tooltip-foreground: #f1f5f9;
+  --tooltip-border: #1e3a5f;
+  --chat-bubble-user: #2A2D31;
+  --chat-bubble-user-text: #e6edf3;
+  --chat-bubble-user-hover: #353A3F;
+  --chat-bubble-assistant: transparent;
+  --chat-bubble-assistant-text: #e6edf3;
+  --chat-bubble-hover: rgba(255, 255, 255, 0.02);
+  --chat-input-background: #2A2D31;
+  --chat-input-bottom-background: rgba(0, 0, 0, 0.08);
+  --textarea-background: transparent;
+  --chat-container-background: rgba(0, 0, 0, 0.1);
+  --company-border: #FF7133;
+  --company-background: #4A2416;
+  --company-indicator: #FF7133;
+  --radius: 0.5rem;
+  --label-text-size: 0.875rem;
+  --hint-text-size: 0.75rem;
+  --error-text-size: 0.75rem;
+}
+
+/* ===================================================================
+ * UTILITY CLASSES
+ * =================================================================== */
+
+/* Status colors */
+.status-success { color: var(--success); }
+.status-warning { color: var(--warning); }
+.status-error { color: var(--error); }
+.status-info { color: var(--info); }
+.status-pending { color: var(--pending); }
+
+/* Links */
+.text-link { color: var(--text-link); }
+.link-hover:hover { color: var(--text-link); }
+
+/* Backgrounds */
+.bg-surface { background-color: var(--surface); }
+.bg-surface-elevated { background-color: var(--surface-elevated); }
+
+/* Borders */
+.border-default { border-color: var(--border); }
+.border-muted { border-color: var(--border-muted); }
+
+/* MultiCompany */
+.company-context { border-left: 3px solid var(--company-border); }
+.company-indicator { background-color: var(--company-background); }

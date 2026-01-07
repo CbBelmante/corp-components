@@ -1,14 +1,27 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import { CorpSelect } from '@/components/ui/select';
 import { useForm } from '@/composables/useForm';
 import { useValidationRules } from '@/validations/rules';
+
+// ============== TYPES ==============
+interface SelectTestForm {
+  framework: string;
+  state: string;
+  status: string;
+  tags: (string | number)[];
+  skills: (string | number)[];
+  frameworkClear: string;
+  skillsClear: (string | number)[];
+  country: string;
+  languages: (string | number)[];
+}
 
 // ============== VALIDATION ==============
 const rules = useValidationRules();
 
 // ============== FORM WITH VALIDATION CONTEXT ==============
-const { form, validateForm } = useForm({
+const { form: formRaw, validateForm } = useForm({
   initialValues: {
     framework: '',
     state: '',
@@ -21,6 +34,9 @@ const { form, validateForm } = useForm({
     languages: [],
   },
 });
+
+// Type-safe form access
+const form = formRaw as unknown as Ref<SelectTestForm>;
 
 // ============== STATE ==============
 const simpleSelect = ref('');
@@ -70,7 +86,7 @@ const handleSubmit = () => {
 
   if (isValid) {
     alert(
-      `Formulário válido!\nPaís: ${form.country}\nIdiomas: ${form.languages.join(', ')}`
+      `Formulário válido!\nPaís: ${form.value.country}\nIdiomas: ${form.value.languages.join(', ')}`
     );
   } else {
     alert('Formulário inválido! Verifique os campos.');
@@ -78,8 +94,8 @@ const handleSubmit = () => {
 };
 
 const handleClear = () => {
-  form.country = '';
-  form.languages = [];
+  form.value.country = '';
+  form.value.languages = [];
 };
 </script>
 

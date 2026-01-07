@@ -249,6 +249,91 @@ Use as props `*IconClickable` para controlar se um ícone é clicável:
 ```
 :::
 
+**Cores dos ícones:**
+
+Personalize a cor de cada ícone individualmente. Todas as props de cor suportam classes Tailwind CSS.
+
+:::corp-code
+<div class="space-y-4 max-w-md">
+  <CorpInput
+    v-model="form.name8"
+    name="iconColors1"
+    label="Ícone com cor customizada"
+    prepend-icon="luc-star"
+    prepend-icon-color="text-yellow-500"
+    placeholder="Favoritos"
+  />
+  <CorpInput
+    v-model="form.name9"
+    name="iconColors2"
+    label="Múltiplos ícones com cores diferentes"
+    prepend-outer-icon="luc-search"
+    prepend-outer-icon-color="text-blue-500"
+    append-icon="luc-check"
+    append-icon-color="text-green-500"
+    @click:prepend-outer="() => alert('Buscar')"
+    @click:append="() => alert('Confirmar')"
+  />
+  <CorpInput
+    v-model="form.name10"
+    name="iconColors3"
+    label="Cor padrão customizada"
+    prepend-icon="luc-user"
+    append-icon="luc-settings"
+    icon-color="text-purple-500"
+    hint="Todos os ícones herdam a cor padrão"
+  />
+</div>
+
+<!-- @disp-code -->
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const favorite = ref('')
+const search = ref('')
+const user = ref('')
+</script>
+
+<template>
+  <!-- Ícone prepend com cor amarela -->
+  <CorpInput
+    v-model="favorite"
+    name="favorite"
+    label="Favoritos"
+    prepend-icon="luc-star"
+    prepend-icon-color="text-yellow-500"
+  />
+
+  <!-- Múltiplos ícones com cores diferentes -->
+  <CorpInput
+    v-model="search"
+    name="search"
+    label="Buscar"
+    prepend-outer-icon="luc-search"
+    prepend-outer-icon-color="text-blue-500"
+    append-icon="luc-check"
+    append-icon-color="text-green-500"
+  />
+
+  <!-- Cor padrão para todos os ícones -->
+  <CorpInput
+    v-model="user"
+    name="user"
+    label="Usuário"
+    prepend-icon="luc-user"
+    append-icon="luc-settings"
+    icon-color="text-purple-500"
+  />
+</template>
+```
+:::
+
+::: tip Hierarquia de Cores
+As props específicas (`prependIconColor`, `appendIconColor`, etc) **sobrescrevem** a prop `iconColor`. Se não especificadas, usam o valor padrão `text-muted-foreground`.
+:::
+
 ### Clearable
 
 Botão "X" para limpar o campo rapidamente.
@@ -1255,10 +1340,11 @@ const handleClear = () => {
 | `prependIconClickable` | `boolean` | `false` | Se ícone prepend é clicável |
 | `appendIconClickable` | `boolean` | `true` | Se ícone append é clicável |
 | `appendOuterIconClickable` | `boolean` | `true` | Se ícone append-outer é clicável |
-| `prependOuterIconColor` | `string` | `undefined` | Cor do ícone prepend-outer (sobrescreve iconColor) |
-| `prependIconColor` | `string` | `undefined` | Cor do ícone prepend (sobrescreve iconColor) |
-| `appendIconColor` | `string` | `undefined` | Cor do ícone append (sobrescreve iconColor) |
-| `appendOuterIconColor` | `string` | `undefined` | Cor do ícone append-outer (sobrescreve iconColor) |
+| `iconColor` | `string` | `'text-muted-foreground'` | Cor padrão de todos os ícones (classes Tailwind CSS) |
+| `prependOuterIconColor` | `string` | `undefined` | Cor específica do prepend-outer-icon (sobrescreve iconColor) |
+| `prependIconColor` | `string` | `undefined` | Cor específica do prepend-icon (sobrescreve iconColor) |
+| `appendIconColor` | `string` | `undefined` | Cor específica do append-icon (sobrescreve iconColor) |
+| `appendOuterIconColor` | `string` | `undefined` | Cor específica do append-outer-icon (sobrescreve iconColor) |
 | `clearable` | `boolean` | `false` | Mostra botão para limpar campo |
 | `counter` | `boolean \| number` | `false` | Contador de caracteres (true = apenas mostra, number = limite) |
 | `prefix` | `string` | `undefined` | Texto fixo antes do valor (ex: "R$", "https://") |
@@ -1267,7 +1353,6 @@ const handleClear = () => {
 | `loading` | `boolean` | `false` | Exibe spinner animado (substitui append-icon) |
 | `hideDetails` | `boolean` | `false` | Oculta hint/error/counter |
 | `iconSize` | `number` | `16` | Tamanho dos ícones em pixels |
-| `iconColor` | `string` | `'text-muted-foreground'` | Cor padrão dos ícones |
 
 ### Slots
 

@@ -1,102 +1,26 @@
-@import './theme.css';
+/**
+ * 🎨 MAIN CSS - Arquivo de entrada principal (MANUAL)
+ *
+ * Este arquivo importa todos os estilos do sistema.
+ * Edite aqui se precisar adicionar estilos customizados globais.
+ *
+ * ⚠️ Arquivos CSS gerados automaticamente estão em src/generated/
+ */
 
+/* Importar variáveis CSS geradas (HEX) - base */
+@import '../generated/theme.css';
+
+/* Importar variáveis Tailwind geradas (HSL) - sobrescreve BOTH para classes Tailwind */
+@import '../generated/tailwind.css';
+
+/* Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /**
- * Variáveis shadcn/Tailwind - Cores
- * Formato HSL sem hsl() para Tailwind processar
- * IMPORTANTE: Fora de @layer para ter prioridade sobre theme.css
+ * ===================================================================
+ * ESTILOS CUSTOMIZADOS GLOBAIS
+ * ===================================================================
+ * Adicione aqui estilos globais customizados se necessário
  */
-
-/* Light Mode */
-:root {
-  --radius: 0.5rem;
-
-  /* Primary - Laranja #FF7133 */
-  --primary: 20 100% 60%;
-  --primary-foreground: 0 0% 100%;
-
-  /* Secondary - Azulado visível */
-  --secondary: 210 30% 85%;
-  --secondary-foreground: 220 30% 20%;
-
-  /* Destructive - Vermelho */
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 100%;
-
-  /* Muted */
-  --muted: 210 30% 92%;
-  --muted-foreground: 215 16% 47%;
-
-  /* Accent */
-  --accent: 210 30% 92%;
-  --accent-foreground: 220 30% 20%;
-
-  /* Background - Transparente para outline */
-  --background: 0 0% 0% / 0;
-  --foreground: 220 30% 10%;
-
-  /* Cards e Popovers */
-  --card: 0 0% 100%;
-  --card-foreground: 220 30% 10%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 220 30% 10%;
-
-  /* Bordas e Inputs */
-  --border: 214 30% 80%;
-  --input: 214 30% 80%;
-  --ring: 20 100% 60%;
-
-  /* Input Background - azul claro harmonizado (CbAdmin) */
-  --input-background: #D1DCE5;
-
-  /* Button Outline - borda mais visivel */
-  --button-outline-border: 214 25% 60%;
-}
-
-/* Dark Mode - GitHub style */
-.dark {
-  /* Primary - Laranja */
-  --primary: 20 100% 60%;
-  --primary-foreground: 0 0% 100%;
-
-  /* Secondary - Azulado escuro */
-  --secondary: 217 30% 25%;
-  --secondary-foreground: 210 30% 95%;
-
-  /* Destructive */
-  --destructive: 0 63% 45%;
-  --destructive-foreground: 0 0% 100%;
-
-  /* Muted */
-  --muted: 217 30% 18%;
-  --muted-foreground: 215 20% 65%;
-
-  /* Accent */
-  --accent: 217 30% 25%;
-  --accent-foreground: 210 30% 95%;
-
-  /* Background - Transparente para outline */
-  --background: 0 0% 0% / 0;
-  --foreground: 210 30% 95%;
-
-  /* Cards e Popovers */
-  --card: 220 15% 14%;
-  --card-foreground: 210 30% 95%;
-  --popover: 220 15% 16%;
-  --popover-foreground: 210 30% 95%;
-
-  /* Bordas e Inputs */
-  --border: 217 30% 35%;
-  --input: 217 30% 35%;
-  --ring: 20 100% 60%;
-
-  /* Input Background - escuro */
-  --input-background: #1c2128;
-
-  /* Button Outline - borda mais visivel */
-  --button-outline-border: 217 25% 55%;
-}
-

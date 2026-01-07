@@ -74,7 +74,9 @@ const ALIAS_DEFINITIONS = {
   '@': './src',
   '@playground': './playground',
   '@docs': './docs',
+  '@scripts': './scripts',
   '@assets': './src/assets',
+  '@generated': './src/generated',
   '@components': './src/components',
   '@base': './src/components/base',
   '@shadcn': './src/components/base/shadcn',
@@ -82,7 +84,7 @@ const ALIAS_DEFINITIONS = {
   '@composables': './src/composables',
   '@utils': './src/utils',
   '@types': './src/types',
-  '@locales': './src/locales',
+  '@locales': './src/locales/index',
 } as const;
 
 // ============== CONSTANTES COMPARTILHADAS ==============

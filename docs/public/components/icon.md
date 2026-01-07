@@ -124,13 +124,54 @@ Use a prop `size` para controlar o tamanho:
 
 ### Color
 
-Use a prop `color` para alterar a cor. O padrao e `currentColor`:
+Use a prop `color` para alterar a cor. Aceita **cores CSS**, **HEX**, **RGB** e **nomes do tema**:
 
 :::corp-code
-<CorpIcon icon="luc-heart" color="red" />
-<CorpIcon icon="luc-check" color="green" />
-<CorpIcon icon="luc-alert-circle" color="orange" />
-<CorpIcon icon="luc-info" color="blue" />
+<!-- Cores CSS nomeadas -->
+<CorpIcon icon="luc-heart" color="crimson" />
+<CorpIcon icon="luc-check" color="seagreen" />
+
+<!-- HEX -->
+<CorpIcon icon="luc-star" color="#8b5cf6" />
+<CorpIcon icon="luc-mail" color="#ec4899" />
+
+<!-- RGB -->
+<CorpIcon icon="luc-bell" color="rgb(6, 182, 212)" />
+<CorpIcon icon="luc-settings" color="rgb(245, 158, 11)" />
+:::
+
+#### Cores do Tema
+
+Use nomes do sistema de cores para consistência:
+
+:::corp-code
+<CorpIcon icon="luc-check" color="success" />
+<CorpIcon icon="luc-alert-triangle" color="warning" />
+<CorpIcon icon="luc-x" color="error" />
+<CorpIcon icon="luc-info" color="info" />
+<CorpIcon icon="luc-home" color="primary" />
+<CorpIcon icon="luc-user" color="secondary" />
+:::
+
+| Nome | Cor Light | Cor Dark |
+|------|-----------|----------|
+| `primary` | Laranja (#FF7133) | Laranja (#FF7133) |
+| `secondary` | Escuro (#001121) | Azul escuro (#1e3a5f) |
+| `accent` | Azul médio (#7A9AB8) | Cinza (#21262d) |
+| `success` | Verde (#22c55e) | Verde claro (#4ade80) |
+| `warning` | Amarelo (#eab308) | Amarelo claro (#fbbf24) |
+| `error` | Vermelho (#ef4444) | Vermelho claro (#f87171) |
+| `info` | Azul (#3b82f6) | Azul claro (#60a5fa) |
+
+#### Variáveis CSS e HSL
+
+Também aceita variáveis CSS customizadas e formato HSL:
+
+:::corp-code
+<CorpIcon icon="luc-star" color="var(--accent)" />
+<CorpIcon icon="luc-star" color="var(--primary)" />
+<CorpIcon icon="luc-circle" color="hsl(18, 100%, 60%)" />
+<CorpIcon icon="luc-square" color="hsl(142, 71%, 45%)" />
 :::
 
 ### Stroke Width

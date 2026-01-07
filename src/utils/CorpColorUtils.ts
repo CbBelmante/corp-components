@@ -27,6 +27,11 @@
 // ============== DEPENDÊNCIAS INTERNAS ==============
 
 import { isClientSide } from './CorpClientUtils';
+import {
+  CSS_VARIABLES,
+  HSL_VARIABLES,
+  HEX_VARIABLES,
+} from '../generated/themeMetadata';
 
 // ============== TYPE DEFINITIONS ==============
 
@@ -104,6 +109,77 @@ export const hexToRgb = (hex: string): RgbColor => {
   const b = parseInt(hex.substring(4, 6), 16);
 
   return { r, g, b };
+};
+
+/**
+ * 🎨 Converte cor hexadecimal para HSL (sem wrapper)
+ *
+ * Converte HEX (#FF7133) para formato HSL sem wrapper (18 100% 60%).
+ * Formato usado pelo Tailwind CSS para suportar opacity modifiers.
+ *
+ * @param {string} hex - Cor hexadecimal (com ou sem #)
+ * @returns {string} String HSL no formato "H S% L%" (sem hsl())
+ *
+ * @example
+ * hexToHsl('#FF7133')  // '18 100% 60%'
+ * hexToHsl('#000000')  // '0 0% 0%'
+ * hexToHsl('#FFFFFF')  // '0 0% 100%'
+ */
+export const hexToHsl = (hex: string): string => {
+  // Remove #
+  hex = hex.replace('#', '');
+
+  // Converte para RGB normalizado (0-1)
+  const r = parseInt(hex.substring(0, 2), 16) / 255;
+  const g = parseInt(hex.substring(2, 4), 16) / 255;
+  const b = parseInt(hex.substring(4, 6), 16) / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    switch (max) {
+      case r:
+        h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+        break;
+      case g:
+        h = ((b - r) / d + 2) / 6;
+        break;
+      case b:
+        h = ((r - g) / d + 4) / 6;
+        break;
+    }
+  }
+
+  h = Math.round(h * 360);
+  s = Math.round(s * 100);
+  const lPercent = Math.round(l * 100);
+
+  return `${h} ${s}% ${lPercent}%`;
+};
+
+/**
+ * 🎨 Converte cor hexadecimal para HSL (com wrapper hsl())
+ *
+ * Converte HEX (#FF7133) para formato HSL completo com wrapper.
+ * Reutiliza a função pura hexToHsl() internamente (composição).
+ *
+ * @param {string} hex - Cor hexadecimal (com ou sem #)
+ * @returns {string} String HSL no formato "hsl(H S% L%)"
+ *
+ * @example
+ * hexToHslWithWrapper('#FF7133')  // 'hsl(18 100% 60%)'
+ * hexToHslWithWrapper('#000000')  // 'hsl(0 0% 0%)'
+ * hexToHslWithWrapper('#FFFFFF')  // 'hsl(0 0% 100%)'
+ */
+export const hexToHslWithWrapper = (hex: string): string => {
+  return `hsl(${hexToHsl(hex)})`;
 };
 
 /**
@@ -231,79 +307,49 @@ export const lighten = (color: string, percent: number = 20): string => {
 // ============== COLOR RESOLUTION ==============
 
 /**
- * 🎨 Resolve nomes de cores para valores reais (client-side)
+ * 🎨 Resolve nomes de cores para valores reais
  *
- * ⚠️ IMPLEMENTAÇÃO ATUAL: HARDCODED
- * Este mapeamento é manual e precisa ser atualizado quando novas cores são adicionadas.
- *
- * 🔄 TODO: Implementar Auto-Discovery
- * Deveria ler automaticamente todas as CSS variables do :root no runtime:
- *
- * @example Auto-Discovery (futuro)
- * ```typescript
- * const discoverCSSVariables = (): Record<string, string> => {
- *   if (!isClientSide()) return {};
- *   const styles = getComputedStyle(document.documentElement);
- *   const vars: Record<string, string> = {};
- *   for (let i = 0; i < styles.length; i++) {
- *     const prop = styles[i];
- *     if (prop.startsWith('--')) {
- *       vars[prop.slice(2)] = `var(${prop})`;
- *     }
- *   }
- *   return vars;
- * }
- * ```
- *
- * ⚠️ VARIÁVEIS FALTANDO NO MAPEAMENTO:
- * Existem no main.css mas NÃO estão mapeadas aqui:
- * - primary-foreground, secondary-foreground, destructive-foreground
- * - muted-foreground, accent-foreground
- * - card, card-foreground
- * - popover, popover-foreground
- * - border, input, ring
- * - input-background, button-outline-border
- *
- * ⚠️ VARIÁVEIS MAPEADAS MAS NÃO EXISTEM NO CSS:
- * - success (não existe no main.css - precisa adicionar!)
- * - warning (não existe no main.css - precisa adicionar!)
- *
- * Converte nomes de cores CSS ou variáveis Tailwind para valores computados.
- * Útil para processar cores antes de manipulações.
+ * Converte nomes de cores do sistema para valores CSS válidos.
+ * Os metadados de cores são gerados automaticamente de src/theme.ts.
  *
  * @param {string} color - Nome da cor ou valor já válido
  * @returns {string} Cor resolvida em formato válido
  *
  * @example
- * resolveColor('primary')           // 'var(--primary)'
+ * resolveColor('primary')           // 'hsl(var(--primary))'
+ * resolveColor('success')           // 'var(--success)'
  * resolveColor('#FF5733')           // '#FF5733' (passthrough)
- * resolveColor('var(--primary)')    // 'var(--primary)' (passthrough)
+ * resolveColor('var(--primary)')    // 'hsl(var(--primary))' (passthrough)
  */
 export const resolveColor = (color: string): string => {
   const colorType = getColorType(color);
 
-  // Se já é uma cor válida, retorna como está
-  if (['hex', 'rgb', 'rgba', 'variable'].includes(colorType)) {
+  // Se já é uma cor válida (hex, rgb, rgba), retorna como está
+  if (['hex', 'rgb', 'rgba'].includes(colorType)) {
     return color;
   }
 
-  // ⚠️ HARDCODED: Mapeamento manual de nomes para variáveis CSS
-  // TODO: Substituir por auto-discovery para eliminar duplicação
-  const cssVariables: Record<string, string> = {
-    primary: 'var(--primary)',
-    secondary: 'var(--secondary)',
-    accent: 'var(--accent)',
-    destructive: 'var(--destructive)',
-    muted: 'var(--muted)',
-    success: 'var(--success)', // ⚠️ NÃO EXISTE no main.css!
-    warning: 'var(--warning)', // ⚠️ NÃO EXISTE no main.css!
-    error: 'var(--destructive)', // Alias
-    background: 'var(--background)',
-    foreground: 'var(--foreground)',
-    // TODO: Adicionar as variáveis faltantes (ver lista acima)
-  };
+  // Se é nome de cor do sistema, resolve baseado no tipo
+  if (CSS_VARIABLES[color]) {
+    // Cores tipo 'tailwind' precisam de hsl() wrapper
+    if (HSL_VARIABLES.has(color)) {
+      return `hsl(${CSS_VARIABLES[color]})`;
+    }
+    // Cores tipo 'theme' usam valor direto
+    if (HEX_VARIABLES.has(color)) {
+      return CSS_VARIABLES[color];
+    }
+    // Fallback: assume HSL
+    return `hsl(${CSS_VARIABLES[color]})`;
+  }
 
-  return cssVariables[color] ?? color;
+  // Se já é uma variável CSS direta, envolve com hsl()
+  if (colorType === 'variable') {
+    return `hsl(${color})`;
+  }
+
+  // Para outros casos, retorna como está
+  return color;
 };
 
 /**

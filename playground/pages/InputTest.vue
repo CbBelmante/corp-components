@@ -3,12 +3,37 @@ import { CorpInput } from '@/components/ui/input';
 import { CorpButton } from '@/components/ui/button';
 import { useForm } from '@/composables/useForm';
 import { useValidationRules } from '@/validations/rules';
+import { type Ref } from 'vue';
+
+// ============== TYPES ==============
+interface InputTestForm {
+  name1: string;
+  email1: string;
+  name2: string;
+  email2: string;
+  cpf: string;
+  phone: string;
+  email3: string;
+  search: string;
+  password1: string;
+  name3: string;
+  email4: string;
+  bio: string;
+  name4: string;
+  name5: string;
+  email5: string;
+  website: string;
+  domain: string;
+  nameForm: string;
+  emailForm: string;
+  passwordForm: string;
+}
 
 // ============== VALIDATION ==============
 const rules = useValidationRules();
 
 // ============== FORM WITH VALIDATION CONTEXT ==============
-const { form, validateForm } = useForm({
+const { form: formRaw, validateForm } = useForm({
   initialValues: {
     name1: '',
     email1: '',
@@ -33,6 +58,9 @@ const { form, validateForm } = useForm({
   },
   formName: 'InputTestForm',
 });
+
+// Type-safe form access
+const form = formRaw as unknown as Ref<InputTestForm>;
 
 const handleSubmit = () => {
   const schema = {
@@ -187,14 +215,12 @@ const handleSubmit = () => {
           name="name5"
           label="Desabilitado"
           disabled
-          model-value="Campo desabilitado"
         />
         <CorpInput
           v-model="form.email5"
           name="email5"
           label="Somente leitura"
           readonly
-          model-value="campo@readonly.com"
         />
       </div>
     </section>

@@ -291,7 +291,7 @@ const removeChip = (value: string | number): void => {
         @update:open="handleOpenChange"
       >
         <SelectTrigger
-          class="corpSelectTrigger bg-[var(--select-background)] !border-[var(--select-border)] focus:ring-[length:var(--ring-width)] focus:!ring-[var(--select-ring)]"
+          class="corpSelectTrigger bg-[hsl(var(--select-background))] !border-[hsl(var(--select-border))] focus:ring-[length:var(--ring-width)] focus:!ring-[hsl(var(--select-ring))]"
           :class="
             cn({
               'border-destructive': hasError,
@@ -410,11 +410,19 @@ const removeChip = (value: string | number): void => {
 
 /* Light theme - escurece 7% */
 .corpSelectTrigger:hover:not(:disabled) {
-  background-color: color-mix(in srgb, var(--select-background) 93%, black 7%);
+  background-color: color-mix(
+    in srgb,
+    hsl(var(--select-background)) 93%,
+    black 7%
+  );
 }
 
 /* Dark theme - clareia 3% (mais sutil) */
 .dark .corpSelectTrigger:hover:not(:disabled) {
-  background-color: color-mix(in srgb, var(--select-background) 97%, white 3%);
+  background-color: color-mix(
+    in srgb,
+    hsl(var(--select-background)) 97%,
+    white 3%
+  );
 }
 </style>

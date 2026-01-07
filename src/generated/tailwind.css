@@ -1,0 +1,152 @@
+/**
+ * ===================================================================
+ * 🎨 TAILWIND CSS VARIABLES - GERADO AUTOMATICAMENTE
+ * ===================================================================
+ *
+ * ⚠️ NÃO ADICIONE AQUI! ⚠️
+ * Arquivo gerado no build ou via: bun run generateTheme
+ *
+ * Este arquivo é gerado automaticamente de src/theme.ts
+ * Formato HSL sem hsl() para Tailwind processar opacity modifiers
+ *
+ * Para modificar cores, edite src/theme.ts e rode:
+ * `bun run generateTheme`
+ */
+
+/* Light Mode */
+:root {
+  --primary: 18 100% 60%;
+  --primary-foreground: 0 0% 100%;
+  --primary-soft: 16 100% 97%;
+  --primary-hover: 21 80% 51%;
+  --primary-muted: 15 100% 80%;
+  --secondary: 215 25% 27%;
+  --secondary-foreground: 0 0% 98%;
+  --secondary-soft: 210 17% 95%;
+  --secondary-hover: 209 100% 10%;
+  --secondary-muted: 213 10% 82%;
+  --accent: 209 30% 60%;
+  --accent-foreground: 0 0% 100%;
+  --accent-soft: 208 48% 94%;
+  --background: 210 40% 98%;
+  --background-gradient-start: 210 40% 96%;
+  --background-gradient-end: 210 40% 98%;
+  --foreground: 217 33% 17%;
+  --container-background: 0 0% 0% / 0;
+  --surface-muted: 208 18% 83%;
+  --sidebar-background: rgba(0, 0, 0, 0.2);
+  --card: 0 0% 100%;
+  --card-foreground: 224 60% 5%;
+  --popover: 210 25% 97%;
+  --popover-foreground: 224 60% 5%;
+  --muted: 210 19% 88%;
+  --muted-foreground: 0 0% 45%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --input-border: 210 21% 95%;
+  --input-background: 207 28% 86%;
+  --input-ring: 18 100% 60%;
+  --ring-width: 2px;
+  --select-border: 210 21% 95%;
+  --select-background: 207 28% 86%;
+  --select-ring: 18 100% 60%;
+  --text: 224 60% 5%;
+  --text-muted: 215 16% 47%;
+  --text-accent: 18 100% 60%;
+  --border: 210 19% 77%;
+  --border-muted: 210 20% 82%;
+  --table-background: 206 30% 95%;
+  --card-content-background: 206 30% 95%;
+  --table-header-border: 210 19% 77%;
+  --table-border: 210 21% 95%;
+  --table-cell-border: 220 13% 91%;
+  --focus-ring: 18 100% 60%;
+  --button-outline: 215 25% 27%;
+  --disabled-background: 209 21% 77%;
+  --disabled-foreground: 215 16% 47%;
+  --disabled-border: 215 20% 65%;
+  --checkbox-unchecked: 210 19% 77%;
+  --checkbox-unchecked-disabled-border: 209 23% 80%;
+  --checkbox-unchecked-border: 215 20% 65%;
+  --switch-unchecked: 210 19% 77%;
+  --code-background: 210 36% 96%;
+  --blockquote-border: 18 100% 60%;
+  --blockquote-background: 55 92% 95%;
+  --alert-border: 18 100% 60%;
+  --alert-background: 55 92% 95%;
+  --code-preview-border: 207 28% 86%;
+  --code-preview-copy-btn-border: 207 28% 86%;
+  --tooltip-background: 217 33% 17%;
+  --tooltip-foreground: 214 32% 91%;
+  --tooltip-border: 215 25% 27%;
+  --company-border: 18 100% 60%;
+}
+
+/* Dark Mode */
+.dark {
+  --primary: 18 100% 60%;
+  --primary-foreground: 0 0% 100%;
+  --primary-soft: 16 54% 19%;
+  --primary-hover: 19 100% 65%;
+  --primary-muted: 20 64% 39%;
+  --secondary: 214 52% 25%;
+  --secondary-foreground: 0 0% 98%;
+  --secondary-soft: 211 51% 18%;
+  --secondary-hover: 214 50% 29%;
+  --secondary-muted: 212 23% 29%;
+  --accent: 215 15% 15%;
+  --accent-foreground: 208 35% 93%;
+  --accent-soft: 215 21% 11%;
+  --background: 215 18% 13%;
+  --background-gradient-start: 231 11% 12%;
+  --background-gradient-end: 233 11% 15%;
+  --foreground: 208 35% 93%;
+  --container-background: 0 0% 0% / 0;
+  --surface-muted: 216 33% 6%;
+  --sidebar-background: rgba(0, 0, 0, 0.2);
+  --card: 215 15% 16%;
+  --card-foreground: 208 35% 93%;
+  --popover: 215 13% 19%;
+  --popover-foreground: 208 35% 93%;
+  --muted: 215 18% 13%;
+  --muted-foreground: 215 8% 53%;
+  --destructive: 3 93% 63%;
+  --destructive-foreground: 0 0% 98%;
+  --input-border: 215 19% 12%;
+  --input-background: 215 18% 13%;
+  --input-ring: 18 100% 60%;
+  --ring-width: 2px;
+  --select-border: 215 19% 12%;
+  --select-background: 215 18% 13%;
+  --select-ring: 18 100% 60%;
+  --text: 208 35% 93%;
+  --text-muted: 215 8% 53%;
+  --text-accent: 18 100% 60%;
+  --border: 214 12% 27%;
+  --border-muted: 215 15% 15%;
+  --table-background: 213 17% 12%;
+  --card-content-background: 215 21% 11%;
+  --table-header-border: 215 18% 13%;
+  --table-border: 218 26% 8%;
+  --table-cell-border: 212 12% 21%;
+  --focus-ring: 18 100% 60%;
+  --button-outline: 214 12% 27%;
+  --disabled-background: 216 33% 6%;
+  --disabled-foreground: 215 8% 47%;
+  --disabled-border: 212 12% 21%;
+  --checkbox-unchecked: 214 12% 27%;
+  --checkbox-unchecked-disabled-border: 214 12% 27%;
+  --checkbox-unchecked-border: 214 10% 31%;
+  --switch-unchecked: 214 12% 27%;
+  --code-background: 120 12% 12%;
+  --blockquote-border: 18 100% 60%;
+  --blockquote-background: 24 10% 10%;
+  --alert-border: 18 100% 60%;
+  --alert-background: 24 10% 10%;
+  --code-preview-border: 212 12% 21%;
+  --code-preview-copy-btn-border: 212 12% 21%;
+  --tooltip-background: 240 40% 10%;
+  --tooltip-foreground: 210 40% 96%;
+  --tooltip-border: 214 52% 25%;
+  --company-border: 18 100% 60%;
+}

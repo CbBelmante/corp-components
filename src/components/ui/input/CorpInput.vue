@@ -528,7 +528,7 @@ const inputDynamicPadding = computed(() => {
             )
           "
           :style="{
-            'background-color': 'var(--input-background)',
+            'background-color': 'hsl(var(--input-background))',
             ...inputDynamicPadding,
           }"
           @input="handleInput"

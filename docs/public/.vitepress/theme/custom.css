@@ -10,9 +10,9 @@
   --vp-c-brand-soft: rgba(255, 113, 51, 0.14);
 
   /* Background - Azulado (igual theme.css) */
-  --vp-c-bg: #e8ecf0;
+  --vp-c-bg: #f8fafc;
   --vp-c-bg-soft: #D1DCE5;
-  --vp-c-bg-alt: #e8ecf0;
+  --vp-c-bg-alt: #f8fafc;
   --vp-c-bg-elv: #ffffff;
 
   /* Grays - Tons azulados */
@@ -23,10 +23,10 @@
 
   /* Dividers - Azulado */
   --vp-c-divider: #D1DCE5;
-  --vp-c-divider-light: #e8ecf0;
+  --vp-c-divider-light: #f8fafc;
 
   /* Text */
-  --vp-c-text-1: #050914;
+  --vp-c-text-1: #1e293b;
   --vp-c-text-2: #64748b;
   --vp-c-text-3: #7A9AB8;
 
@@ -45,7 +45,7 @@
   /* Hero gradient */
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: linear-gradient(135deg, #FF7133 0%, #E6641C 100%);
-  --vp-home-hero-image-background-image: linear-gradient(135deg, #FFF4F0 0%, #e8ecf0 100%);
+  --vp-home-hero-image-background-image: linear-gradient(135deg, #FFF4F0 0%, #f8fafc 100%);
 
   /* Button */
   --vp-button-brand-border: #FF7133;
@@ -60,10 +60,10 @@
 
   /* Alt button - Azulado */
   --vp-button-alt-border: transparent;
-  --vp-button-alt-text: #050914;
+  --vp-button-alt-text: #1e293b;
   --vp-button-alt-bg: #D1DCE5;
   --vp-button-alt-hover-border: transparent;
-  --vp-button-alt-hover-text: #050914;
+  --vp-button-alt-hover-text: #1e293b;
   --vp-button-alt-hover-bg: #B8CAD9;
 }
 
@@ -146,8 +146,18 @@
 
 /* Fix: VitePress base.css aplica "border: 0" em todos os buttons */
 .componentPreview button,
-.codePreview button {
-  border-style: solid;
+.codePreview button,
+.vp-doc button {
+  border-style: solid !important;
+}
+
+/* Fix: VitePress sobrescreve cor da borda do variant outline */
+.componentPreview button.border-button-outline,
+.codePreview button.border-button-outline,
+.vp-doc button.border-button-outline {
+  border-color: hsl(var(--button-outline)) !important;
+  border-width: 2px !important;
+  color: hsl(var(--button-outline)) !important;
 }
 
 /* Fix: VitePress aplica cor de link em botões renderizados como <a> */
