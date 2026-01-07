@@ -28,10 +28,15 @@ import { RouterLink } from 'vue-router';
         </p>
       </RouterLink>
 
-      <div class="p-6 border border-dashed border-border rounded-lg opacity-50">
-        <h3 class="font-semibold text-foreground mb-1">Select</h3>
-        <p class="text-sm text-muted-foreground">Em breve...</p>
-      </div>
+      <RouterLink
+        to="/selects"
+        class="p-6 border border-border rounded-lg hover:border-primary hover:bg-accent/50 transition-colors"
+      >
+        <h3 class="font-semibold text-foreground mb-1">Selects</h3>
+        <p class="text-sm text-muted-foreground">
+          Testar selects com multiple, chips e validacao
+        </p>
+      </RouterLink>
     </div>
   </div>
 </template>

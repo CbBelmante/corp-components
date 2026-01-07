@@ -63,7 +63,7 @@ export default defineConfig(async () => {
       sidebar: [
         {
           text: 'Introducao',
-          items: [{ text: 'Instalacao', link: '/getting-started' }],
+          items: [{ text: 'Instalacao', link: '/gettingStarted' }],
         },
         {
           text: 'UI Components',
@@ -71,6 +71,7 @@ export default defineConfig(async () => {
             { text: 'Button', link: '/components/button' },
             { text: 'Icon', link: '/components/icon' },
             { text: 'Input', link: '/components/input' },
+            { text: 'Select', link: '/components/select' },
           ],
         },
       ],

@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { CorpIcon } from '@components/ui/icon'
-import { CorpButton } from '@components/ui/corpbutton'
+import { CorpButton } from '@components/ui/button'
 
 const clickCount = ref(0)
 </script>

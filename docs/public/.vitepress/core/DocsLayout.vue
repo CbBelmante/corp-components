@@ -142,6 +142,43 @@ const handleClear = () => {
   form.passwordForm = '';
 };
 
+// ============== SELECT.MD - Estados e Handlers ==============
+const { form: selectForm, validateForm: validateSelectFormFn } = useForm({
+  initialValues: {
+    framework: '',
+    frameworkUsage: '',
+    state: '',
+    status: '',
+    tags: [],
+    multipleFrameworks: [],
+    skills: [],
+    frameworkClear: '',
+    country: '',
+  },
+  formName: 'SelectForm',
+});
+
+const validationRules = [
+  rules.required,
+  (value: string[] | undefined) =>
+    (Array.isArray(value) && value.length >= 2) ||
+    'Selecione pelo menos 2 frameworks',
+];
+
+const validateSelectForm = () => {
+  const schema = {
+    tags: validationRules,
+  };
+
+  const isValid = validateSelectFormFn(schema);
+
+  if (isValid) {
+    alert('✅ Formulário válido! Frameworks: ' + selectForm.tags.join(', '));
+  } else {
+    alert('❌ Selecione pelo menos 2 frameworks!');
+  }
+};
+
 // ============== INJETAR EM GLOBALPROPERTIES ==============
 // Torna estados acessíveis nos .md SEM script setup!
 // Arquivos .md podem usar: {{ loadingButton }}, v-model="form.name", :rules="[rules.required]"
@@ -160,6 +197,11 @@ injectDocsContext({
   validateForm,
   handleSubmit,
   handleClear,
+
+  // Select.md
+  selectForm,
+  validationRules,
+  validateSelectForm,
 });
 </script>
 

@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: Comecar
-      link: /getting-started
+      link: /gettingStarted
     - theme: alt
       text: Componentes
       link: /components/button

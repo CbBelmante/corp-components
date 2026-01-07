@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CorpInput } from '@/components/ui/input';
-import { CorpButton } from '@/components/ui/corpbutton';
+import { CorpButton } from '@/components/ui/button';
 import { useForm } from '@/composables/useForm';
 import { useValidationRules } from '@/validations/rules';
 

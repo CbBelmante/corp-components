@@ -262,41 +262,54 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 |---------|---------------|------------|--------|
 | Button (shadcn) | CorpButton.vue | 🔴 Alta | ✅ Completo (variant/size/rounded/block/stacked/loading/icons) |
 | CbIcon.vue | CorpIcon.vue | 🔴 Alta | ✅ Completo (tag/start/end/clickable) |
-| CbInput.vue | CorpInput.vue | 🔴 Alta | ⬜ Pendente |
-| CbSelect.vue | CorpSelect.vue | 🔴 Alta |
-| CbCheckbox.vue | CorpCheckbox.vue | 🔴 Alta |
-| CbSwitch.vue | CorpSwitch.vue | 🔴 Alta |
-| CbDate.vue | CorpDate.vue | 🔴 Alta |
-| CbTimeField.vue | CorpTimeField.vue | 🟡 Média |
-| CbButtonGroup.vue | CorpButtonGroup.vue | 🟡 Média |
-| CbAddress.vue | CorpAddress.vue | 🟡 Média |
-| CbAddressList.vue | CorpAddressList.vue | 🟡 Média |
-| CbFileUpload.vue | CorpFileUpload.vue | 🟡 Média |
-| CbImageUpload.vue | CorpImageUpload.vue | 🟡 Média |
-| CbHintLine.vue | CorpHintLine.vue | 🟢 Baixa |
-| CbLocation.vue | CorpLocation.vue | 🟢 Baixa |
+| CbInput.vue | CorpInput.vue | 🔴 Alta | ✅ Completo (validation/clearable/masks/icons/counter) |
+| CbSelect.vue | CorpSelect.vue | 🔴 Alta | ✅ Completo (validation/clearable/multiple/chips) |
+| CbBadge.vue | CorpBadge.vue | 🔴 Alta | ✅ Completo (variant/opacity/icon/animation) |
+| CbHintLine.vue | CorpHintLine.vue | 🔴 Alta | ✅ Completo (error/hint/persistent/debug) |
+| CbCheckbox.vue | CorpCheckbox.vue | 🔴 Alta | ⬜ Pendente |
+| CbSwitch.vue | CorpSwitch.vue | 🔴 Alta | ⬜ Pendente |
+| CbDate.vue | CorpDate.vue | 🔴 Alta | ⬜ Pendente |
+| CbTimeField.vue | CorpTimeField.vue | 🟡 Média | ⬜ Pendente |
+| CbButtonGroup.vue | CorpButtonGroup.vue | 🟡 Média | ⬜ Pendente |
+| CbAddress.vue | CorpAddress.vue | 🟡 Média | ⬜ Pendente |
+| CbAddressList.vue | CorpAddressList.vue | 🟡 Média | ⬜ Pendente |
+| CbFileUpload.vue | CorpFileUpload.vue | 🟡 Média | ⬜ Pendente |
+| CbImageUpload.vue | CorpImageUpload.vue | 🟡 Média | ⬜ Pendente |
+| CbLocation.vue | CorpLocation.vue | 🟢 Baixa | ⬜ Pendente |
 
 ### Tarefas
 
-- [ ] **3.1** Migrar CorpInput.vue
-  - Copiar de `CbAdmin/src/components/CbComponents/forms/CbInput.vue`
-  - Renomear para `CorpInput.vue`
-  - Substituir `Cb` → `Ark` no código
-  - Ajustar imports internos
+- [x] **3.1** Migrar CorpInput.vue ✅ **(CONCLUÍDO em 06/01/2025)**
+  - Instalado Input shadcn via CLI
+  - Renomeado Input.vue → CorpInput.vue
+  - Adicionado todas features do CbInput (validation, clearable, masks, icons, counter)
+  - Ajustado imports internos
 
-- [ ] **3.2** Migrar CorpSelect.vue
+- [x] **3.2** Migrar CorpSelect.vue ✅ **(CONCLUÍDO em 06/01/2025)**
+  - Instalado Select shadcn via CLI
+  - Renomeado Select.vue → CorpSelect.vue
+  - Adicionado features: validation, clearable, **multiple**, **chips**
+  - Normalização de items (string[] ou {value, label}[])
+
+- [x] **3.3** Migrar CorpBadge.vue ✅ **(CONCLUÍDO em 06/01/2025)**
+  - Instalado Badge shadcn via CLI
+  - Renomeado Badge.vue → CorpBadge.vue
+  - Adicionado features: variant, opacity, icon, animation (pulse/bounce/spin/ping)
+  - Integração com CorpIcon e CorpColorUtils
+
+- [x] **3.4** Migrar CorpHintLine.vue ✅ **(CONCLUÍDO em 05/01/2025)**
+  - Componente auxiliar para mensagens de erro/hint
+  - Features: errorMessages, hint, persistentHint, debug, hideDetails
+
+- [ ] **3.5** Migrar CorpCheckbox.vue
   - Copiar e renomear
   - Ajustar imports
 
-- [ ] **3.3** Migrar CorpCheckbox.vue
+- [ ] **3.6** Migrar CorpSwitch.vue
   - Copiar e renomear
   - Ajustar imports
 
-- [ ] **3.4** Migrar CorpSwitch.vue
-  - Copiar e renomear
-  - Ajustar imports
-
-- [ ] **3.5** Migrar CorpDate.vue
+- [ ] **3.7** Migrar CorpDate.vue
   - Copiar e renomear
   - Ajustar imports
   - Verificar dependência do DateUtils
@@ -423,39 +436,51 @@ Migrar utilitários essenciais do CbAdmin.
 
 ### Mapeamento
 
-| CbAdmin | corp-components | Prioridade |
-|---------|---------------|------------|
-| stringUtils.ts | stringUtils.ts | 🔴 Alta |
-| DateUtils.ts | dateUtils.ts | 🔴 Alta |
-| CbLogger.ts | logger.ts | 🟡 Média |
-| ValidatorUtils.ts | validators.ts | 🟡 Média |
+| CbAdmin | corp-components | Prioridade | Status |
+|---------|---------------|------------|--------|
+| stringUtils.ts | stringUtils.ts | 🔴 Alta | ✅ Migrado |
+| CorpLogger.ts | CorpLogger.ts | 🔴 Alta | ✅ Migrado |
+| CbColorUtils.ts | CorpColorUtils.ts | 🔴 Alta | ✅ Migrado |
+| CbClientUtils.ts | CorpClientUtils.ts | 🔴 Alta | ✅ Migrado |
+| DateUtils.ts | dateUtils.ts | 🟡 Média | ⬜ Pendente |
+| ValidatorUtils.ts | validators.ts | 🟡 Média | ⬜ Pendente |
 
 ### Tarefas
 
-- [ ] **5.1** Migrar stringUtils.ts
-  - Copiar de `CbAdmin/src/utils/stringUtils.ts`
-  - Remover funções específicas do CbAdmin
-  - Manter apenas utilitários genéricos
+- [x] **5.1** Migrar stringUtils.ts ✅ **(MIGRADO anteriormente)**
+  - Utilitários genéricos de string
 
-- [ ] **5.2** Migrar dateUtils.ts
+- [x] **5.2** Migrar CorpLogger.ts ✅ **(MIGRADO anteriormente)**
+  - Logger com níveis de log e formatação
+
+- [x] **5.3** Migrar CorpColorUtils.ts ✅ **(CONCLUÍDO em 06/01/2025)**
+  - Copiado de `CbAdmin/src/utils/CbColorUtils.ts`
+  - Renomeado CbColorUtils → CorpColorUtils
+  - Funções: hexToRgb, toRgba, darken, lighten, resolveColor, getLighterColor
+  - SSR-safe (usa CorpClientUtils)
+
+- [x] **5.4** Migrar CorpClientUtils.ts ✅ **(CONCLUÍDO em 06/01/2025)**
+  - Copiado de `CbAdmin/src/utils/CbClientUtils.ts`
+  - Renomeado CbClientUtils → CorpClientUtils
+  - Funções SSR-safe: isClientSide, isServerSide, isBrowserAvailable, clientOnly
+
+- [ ] **5.5** Migrar dateUtils.ts
   - Copiar de `CbAdmin/src/utils/DateUtils.ts`
   - Verificar dependência do dayjs
   - Instalar dayjs se necessário
 
-- [ ] **5.3** Migrar logger.ts (versão simplificada)
-  - Criar versão simples do CbLogger
-  - Remover dependências específicas
-
-- [ ] **5.4** Migrar validators.ts
+- [ ] **5.6** Migrar validators.ts
   - Copiar validadores de `CbAdmin/src/validations/rules.ts`
   - Adaptar para uso standalone
 
-- [ ] **5.5** Criar src/utils/index.ts
+- [x] **5.7** Atualizar src/utils/index.ts ✅ **(CONCLUÍDO em 06/01/2025)**
   ```typescript
   export * from './stringUtils';
-  export * from './dateUtils';
-  export * from './logger';
-  export * from './validators';
+  export * from './CorpLogger';
+  export * from './CorpClientUtils';
+  export * from './CorpColorUtils';
+  // export * from './dateUtils';  // Pendente
+  // export * from './validators'; // Pendente
   ```
 
 - [ ] **5.6** Instalar dependências necessárias

@@ -177,7 +177,7 @@ npx shadcn-vue@latest add button
 ### **Estrutura de um Componente**
 
 ```
-src/components/ui/corpbutton/
+src/components/ui/button/
 ├── CorpButton.vue      # Componente principal
 ├── index.ts            # Exportação
 └── button.styles.ts    # CVA variants (opcional)
@@ -187,7 +187,7 @@ src/components/ui/corpbutton/
 
 ```typescript
 // src/components/ui/index.ts
-export { default as CorpButton } from './corpbutton/CorpButton.vue'
+export { default as CorpButton } from './button/CorpButton.vue'
 export { default as CorpIcon } from './icon/CorpIcon.vue'
 ```
 

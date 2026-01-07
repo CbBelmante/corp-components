@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { CorpButton as Button } from '@/components/ui/corpbutton';
+import { CorpButton as Button } from '@/components/ui/button';
 
 const clickCount = ref(0);
 const loading = ref(false);

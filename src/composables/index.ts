@@ -4,3 +4,4 @@
 
 export * from './useLucideIcon';
 export * from './useForm';
+export * from './useTheme';

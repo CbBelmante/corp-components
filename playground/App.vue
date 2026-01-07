@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
+import { CorpThemeToggle } from '@/components/ui';
 </script>
 
 <template>
@@ -33,13 +34,16 @@ import { RouterLink, RouterView } from 'vue-router';
             </RouterLink>
           </nav>
         </div>
-        <a
-          href="http://localhost:5174"
-          target="_blank"
-          class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90 transition-opacity"
-        >
-          Docs
-        </a>
+        <div class="flex items-center gap-3">
+          <CorpThemeToggle />
+          <a
+            href="http://localhost:5174"
+            target="_blank"
+            class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90 transition-opacity"
+          >
+            Docs
+          </a>
+        </div>
       </div>
     </header>
 

@@ -70,7 +70,7 @@ corp-components/
 ├── src/                      # 🏗️ CÓDIGO FONTE
 │   ├── components/           # 🧩 COMPONENTES VUE
 │   │   ├── ui/               # Componentes shadcn-vue
-│   │   │   ├── corpbutton/   # CorpButton (variants: default, destructive, outline, etc)
+│   │   │   ├── button/       # CorpButton (variants: default, destructive, outline, etc)
 │   │   │   ├── icon/         # CorpIcon (lucide wrapper)
 │   │   │   └── code-preview/ # CodePreview (syntax highlighting)
 │   │   ├── forms/            # 🚧 Componentes de formulário (planejado)

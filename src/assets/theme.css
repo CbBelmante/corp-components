@@ -92,14 +92,14 @@
   --destructive-foreground: #fafafa; /* Texto destrutivo */
 
   /* Input System */
-  --input-border: #eef1f4; /* Borda do input = background do select */
+  --input-border: #eef1f4; /* Borda do input */
   --input-background: #D1DCE5; /* Background de inputs - azul médio harmonizado */
   --input-ring: var(--primary); /* Focus ring do input */
   --ring-width: 2px; /* Espessura padrão dos rings de foco (inputs, selects, buttons, etc) */
 
   /* Select System */
-  --select-border: #eef1f4; /* Borda do select = background */
-  --select-background: #B8CAD9; /* Background de selects - azul slate mais escuro */
+  --select-border: #eef1f4; /* Borda do select (igual input) */
+  --select-background: #D1DCE5; /* Background de selects (igual input) */
   --select-ring: var(--primary); /* Focus ring do select */
 
   --radius: 0.5rem; /* Border radius padrão */
@@ -306,8 +306,8 @@
   --ring-width: 2px; /* Espessura padrão dos rings de foco (inputs, selects, buttons, etc) */
 
   /* Select System */
-  --select-border: #10141b; /* Borda do select = background */
-  --select-background: #10141b; /* Background de selects - um pouco mais escuro que input */
+  --select-border: #191e25; /* Borda do select (igual input) */
+  --select-background: #1c2128; /* Background de selects (igual input) */
   --select-ring: var(--primary); /* Focus ring do select */
 
   /* ===================================================================
@@ -315,7 +315,7 @@
    * =================================================================== */
   --text-muted: #7d8590; /* Texto muted GitHub style */
   --text-link: #60a5fa; /* Links e texto interativo (igual code) */
-  --border: #30363d; /* Border principal GitHub style */
+  --border: #3d444d; /* Border principal - mais claro para contraste com popovers */
   --border-muted: #21262d; /* Border muted GitHub style */
 
   /* ===================================================================

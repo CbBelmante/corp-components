@@ -9,8 +9,9 @@ import DocsLayout from '../core/DocsLayout.vue';
 
 // Componentes globais para docs
 import { CodePreview } from '@components/layout';
-import { CorpButton } from '@components/ui/corpbutton';
+import { CorpButton } from '@components/ui/button';
 import { CorpInput } from '@components/ui/input';
+import { CorpSelect } from '@components/ui/select';
 import { CorpIcon } from '@components/ui/icon';
 
 // i18n centralizado (igual playground)
@@ -26,6 +27,7 @@ export default {
     app.component('CodePreview', CodePreview);
     app.component('CorpButton', CorpButton);
     app.component('CorpInput', CorpInput);
+    app.component('CorpSelect', CorpSelect);
     app.component('CorpIcon', CorpIcon);
 
     // ============== PLUGINS ==============

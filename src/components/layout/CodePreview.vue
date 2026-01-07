@@ -14,7 +14,7 @@
 import { ref, computed, type PropType } from 'vue';
 
 // ============== DEPENDÊNCIAS INTERNAS ==============
-import { CorpButton } from '@components/ui/corpbutton';
+import { CorpButton } from '@components/ui/button';
 import { CorpIcon } from '@components/ui/icon';
 
 // ============== TIPOS ==============

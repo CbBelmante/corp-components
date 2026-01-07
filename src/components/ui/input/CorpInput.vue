@@ -233,15 +233,10 @@ const hasError = computed<boolean>(() => {
   return errors.length > 0 && !isFocused.value;
 });
 
-/**
- * Detecta se há rule required no array de rules
- * Testa cada rule com valor vazio - se alguma falhar, considera como required
- */
-const hasRequiredRule = computed<boolean>(() => {
-  return props.rules.some(rule => {
-    const result = rule('');
-    return result !== true;
-  });
+const hasRequiredRule = computed(() => {
+  return props.rules.some(
+    rule => rule.name === 'required' || rule.toString().includes('obrigatório')
+  );
 });
 
 // ============== MÁSCARAS ==============
