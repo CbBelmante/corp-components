@@ -286,7 +286,9 @@ ${renderedCode}
     }
 
     // MODO SIMPLES (preview = codigo)
-    const codeBlock = `\`\`\`${meta.language}\n${content}\n\`\`\``;
+    // Envolver em <template> apenas para o highlight do Shiki (não afeta preview)
+    const wrappedContent = `<template>\n${content}\n</template>`;
+    const codeBlock = `\`\`\`${meta.language}\n${wrappedContent}\n\`\`\``;
     const renderedCode = md.render(codeBlock);
 
     const configAttr =
