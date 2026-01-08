@@ -239,6 +239,57 @@ O `CorpSwitch` integra-se com o sistema de validação `useForm`. O asterisco (*
 
 ---
 
+## Densidade (Density)
+
+Controle o tamanho do switch com a prop `density`.
+
+:::corp-code
+<CorpSwitch name="compact" label="Compact (padrão)" density="compact" model-value />
+<CorpSwitch name="standard" label="Standard" density="standard" model-value />
+<CorpSwitch name="comfortable" label="Comfortable" density="comfortable" model-value />
+:::
+
+---
+
+## Posição do Label
+
+Use `labelPosition` para alterar a posição do label.
+
+:::corp-code
+<CorpSwitch name="right" label="Label à direita (padrão)" label-position="right" model-value />
+<CorpSwitch name="left" label="Label à esquerda" label-position="left" model-value />
+:::
+
+---
+
+## Erros Externos
+
+Use `externalErrors` para exibir erros vindos do backend/API.
+
+:::corp-code
+<CorpSwitch
+  name="external"
+  label="Campo com erro do backend"
+  :external-errors="['Erro ao salvar no servidor']"
+/>
+:::
+
+---
+
+## Estado Indeterminado
+
+Use `indeterminate` para estado intermediário (útil em seleções parciais).
+
+:::corp-code
+<CorpSwitch
+  name="indeterminate"
+  label="Estado intermediário"
+  indeterminate
+/>
+:::
+
+---
+
 ## API
 
 ### Props
@@ -253,8 +304,15 @@ O `CorpSwitch` integra-se com o sistema de validação `useForm`. O asterisco (*
 | `disabled` | `boolean` | `false` | Desabilita o switch |
 | `readonly` | `boolean` | `false` | Somente leitura |
 | `loading` | `boolean` | `false` | Estado de loading (spinner) |
+| `indeterminate` | `boolean` | `false` | Estado intermediário |
 | `trueValue` | `boolean \| string \| number` | `true` | Valor quando ligado |
 | `falseValue` | `boolean \| string \| number` | `false` | Valor quando desligado |
+| `forceError` | `boolean` | `false` | Força visual de erro |
+| `externalErrors` | `string \| string[]` | `''` | Erros externos (backend/API) |
+| `messages` | `string[]` | `[]` | Mensagens genéricas (info/warning) |
+| `maxErrors` | `number` | `1` | Limite de erros exibidos |
+| `density` | `'compact' \| 'standard' \| 'comfortable'` | `'compact'` | Tamanho do switch |
+| `labelPosition` | `'left' \| 'right'` | `'right'` | Posição do label |
 | `rules` | `ValidationRule[]` | `[]` | Regras de validação |
 | `hideDetails` | `boolean` | `false` | Esconde hint/erro |
 | `debug` | `boolean` | `false` | Exibe áreas reservadas |
@@ -330,3 +388,5 @@ O `CorpSwitch` integra-se com o sistema de validação `useForm`. O asterisco (*
 💡 **Cores universais:** Suporta HEX, RGB, HSL, variáveis CSS e nomes CSS
 💡 **Valores customizados:** Use `trueValue`/`falseValue` para APIs específicas
 💡 **Loading state:** Mostre feedback visual durante operações assíncronas
+💡 **Densidade:** Ajuste o tamanho com `density` (compact/standard/comfortable)
+💡 **Erros externos:** Use `externalErrors` para erros de backend/API

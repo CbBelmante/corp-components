@@ -18,7 +18,7 @@
     "dist"
   ],
   "scripts": {
-    "dev": "tsx scripts/dev.ts",
+    "dev": "bun run generateTheme && tsx scripts/dev.ts",
     "devDocs": "tsx scripts/devDocs.ts",
     "devPlayground": "tsx scripts/devPlayground.ts",
     "generateTheme": "bun run scripts/generateTheme.ts",

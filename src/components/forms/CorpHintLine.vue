@@ -34,14 +34,29 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  maxErrors: {
+    type: Number,
+    default: 1,
+  },
+  messages: {
+    type: Array as PropType<string[]>,
+    default: () => [],
+  },
 });
 
 // ============== COMPUTED ==============
 const hasError = computed(() => props.errorMessages.length > 0);
+
+// Limita erros ao maxErrors
+const limitedErrors = computed(() => {
+  return props.errorMessages.slice(0, props.maxErrors);
+});
+
+const hasMessages = computed(() => props.messages.length > 0);
 </script>
 
 <template>
-  <!-- Área de detalhes (hint/error) -->
+  <!-- Área de detalhes (hint/error/messages) -->
   <div
     v-if="!hideDetails || debug"
     class="min-h-5 text-xs"
@@ -49,9 +64,14 @@ const hasError = computed(() => props.errorMessages.length > 0);
       'bg-yellow-50 border border-yellow-200 p-1': debug,
     }"
   >
-    <!-- Error messages -->
+    <!-- Error messages (limitado ao maxErrors) -->
     <div v-if="hasError" class="text-red-500">
-      {{ errorMessages.join(', ') }}
+      {{ limitedErrors.join(', ') }}
+    </div>
+
+    <!-- Messages (genérico - aparecem quando não há erro) -->
+    <div v-else-if="hasMessages" class="text-muted-foreground">
+      {{ messages.join(', ') }}
     </div>
 
     <!-- Hint (sempre visível se persistentHint=true, senão só quando não tem erro) -->
@@ -64,8 +84,11 @@ const hasError = computed(() => props.errorMessages.length > 0);
     </div>
 
     <!-- Debug mode -->
-    <div v-else-if="debug && !hint" class="text-gray-400 italic">
-      [Área reservada para hint/error]
+    <div
+      v-else-if="debug && !hint && !hasError && !hasMessages"
+      class="text-gray-400 italic"
+    >
+      [Área reservada para hint/error/messages]
     </div>
   </div>
 </template>

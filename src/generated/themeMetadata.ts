@@ -16,7 +16,7 @@
 
 /**
  * Mapeamento de cores principais para variáveis CSS
- * Total: 59 variáveis
+ * Total: 61 variáveis
  */
 export const CSS_VARIABLES: Record<string, string> = {
   primary: 'var(--primary)',
@@ -58,9 +58,11 @@ export const CSS_VARIABLES: Record<string, string> = {
   'button-chat-input': 'var(--button-chat-input)',
   'disabled-background': 'var(--disabled-background)',
   'checkbox-unchecked': 'var(--checkbox-unchecked)',
+  'checkbox-ring': 'var(--checkbox-ring)',
   'switch-unchecked': 'var(--switch-unchecked)',
   'switch-checked-disabled': 'var(--switch-checked-disabled)',
   'switch-thumb': 'var(--switch-thumb)',
+  'switch-ring': 'var(--switch-ring)',
   'audio-waves-color': 'var(--audio-waves-color)',
   'audio-waves-progress-played': 'var(--audio-waves-progress-played)',
   'code-background': 'var(--code-background)',
@@ -82,7 +84,7 @@ export const CSS_VARIABLES: Record<string, string> = {
 
 /**
  * Cores tipo 'tailwind' que precisam de hsl() wrapper
- * Total: 67 variáveis
+ * Total: 64 variáveis
  */
 export const HSL_VARIABLES = new Set([
   'primary',
@@ -116,10 +118,10 @@ export const HSL_VARIABLES = new Set([
   'input-border',
   'input-background',
   'input-ring',
-  'ring-width',
   'select-border',
   'select-background',
   'select-ring',
+  'ring-width',
   'text',
   'text-muted',
   'text-accent',
@@ -138,9 +140,6 @@ export const HSL_VARIABLES = new Set([
   'disabled-background',
   'disabled-foreground',
   'disabled-border',
-  'checkbox-unchecked',
-  'checkbox-unchecked-disabled-border',
-  'checkbox-unchecked-border',
   'code-background',
   'blockquote-border',
   'blockquote-background',
@@ -156,7 +155,7 @@ export const HSL_VARIABLES = new Set([
 
 /**
  * Cores tipo 'theme' que usam valor direto (sem wrapper)
- * Total: 65 variáveis
+ * Total: 69 variáveis
  */
 export const HEX_VARIABLES = new Set([
   'surface',
@@ -182,13 +181,17 @@ export const HEX_VARIABLES = new Set([
   'button-chat-input',
   'button-chat-input-hover',
   'button-chat-input-text',
-  'checkbox-checked-disabled-bg',
-  'checkbox-checked-disabled-border',
+  'checkbox-checked-border',
+  'checkbox-unchecked',
+  'checkbox-unchecked-border',
   'checkbox-unchecked-disabled-bg',
+  'checkbox-unchecked-disabled-border',
+  'checkbox-ring',
   'switch-unchecked',
   'switch-unchecked-disabled-bg',
   'switch-checked-disabled',
   'switch-thumb',
+  'switch-ring',
   'audio-waves-color',
   'audio-waves-progress-played',
   'code-text',

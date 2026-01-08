@@ -76,6 +76,7 @@ export default defineConfig(async () => {
           text: 'UI Components',
           items: [
             { text: 'Button', link: '/components/button' },
+            { text: 'Checkbox', link: '/components/checkbox' },
             { text: 'Icon', link: '/components/icon' },
             { text: 'Input', link: '/components/input' },
             { text: 'Select', link: '/components/select' },

@@ -46,10 +46,10 @@
   --input-border: 210 21% 95%;
   --input-background: 207 28% 86%;
   --input-ring: 18 100% 60%;
-  --ring-width: 2px;
   --select-border: 210 21% 95%;
   --select-background: 207 28% 86%;
   --select-ring: 18 100% 60%;
+  --ring-width: 2px;
   --text: 224 60% 5%;
   --text-muted: 215 16% 47%;
   --text-accent: 18 100% 60%;
@@ -68,9 +68,6 @@
   --disabled-background: 209 21% 77%;
   --disabled-foreground: 215 16% 47%;
   --disabled-border: 215 20% 65%;
-  --checkbox-unchecked: 210 19% 77%;
-  --checkbox-unchecked-disabled-border: 209 23% 80%;
-  --checkbox-unchecked-border: 215 20% 65%;
   --code-background: 210 36% 96%;
   --blockquote-border: 18 100% 60%;
   --blockquote-background: 55 92% 95%;
@@ -117,10 +114,10 @@
   --input-border: 215 19% 12%;
   --input-background: 215 18% 13%;
   --input-ring: 18 100% 60%;
-  --ring-width: 2px;
   --select-border: 215 19% 12%;
   --select-background: 215 18% 13%;
   --select-ring: 18 100% 60%;
+  --ring-width: 2px;
   --text: 208 35% 93%;
   --text-muted: 215 8% 53%;
   --text-accent: 18 100% 60%;
@@ -139,9 +136,6 @@
   --disabled-background: 216 33% 6%;
   --disabled-foreground: 215 8% 47%;
   --disabled-border: 212 12% 21%;
-  --checkbox-unchecked: 214 12% 27%;
-  --checkbox-unchecked-disabled-border: 214 12% 27%;
-  --checkbox-unchecked-border: 214 10% 31%;
   --code-background: 120 12% 12%;
   --blockquote-border: 18 100% 60%;
   --blockquote-background: 24 10% 10%;

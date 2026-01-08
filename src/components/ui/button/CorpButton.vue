@@ -207,24 +207,32 @@ const customElevatedClass = computed(() => {
   return '';
 });
 
-// Verifica se color é preset (semântico) ou custom
-const isColorPreset = computed(() => {
+// Verifica se color é semantic ou custom
+const isColorSemantic = computed(() => {
   return SEMANTIC_COLORS.includes(props.color as ButtonVariants['color']);
 });
 
-// Custom color styles (bgColor/textColor overrides OU color não-preset)
+// Custom color styles (bgColor/textColor overrides OU color não-semantic)
 const customColorStyle = computed(() => {
   const styles: Record<string, string> = {};
 
   // bgColor tem prioridade sobre color
   if (props.bgColor) {
     styles.backgroundColor = resolveColor(props.bgColor);
-  } else if (!isColorPreset.value && props.color) {
+  } else if (!isColorSemantic.value && props.color) {
     // Color customizado (não-preset) - injeta CSS variables com diferentes opacities
     // IMPORTANTE: toRgba() ANTES de resolveColor() para processar var() corretamente
-    styles['--corp-btn-color'] = resolveColor(props.color);
-    styles['--corp-btn-color-hover'] = toRgba(props.color, 0.9); // 90% para solid
-    styles['--corp-btn-color-light'] = toRgba(props.color, 0.1); // 10% para outline/ghost
+    // TODO: Criar toHsla() em CorpColorUtils para padronizar com HSL em vez de RGBA
+    //       Checkbox e Switch já usam HSL, Button ainda usa RGBA (funciona mas não é consistente)
+    styles['--corp-runtime-btn-color'] = resolveColor(props.color);
+    styles['--corp-runtime-btn-color-hover'] = toRgba(props.color, 0.9); // 90% para solid
+    styles['--corp-runtime-btn-color-light'] = toRgba(props.color, 0.1); // 10% para outline/ghost
+    styles['--corp-runtime-btn-focus-ring'] = resolveColor(props.color); // Focus ring
+  }
+
+  // Cor semântica: injeta apenas focus ring
+  if (isColorSemantic.value && props.color) {
+    styles['--corp-runtime-btn-focus-ring'] = resolveColor(props.color);
   }
 
   // textColor tem prioridade final
@@ -235,14 +243,14 @@ const customColorStyle = computed(() => {
   return styles;
 });
 
-// Custom color classes (Tailwind arbitrary values para hover/focus)
-const customColorClasses = computed(() => {
-  // Só aplica se cor não é preset E existe
-  if (isColorPreset.value || !props.color) return [];
+// Classes de cor customizadas (Tailwind arbitrary values para hover/focus)
+const colorClasses = computed(() => {
+  // Só aplica se cor não é semantic E existe
+  if (isColorSemantic.value || !props.color) return [];
 
-  const color = 'var(--corp-btn-color)';
-  const colorHover = 'var(--corp-btn-color-hover)';
-  const colorLight = 'var(--corp-btn-color-light)';
+  const color = 'var(--corp-runtime-btn-color)';
+  const colorHover = 'var(--corp-runtime-btn-color-hover)';
+  const colorLight = 'var(--corp-runtime-btn-color-light)';
 
   if (props.variant === 'solid') {
     return [`bg-[${color}]`, `hover:bg-[${colorHover}]`, 'text-white'];
@@ -261,6 +269,15 @@ const customColorClasses = computed(() => {
   return [];
 });
 
+// Classes de focus - runtime override ou padrão do tema
+const focusClasses = computed(() => {
+  // Se não tem cor customizada, usa padrão do tema (shadcn default)
+  if (!props.color) return '';
+
+  // TODAS as cores (semantic E custom) usam variável runtime
+  return 'focus-visible:ring-[var(--corp-runtime-btn-focus-ring)]';
+});
+
 // Combina custom rounded + custom color styles
 const buttonStyle = computed(() => {
   return {
@@ -273,7 +290,7 @@ const buttonClasses = computed(() => {
   return cn(
     buttonVariants({
       variant: props.variant,
-      color: isColorPreset.value
+      color: isColorSemantic.value
         ? (props.color as ButtonVariants['color'])
         : undefined,
       size: props.size,
@@ -288,7 +305,8 @@ const buttonClasses = computed(() => {
     }),
     customRoundedClass.value,
     customElevatedClass.value,
-    customColorClasses.value,
+    colorClasses.value,
+    focusClasses.value,
     props.class
   );
 });

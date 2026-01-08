@@ -4,6 +4,7 @@ import ButtonTest from './pages/ButtonTest.vue';
 import InputTest from './pages/InputTest.vue';
 import SelectTest from './pages/SelectTest.vue';
 import SwitchTest from './pages/SwitchTest.vue';
+import CheckboxTest from './pages/CheckboxTest.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/switches',
       name: 'switches',
       component: SwitchTest,
+    },
+    {
+      path: '/checkboxes',
+      name: 'checkboxes',
+      component: CheckboxTest,
     },
   ],
 });

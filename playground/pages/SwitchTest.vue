@@ -51,6 +51,11 @@ const disabledOff = ref(false);
 const disabledOn = ref(true);
 const readonlyOff = ref(false);
 const readonlyOn = ref(true);
+const indeterminateSwitch = ref(false);
+const statusSwitch = ref<'active' | 'inactive'>('inactive');
+const levelSwitch = ref<1 | 0>(0);
+const externalErrorsExample = ref<string[]>(['Erro do servidor ao salvar']);
+const showExternalError = ref(true);
 
 // ============== HANDLERS ==============
 const simulateLoading = () => {
@@ -112,6 +117,36 @@ const handleSubmit = () => {
           name="newsletter"
           label="Newsletter"
           hint="Newsletter semanal com novidades"
+        />
+      </div>
+    </section>
+
+    <!-- Teste de Densidade com Hints Longos -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Densidade com Hints Longos
+      </h2>
+      <div class="space-y-4 p-4 bg-card border border-border rounded-lg">
+        <CorpSwitch
+          v-model="form.active"
+          name="densityCompactHint"
+          label="Compact com hint longo"
+          hint="Este é um hint bem longo para testar o alinhamento do switch em modo compact. Vamos verificar se o texto quebra corretamente e se o switch permanece alinhado."
+          density="compact"
+        />
+        <CorpSwitch
+          v-model="form.active"
+          name="densityStandardHint"
+          label="Standard com hint longo"
+          hint="Este é um hint bem longo para testar o alinhamento do switch em modo standard. Vamos verificar se o texto quebra corretamente e se o switch permanece alinhado."
+          density="standard"
+        />
+        <CorpSwitch
+          v-model="form.active"
+          name="densityComfortableHint"
+          label="Comfortable com hint longo"
+          hint="Este é um hint bem longo para testar o alinhamento do switch em modo comfortable. Vamos verificar se o texto quebra corretamente e se o switch permanece alinhado."
+          density="comfortable"
         />
       </div>
     </section>
@@ -345,6 +380,138 @@ const handleSubmit = () => {
           label="Autenticação de dois fatores"
           hint="Adiciona camada extra de segurança"
           color="success"
+        />
+      </div>
+    </section>
+
+    <!-- Indeterminate (Estado Intermediário) -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Indeterminate (Estado Intermediário)
+      </h2>
+      <div class="space-y-4 p-4 bg-card border border-border rounded-lg">
+        <CorpSwitch
+          v-model="indeterminateSwitch"
+          name="indeterminateSwitch"
+          label="Estado intermediário"
+          hint="Usado quando o estado é desconhecido ou parcial"
+          indeterminate
+        />
+        <p class="text-sm text-muted-foreground">
+          Valor:
+          <code>{{ indeterminateSwitch }}</code>
+          (indeterminate: true)
+        </p>
+      </div>
+    </section>
+
+    <!-- External Errors -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        External Errors (Erros Externos)
+      </h2>
+      <div class="space-y-4 p-4 bg-card border border-border rounded-lg">
+        <CorpSwitch
+          v-model="form.active"
+          name="externalError"
+          label="Campo com erro do backend"
+          hint="Erro vindo da API"
+          :external-errors="showExternalError ? externalErrorsExample : []"
+        />
+        <button
+          @click="showExternalError = !showExternalError"
+          class="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90"
+        >
+          {{ showExternalError ? 'Remover Erro' : 'Mostrar Erro' }}
+        </button>
+      </div>
+    </section>
+
+    <!-- Force Error -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Force Error (Forçar Visual)
+      </h2>
+      <div class="space-y-4 p-4 bg-card border border-border rounded-lg">
+        <CorpSwitch
+          v-model="form.active"
+          name="forceError"
+          label="Erro forçado"
+          hint="Visual de erro sem mensagem"
+          force-error
+        />
+      </div>
+    </section>
+
+    <!-- Density -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">Density (Tamanhos)</h2>
+      <div class="space-y-4 p-4 bg-card border border-border rounded-lg">
+        <CorpSwitch
+          v-model="form.active"
+          name="densityCompact"
+          label="Compact (padrão)"
+          density="compact"
+        />
+        <CorpSwitch
+          v-model="form.active"
+          name="densityStandard"
+          label="Standard (padrão visual)"
+          density="standard"
+        />
+        <CorpSwitch
+          v-model="form.active"
+          name="densityComfortable"
+          label="Comfortable (espaçoso)"
+          density="comfortable"
+        />
+      </div>
+    </section>
+
+    <!-- Label Position -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Label Position (Posição do Label)
+      </h2>
+      <div class="space-y-4 p-4 bg-card border border-border rounded-lg">
+        <CorpSwitch
+          v-model="form.active"
+          name="labelRight"
+          label="Label à direita (padrão)"
+          hint="O hint também fica alinhado à esquerda com o label"
+          label-position="right"
+        />
+        <CorpSwitch
+          v-model="form.active"
+          name="labelLeft"
+          label="Label à esquerda"
+          hint="O hint fica alinhado à direita quando label está à esquerda"
+          label-position="left"
+        />
+      </div>
+    </section>
+
+    <!-- Messages e MaxErrors -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Messages e MaxErrors
+      </h2>
+      <div class="space-y-4 p-4 bg-card border border-border rounded-lg">
+        <CorpSwitch
+          v-model="form.active"
+          name="messages"
+          label="Com mensagens genéricas"
+          :messages="[
+            'Info: Configuração recomendada',
+            'Warning: Pode afetar performance',
+          ]"
+        />
+        <CorpSwitch
+          v-model="form.active"
+          name="maxErrors"
+          label="Limitando erros (maxErrors=1)"
+          :external-errors="['Erro 1', 'Erro 2', 'Erro 3']"
+          :max-errors="1"
         />
       </div>
     </section>

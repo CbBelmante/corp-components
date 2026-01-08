@@ -183,6 +183,86 @@ export const hexToHslWithWrapper = (hex: string): string => {
 };
 
 /**
+ * 🎨 Converte qualquer cor para HEX (SSR-safe)
+ *
+ * Suporta múltiplos formatos: hex, rgb, rgba, hsl, variáveis CSS.
+ * Para variáveis CSS, resolve o valor computado no browser.
+ * Necessário para usar com darken() e lighten().
+ *
+ * @param {string} color - Cor em qualquer formato
+ * @returns {string} Cor em formato hexadecimal
+ *
+ * @example
+ * toHex('#FF5733')              // '#FF5733'
+ * toHex('hsl(18 100% 60%)')     // '#FF7133'
+ * toHex('var(--primary)')       // '#FF7133' (computado)
+ */
+export const toHex = (color: string): string => {
+  // Se for uma variável CSS
+  if (color.startsWith('var(--')) {
+    const varName = color.replace('var(', '').replace(')', '');
+
+    if (isClientSide()) {
+      const computedStyle = getComputedStyle(document.documentElement);
+      const value = computedStyle.getPropertyValue(varName).trim();
+
+      if (value) {
+        return toHex(value); // Recursivo
+      }
+    }
+    return color; // Fallback SSR
+  }
+
+  // Se for hsl(var(--primary))
+  if (color.startsWith('hsl(var(')) {
+    const varName = color.replace('hsl(var(', '').replace('))', '');
+
+    if (isClientSide()) {
+      const computedStyle = getComputedStyle(document.documentElement);
+      const value = computedStyle.getPropertyValue(varName).trim();
+
+      if (value) {
+        // value é algo como "18 100% 60%"
+        const rgb = hslToRgb(value);
+        return rgbToHex(rgb);
+      }
+    }
+    return color; // Fallback SSR
+  }
+
+  // Se já for HEX
+  if (color.startsWith('#')) {
+    return color;
+  }
+
+  // Se for RGB/RGBA
+  if (color.startsWith('rgb')) {
+    const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+      return rgbToHex({
+        r: parseInt(match[1]),
+        g: parseInt(match[2]),
+        b: parseInt(match[3]),
+      });
+    }
+  }
+
+  // Se for HSL
+  if (color.startsWith('hsl')) {
+    const rgb = hslToRgb(color);
+    return rgbToHex(rgb);
+  }
+
+  // Se for nome de cor CSS
+  const rgb = cssNameToRgb(color);
+  if (rgb) {
+    return rgbToHex(rgb);
+  }
+
+  return color; // Fallback
+};
+
+/**
  * 🎨 Converte qualquer cor para RGBA com opacidade específica (SSR-safe)
  *
  * Suporta múltiplos formatos de entrada: hex, rgb, rgba, variáveis CSS.
@@ -370,6 +450,34 @@ export const hslToRgb = (hsl: string): RgbColor => {
 };
 
 // ============== COLOR MANIPULATION ==============
+
+/**
+ * 🔄 Converte RGB para HEX
+ *
+ * @param {RgbColor} rgb - Objeto RGB
+ * @returns {string} Cor em formato hexadecimal
+ *
+ * @example
+ * rgbToHex({ r: 255, g: 87, b: 51 })  // '#FF5733'
+ */
+export const rgbToHex = (rgb: RgbColor): string => {
+  return `#${rgb.r.toString(16).padStart(2, '0')}${rgb.g.toString(16).padStart(2, '0')}${rgb.b.toString(16).padStart(2, '0')}`;
+};
+
+/**
+ * 🔄 Converte HSL para HEX
+ *
+ * @param {string} hsl - String HSL (com ou sem wrapper)
+ * @returns {string} Cor em formato hexadecimal
+ *
+ * @example
+ * hslToHex('200 98% 39%')         // '#0284C7'
+ * hslToHex('hsl(200 98% 39%)')    // '#0284C7'
+ */
+export const hslToHex = (hsl: string): string => {
+  const rgb = hslToRgb(hsl);
+  return rgbToHex(rgb);
+};
 
 /**
  * 🌑 Escurece uma cor hexadecimal reduzindo brilho

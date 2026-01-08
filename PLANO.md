@@ -267,7 +267,7 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 | CbBadge.vue | CorpBadge.vue | 🔴 Alta | ✅ Completo (variant/opacity/icon/animation) |
 | CbHintLine.vue | CorpHintLine.vue | 🔴 Alta | ✅ Completo (error/hint/persistent/debug) |
 | CbCheckbox.vue | CorpCheckbox.vue | 🔴 Alta | ⬜ Pendente |
-| CbSwitch.vue | CorpSwitch.vue | 🔴 Alta | ⬜ Pendente |
+| CbSwitch.vue | CorpSwitch.vue | 🔴 Alta | ✅ Completo (color/validation/loading/readonly/trueValue/falseValue) |
 | CbDate.vue | CorpDate.vue | 🔴 Alta | ⬜ Pendente |
 | CbTimeField.vue | CorpTimeField.vue | 🟡 Média | ⬜ Pendente |
 | CbButtonGroup.vue | CorpButtonGroup.vue | 🟡 Média | ⬜ Pendente |

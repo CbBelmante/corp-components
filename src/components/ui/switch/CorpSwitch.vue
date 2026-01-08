@@ -68,11 +68,25 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  indeterminate: {
+    type: Boolean,
+    default: false,
+  },
+  forceError: {
+    type: Boolean,
+    default: false,
+  },
 
   // Color (semantic OU custom: hex, rgb, var(), etc)
   color: {
     type: String,
     default: 'primary',
+  },
+
+  // Validação direta (erros externos - backend/API)
+  externalErrors: {
+    type: [String, Array] as PropType<string | string[]>,
+    default: '',
   },
 
   // Valores customizados (permite String, Number, etc ao invés de apenas Boolean)
@@ -94,14 +108,36 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  debug: {
-    type: Boolean,
-    default: false,
+  labelPosition: {
+    type: String as PropType<'left' | 'right'>,
+    default: 'right',
+  },
+
+  // Mensagens genéricas (info, warning, etc)
+  messages: {
+    type: Array as PropType<string[]>,
+    default: () => [],
+  },
+  maxErrors: {
+    type: Number,
+    default: 1,
+  },
+
+  // Density (tamanho)
+  density: {
+    type: String as PropType<'compact' | 'standard' | 'comfortable'>,
+    default: 'compact',
   },
 
   modelValue: {
     type: [Boolean, String, Number] as PropType<boolean | string | number>,
     default: undefined,
+  },
+
+  // Debug
+  debug: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -120,9 +156,16 @@ const validation = inject<CorpValidationContext | undefined>(
   undefined
 );
 
-const errorMessages = computed<string[]>(
-  () => validation?.errors.value[props.name] ?? []
-);
+// Combina erros de validação (rules) + erros externos (prop)
+const errorMessages = computed<string[]>(() => {
+  const validationErrors = validation?.errors.value[props.name] ?? [];
+  const external = Array.isArray(props.externalErrors)
+    ? props.externalErrors
+    : props.externalErrors
+      ? [props.externalErrors]
+      : [];
+  return [...validationErrors, ...external];
+});
 
 // Converte modelValue para boolean interno (checked state)
 const internalValue = ref<boolean>(
@@ -136,9 +179,11 @@ const touched = ref<boolean>(false);
 const isFocused = ref<boolean>(false);
 
 const hasError = computed<boolean>(() => {
-  if (!validation) return false;
-  const errors = validation.errors.value[props.name] ?? [];
-  return errors.length > 0 && !isFocused.value;
+  // forceError sempre mostra erro (mesmo focado)
+  if (props.forceError) return true;
+
+  // Erros normais (esconde enquanto focado)
+  return errorMessages.value.length > 0 && !isFocused.value;
 });
 
 // ============== COMPUTED PROPERTIES ==============
@@ -149,11 +194,6 @@ const hasRequiredRule = computed(() => {
   return props.rules.some(
     rule => rule.name === 'required' || rule.toString().includes('obrigatório')
   );
-});
-
-// Verifica se tem hint ou erros (para ajustar margem do switch)
-const hasHintOrError = computed(() => {
-  return !!(props.hint || errorMessages.value.length > 0);
 });
 
 // Disabled state (disabled OU readonly OU loading)
@@ -168,32 +208,62 @@ const isColorSemantic = computed(() => {
 
 // Style inline para color customizado
 const customColorStyle = computed(() => {
-  if (isColorSemantic.value || !props.color) return {};
+  if (!props.color) return {};
 
-  // Color customizado (não-semantic): aplica via CSS variable
+  const resolved = resolveColor(props.color);
+
+  // Semantic colors: só injeta focus ring
+  if (isColorSemantic.value) {
+    return {
+      '--corp-runtime-switch-track-focus': resolved, // Trilho
+      '--corp-runtime-switch-thumb-focus': resolved, // Bolinha
+    };
+  }
+
+  // Color customizado (não-semantic): injeta tudo
   return {
-    '--switch-custom-color': resolveColor(props.color),
+    '--corp-runtime-switch-color': resolved,
+    '--corp-runtime-switch-track-focus': resolved, // Trilho
+    '--corp-runtime-switch-thumb-focus': resolved, // Bolinha
   };
 });
 
-// Classes de cor (mapeamento fixo para JIT)
+// Classes de cor (geração dinâmica - safelist garante)
 const colorClasses = computed(() => {
   if (!isColorSemantic.value) {
     // Custom color: usa CSS variable
-    return 'data-[state=checked]:bg-[var(--switch-custom-color)]';
+    return 'data-[state=checked]:bg-[var(--corp-runtime-switch-color)]';
   }
 
-  // Semantic colors: mapeamento fixo
-  const colorMap: Record<string, string> = {
-    primary: 'data-[state=checked]:bg-primary',
-    secondary: 'data-[state=checked]:bg-secondary',
-    destructive: 'data-[state=checked]:bg-destructive',
-    success: 'data-[state=checked]:bg-success',
-    warning: 'data-[state=checked]:bg-warning',
-    info: 'data-[state=checked]:bg-info',
-  };
+  // Semantic colors: geração dinâmica (pattern no safelist gera as classes)
+  return `data-[state=checked]:bg-${props.color}`;
+});
 
-  return colorMap[props.color] || 'data-[state=checked]:bg-primary';
+// Classes de focus - runtime override ou padrão do tema
+const focusClasses = computed(() => {
+  // Se não tem cor, usa padrão do tema (switch-ring = primary)
+  if (!props.color) return 'focus-visible:ring-[var(--switch-ring)]';
+
+  // TODAS as cores (semantic E custom) usam variável runtime do TRILHO
+  return 'focus-visible:ring-[var(--corp-runtime-switch-track-focus)]';
+});
+
+// Classes de density (tamanho)
+const densityClasses = computed(() => {
+  const thumbSizes = {
+    compact: 'h-4 w-4',
+    standard: 'h-4 w-4',
+    comfortable: 'h-5 w-5',
+  };
+  const trackSizes = {
+    compact: 'h-5 w-9',
+    standard: 'h-5 w-10',
+    comfortable: 'h-6 w-12',
+  };
+  return {
+    thumb: thumbSizes[props.density],
+    track: trackSizes[props.density],
+  };
 });
 
 // ============== WATCHERS ==============
@@ -234,16 +304,6 @@ const handleSwitchClick = () => {
   }
 };
 
-/**
- * Toggle switch quando usuário clica no label
- * Aumenta área clicável para melhor UX
- */
-const toggleValue = () => {
-  if (!isDisabled.value) {
-    internalValue.value = !internalValue.value;
-  }
-};
-
 const handleFocus = (): void => {
   isFocused.value = true;
 };
@@ -260,84 +320,99 @@ const handleBlur = (): void => {
 </script>
 
 <template>
-  <div class="flex items-start space-x-3">
-    <!-- Switch -->
-    <SwitchRoot
-      :name="name"
-      :checked="internalValue"
-      :disabled="isDisabled"
-      @click="handleSwitchClick"
-      :style="customColorStyle"
+  <div class="space-y-1 w-full">
+    <!-- Switch + Label alinhados -->
+    <div
       :class="
-        cn(
-          'peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed data-[state=unchecked]:bg-[var(--switch-unchecked)]',
-          colorClasses,
-          {
-            'border-destructive': hasError,
-            'mt-1.5': hasHintOrError,
-            'mt-1': !hasHintOrError,
-          },
-          customClass
-        )
+        cn('flex items-center space-x-3', {
+          'flex-row-reverse space-x-reverse': labelPosition === 'left',
+        })
       "
-      @focus="handleFocus"
-      @blur="handleBlur"
     >
-      <SwitchThumb
+      <!-- Switch -->
+      <SwitchRoot
+        :id="name"
+        :name="name"
+        :checked="indeterminate ? 'indeterminate' : internalValue"
+        :disabled="isDisabled"
+        @click="handleSwitchClick"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        :style="customColorStyle"
         :class="
           cn(
-            'pointer-events-none flex items-center justify-center h-4 w-4 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0'
+            'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed data-[state=unchecked]:bg-[var(--switch-unchecked)]',
+            densityClasses.track,
+            colorClasses,
+            focusClasses,
+            {
+              'border-destructive': hasError,
+            },
+            customClass
           )
         "
       >
-        <!-- Loading spinner -->
-        <CorpIcon
-          v-if="loading"
-          icon="luc-loader-2"
-          :size="10"
-          class="animate-spin text-muted-foreground"
-        />
-      </SwitchThumb>
-    </SwitchRoot>
+        <SwitchThumb
+          :class="
+            cn(
+              'pointer-events-none flex items-center justify-center rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0',
+              densityClasses.thumb
+            )
+          "
+        >
+          <!-- Loading spinner -->
+          <CorpIcon
+            v-if="loading"
+            icon="luc-loader-2"
+            :size="10"
+            class="animate-spin text-muted-foreground"
+          />
+        </SwitchThumb>
+      </SwitchRoot>
 
-    <!-- Label + Hint/Error container (sempre existe) -->
-    <div class="flex-1 space-y-0">
+      <!-- Label -->
       <Label
         v-if="label"
         :for="name"
-        @click="toggleValue"
-        :class="{ 'text-destructive': hasError }"
-        class="cursor-pointer font-normal"
+        :class="
+          cn('cursor-pointer font-normal', { 'text-destructive': hasError })
+        "
         style="font-size: var(--label-text-size)"
       >
         {{ label }}
         <span v-if="hasRequiredRule" class="text-destructive">*</span>
       </Label>
+    </div>
 
-      <!-- CorpHintLine controla internamente se mostra ou não -->
+    <!-- Área de hint e erro (separada) -->
+    <div
+      :class="
+        cn({
+          'pl-12': labelPosition === 'right',
+          'pr-12 text-right': labelPosition === 'left',
+        })
+      "
+    >
       <CorpHintLine
         :error-messages="errorMessages"
         :hint="hint"
         :hide-details="hideDetails"
         :debug="debug"
+        :messages="messages"
+        :max-errors="maxErrors"
       />
     </div>
   </div>
 </template>
 
 <style scoped>
-/* Focus glow na bolinha (thumb) do switch - emanando luz laranja */
+/* Focus glow na bolinha (thumb) do switch - emanando luz */
 :deep(button[role='switch']:focus-visible span) {
   outline: none !important;
   box-shadow:
-    0 0 0 var(--ring-width) var(--input-ring),
-    0 0 7px 1.5px var(--input-ring) !important;
-}
-
-/* Remove ring do botão externo */
-:deep(button[role='switch']:focus-visible) {
-  outline: none !important;
-  box-shadow: none !important;
+    0 0 0 var(--ring-width)
+      var(--corp-runtime-switch-thumb-focus, var(--switch-ring)),
+    0 0 7px 1.5px var(--corp-runtime-switch-thumb-focus, var(--switch-ring)) !important;
 }
 
 /* Normal unchecked - usa variável do theme */

@@ -13,6 +13,8 @@
  * 3. Pronto! ✅
  */
 
+import { lighten, darken } from '@/utils/CorpColorUtils';
+
 /**
  * Tipos de geração da cor CSS (FONTE ÚNICA - sem magic strings!)
  *
@@ -49,9 +51,17 @@ export interface ColorDefinition {
   type: ThemeColorType;
 }
 
+// ==================== PRIMARY COLOR (usado como base para cálculos) ====================
+const PRIMARY_LIGHT = '#FF7133';
+const PRIMARY_DARK = '#FF7133';
+
 export const themeDefinition = {
   // ==================== PRIMARY PALETTE ====================
-  primary: { light: '#FF7133', dark: '#FF7133', type: THEME_COLOR_TYPES.BOTH },
+  primary: {
+    light: PRIMARY_LIGHT,
+    dark: PRIMARY_DARK,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
   'primary-foreground': {
     light: '#ffffff',
     dark: '#ffffff',
@@ -206,6 +216,8 @@ export const themeDefinition = {
   },
 
   // ==================== INPUT & SELECT SYSTEM ====================
+
+  // Input
   'input-border': {
     light: '#eef1f4',
     dark: '#191e25',
@@ -221,7 +233,8 @@ export const themeDefinition = {
     dark: '#FF7133',
     type: THEME_COLOR_TYPES.BOTH,
   },
-  'ring-width': { light: '2px', dark: '2px', type: THEME_COLOR_TYPES.BOTH },
+
+  // Select
   'select-border': {
     light: '#eef1f4',
     dark: '#191e25',
@@ -237,6 +250,9 @@ export const themeDefinition = {
     dark: '#FF7133',
     type: THEME_COLOR_TYPES.BOTH,
   },
+
+  // Shared
+  'ring-width': { light: '2px', dark: '2px', type: THEME_COLOR_TYPES.BOTH },
 
   // ==================== TEXT & BORDERS ====================
   text: { light: '#050914', dark: '#e6edf3', type: THEME_COLOR_TYPES.BOTH },
@@ -433,20 +449,26 @@ export const themeDefinition = {
   },
 
   // ==================== CHECKBOX & SWITCH ====================
-  'checkbox-checked-disabled-bg': {
-    light: '#FF9999',
-    dark: '#7F3319',
+
+  // Checkbox - Checked state
+  'checkbox-checked-border': {
+    light: darken(PRIMARY_LIGHT, 15), // 15% mais escuro que o bg
+    dark: lighten(PRIMARY_DARK, 15), // 15% mais claro (contraste no dark)
     type: THEME_COLOR_TYPES.ONLY_THEME,
   },
-  'checkbox-checked-disabled-border': {
-    light: '#FFB399',
-    dark: '#A54E24',
-    type: THEME_COLOR_TYPES.ONLY_THEME,
-  },
+  // checkbox-checked-disabled-* removidas: agora calculadas em runtime
+  // (lighten no mesmo tom da cor escolhida - igual button)
+
+  // Checkbox - Unchecked state
   'checkbox-unchecked': {
     light: '#bac5d0',
     dark: '#3d444d',
-    type: THEME_COLOR_TYPES.BOTH,
+    type: THEME_COLOR_TYPES.ONLY_THEME,
+  },
+  'checkbox-unchecked-border': {
+    light: '#94a3b8',
+    dark: '#484f58',
+    type: THEME_COLOR_TYPES.ONLY_THEME,
   },
   'checkbox-unchecked-disabled-bg': {
     light: '#e8ecf0',
@@ -456,13 +478,17 @@ export const themeDefinition = {
   'checkbox-unchecked-disabled-border': {
     light: '#c1cdd8',
     dark: '#3d444d',
-    type: THEME_COLOR_TYPES.BOTH,
+    type: THEME_COLOR_TYPES.ONLY_THEME,
   },
-  'checkbox-unchecked-border': {
-    light: '#94a3b8',
-    dark: '#484f58',
-    type: THEME_COLOR_TYPES.BOTH,
+
+  // Checkbox - Focus state
+  'checkbox-ring': {
+    light: PRIMARY_LIGHT,
+    dark: PRIMARY_DARK,
+    type: THEME_COLOR_TYPES.ONLY_THEME,
   },
+
+  // Switch - Unchecked state
   'switch-unchecked': {
     light: '#bac5d0',
     dark: '#3d444d',
@@ -473,14 +499,25 @@ export const themeDefinition = {
     dark: '#0d1117',
     type: THEME_COLOR_TYPES.ONLY_THEME,
   },
+
+  // Switch - Checked state (disabled)
   'switch-checked-disabled': {
     light: '#FF9999',
     dark: '#7F3319',
     type: THEME_COLOR_TYPES.ONLY_THEME,
   },
+
+  // Switch - Thumb
   'switch-thumb': {
     light: 'white',
     dark: 'white',
+    type: THEME_COLOR_TYPES.ONLY_THEME,
+  },
+
+  // Switch - Focus state
+  'switch-ring': {
+    light: PRIMARY_LIGHT,
+    dark: PRIMARY_DARK,
     type: THEME_COLOR_TYPES.ONLY_THEME,
   },
 
