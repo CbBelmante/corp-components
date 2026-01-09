@@ -26,6 +26,9 @@ export default {
     'border-[var(--corp-runtime-btn-color)]',
     // Button - Focus ring (runtime override)
     'focus-visible:ring-[var(--corp-runtime-btn-focus-ring)]',
+    // Button - Border default (theme.ts corp-def-button-*)
+    'border-[length:var(--corp-def-button-border-width)]',
+    'border-[var(--corp-def-button-border-color)]',
 
     // ==================== SWITCH ====================
     // Switch - Checked state (runtime custom color)
@@ -51,27 +54,55 @@ export default {
     'focus-visible:ring-[var(--corp-runtime-checkbox-focus-ring)]',
 
     // ==================== INPUT ====================
-    // Input - Border (runtime custom color)
+    // Input - Border default (theme.ts corp-def-input-*)
+    'border-[var(--corp-def-input-border)]',
+    'focus:border-[var(--corp-def-input-border-focus)]',
+    'placeholder:text-[var(--corp-def-input-placeholder)]',
+    // Input - Border runtime (custom color)
     'border-[var(--corp-runtime-input-border)]',
     'focus:border-[var(--corp-runtime-input-border-focus)]',
     // Input - Focus ring (theme.ts default + runtime override)
-    'focus-visible:ring-[var(--input-ring)]',
+    'focus-visible:ring-[var(--corp-def-input-ring)]',
     'focus-visible:ring-[var(--corp-runtime-input-focus-ring)]',
     // Input - Disabled: tratados via CSS <style> block com !important
     // (não precisam de safelist - variáveis -light/-dark resolvidas no CSS)
 
     // ==================== BADGE ====================
-    // Badge - Background (runtime custom color)
-    'bg-[var(--corp-runtime-badge-bg)]',
-    // Badge - Text color (runtime custom color)
+    // Badge - Default colors (theme.ts corp-def-badge-* - HSL com wrapper)
+    'bg-[hsl(var(--corp-def-badge-bg))]',
+    'text-[hsl(var(--corp-def-badge-text))]',
+    'border-[hsl(var(--corp-def-badge-border))]',
+    // Badge - Border default (theme.ts corp-def-badge-*)
+    'border-[length:var(--corp-def-badge-border-width)]',
+    'border-[var(--corp-def-badge-border-color)]',
+    // Badge - Runtime custom color (via prop color)
+    'bg-[var(--corp-runtime-badge-color)]',
+    'hover:bg-[var(--corp-runtime-badge-color-hover)]',
+    'hover:bg-[var(--corp-runtime-badge-color-light)]',
     'text-[var(--corp-runtime-badge-color)]',
+    'border-[var(--corp-runtime-badge-color)]',
+    // Badge - Dot mode (mini badge 9x9px)
+    '!min-w-[9px]',
+    '!w-[9px]',
+    '!h-[9px]',
+    '!p-0',
+    // Badge - Rounded presets (via CVA)
+    'rounded-md',
+    'rounded-none',
+    'rounded-sm',
+    'rounded-lg',
+    'rounded-xl',
+    'rounded-full',
 
     // ==================== SELECT ====================
-    // Select - Border (runtime custom color)
+    // Select - Border default (theme.ts corp-def-select-*)
+    'border-[var(--corp-def-select-border)]',
+    'focus:border-[var(--corp-def-select-border-focus)]',
+    // Select - Border runtime (custom color)
     'border-[var(--corp-runtime-select-border)]',
     'focus:border-[var(--corp-runtime-select-border-focus)]',
     // Select - Focus ring (theme.ts default + runtime override)
-    'focus-visible:ring-[var(--select-ring)]',
+    'focus-visible:ring-[var(--corp-def-select-ring)]',
     'focus-visible:ring-[var(--corp-runtime-select-focus-ring)]',
   ],
   theme: {
@@ -79,7 +110,7 @@ export default {
       colors: {
         // ==================== BASE ====================
         border: 'hsl(var(--border))',
-        input: 'hsl(var(--input-border))',
+        input: 'hsl(var(--corp-def-input-border))', // Input border default
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',

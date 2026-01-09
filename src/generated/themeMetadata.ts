@@ -16,7 +16,7 @@
 
 /**
  * Mapeamento de cores principais para variáveis CSS
- * Total: 61 variáveis
+ * Total: 62 variáveis
  */
 export const CSS_VARIABLES: Record<string, string> = {
   primary: 'var(--primary)',
@@ -33,10 +33,11 @@ export const CSS_VARIABLES: Record<string, string> = {
   popover: 'var(--popover)',
   muted: 'var(--muted)',
   destructive: 'var(--destructive)',
-  'input-background': 'var(--input-background)',
-  'input-ring': 'var(--input-ring)',
-  'select-background': 'var(--select-background)',
-  'select-ring': 'var(--select-ring)',
+  'corp-def-input-ring': 'var(--corp-def-input-ring)',
+  'corp-def-input-placeholder': 'var(--corp-def-input-placeholder)',
+  'corp-def-input-label-color': 'var(--corp-def-input-label-color)',
+  'corp-def-select-ring': 'var(--corp-def-select-ring)',
+  'corp-def-select-label-color': 'var(--corp-def-select-label-color)',
   text: 'var(--text)',
   'text-accent': 'var(--text-accent)',
   'text-link': 'var(--text-link)',
@@ -84,7 +85,7 @@ export const CSS_VARIABLES: Record<string, string> = {
 
 /**
  * Cores tipo 'tailwind' que precisam de hsl() wrapper
- * Total: 64 variáveis
+ * Total: 78 variáveis
  */
 export const HSL_VARIABLES = new Set([
   'primary',
@@ -115,12 +116,26 @@ export const HSL_VARIABLES = new Set([
   'muted-foreground',
   'destructive',
   'destructive-foreground',
-  'input-border',
-  'input-background',
-  'input-ring',
-  'select-border',
-  'select-background',
-  'select-ring',
+  'corp-def-input-bg',
+  'corp-def-input-border',
+  'corp-def-input-border-focus',
+  'corp-def-input-ring',
+  'corp-def-input-text',
+  'corp-def-input-placeholder',
+  'corp-def-input-label-color',
+  'corp-def-input-label-size',
+  'corp-def-select-bg',
+  'corp-def-select-border',
+  'corp-def-select-border-focus',
+  'corp-def-select-ring',
+  'corp-def-select-text',
+  'corp-def-select-label-color',
+  'corp-def-select-label-size',
+  'corp-def-badge-bg',
+  'corp-def-badge-text',
+  'corp-def-badge-border',
+  'corp-def-badge-border-width',
+  'corp-def-button-border-width',
   'ring-width',
   'text',
   'text-muted',
@@ -155,12 +170,14 @@ export const HSL_VARIABLES = new Set([
 
 /**
  * Cores tipo 'theme' que usam valor direto (sem wrapper)
- * Total: 69 variáveis
+ * Total: 71 variáveis
  */
 export const HEX_VARIABLES = new Set([
   'surface',
   'surface-elevated',
   'sidebar-header',
+  'corp-def-badge-border-color',
+  'corp-def-button-border-color',
   'text-link',
   'table-header',
   'table-header-text',

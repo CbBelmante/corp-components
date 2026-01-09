@@ -250,7 +250,8 @@ const colorClasses = computed(() => {
 
   if (props.variant === 'solid') {
     const classes: string[] = [];
-    if (!hasBgOverride) classes.push(`bg-[${color}]`, `hover:bg-[${colorHover}]`);
+    if (!hasBgOverride)
+      classes.push(`bg-[${color}]`, `hover:bg-[${colorHover}]`);
     if (!hasTextOverride) classes.push('text-white');
     return classes;
   } else if (props.variant === 'outline') {
@@ -262,7 +263,8 @@ const colorClasses = computed(() => {
   } else if (props.variant === 'ghost') {
     const classes: string[] = [];
     if (!hasBgOverride) classes.push(`hover:bg-[${colorLight}]`);
-    if (!hasTextOverride) classes.push(`text-[${color}]`, `hover:text-[${color}]`);
+    if (!hasTextOverride)
+      classes.push(`text-[${color}]`, `hover:text-[${color}]`);
     return classes;
   } else if (props.variant === 'link') {
     const classes: string[] = [];

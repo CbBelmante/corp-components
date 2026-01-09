@@ -32,13 +32,16 @@ export const buttonVariants = cva(
 
     // SVG handling
     '[&_svg]:pointer-events-none [&_svg]:shrink-0',
+
+    // Border padrão (transparente exceto no outline)
+    'border-[length:var(--corp-def-button-border-width)] border-[var(--corp-def-button-border-color)]',
   ],
   {
     variants: {
       // Variant = Estilo visual (não define cor!)
       variant: {
         solid: 'shadow',
-        outline: 'border-2 bg-transparent shadow-sm',
+        outline: 'bg-transparent shadow-sm',
         ghost: '',
         link: 'underline-offset-4 hover:underline',
       },

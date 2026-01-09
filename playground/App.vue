@@ -19,6 +19,13 @@ import { CorpThemeToggle } from '@/components/ui';
               Home
             </RouterLink>
             <RouterLink
+              to="/badges"
+              class="text-muted-foreground hover:text-foreground transition-colors"
+              active-class="text-primary font-medium"
+            >
+              Badges
+            </RouterLink>
+            <RouterLink
               to="/buttons"
               class="text-muted-foreground hover:text-foreground transition-colors"
               active-class="text-primary font-medium"

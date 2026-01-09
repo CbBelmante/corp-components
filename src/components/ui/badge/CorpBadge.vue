@@ -1,8 +1,9 @@
 <script setup lang="ts">
 /**
- * 🧩 CorpBadge - Badge customizável com ícones e cores
+ * 🧩 CorpBadge - Badge customizável com ícones, cores e contadores
  *
- * Badge com suporte a cores customizadas, ícones opcionais, opacity e animações.
+ * Badge inline com suporte a cores customizadas, ícones, contadores (max 99+),
+ * mini badge (dot) e animações.
  *
  * 🔗 DEPENDÊNCIAS:
  * - badgeVariants - Variantes do shadcn badge
@@ -10,45 +11,75 @@
  * - CorpColorUtils - Resolução de cores
  *
  * @example
- * // Básico
- * <CorpBadge variant="secondary">Badge</CorpBadge>
+ * // Básico (slot)
+ * <CorpBadge color="primary">Active</CorpBadge>
  *
- * // Com ícone e cor customizada
- * <CorpBadge variant="outline" icon="Check" bgColor="success" :opacity="85">Approved</CorpBadge>
+ * // Com content prop e max
+ * <CorpBadge :content="142" :max="99" color="destructive" />  <!-- Renderiza: 99+ -->
  *
- * // Com animação
- * <CorpBadge variant="destructive" animation="pulse">Alert</CorpBadge>
+ * // Dot (mini badge)
+ * <CorpBadge dot color="success" />
+ *
+ * // Com ícone e cores customizadas
+ * <CorpBadge icon="Check" bgColor="success" contentColor="white">Approved</CorpBadge>
+ *
+ * // Com animação e rounded
+ * <CorpBadge animation="pulse" rounded="full">Alert</CorpBadge>
  */
 
-import type { HTMLAttributes, PropType } from 'vue';
+import type { HTMLAttributes } from 'vue';
+import type { PropType } from 'vue';
 import type { BadgeVariants } from '.';
 import { computed } from 'vue';
 import { cn } from '@/lib/utils';
 import { badgeVariants } from '.';
 import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
-import {
-  resolveColor,
-  darken,
-  lighten,
-  getComputedColor,
-  hexToHslWithWrapper,
-} from '@/utils/CorpColorUtils';
+import { resolveColor, toRgba, getComputedColor } from '@/utils/CorpColorUtils';
+
+// ============== TIPOS ==============
+
+type RoundedPreset = 'default' | 'none' | 'sm' | 'lg' | 'xl' | 'full';
 
 // ============== PROPS ==============
 
 const props = defineProps({
   variant: {
     type: String as () => BadgeVariants['variant'],
-    default: 'default',
+    default: 'solid',
   },
-  // Custom color overrides
+  // Color shortcut (gera bg/text/hover/border automaticamente)
+  color: {
+    type: String,
+    default: undefined,
+  },
+  // Color overrides (bloqueiam automático do color)
   bgColor: {
     type: String,
     default: undefined,
   },
-  textColor: {
+  contentColor: {
     type: String,
     default: undefined,
+  },
+  // Conteúdo (alternativa ao slot)
+  content: {
+    type: [String, Number],
+    default: undefined,
+  },
+  // Máximo para números (ex: 99+ quando content > max)
+  max: {
+    type: [String, Number],
+    default: undefined,
+  },
+  // Mini badge (9x9px ponto colorido)
+  dot: {
+    type: Boolean,
+    default: false,
+  },
+  // Border-radius (presets: default, none, sm, lg, xl, full OU custom: rounded-3xl, 10px)
+  rounded: {
+    type: String,
+    default: 'default',
   },
   icon: {
     type: String,
@@ -93,41 +124,151 @@ const props = defineProps({
 // Style inline - SEMPRE injeta cor (sem branching semantic/custom)
 // resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
 const customColorStyle = computed(() => {
-  const style: Record<string, string> = {};
+  const styles: Record<string, string> = {};
 
-  // Background color runtime
+  // bgColor tem prioridade sobre color
   if (props.bgColor) {
-    const resolved = resolveColor(props.bgColor);
-    style['--corp-runtime-badge-bg'] = resolved;
+    styles.backgroundColor = resolveColor(props.bgColor);
+  } else if (props.color) {
+    const resolved = resolveColor(props.color);
+    const hex = getComputedColor(resolved);
+
+    styles['--corp-runtime-badge-color'] = resolved;
+    styles['--corp-runtime-badge-color-hover'] = toRgba(hex, 0.9);
+    styles['--corp-runtime-badge-color-light'] = toRgba(hex, 0.1);
   }
 
-  // Text color runtime
-  if (props.textColor) {
-    const resolved = resolveColor(props.textColor);
-    style['--corp-runtime-badge-color'] = resolved;
+  // contentColor tem prioridade final
+  if (props.contentColor) {
+    styles.color = resolveColor(props.contentColor);
   }
 
-  // Adiciona opacidade suave
-  style.opacity = (props.opacity / 100).toString();
+  // Adiciona opacidade
+  styles.opacity = (props.opacity / 100).toString();
 
-  return style;
+  return styles;
 });
 
-// Classes de cor - SEMPRE usa CSS variable (funciona pra qualquer cor)
+// Classes de cor - SEMPRE usa CSS variables (funciona pra qualquer cor)
+// bgColor/contentColor têm prioridade (bloqueiam classes de bg/text respectivamente)
 const colorClasses = computed(() => {
-  const classes = [];
+  const hasBgOverride = !!props.bgColor;
+  const hasContentOverride = !!props.contentColor;
 
-  // Background color runtime
-  if (props.bgColor) {
-    classes.push('bg-[var(--corp-runtime-badge-bg)]');
+  // Se não tem color, usa defaults do theme (corp-def-badge-*)
+  if (!props.color) {
+    if (props.variant === 'solid') {
+      const classes: string[] = [];
+      if (!hasBgOverride)
+        classes.push('bg-[hsl(var(--corp-def-badge-bg))]', 'hover:opacity-90');
+      if (!hasContentOverride)
+        classes.push('text-[hsl(var(--corp-def-badge-text))]');
+      classes.push('border-[hsl(var(--corp-def-badge-border))]');
+      return classes;
+    } else if (props.variant === 'outline') {
+      const classes: string[] = [];
+      if (!hasBgOverride) classes.push('hover:bg-muted');
+      if (!hasContentOverride) classes.push('text-foreground');
+      classes.push('border-[hsl(var(--corp-def-badge-border))]');
+      return classes;
+    } else if (props.variant === 'ghost') {
+      const classes: string[] = [];
+      if (!hasBgOverride) classes.push('hover:bg-muted');
+      if (!hasContentOverride) classes.push('text-foreground');
+      return classes;
+    }
+    return [];
   }
 
-  // Text color runtime
-  if (props.textColor) {
-    classes.push('text-[var(--corp-runtime-badge-color)]');
+  // Se tem color, usa runtime CSS vars
+  const color = 'var(--corp-runtime-badge-color)';
+  const colorHover = 'var(--corp-runtime-badge-color-hover)';
+  const colorLight = 'var(--corp-runtime-badge-color-light)';
+
+  if (props.variant === 'solid') {
+    const classes: string[] = [];
+    if (!hasBgOverride)
+      classes.push(`bg-[${color}]`, `hover:bg-[${colorHover}]`);
+    if (!hasContentOverride) classes.push('text-white');
+    classes.push(`border-[${color}]`);
+    return classes;
+  } else if (props.variant === 'outline') {
+    const classes: string[] = [];
+    if (!hasBgOverride) classes.push(`hover:bg-[${colorLight}]`);
+    if (!hasContentOverride) classes.push(`text-[${color}]`);
+    classes.push(`border-[${color}]`);
+    return classes;
+  } else if (props.variant === 'ghost') {
+    const classes: string[] = [];
+    if (!hasBgOverride) classes.push(`hover:bg-[${colorLight}]`);
+    if (!hasContentOverride) classes.push(`text-[${color}]`);
+    return classes;
   }
 
-  return classes.join(' ');
+  return [];
+});
+
+// Lógica do content com max (99+)
+const displayContent = computed(() => {
+  if (props.dot) return ''; // Dot não mostra conteúdo
+  if (!props.content) return null;
+
+  // Se não tem max, retorna content direto
+  if (props.max === undefined) return String(props.content);
+
+  // Se content não é número, retorna direto
+  const contentNum = Number(props.content);
+  if (isNaN(contentNum)) return String(props.content);
+
+  // Se content <= max, retorna content
+  const maxNum = Number(props.max);
+  if (contentNum <= maxNum) return String(props.content);
+
+  // Se content > max, retorna "max+"
+  return `${maxNum}+`;
+});
+
+// Verifica se rounded é preset ou custom
+const roundedPresets: RoundedPreset[] = [
+  'default',
+  'none',
+  'sm',
+  'lg',
+  'xl',
+  'full',
+];
+const isRoundedPreset = computed(() =>
+  roundedPresets.includes(props.rounded as RoundedPreset)
+);
+
+// Classes custom de rounded (quando não é preset)
+const customRoundedClass = computed(() => {
+  if (isRoundedPreset.value) return '';
+  // Se começa com "rounded", é classe Tailwind
+  if (props.rounded.startsWith('rounded')) return props.rounded;
+  // Senão, assume que é valor CSS (será aplicado via style)
+  return '';
+});
+
+// Style custom de rounded (quando é valor CSS tipo "10px", "1rem")
+const customRoundedStyle = computed(() => {
+  if (isRoundedPreset.value) return {};
+  if (props.rounded.startsWith('rounded')) return {};
+  return { borderRadius: props.rounded };
+});
+
+// Combina custom rounded + custom color styles
+const badgeStyle = computed(() => {
+  return {
+    ...customRoundedStyle.value,
+    ...customColorStyle.value,
+  };
+});
+
+// Rounded para CVA (só quando é preset)
+const roundedForCVA = computed(() => {
+  if (!isRoundedPreset.value) return undefined;
+  return props.rounded as RoundedPreset;
 });
 
 const computedClasses = computed(() => {
@@ -136,6 +277,16 @@ const computedClasses = computed(() => {
   // Adiciona classes customizadas do prop
   if (props.class) {
     classes.push(props.class);
+  }
+
+  // Dot mode (mini badge 9x9px)
+  if (props.dot) {
+    classes.push('!min-w-[9px] !w-[9px] !h-[9px] !p-0');
+  }
+
+  // Rounded (custom class OU preset via CVA)
+  if (customRoundedClass.value) {
+    classes.push(customRoundedClass.value);
   }
 
   // Adiciona animação com velocidade
@@ -153,21 +304,36 @@ const computedClasses = computed(() => {
 
 <template>
   <div
-    :class="cn(badgeVariants({ variant }), colorClasses, computedClasses)"
-    :style="customColorStyle"
+    :class="
+      cn(
+        badgeVariants({
+          variant,
+          rounded: roundedForCVA,
+        }),
+        colorClasses,
+        computedClasses
+      )
+    "
+    :style="badgeStyle"
   >
+    <!-- Ícone esquerda (esconde no dot mode) -->
     <CorpIcon
-      v-if="icon && iconPosition === 'left'"
-      :name="icon"
+      v-if="!dot && icon && iconPosition === 'left'"
+      :icon="icon"
       :size="iconSize"
       class="mr-1"
     />
 
-    <slot />
+    <!-- Content prop (tem prioridade sobre slot) -->
+    <span v-if="displayContent">{{ displayContent }}</span>
 
+    <!-- Slot (fallback quando não tem content) -->
+    <slot v-else-if="!dot" />
+
+    <!-- Ícone direita (esconde no dot mode) -->
     <CorpIcon
-      v-if="icon && iconPosition === 'right'"
-      :name="icon"
+      v-if="!dot && icon && iconPosition === 'right'"
+      :icon="icon"
       :size="iconSize"
       class="ml-1"
     />

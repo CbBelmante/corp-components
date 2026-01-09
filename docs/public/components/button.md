@@ -211,10 +211,50 @@ Use a prop `rounded` para controlar o border radius. Aceita presets ou valores c
 Também aceita classes Tailwind ou valores CSS:
 
 :::corp-code
-<CorpButton rounded="rounded-3xl">Tailwind</CorpButton>
-<CorpButton rounded="rounded-tl-xl rounded-br-xl">Corners</CorpButton>
-<CorpButton rounded="20px">20px</CorpButton>
-<CorpButton rounded="50% 0">50% 0</CorpButton>
+<!-- Classes Tailwind -->
+<CorpButton rounded="rounded-3xl" color="primary">Ultra Rounded</CorpButton>
+<CorpButton rounded="rounded-tl-3xl rounded-br-3xl" color="success">Diagonal Cut</CorpButton>
+<CorpButton rounded="rounded-l-full rounded-r-sm" color="info">Asymmetric</CorpButton>
+
+<!-- Valores CSS -->
+<CorpButton rounded="8px 24px" color="warning">Mixed Radius</CorpButton>
+<CorpButton rounded="24px 24px 0 0" color="destructive">Top Rounded</CorpButton>
+<CorpButton rounded="0 24px 24px 0" color="secondary">Right Rounded</CorpButton>
+:::
+
+**Exemplos Criativos:**
+
+:::corp-code
+<!-- Botão tipo "Tag" (canto esquerdo reto) -->
+<CorpButton rounded="rounded-r-full" color="primary" prepend-icon="luc-tag">Tag Style</CorpButton>
+
+<!-- Botão tipo "Arrow" (pontinha direita) -->
+<CorpButton rounded="16px 24px 24px 16px" color="success" append-icon="luc-arrow-right">Next</CorpButton>
+
+<!-- Botão tipo "Speech" (speech bubble) -->
+<CorpButton rounded="20px 20px 20px 4px" color="info" prepend-icon="luc-message-circle">Chat</CorpButton>
+
+<!-- Botão tipo "Ticket" -->
+<CorpButton rounded="4px 20px 20px 4px" variant="outline" color="warning">Download Ticket</CorpButton>
+
+<!-- Botão tipo "Capsule" (pill assimétrica) -->
+<CorpButton rounded="rounded-l-full rounded-r-lg" color="destructive" prepend-icon="luc-trash">Delete</CorpButton>
+
+<!-- Botão tipo "Modern Card" -->
+<CorpButton rounded="rounded-2xl" variant="outline" color="secondary" size="lg">Modern Action</CorpButton>
+:::
+
+**Combinações com Variants:**
+
+:::corp-code
+<!-- Solid + Custom Rounded -->
+<CorpButton variant="solid" rounded="rounded-tl-2xl rounded-br-2xl" color="primary">Solid Diagonal</CorpButton>
+
+<!-- Outline + Asymmetric -->
+<CorpButton variant="outline" rounded="rounded-l-full rounded-r-md" color="success">Outline Asymmetric</CorpButton>
+
+<!-- Ghost + Ultra Rounded -->
+<CorpButton variant="ghost" rounded="rounded-3xl" color="info">Ghost Ultra</CorpButton>
 :::
 
 ### Stacked

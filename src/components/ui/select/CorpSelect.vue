@@ -240,13 +240,17 @@ const customColorStyle = computed(() => {
 
 // Classes de cor - SEMPRE usa CSS variable (funciona pra qualquer cor)
 const colorClasses = computed(() => {
-  if (!props.borderColor) return 'focus:border-primary';
+  // Se não tem cor, usa padrão do tema corp-def-select-border-focus
+  if (!props.borderColor)
+    return 'focus:border-[var(--corp-def-select-border-focus)]';
   return 'border-[var(--corp-runtime-select-border)] focus:border-[var(--corp-runtime-select-border-focus)]';
 });
 
 // Classes de focus - runtime override ou padrão do tema
 const focusClasses = computed(() => {
-  if (!props.borderColor) return 'focus-visible:ring-[var(--select-ring)]';
+  // Se não tem cor customizada, usa padrão do tema corp-def-select-ring
+  if (!props.borderColor)
+    return 'focus-visible:ring-[var(--corp-def-select-ring)]';
   return 'focus-visible:ring-[var(--corp-runtime-select-focus-ring)]';
 });
 
@@ -329,7 +333,10 @@ const removeChip = (value: string | number): void => {
       v-if="label"
       :for="name"
       :class="{ 'text-destructive': hasError }"
-      style="font-size: var(--label-text-size)"
+      style="
+        font-size: var(--corp-def-select-label-size);
+        color: var(--corp-def-select-label-color);
+      "
     >
       {{ label }}
       <span v-if="hasRequiredRule" class="text-destructive">*</span>
@@ -346,7 +353,7 @@ const removeChip = (value: string | number): void => {
         @update:open="handleOpenChange"
       >
         <SelectTrigger
-          class="corpSelectTrigger bg-[hsl(var(--select-background))] focus:ring-[length:var(--ring-width)]"
+          class="corpSelectTrigger bg-[hsl(var(--corp-def-select-bg))] border-[var(--corp-def-select-border)] focus:ring-[length:var(--ring-width)]"
           :class="
             cn(
               {
@@ -371,9 +378,9 @@ const removeChip = (value: string | number): void => {
             <CorpBadge
               v-for="item in selectedItems"
               :key="String(item.value)"
-              variant="secondary"
+              variant="solid"
               :opacity="85"
-              :bgColor="chipColor"
+              :color="chipColor"
               class="gap-1 flex items-center"
             >
               {{ item.label }}
@@ -474,7 +481,7 @@ const removeChip = (value: string | number): void => {
 .corpSelectTrigger:hover:not(:disabled) {
   background-color: color-mix(
     in srgb,
-    hsl(var(--select-background)) 93%,
+    hsl(var(--corp-def-select-bg)) 93%,
     black 7%
   );
 }
@@ -483,7 +490,7 @@ const removeChip = (value: string | number): void => {
 .dark .corpSelectTrigger:hover:not(:disabled) {
   background-color: color-mix(
     in srgb,
-    hsl(var(--select-background)) 97%,
+    hsl(var(--corp-def-select-bg)) 97%,
     white 3%
   );
 }

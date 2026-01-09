@@ -55,6 +55,10 @@ export interface ColorDefinition {
 const PRIMARY_LIGHT = '#FF7133';
 const PRIMARY_DARK = '#FF7133';
 
+// ==================== SECONDARY COLOR ====================
+const SECONDARY_LIGHT = '#334155';
+const SECONDARY_DARK = '#1e3a5f';
+
 export const themeDefinition = {
   // ==================== PRIMARY PALETTE ====================
   primary: {
@@ -85,8 +89,8 @@ export const themeDefinition = {
 
   // ==================== SECONDARY PALETTE ====================
   secondary: {
-    light: '#334155',
-    dark: '#1e3a5f',
+    light: SECONDARY_LIGHT,
+    dark: SECONDARY_DARK,
     type: THEME_COLOR_TYPES.BOTH,
   },
   'secondary-foreground': {
@@ -217,38 +221,122 @@ export const themeDefinition = {
 
   // ==================== INPUT & SELECT SYSTEM ====================
 
-  // Input
-  'input-border': {
-    light: '#aec0d2ff',
-    dark: '#2e333eff',
-    type: THEME_COLOR_TYPES.BOTH,
-  },
-  'input-background': {
+  // ============== CORP INPUT ==============
+  'corp-def-input-bg': {
     light: '#D1DCE5',
     dark: '#1c2128',
     type: THEME_COLOR_TYPES.BOTH,
   },
-  'input-ring': {
-    light: '#FF7133',
-    dark: '#FF7133',
+  'corp-def-input-border': {
+    light: '#aec0d2ff',
+    dark: '#2e333eff',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-input-border-focus': {
+    light: PRIMARY_LIGHT,
+    dark: PRIMARY_DARK,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-input-ring': {
+    light: PRIMARY_LIGHT,
+    dark: PRIMARY_DARK,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-input-text': {
+    light: '#050914',
+    dark: '#e6edf3',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-input-placeholder': {
+    light: '#737373',
+    dark: '#7d8590',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-input-label-color': {
+    light: '#050914',
+    dark: '#e6edf3',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-input-label-size': {
+    light: '0.875rem',
+    dark: '0.875rem',
     type: THEME_COLOR_TYPES.BOTH,
   },
 
-  // Select
-  'select-border': {
-    light: '#aec0d2ff',
-    dark: '#2e333eff',
-    type: THEME_COLOR_TYPES.BOTH,
-  },
-  'select-background': {
+  // ============== CORP SELECT ==============
+  'corp-def-select-bg': {
     light: '#D1DCE5',
     dark: '#1c2128',
     type: THEME_COLOR_TYPES.BOTH,
   },
-  'select-ring': {
-    light: '#FF7133',
-    dark: '#FF7133',
+  'corp-def-select-border': {
+    light: '#aec0d2ff',
+    dark: '#2e333eff',
     type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-select-border-focus': {
+    light: PRIMARY_LIGHT,
+    dark: PRIMARY_DARK,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-select-ring': {
+    light: PRIMARY_LIGHT,
+    dark: PRIMARY_DARK,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-select-text': {
+    light: '#050914',
+    dark: '#e6edf3',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-select-label-color': {
+    light: '#050914',
+    dark: '#e6edf3',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-select-label-size': {
+    light: '0.875rem',
+    dark: '0.875rem',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+
+  // ============== CORP BADGE ==============
+  'corp-def-badge-bg': {
+    light: SECONDARY_LIGHT,
+    dark: SECONDARY_DARK,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-badge-text': {
+    light: '#fafafa', // secondary-foreground
+    dark: '#fafafa', // secondary-foreground
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-badge-border': {
+    light: SECONDARY_LIGHT,
+    dark: SECONDARY_DARK,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-badge-border-width': {
+    light: '1.5px',
+    dark: '1.5px',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-badge-border-color': {
+    light: 'transparent',
+    dark: 'transparent',
+    type: THEME_COLOR_TYPES.ONLY_THEME,
+  },
+
+  // ============== CORP BUTTON ==============
+  'corp-def-button-border-width': {
+    light: '2px',
+    dark: '2px',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-button-border-color': {
+    light: 'transparent',
+    dark: 'transparent',
+    type: THEME_COLOR_TYPES.ONLY_THEME,
   },
 
   // Shared

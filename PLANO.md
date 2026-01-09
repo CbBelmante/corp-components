@@ -105,7 +105,7 @@ corp-components/
 | 1 | Setup do Repositório | ✅ Concluído | 7/7 |
 | 2 | Configuração de Build | ✅ Concluído | 8/8 |
 | 2.5 | Tailwind + shadcn-vue CLI | ✅ Concluído | 5/5 |
-| 3 | Componentes UI (shadcn) | 🔄 Em Andamento | 2/10 |
+| 3 | Componentes UI (shadcn) | 🔄 Em Andamento | 8/19 |
 | 4 | Migração de Composables | 🔄 Em Andamento | 1/6 |
 | 5 | Migração de Utils | ⬜ Pendente | 0/7 |
 | 6 | Documentação (VitePress) | ✅ Concluído | 8/8 |
@@ -264,11 +264,14 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 | CbIcon.vue | CorpIcon.vue | 🔴 Alta | ✅ Completo (tag/start/end/clickable) |
 | CbInput.vue | CorpInput.vue | 🔴 Alta | ✅ Completo (validation/clearable/masks/icons/counter) |
 | CbSelect.vue | CorpSelect.vue | 🔴 Alta | ✅ Completo (validation/clearable/multiple/chips) |
-| CbBadge.vue | CorpBadge.vue | 🔴 Alta | ✅ Completo (variant/opacity/icon/animation) |
+| CbBadge.vue | CorpBadge.vue | 🔴 Alta | ✅ Completo (variant/color/bgColor/textColor/opacity/icon/animation) |
 | CbHintLine.vue | CorpHintLine.vue | 🔴 Alta | ✅ Completo (error/hint/persistent/debug) |
-| CbCheckbox.vue | CorpCheckbox.vue | 🔴 Alta | ⬜ Pendente |
+| CbCheckbox.vue | CorpCheckbox.vue | 🔴 Alta | ✅ Completo (color/validation/disabled/indeterminate/density/trueValue/falseValue) |
 | CbSwitch.vue | CorpSwitch.vue | 🔴 Alta | ✅ Completo (color/validation/loading/readonly/trueValue/falseValue) |
-| CbDate.vue | CorpDate.vue | 🔴 Alta | ⬜ Pendente |
+| N/A | CorpRadioButton.vue | 🔴 Alta | ⬜ Pendente |
+| N/A | CorpRadioGroup.vue | 🔴 Alta | ⬜ Pendente |
+| N/A | CorpAutocomplete.vue | 🔴 Alta | ⬜ Pendente |
+| CbDate.vue | CorpDate.vue | 🟡 Média | ⬜ Pendente |
 | CbTimeField.vue | CorpTimeField.vue | 🟡 Média | ⬜ Pendente |
 | CbButtonGroup.vue | CorpButtonGroup.vue | 🟡 Média | ⬜ Pendente |
 | CbAddress.vue | CorpAddress.vue | 🟡 Média | ⬜ Pendente |
@@ -291,23 +294,31 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
   - Adicionado features: validation, clearable, **multiple**, **chips**
   - Normalização de items (string[] ou {value, label}[])
 
-- [x] **3.3** Migrar CorpBadge.vue ✅ **(CONCLUÍDO em 06/01/2025)**
+- [x] **3.3** Migrar CorpBadge.vue ✅ **(CONCLUÍDO em 06/01/2025, REFATORADO em 09/01/2026)**
   - Instalado Badge shadcn via CLI
   - Renomeado Badge.vue → CorpBadge.vue
-  - Adicionado features: variant, opacity, icon, animation (pulse/bounce/spin/ping)
+  - Features: variant (solid/outline/ghost), color (shortcut), bgColor/textColor (overrides), opacity, icon, animation
+  - CVA refatorado (sem cores embedded)
+  - corp-def-badge-* defaults criados no theme.ts (SECONDARY colors)
+  - Runtime CSS variables para cores customizadas
   - Integração com CorpIcon e CorpColorUtils
+  - ⚠️ PENDENTE: Criar documentação Badge.md
 
 - [x] **3.4** Migrar CorpHintLine.vue ✅ **(CONCLUÍDO em 05/01/2025)**
   - Componente auxiliar para mensagens de erro/hint
   - Features: errorMessages, hint, persistentHint, debug, hideDetails
 
-- [ ] **3.5** Migrar CorpCheckbox.vue
-  - Copiar e renomear
-  - Ajustar imports
+- [x] **3.5** Migrar CorpCheckbox.vue ✅ **(CONCLUÍDO em 06/01/2025)**
+  - Instalado Checkbox shadcn via CLI
+  - Renomeado Checkbox.vue → CorpCheckbox.vue
+  - Features: color (semantic/custom), validation, disabled colors (light/dark), indeterminate, density, trueValue/falseValue
+  - Runtime CSS variables para cores e estados disabled
 
-- [ ] **3.6** Migrar CorpSwitch.vue
-  - Copiar e renomear
-  - Ajustar imports
+- [x] **3.6** Migrar CorpSwitch.vue ✅ **(CONCLUÍDO em 06/01/2025)**
+  - Instalado Switch shadcn via CLI
+  - Renomeado Switch.vue → CorpSwitch.vue
+  - Features: color (semantic/custom), validation, loading, readonly, trueValue/falseValue
+  - Runtime CSS variables para cores
 
 - [ ] **3.7** Migrar CorpDate.vue
   - Copiar e renomear
@@ -824,11 +835,57 @@ Os componentes originais ficam em:
 | 05/01/2026 | Pasta config/ removida (aliases agora em src/config.ts) | ✅ |
 | 05/01/2026 | npm run tscw adicionado (TypeScript watch mode) | ✅ |
 | 05/01/2026 | PLANO.md copiado do CbAdmin e adaptado ao repositório | ✅ |
+| 09/01/2026 | **🎨 Unified Color Architecture** implementada | ✅ |
+| 09/01/2026 | Input: `borderColor` prop com runtime CSS vars + disabled colors | ✅ |
+| 09/01/2026 | Select: `borderColor` + `chipColor` props com runtime CSS vars | ✅ |
+| 09/01/2026 | Badge: refatorado seguindo padrão Button (`color` shortcut + `bgColor`/`textColor` overrides) | ✅ |
+| 09/01/2026 | Badge: CVA refatorado (solid/outline/ghost sem cores embedded) | ✅ |
+| 09/01/2026 | Badge: corp-def-badge-* defaults criados no theme.ts (SECONDARY colors) | ✅ |
+| 09/01/2026 | Button: `bgColor`/`textColor` blocking behavior documentado | ✅ |
+| 09/01/2026 | Checkbox: confirmado completo (color/disabled/validation) | ✅ |
+| 09/01/2026 | Documentação atualizada: RGB/HEX/HSL/CSS vars em todos componentes | ✅ |
+| 09/01/2026 | Playground: BorderColor/ChipColor/Disabled examples para todos | ✅ |
+
+### 🎨 Arquitetura de Cores Unificada
+
+**Implementado em 09/01/2026** - Todos os componentes agora seguem padrão consistente:
+
+#### Padrão por Tipo de Componente:
+- **Input/Select**: `borderColor` (controla borda + focus + focus ring)
+- **Badge**: `bgColor` + `textColor` (controle independente)
+- **Button**: `color` (shortcut) + `bgColor`/`textColor` (overrides com blocking)
+- **Checkbox/Switch**: `color` (controla estado checked/on)
+
+#### Runtime CSS Variables:
+Todos os componentes usam variáveis CSS injetadas dinamicamente:
+```css
+--corp-runtime-{component}-{property}
+--corp-runtime-{component}-{property}-focus
+--corp-runtime-{component}-focus-ring
+--corp-runtime-{component}-disabled-{property}-light
+--corp-runtime-{component}-disabled-{property}-dark
+```
+
+#### Disabled Colors:
+Suporte light/dark mode com variáveis separadas:
+- Light mode: `lighten()` + `:disabled` CSS
+- Dark mode: `darken()` + `.dark :disabled` CSS
+
+#### Resolução de Cores:
+`resolveColor()` aceita:
+- Semânticas: `primary`, `success`, `destructive`
+- HEX: `#8b5cf6`, `#ec4899`
+- RGB: `rgb(139, 92, 246)`
+- HSL: `hsl(280, 87%, 65%)`
+- CSS vars: `var(--accent)`, `var(--info)`
+- CSS names: `cyan`, `orange`, `pink`
 
 ### Próximos Passos Imediatos
 - [x] Instalar VitePress para documentação ✅
 - [x] Criar showcase do Button ✅
-- [ ] Adicionar mais componentes via shadcn-vue CLI
+- [x] Unified Color Architecture ✅
+- [ ] Adicionar CorpRadioButton/CorpRadioGroup
+- [ ] Adicionar CorpAutocomplete
 - [ ] Configurar preview live dos componentes na docs
 
 ### Próximas Versões (v0.2.0+)
@@ -838,9 +895,9 @@ Os componentes originais ficam em:
 
 ---
 
-**Última atualização:** 05 de Janeiro de 2026
+**Última atualização:** 09 de Janeiro de 2026
 **Responsável:** Cabo Belmante
-**Status:** 🔄 Em Execução (FASE 3 - Componentes UI)
+**Status:** 🔄 Em Execução (FASE 3 - Componentes UI - 8/19 completos)
 
 ---
 

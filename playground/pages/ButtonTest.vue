@@ -180,15 +180,15 @@ const simulateLoading = () => {
               ✅ color gera hover | ❌ bgColor bloqueia hover
             </p>
             <div class="flex flex-wrap gap-4">
-              <Button color="#8b5cf6" variant="solid"
-                >Color com hover ✅</Button
-              >
-              <Button color="#8b5cf6" bgColor="#8b5cf6" variant="solid"
-                >bgColor bloqueia ❌</Button
-              >
-              <Button bgColor="#8b5cf6" textColor="white" variant="solid"
-                >bgColor manual</Button
-              >
+              <Button color="#8b5cf6" variant="solid">
+                Color com hover ✅
+              </Button>
+              <Button color="#8b5cf6" bgColor="#8b5cf6" variant="solid">
+                bgColor bloqueia ❌
+              </Button>
+              <Button bgColor="#8b5cf6" textColor="white" variant="solid">
+                bgColor manual
+              </Button>
             </div>
           </div>
 
@@ -196,12 +196,12 @@ const simulateLoading = () => {
           <div class="space-y-2">
             <p class="text-xs text-muted-foreground">Ghost variant</p>
             <div class="flex flex-wrap gap-4">
-              <Button color="success" variant="ghost"
-                >Hover verde automático ✅</Button
-              >
-              <Button bgColor="transparent" textColor="#22c55e" variant="ghost"
-                >Sem hover (manual)</Button
-              >
+              <Button color="success" variant="ghost">
+                Hover verde automático ✅
+              </Button>
+              <Button bgColor="transparent" textColor="#22c55e" variant="ghost">
+                Sem hover (manual)
+              </Button>
             </div>
           </div>
 
@@ -211,13 +211,142 @@ const simulateLoading = () => {
               Combinando color + textColor
             </p>
             <div class="flex flex-wrap gap-4">
-              <Button color="primary" textColor="yellow" variant="solid"
-                >Bg laranja, texto amarelo</Button
-              >
-              <Button color="#1e293b" textColor="#fbbf24" variant="solid"
-                >Contraste customizado</Button
-              >
+              <Button color="primary" textColor="yellow" variant="solid">
+                Bg laranja, texto amarelo
+              </Button>
+              <Button color="#1e293b" textColor="#fbbf24" variant="solid">
+                Contraste customizado
+              </Button>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rounded (Border Radius) -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Rounded (Border Radius)
+      </h2>
+      <div class="space-y-3">
+        <!-- Presets -->
+        <div class="space-y-2">
+          <p class="text-sm text-muted-foreground font-medium">Presets</p>
+          <div
+            class="flex flex-wrap gap-2 p-3 bg-card border border-border rounded"
+          >
+            <Button rounded="none" color="primary">none</Button>
+            <Button rounded="sm" color="primary">sm</Button>
+            <Button rounded="default" color="primary">default</Button>
+            <Button rounded="lg" color="primary">lg</Button>
+            <Button rounded="xl" color="primary">xl</Button>
+            <Button rounded="full" color="primary">full</Button>
+          </div>
+        </div>
+
+        <!-- Custom Tailwind Classes -->
+        <div class="space-y-2">
+          <p class="text-sm text-muted-foreground font-medium">
+            Custom Tailwind Classes
+          </p>
+          <div
+            class="flex flex-wrap gap-2 p-3 bg-card border border-border rounded"
+          >
+            <Button rounded="rounded-3xl" color="success">rounded-3xl</Button>
+            <Button rounded="rounded-tl-3xl rounded-br-3xl" color="info">
+              Diagonal Cut
+            </Button>
+            <Button rounded="rounded-l-full rounded-r-sm" color="warning">
+              Asymmetric
+            </Button>
+          </div>
+        </div>
+
+        <!-- Custom CSS Values -->
+        <div class="space-y-2">
+          <p class="text-sm text-muted-foreground font-medium">
+            Custom CSS Values
+          </p>
+          <div
+            class="flex flex-wrap gap-2 p-3 bg-card border border-border rounded"
+          >
+            <Button rounded="8px 24px" color="primary">8px 24px</Button>
+            <Button rounded="24px 24px 0 0" color="success">Top Rounded</Button>
+            <Button rounded="0 24px 24px 0" color="info">Right Rounded</Button>
+          </div>
+        </div>
+
+        <!-- Exemplos Criativos -->
+        <div class="space-y-2">
+          <p class="text-sm text-muted-foreground font-medium">
+            Exemplos Criativos
+          </p>
+          <div
+            class="flex flex-wrap gap-2 p-3 bg-card border border-border rounded"
+          >
+            <Button
+              rounded="rounded-r-full"
+              color="primary"
+              prepend-icon="luc-tag"
+            >
+              Tag Style
+            </Button>
+            <Button
+              rounded="16px 24px 24px 16px"
+              color="success"
+              append-icon="luc-arrow-right"
+            >
+              Next
+            </Button>
+            <Button
+              rounded="20px 20px 20px 4px"
+              color="info"
+              prepend-icon="luc-message-circle"
+            >
+              Chat
+            </Button>
+            <Button
+              rounded="4px 20px 20px 4px"
+              variant="outline"
+              color="warning"
+            >
+              Ticket
+            </Button>
+            <Button
+              rounded="rounded-l-full rounded-r-lg"
+              color="destructive"
+              prepend-icon="luc-trash"
+            >
+              Delete
+            </Button>
+          </div>
+        </div>
+
+        <!-- Combinações com Variants -->
+        <div class="space-y-2">
+          <p class="text-sm text-muted-foreground font-medium">
+            Combinações com Variants
+          </p>
+          <div
+            class="flex flex-wrap gap-2 p-3 bg-card border border-border rounded"
+          >
+            <Button
+              variant="solid"
+              rounded="rounded-tl-2xl rounded-br-2xl"
+              color="primary"
+            >
+              Solid Diagonal
+            </Button>
+            <Button
+              variant="outline"
+              rounded="rounded-l-full rounded-r-md"
+              color="success"
+            >
+              Outline Asymmetric
+            </Button>
+            <Button variant="ghost" rounded="rounded-3xl" color="info">
+              Ghost Ultra
+            </Button>
           </div>
         </div>
       </div>

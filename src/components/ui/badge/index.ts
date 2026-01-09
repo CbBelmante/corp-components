@@ -4,21 +4,26 @@ import { cva } from 'class-variance-authority';
 export { default as CorpBadge } from './CorpBadge.vue';
 
 export const badgeVariants = cva(
-  'inline-flex gap-1 items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  'inline-flex gap-1 items-center px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-[length:var(--corp-def-badge-border-width)] border-[var(--corp-def-badge-border-color)]',
   {
     variants: {
       variant: {
-        default:
-          'border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80',
-        secondary:
-          'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        destructive:
-          'border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80',
-        outline: 'text-foreground',
+        solid: 'shadow',
+        outline: 'bg-transparent',
+        ghost: 'bg-transparent',
+      },
+      rounded: {
+        default: 'rounded-md',
+        none: 'rounded-none',
+        sm: 'rounded-sm',
+        lg: 'rounded-lg',
+        xl: 'rounded-xl',
+        full: 'rounded-full',
       },
     },
     defaultVariants: {
-      variant: 'default',
+      variant: 'solid',
+      rounded: 'default',
     },
   }
 );
