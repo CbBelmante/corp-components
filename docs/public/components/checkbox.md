@@ -165,13 +165,19 @@ const success = ref(true)
 Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
 
 :::corp-code
-<!-- Cor HEX -->
-<CorpCheckbox name="purple" label="Roxo" color="#8b5cf6" model-value />
-<CorpCheckbox name="pink" label="Rosa" color="#ec4899" model-value />
+<!-- HEX -->
+<CorpCheckbox name="purple" label="Roxo (HEX)" color="#8b5cf6" model-value />
+<CorpCheckbox name="pink" label="Rosa (HEX)" color="#ec4899" model-value />
+
+<!-- RGB -->
+<CorpCheckbox name="rgb" label="RGB" color="rgb(139, 92, 246)" model-value />
+
+<!-- HSL -->
+<CorpCheckbox name="hsl" label="HSL" color="hsl(280, 87%, 65%)" model-value />
 
 <!-- Nomes CSS -->
-<CorpCheckbox name="cyan" label="Cyan" color="cyan" model-value />
-<CorpCheckbox name="orange" label="Orange" color="orange" model-value />
+<CorpCheckbox name="cyan" label="Cyan (CSS)" color="cyan" model-value />
+<CorpCheckbox name="orange" label="Orange (CSS)" color="orange" model-value />
 :::
 
 > **Suporte universal!** Cores customizadas (HEX, RGB, HSL, var(), nomes CSS) funcionam perfeitamente.

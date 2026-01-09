@@ -42,6 +42,13 @@ import {
   applyPhoneMask,
   applyCEPMask,
 } from '@/utils/stringUtils';
+import {
+  resolveColor,
+  darken,
+  lighten,
+  getComputedColor,
+  hexToHslWithWrapper,
+} from '@/utils/CorpColorUtils';
 
 // ============== PROPS ==============
 
@@ -76,6 +83,12 @@ const props = defineProps({
   rules: {
     type: Array as PropType<ValidationRule[]>,
     default: () => [],
+  },
+
+  // BorderColor - cor da borda (semantic OU custom: hex, rgb, var(), etc)
+  borderColor: {
+    type: String,
+    default: undefined,
   },
 
   // Estados
@@ -237,6 +250,65 @@ const hasRequiredRule = computed(() => {
   return props.rules.some(
     rule => rule.name === 'required' || rule.toString().includes('obrigatório')
   );
+});
+
+// ============== CUSTOM COLOR STYLES ==============
+
+const isDisabled = computed(() => {
+  return props.disabled || props.readonly;
+});
+
+// Style inline - SEMPRE injeta cor (sem branching semantic/custom)
+// resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
+const customColorStyle = computed(() => {
+  if (!props.borderColor) return {};
+
+  const resolved = resolveColor(props.borderColor);
+  // getComputedColor resolve CSS vars em runtime pra poder usar com darken/lighten
+  const hexColor = getComputedColor(resolved);
+
+  // ENABLED: borda normal + borda focus escurecida
+  const darkenedHex = darken(hexColor); // HEX 20% mais escuro
+  const darkenedHsl = hexToHslWithWrapper(darkenedHex);
+
+  // DISABLED: light-dark() automático (lighten no light, darken no dark)
+  // Light mode: lighten (bem claro/lavado)
+  const lightenedDisabledBorderHsl = hexToHslWithWrapper(lighten(hexColor, 50));
+
+  // Dark mode: darken (menos apagado)
+  const darkenedDisabledBorderHsl = hexToHslWithWrapper(darken(hexColor, 40));
+
+  return {
+    // Enabled
+    '--corp-runtime-input-border': resolved,
+    '--corp-runtime-input-border-focus': darkenedHsl,
+    // Focus ring (usa cor base)
+    '--corp-runtime-input-focus-ring': resolved,
+    // Disabled (2 variáveis: light e dark)
+    '--corp-runtime-input-disabled-border-light': lightenedDisabledBorderHsl,
+    '--corp-runtime-input-disabled-border-dark': darkenedDisabledBorderHsl,
+  };
+});
+
+// Classes de cor - SEMPRE usa CSS variable (funciona pra qualquer cor)
+const colorClasses = computed(() => {
+  // NÃO aplica quando disabled (disabled tem suas próprias classes)
+  if (isDisabled.value) return '';
+
+  // Se não tem cor, usa padrão do tema (border-input cinza, focus primary)
+  if (!props.borderColor) return 'focus:border-primary';
+
+  // Usa variáveis injetadas dinamicamente (borda + borda focus mais escura com darken)
+  return 'border-[var(--corp-runtime-input-border)] focus:border-[var(--corp-runtime-input-border-focus)]';
+});
+
+// Classes de focus - runtime override ou padrão do tema
+const focusClasses = computed(() => {
+  // Se não tem cor customizada, usa padrão do tema (input-ring)
+  if (!props.borderColor) return 'focus-visible:ring-[var(--input-ring)]';
+
+  // Cor customizada: usa variável runtime
+  return 'focus-visible:ring-[var(--corp-runtime-input-focus-ring)]';
 });
 
 // ============== MÁSCARAS ==============
@@ -519,17 +591,20 @@ const inputDynamicPadding = computed(() => {
           :readonly="readonly"
           :class="
             cn(
-              'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+              'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
               {
                 'border-destructive': hasError,
                 ...inputPaddingClasses,
               },
+              colorClasses,
+              focusClasses,
               props.class
             )
           "
           :style="{
             'background-color': 'hsl(var(--input-background))',
             ...inputDynamicPadding,
+            ...customColorStyle,
           }"
           @input="handleInput"
           @focus="handleFocus"
@@ -677,6 +752,21 @@ const inputDynamicPadding = computed(() => {
 </template>
 
 <style scoped>
+/*
+ * FORÇA cores disabled com !important
+ * Input não tem state checked/unchecked, então apenas aplica borda disabled
+ */
+
+/* Disabled: light mode (default) */
+input:disabled {
+  border-color: var(--corp-runtime-input-disabled-border-light) !important;
+}
+
+/* Disabled: dark mode */
+.dark input:disabled {
+  border-color: var(--corp-runtime-input-disabled-border-dark) !important;
+}
+
 .corp-icon-wrapper {
   display: flex;
   align-items: center;

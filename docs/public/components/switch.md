@@ -223,13 +223,19 @@ const success = ref(true)
 Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
 
 :::corp-code
-<!-- Cor HEX -->
-<CorpSwitch name="purple" label="Roxo" color="#8b5cf6" model-value />
-<CorpSwitch name="pink" label="Rosa" color="#ec4899" model-value />
+<!-- HEX -->
+<CorpSwitch name="purple" label="Roxo (HEX)" color="#8b5cf6" model-value />
+<CorpSwitch name="pink" label="Rosa (HEX)" color="#ec4899" model-value />
+
+<!-- RGB -->
+<CorpSwitch name="rgb" label="RGB" color="rgb(139, 92, 246)" model-value />
+
+<!-- HSL -->
+<CorpSwitch name="hsl" label="HSL" color="hsl(280, 87%, 65%)" model-value />
 
 <!-- Nomes CSS -->
-<CorpSwitch name="cyan" label="Cyan" color="cyan" model-value />
-<CorpSwitch name="orange" label="Orange" color="orange" model-value />
+<CorpSwitch name="cyan" label="Cyan (CSS)" color="cyan" model-value />
+<CorpSwitch name="orange" label="Orange (CSS)" color="orange" model-value />
 :::
 
 > **Suporte universal!** Cores customizadas (HEX, RGB, HSL, var(), nomes CSS) funcionam perfeitamente.

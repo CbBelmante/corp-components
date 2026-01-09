@@ -39,6 +39,13 @@ import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
 import { CorpBadge } from '@/components/ui/badge';
 import type { ValidationRule } from '@/validations/rules';
 import type { CorpValidationContext } from '@/composables/useForm';
+import {
+  resolveColor,
+  darken,
+  lighten,
+  getComputedColor,
+  hexToHslWithWrapper,
+} from '@/utils/CorpColorUtils';
 
 // ============== TYPES ==============
 
@@ -117,6 +124,17 @@ const props = defineProps({
     default: false,
   },
 
+  // BorderColor - cor da borda (semantic OU custom: hex, rgb, var(), etc)
+  borderColor: {
+    type: String,
+    default: undefined,
+  },
+  // ChipColor - cor dos chips no multiple (semantic OU custom: hex, rgb, var(), etc)
+  chipColor: {
+    type: String,
+    default: undefined, // undefined = usa secondary (padrão do Badge)
+  },
+
   // Class override
   class: {
     type: [String, Object, Array] as PropType<HTMLAttributes['class']>,
@@ -193,6 +211,43 @@ const selectedItems = computed<SelectItemNormalized[]>(() => {
       return found ?? { value: val, label: String(val) };
     })
     .filter(Boolean);
+});
+
+// Style inline - SEMPRE injeta cor (sem branching semantic/custom)
+// resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
+const customColorStyle = computed(() => {
+  if (!props.borderColor) return {};
+
+  const resolved = resolveColor(props.borderColor);
+  const hexColor = getComputedColor(resolved);
+
+  // ENABLED: borda normal + borda focus escurecida
+  const darkenedHex = darken(hexColor);
+  const darkenedHsl = hexToHslWithWrapper(darkenedHex);
+
+  // DISABLED: light-dark() automático (lighten no light, darken no dark)
+  const lightenedDisabledBorderHsl = hexToHslWithWrapper(lighten(hexColor, 50));
+  const darkenedDisabledBorderHsl = hexToHslWithWrapper(darken(hexColor, 40));
+
+  return {
+    '--corp-runtime-select-border': resolved,
+    '--corp-runtime-select-border-focus': darkenedHsl,
+    '--corp-runtime-select-focus-ring': resolved,
+    '--corp-runtime-select-disabled-border-light': lightenedDisabledBorderHsl,
+    '--corp-runtime-select-disabled-border-dark': darkenedDisabledBorderHsl,
+  };
+});
+
+// Classes de cor - SEMPRE usa CSS variable (funciona pra qualquer cor)
+const colorClasses = computed(() => {
+  if (!props.borderColor) return 'focus:border-primary';
+  return 'border-[var(--corp-runtime-select-border)] focus:border-[var(--corp-runtime-select-border-focus)]';
+});
+
+// Classes de focus - runtime override ou padrão do tema
+const focusClasses = computed(() => {
+  if (!props.borderColor) return 'focus-visible:ring-[var(--select-ring)]';
+  return 'focus-visible:ring-[var(--corp-runtime-select-focus-ring)]';
 });
 
 // ============== WATCHERS ==============
@@ -291,14 +346,20 @@ const removeChip = (value: string | number): void => {
         @update:open="handleOpenChange"
       >
         <SelectTrigger
-          class="corpSelectTrigger bg-[hsl(var(--select-background))] !border-[hsl(var(--select-border))] focus:ring-[length:var(--ring-width)] focus:!ring-[hsl(var(--select-ring))]"
+          class="corpSelectTrigger bg-[hsl(var(--select-background))] focus:ring-[length:var(--ring-width)]"
           :class="
-            cn({
-              'border-destructive': hasError,
-              'pr-10': clearable && hasValue && !disabled && !readonly,
-              'h-auto min-h-10': multiple && chips && selectedItems.length > 0,
-            })
+            cn(
+              {
+                'border-destructive': hasError,
+                'pr-10': clearable && hasValue && !disabled && !readonly,
+                'h-auto min-h-10':
+                  multiple && chips && selectedItems.length > 0,
+              },
+              colorClasses,
+              focusClasses
+            )
           "
+          :style="customColorStyle"
           @focus="handleFocus"
           @blur="handleBlur"
         >
@@ -312,6 +373,7 @@ const removeChip = (value: string | number): void => {
               :key="String(item.value)"
               variant="secondary"
               :opacity="85"
+              :bgColor="chipColor"
               class="gap-1 flex items-center"
             >
               {{ item.label }}
@@ -424,5 +486,15 @@ const removeChip = (value: string | number): void => {
     hsl(var(--select-background)) 97%,
     white 3%
   );
+}
+
+/* Disabled: light mode (default) */
+.corpSelectTrigger:disabled {
+  border-color: var(--corp-runtime-select-disabled-border-light) !important;
+}
+
+/* Disabled: dark mode */
+.dark .corpSelectTrigger:disabled {
+  border-color: var(--corp-runtime-select-disabled-border-dark) !important;
 }
 </style>

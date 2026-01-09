@@ -313,6 +313,81 @@ const countries = [
 
 > **Auto-detect Required:** Se `rules` contém `required`, adiciona `*` vermelho no label automaticamente.
 
+---
+
+## BorderColor
+
+A prop `borderColor` define a cor da borda do select. Aceita cores semânticas ou customizadas.
+
+### Cores Semânticas
+
+:::corp-code
+<CorpSelect name="primary" label="Primary" :items="['Vue', 'React']" borderColor="primary" />
+<CorpSelect name="secondary" label="Secondary" :items="['Vue', 'React']" borderColor="secondary" />
+<CorpSelect name="success" label="Success" :items="['Vue', 'React']" borderColor="success" />
+<CorpSelect name="warning" label="Warning" :items="['Vue', 'React']" borderColor="warning" />
+<CorpSelect name="info" label="Info" :items="['Vue', 'React']" borderColor="info" />
+<CorpSelect name="destructive" label="Destructive" :items="['Vue', 'React']" borderColor="destructive" />
+:::
+
+### Cores Customizadas
+
+Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
+
+:::corp-code
+<!-- HEX -->
+<CorpSelect name="purple" label="Roxo (HEX)" :items="['Vue', 'React']" borderColor="#8b5cf6" />
+<CorpSelect name="pink" label="Rosa (HEX)" :items="['Vue', 'React']" borderColor="#ec4899" />
+
+<!-- RGB -->
+<CorpSelect name="rgb" label="RGB" :items="['Vue', 'React']" borderColor="rgb(139, 92, 246)" />
+
+<!-- HSL -->
+<CorpSelect name="hsl" label="HSL" :items="['Vue', 'React']" borderColor="hsl(280, 87%, 65%)" />
+
+<!-- Nomes CSS -->
+<CorpSelect name="cyan" label="Cyan (CSS)" :items="['Vue', 'React']" borderColor="cyan" />
+<CorpSelect name="orange" label="Orange (CSS)" :items="['Vue', 'React']" borderColor="orange" />
+:::
+
+---
+
+## ChipColor
+
+A prop `chipColor` define a cor dos chips quando `multiple` e `chips` estão ativos.
+
+:::corp-code
+<!-- Semântica -->
+<CorpSelect name="chipsSuccess" label="Success (semântica)" :items="['TS', 'JS', 'Go']" chipColor="success" multiple chips />
+
+<!-- HEX -->
+<CorpSelect name="chipsPurple" label="Roxo (HEX)" :items="['TS', 'JS', 'Go']" chipColor="#8b5cf6" multiple chips />
+<CorpSelect name="chipsPink" label="Rosa (HEX)" :items="['TS', 'JS', 'Go']" chipColor="#ec4899" multiple chips />
+
+<!-- RGB -->
+<CorpSelect name="chipsRgb" label="RGB" :items="['TS', 'JS', 'Go']" chipColor="rgb(236, 72, 153)" multiple chips />
+
+<!-- Nome CSS -->
+<CorpSelect name="chipsOrange" label="Orange (CSS)" :items="['TS', 'JS', 'Go']" chipColor="orange" multiple chips />
+:::
+
+---
+
+## Disabled + Cores
+
+Selects disabled mantêm a cor (mais clara) quando têm `borderColor` customizado.
+
+:::corp-code
+<div class="grid grid-cols-2 gap-4">
+  <CorpSelect name="dis1" label="Primary" :items="['Vue']" borderColor="primary" modelValue="Vue" disabled />
+  <CorpSelect name="dis2" label="Success" :items="['Vue']" borderColor="success" modelValue="Vue" disabled />
+  <CorpSelect name="dis3" label="Roxo" :items="['Vue']" borderColor="#8b5cf6" modelValue="Vue" disabled />
+  <CorpSelect name="dis4" label="Rosa" :items="['Vue']" borderColor="#ec4899" modelValue="Vue" disabled />
+</div>
+:::
+
+---
+
 ## Acessibilidade
 
 O `CorpSelect` usa os primitivos do **reka-ui** que seguem as especificações **WAI-ARIA** para selects:

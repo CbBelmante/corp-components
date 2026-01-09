@@ -42,10 +42,10 @@
   --muted-foreground: #737373;
   --destructive: #ef4444;
   --destructive-foreground: #fafafa;
-  --input-border: #eef1f4;
+  --input-border: #aec0d2ff;
   --input-background: #D1DCE5;
   --input-ring: #FF7133;
-  --select-border: #eef1f4;
+  --select-border: #aec0d2ff;
   --select-background: #D1DCE5;
   --select-ring: #FF7133;
   --ring-width: 2px;
@@ -176,10 +176,10 @@
   --muted-foreground: #7d8590;
   --destructive: #f85149;
   --destructive-foreground: #fafafa;
-  --input-border: #191e25;
+  --input-border: #2e333eff;
   --input-background: #1c2128;
   --input-ring: #FF7133;
-  --select-border: #191e25;
+  --select-border: #2e333eff;
   --select-background: #1c2128;
   --select-ring: #FF7133;
   --ring-width: 2px;

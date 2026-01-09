@@ -36,7 +36,9 @@ A prop `variant` define o **estilo visual** do botão (sólido, outline, ghost, 
 
 ### Color
 
-A prop `color` define a **cor semântica** do botão. Pode ser combinada com qualquer `variant`.
+A prop `color` é um **atalho semântico** que define cor do background, texto, hover e focus automaticamente. Pode ser combinada com qualquer `variant`.
+
+> **Nota:** `color` funciona para **todos os variants** (solid, outline, ghost, link). Para controle total, use `bgColor`/`textColor` (veja seção abaixo).
 
 :::corp-code
 <CorpButton color="primary">Primary</CorpButton>
@@ -76,33 +78,47 @@ Você pode combinar **qualquer variant** com **qualquer color**:
 
 #### Cores Customizadas
 
-Você pode usar **qualquer cor** (HEX, RGB, variável CSS):
+Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
 
 :::corp-code
-<!-- Cor HEX -->
-<CorpButton color="#8b5cf6" variant="solid">Roxo</CorpButton>
-<CorpButton color="#ec4899" variant="outline">Rosa Outline</CorpButton>
+<!-- HEX -->
+<CorpButton color="#8b5cf6" variant="solid">Roxo (HEX)</CorpButton>
+<CorpButton color="#ec4899" variant="outline">Rosa (HEX)</CorpButton>
+
+<!-- RGB -->
+<CorpButton color="rgb(139, 92, 246)" variant="solid">RGB</CorpButton>
+
+<!-- HSL -->
+<CorpButton color="hsl(280, 87%, 65%)" variant="outline">HSL</CorpButton>
 
 <!-- Variável CSS -->
-<CorpButton color="var(--info)" variant="ghost">Info Custom</CorpButton>
+<CorpButton color="var(--info)" variant="ghost">Variável CSS</CorpButton>
+
 <!-- Nomes CSS -->
-<CorpButton color="cyan" variant="ghost">Cyan</CorpButton>
-<CorpButton color="pink" variant="outline">Pink</CorpButton>
-<CorpButton color="orange" variant="solid">Orange</CorpButton>
+<CorpButton color="cyan" variant="ghost">Cyan (CSS)</CorpButton>
+<CorpButton color="orange" variant="solid">Orange (CSS)</CorpButton>
 :::
 
 > **Hover funciona!** Cores customizadas (HEX, RGB, HSL, var(), nomes CSS) suportam hover/focus. Nomes CSS são convertidos automaticamente usando Canvas API.
 
-#### bgColor e textColor
+#### bgColor e textColor (Overrides)
 
-Para controle total, use `bgColor` e `textColor`:
+Para controle total e granular, use `bgColor` e `textColor` que **sobrescrevem** a prop `color`:
 
 :::corp-code
 <CorpButton bgColor="#22c55e" textColor="white">Custom Background</CorpButton>
 <CorpButton variant="outline" bgColor="transparent" textColor="#f59e0b">Custom Outline</CorpButton>
+<CorpButton variant="ghost" bgColor="transparent" textColor="#8b5cf6">Ghost Custom</CorpButton>
 :::
 
-> **Nota:** `bgColor` e `textColor` sobrescrevem `color`.
+**Hierarquia de prioridade:**
+1. `bgColor` → Sobrescreve background (não gera hover automático)
+2. `textColor` → Sobrescreve texto (prioridade máxima)
+3. `color` → Atalho semântico (gera background, texto, hover e focus automaticamente)
+
+**Quando usar:**
+- **`color`**: Para cores semânticas ou customizadas com hover/focus automático
+- **`bgColor`/`textColor`**: Para controle manual total (ex: gradientes, transparência)
 
 ### Size
 
@@ -533,9 +549,9 @@ Icon buttons em uma toolbar:
 | Prop | Tipo | Default | Descrição |
 |------|------|---------|-----------|
 | `variant` | `'solid' \| 'outline' \| 'ghost' \| 'link'` | `'solid'` | Estilo visual do botão |
-| `color` | `'primary' \| 'secondary' \| 'destructive' \| 'success' \| 'warning' \| 'info' \| string` | `'primary'` | Cor semântica (aceita HEX, RGB, variável CSS) |
-| `bgColor` | `string` | `undefined` | Override do background (HEX, RGB, variável CSS) |
-| `textColor` | `string` | `undefined` | Override da cor do texto (HEX, RGB, variável CSS) |
+| `color` | `'primary' \| 'secondary' \| 'destructive' \| 'success' \| 'warning' \| 'info' \| string` | `'primary'` | **Atalho semântico** que gera bg, texto, hover e focus automaticamente (HEX, RGB, HSL, CSS) |
+| `bgColor` | `string` | `undefined` | **Override** manual do background - sobrescreve `color` (não gera hover automático) |
+| `textColor` | `string` | `undefined` | **Override** manual do texto - sobrescreve `color` (prioridade máxima) |
 | `size` | `'default' \| 'sm' \| 'lg' \| 'xs' \| 'icon' \| 'icon-sm' \| 'icon-lg'` | `'default'` | Tamanho do botão |
 | `rounded` | `'default' \| 'none' \| 'sm' \| 'lg' \| 'xl' \| 'full' \| string` | `'default'` | Preset ou valor custom (Tailwind class ou CSS) |
 | `block` | `boolean` | `false` | Largura total (100%) |
@@ -550,6 +566,8 @@ Icon buttons em uma toolbar:
 | `as` | `string` | `'button'` | Elemento HTML a ser renderizado |
 | `asChild` | `boolean` | `false` | Mescla props com elemento filho |
 | `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | Tipo HTML do botão |
+
+> **Hierarquia de cores:** `color` → `bgColor` → `textColor`. Use `color` para atalho semântico (gera hover/focus automático). Use `bgColor`/`textColor` para controle total manual.
 
 ### Slots
 

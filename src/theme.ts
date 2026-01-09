@@ -219,8 +219,8 @@ export const themeDefinition = {
 
   // Input
   'input-border': {
-    light: '#eef1f4',
-    dark: '#191e25',
+    light: '#aec0d2ff',
+    dark: '#2e333eff',
     type: THEME_COLOR_TYPES.BOTH,
   },
   'input-background': {
@@ -236,8 +236,8 @@ export const themeDefinition = {
 
   // Select
   'select-border': {
-    light: '#eef1f4',
-    dark: '#191e25',
+    light: '#aec0d2ff',
+    dark: '#2e333eff',
     type: THEME_COLOR_TYPES.BOTH,
   },
   'select-background': {

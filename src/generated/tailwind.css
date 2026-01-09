@@ -43,10 +43,10 @@
   --muted-foreground: 0 0% 45%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
-  --input-border: 210 21% 95%;
+  --input-border: 210 29% 75%;
   --input-background: 207 28% 86%;
   --input-ring: 18 100% 60%;
-  --select-border: 210 21% 95%;
+  --select-border: 210 29% 75%;
   --select-background: 207 28% 86%;
   --select-ring: 18 100% 60%;
   --ring-width: 2px;
@@ -111,10 +111,10 @@
   --muted-foreground: 215 8% 53%;
   --destructive: 3 93% 63%;
   --destructive-foreground: 0 0% 98%;
-  --input-border: 215 19% 12%;
+  --input-border: 221 15% 21%;
   --input-background: 215 18% 13%;
   --input-ring: 18 100% 60%;
-  --select-border: 215 19% 12%;
+  --select-border: 221 15% 21%;
   --select-background: 215 18% 13%;
   --select-ring: 18 100% 60%;
   --ring-width: 2px;

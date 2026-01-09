@@ -203,6 +203,49 @@ const handleClear = () => {
       </div>
     </section>
 
+    <!-- ChipColor -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">ChipColor</h2>
+      <div class="p-4 bg-card border border-border rounded-lg space-y-4">
+        <CorpSelect
+          name="chipsSuccess"
+          :items="skills"
+          label="Success chips"
+          chip-color="success"
+          modelValue="['TypeScript', 'Go']"
+          multiple
+          chips
+        />
+        <CorpSelect
+          name="chipsWarning"
+          :items="skills"
+          label="Warning chips"
+          chip-color="warning"
+          modelValue="['JavaScript', 'Python']"
+          multiple
+          chips
+        />
+        <CorpSelect
+          name="chipsPurple"
+          :items="skills"
+          label="Roxo chips (#8b5cf6)"
+          chip-color="#8b5cf6"
+          modelValue="['Rust', 'Java']"
+          multiple
+          chips
+        />
+        <CorpSelect
+          name="chipsPink"
+          :items="skills"
+          label="Rosa chips (#ec4899)"
+          chip-color="#ec4899"
+          modelValue="['TypeScript', 'Rust']"
+          multiple
+          chips
+        />
+      </div>
+    </section>
+
     <!-- Clearable -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">Clearable</h2>
@@ -282,6 +325,135 @@ const handleClear = () => {
           >
             Limpar
           </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BorderColor Semânticas -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        BorderColor Semânticas
+      </h2>
+      <div class="p-4 bg-card border border-border rounded-lg space-y-4">
+        <CorpSelect
+          name="selectPrimary"
+          :items="frameworks"
+          label="Primary"
+          border-color="primary"
+          modelValue="Vue"
+        />
+        <CorpSelect
+          name="selectSecondary"
+          :items="frameworks"
+          label="Secondary"
+          border-color="secondary"
+          modelValue="React"
+        />
+        <CorpSelect
+          name="selectSuccess"
+          :items="frameworks"
+          label="Success"
+          border-color="success"
+          modelValue="Angular"
+        />
+        <CorpSelect
+          name="selectWarning"
+          :items="frameworks"
+          label="Warning"
+          border-color="warning"
+          modelValue="Svelte"
+        />
+        <CorpSelect
+          name="selectInfo"
+          :items="frameworks"
+          label="Info"
+          border-color="info"
+          modelValue="Solid"
+        />
+        <CorpSelect
+          name="selectDestructive"
+          :items="frameworks"
+          label="Destructive"
+          border-color="destructive"
+          modelValue="Vue"
+        />
+      </div>
+    </section>
+
+    <!-- BorderColor Customizadas -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        BorderColor Customizadas
+      </h2>
+      <div class="p-4 bg-card border border-border rounded-lg space-y-4">
+        <CorpSelect
+          name="selectPurple"
+          :items="frameworks"
+          label="Roxo (#8b5cf6)"
+          border-color="#8b5cf6"
+          modelValue="Vue"
+        />
+        <CorpSelect
+          name="selectPink"
+          :items="frameworks"
+          label="Rosa (#ec4899)"
+          border-color="#ec4899"
+          modelValue="React"
+        />
+        <CorpSelect
+          name="selectCyan"
+          :items="frameworks"
+          label="Cyan (nome CSS)"
+          border-color="cyan"
+          modelValue="Angular"
+        />
+        <CorpSelect
+          name="selectOrange"
+          :items="frameworks"
+          label="Orange (nome CSS)"
+          border-color="orange"
+          modelValue="Svelte"
+        />
+      </div>
+    </section>
+
+    <!-- Disabled + Cores -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">Disabled + Cores</h2>
+      <div class="p-4 bg-card border border-border rounded-lg">
+        <div class="grid grid-cols-2 gap-4">
+          <CorpSelect
+            name="disabledPrimary"
+            :items="frameworks"
+            label="Primary"
+            border-color="primary"
+            modelValue="Vue"
+            disabled
+          />
+          <CorpSelect
+            name="disabledSuccess"
+            :items="frameworks"
+            label="Success"
+            border-color="success"
+            modelValue="React"
+            disabled
+          />
+          <CorpSelect
+            name="disabledPurple"
+            :items="frameworks"
+            label="Roxo"
+            border-color="#8b5cf6"
+            modelValue="Angular"
+            disabled
+          />
+          <CorpSelect
+            name="disabledPink"
+            :items="frameworks"
+            label="Rosa"
+            border-color="#ec4899"
+            modelValue="Svelte"
+            disabled
+          />
         </div>
       </div>
     </section>

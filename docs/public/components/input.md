@@ -88,6 +88,182 @@ const email = ref('')
 ```
 :::
 
+---
+
+## BorderColor
+
+A prop `borderColor` define a **cor da borda e focus ring** do input. Aceita cores semânticas ou customizadas.
+
+### Cores Semânticas
+
+:::corp-code
+<div class="space-y-4 max-w-md">
+  <CorpInput
+    v-model="form.name1"
+    name="inputPrimary"
+    label="Primary"
+    borderColor="primary"
+    placeholder="Cor primary (padrão)"
+  />
+  <CorpInput
+    v-model="form.name1"
+    name="inputSecondary"
+    label="Secondary"
+    borderColor="secondary"
+    placeholder="Cor secondary"
+  />
+  <CorpInput
+    v-model="form.name1"
+    name="inputSuccess"
+    label="Success"
+    borderColor="success"
+    placeholder="Cor success"
+  />
+  <CorpInput
+    v-model="form.name1"
+    name="inputWarning"
+    label="Warning"
+    borderColor="warning"
+    placeholder="Cor warning"
+  />
+  <CorpInput
+    v-model="form.name1"
+    name="inputInfo"
+    label="Info"
+    borderColor="info"
+    placeholder="Cor info"
+  />
+</div>
+
+<!-- @disp-code -->
+```vue
+<script setup>
+import { ref } from 'vue'
+import { CorpInput } from 'corp-components'
+
+const value = ref('')
+</script>
+
+<template>
+  <CorpInput
+    v-model="value"
+    name="input"
+    label="Success"
+    borderColor="success"
+    placeholder="Digite algo..."
+  />
+</template>
+```
+:::
+
+| Color | Descrição | Cor |
+|-------|-----------|-----|
+| `primary` | Cor principal (padrão) | Laranja `#FF7133` |
+| `secondary` | Cor secundária | Azul acinzentado |
+| `destructive` | Ação destrutiva/perigo | Vermelho |
+| `success` | Sucesso/confirmação | Verde |
+| `warning` | Aviso/atenção | Amarelo |
+| `info` | Informação | Azul |
+
+### Cores Customizadas
+
+Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
+
+:::corp-code
+<div class="space-y-4 max-w-md">
+  <!-- HEX -->
+  <CorpInput
+    v-model="form.name1"
+    name="inputPurple"
+    label="Roxo (HEX)"
+    borderColor="#8b5cf6"
+    placeholder="HEX: #8b5cf6"
+  />
+  <CorpInput
+    v-model="form.name1"
+    name="inputPink"
+    label="Rosa (HEX)"
+    borderColor="#ec4899"
+    placeholder="HEX: #ec4899"
+  />
+
+  <!-- RGB -->
+  <CorpInput
+    v-model="form.name1"
+    name="inputRgb"
+    label="RGB"
+    borderColor="rgb(139, 92, 246)"
+    placeholder="RGB: rgb(139, 92, 246)"
+  />
+
+  <!-- HSL -->
+  <CorpInput
+    v-model="form.name1"
+    name="inputHsl"
+    label="HSL"
+    borderColor="hsl(280, 87%, 65%)"
+    placeholder="HSL: hsl(280, 87%, 65%)"
+  />
+
+  <!-- Nomes CSS -->
+  <CorpInput
+    v-model="form.name1"
+    name="inputCyan"
+    label="Cyan (CSS)"
+    borderColor="cyan"
+    placeholder="Nome CSS: cyan"
+  />
+  <CorpInput
+    v-model="form.name1"
+    name="inputOrange"
+    label="Orange (CSS)"
+    borderColor="orange"
+    placeholder="Nome CSS: orange"
+  />
+</div>
+:::
+
+> **Suporte universal!** Cores customizadas (HEX, RGB, HSL, var(), nomes CSS) funcionam perfeitamente.
+
+### Disabled + Cores
+
+Inputs disabled mantêm a cor da borda (mais clara) quando têm cor customizada.
+
+:::corp-code
+<div class="grid grid-cols-2 gap-4 max-w-2xl">
+  <CorpInput
+    name="disabledPrimary"
+    label="Primary"
+    borderColor="primary"
+    model-value="Disabled primary"
+    disabled
+  />
+  <CorpInput
+    name="disabledSuccess"
+    label="Success"
+    borderColor="success"
+    model-value="Disabled success"
+    disabled
+  />
+  <CorpInput
+    name="disabledPurple"
+    label="Roxo"
+    borderColor="#8b5cf6"
+    model-value="Disabled purple"
+    disabled
+  />
+  <CorpInput
+    name="disabledPink"
+    label="Rosa"
+    borderColor="#ec4899"
+    model-value="Disabled pink"
+    disabled
+  />
+</div>
+:::
+
+---
+
 ### Masks
 
 Máscaras brasileiras aplicadas automaticamente durante digitação.
@@ -260,7 +436,7 @@ Personalize a cor de cada ícone individualmente. Todas as props de cor suportam
     name="iconColors1"
     label="Ícone com cor customizada"
     prepend-icon="luc-star"
-    prepend-icon-color="text-yellow-500"
+    prepend-iconColor="text-yellow-500"
     placeholder="Favoritos"
   />
   <CorpInput
@@ -268,9 +444,9 @@ Personalize a cor de cada ícone individualmente. Todas as props de cor suportam
     name="iconColors2"
     label="Múltiplos ícones com cores diferentes"
     prepend-outer-icon="luc-search"
-    prepend-outer-icon-color="text-blue-500"
+    prepend-outer-iconColor="text-blue-500"
     append-icon="luc-check"
-    append-icon-color="text-green-500"
+    append-iconColor="text-green-500"
     @click:prepend-outer="() => alert('Buscar')"
     @click:append="() => alert('Confirmar')"
   />
@@ -280,7 +456,7 @@ Personalize a cor de cada ícone individualmente. Todas as props de cor suportam
     label="Cor padrão customizada"
     prepend-icon="luc-user"
     append-icon="luc-settings"
-    icon-color="text-purple-500"
+    iconColor="text-purple-500"
     hint="Todos os ícones herdam a cor padrão"
   />
 </div>
@@ -303,7 +479,7 @@ const user = ref('')
     name="favorite"
     label="Favoritos"
     prepend-icon="luc-star"
-    prepend-icon-color="text-yellow-500"
+    prepend-iconColor="text-yellow-500"
   />
 
   <!-- Múltiplos ícones com cores diferentes -->
@@ -312,9 +488,9 @@ const user = ref('')
     name="search"
     label="Buscar"
     prepend-outer-icon="luc-search"
-    prepend-outer-icon-color="text-blue-500"
+    prepend-outer-iconColor="text-blue-500"
     append-icon="luc-check"
-    append-icon-color="text-green-500"
+    append-iconColor="text-green-500"
   />
 
   <!-- Cor padrão para todos os ícones -->
@@ -324,7 +500,7 @@ const user = ref('')
     label="Usuário"
     prepend-icon="luc-user"
     append-icon="luc-settings"
-    icon-color="text-purple-500"
+    iconColor="text-purple-500"
   />
 </template>
 ```

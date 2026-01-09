@@ -49,13 +49,37 @@ export default {
     // Checkbox - Focus ring (theme.ts default + runtime override)
     'focus-visible:ring-[var(--checkbox-ring)]',
     'focus-visible:ring-[var(--corp-runtime-checkbox-focus-ring)]',
+
+    // ==================== INPUT ====================
+    // Input - Border (runtime custom color)
+    'border-[var(--corp-runtime-input-border)]',
+    'focus:border-[var(--corp-runtime-input-border-focus)]',
+    // Input - Focus ring (theme.ts default + runtime override)
+    'focus-visible:ring-[var(--input-ring)]',
+    'focus-visible:ring-[var(--corp-runtime-input-focus-ring)]',
+    // Input - Disabled: tratados via CSS <style> block com !important
+    // (não precisam de safelist - variáveis -light/-dark resolvidas no CSS)
+
+    // ==================== BADGE ====================
+    // Badge - Background (runtime custom color)
+    'bg-[var(--corp-runtime-badge-bg)]',
+    // Badge - Text color (runtime custom color)
+    'text-[var(--corp-runtime-badge-color)]',
+
+    // ==================== SELECT ====================
+    // Select - Border (runtime custom color)
+    'border-[var(--corp-runtime-select-border)]',
+    'focus:border-[var(--corp-runtime-select-border-focus)]',
+    // Select - Focus ring (theme.ts default + runtime override)
+    'focus-visible:ring-[var(--select-ring)]',
+    'focus-visible:ring-[var(--corp-runtime-select-focus-ring)]',
   ],
   theme: {
     extend: {
       colors: {
         // ==================== BASE ====================
         border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
+        input: 'hsl(var(--input-border))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',

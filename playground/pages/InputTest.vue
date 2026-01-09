@@ -105,6 +105,127 @@ const handleSubmit = () => {
       </div>
     </section>
 
+    <!-- Cores Semânticas -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">Cores Semânticas</h2>
+      <div class="p-4 bg-card border border-border rounded-lg space-y-4">
+        <CorpInput
+          v-model="form.name1"
+          name="colorPrimary"
+          label="Primary"
+          border-color="primary"
+          placeholder="Cor primary (padrão)"
+        />
+        <CorpInput
+          v-model="form.name1"
+          name="colorSecondary"
+          label="Secondary"
+          border-color="secondary"
+          placeholder="Cor secondary"
+        />
+        <CorpInput
+          v-model="form.name1"
+          name="colorSuccess"
+          label="Success"
+          border-color="success"
+          placeholder="Cor success"
+        />
+        <CorpInput
+          v-model="form.name1"
+          name="colorWarning"
+          label="Warning"
+          border-color="warning"
+          placeholder="Cor warning"
+        />
+        <CorpInput
+          v-model="form.name1"
+          name="colorInfo"
+          label="Info"
+          border-color="info"
+          placeholder="Cor info"
+        />
+        <CorpInput
+          v-model="form.name1"
+          name="colorDestructive"
+          label="Destructive"
+          border-color="destructive"
+          placeholder="Cor destructive"
+        />
+      </div>
+    </section>
+
+    <!-- Cores Customizadas -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">Cores Customizadas</h2>
+      <div class="p-4 bg-card border border-border rounded-lg space-y-4">
+        <CorpInput
+          v-model="form.name1"
+          name="colorPurple"
+          label="Roxo (#8b5cf6)"
+          border-color="#8b5cf6"
+          placeholder="Cor HEX"
+        />
+        <CorpInput
+          v-model="form.name1"
+          name="colorPink"
+          label="Rosa (#ec4899)"
+          border-color="#ec4899"
+          placeholder="Cor HEX"
+        />
+        <CorpInput
+          v-model="form.name1"
+          name="colorCyan"
+          label="Cyan (nome CSS)"
+          border-color="cyan"
+          placeholder="Nome CSS"
+        />
+        <CorpInput
+          v-model="form.name1"
+          name="colorOrange"
+          label="Orange (nome CSS)"
+          border-color="orange"
+          placeholder="Nome CSS"
+        />
+      </div>
+    </section>
+
+    <!-- Disabled + Cores -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">Disabled + Cores</h2>
+      <div class="p-4 bg-card border border-border rounded-lg">
+        <div class="grid grid-cols-2 gap-4">
+          <CorpInput
+            name="disabledPrimary"
+            label="Primary"
+            border-color="primary"
+            model-value="Disabled primary"
+            disabled
+          />
+          <CorpInput
+            name="disabledSuccess"
+            label="Success"
+            border-color="success"
+            model-value="Disabled success"
+            disabled
+          />
+          <CorpInput
+            name="disabledPurple"
+            label="Roxo"
+            border-color="#8b5cf6"
+            model-value="Disabled purple"
+            disabled
+          />
+          <CorpInput
+            name="disabledPink"
+            label="Rosa"
+            border-color="#ec4899"
+            model-value="Disabled pink"
+            disabled
+          />
+        </div>
+      </div>
+    </section>
+
     <!-- Validação -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">Validação</h2>

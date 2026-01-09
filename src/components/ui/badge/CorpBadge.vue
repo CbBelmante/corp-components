@@ -14,7 +14,7 @@
  * <CorpBadge variant="secondary">Badge</CorpBadge>
  *
  * // Com ícone e cor customizada
- * <CorpBadge variant="outline" icon="Check" bg="success" :opacity="85">Approved</CorpBadge>
+ * <CorpBadge variant="outline" icon="Check" bgColor="success" :opacity="85">Approved</CorpBadge>
  *
  * // Com animação
  * <CorpBadge variant="destructive" animation="pulse">Alert</CorpBadge>
@@ -26,7 +26,13 @@ import { computed } from 'vue';
 import { cn } from '@/lib/utils';
 import { badgeVariants } from '.';
 import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
-import { resolveColor } from '@/utils/CorpColorUtils';
+import {
+  resolveColor,
+  darken,
+  lighten,
+  getComputedColor,
+  hexToHslWithWrapper,
+} from '@/utils/CorpColorUtils';
 
 // ============== PROPS ==============
 
@@ -35,13 +41,14 @@ const props = defineProps({
     type: String as () => BadgeVariants['variant'],
     default: 'default',
   },
-  bg: {
+  // Custom color overrides
+  bgColor: {
     type: String,
-    default: '',
+    default: undefined,
   },
-  color: {
+  textColor: {
     type: String,
-    default: '',
+    default: undefined,
   },
   icon: {
     type: String,
@@ -83,21 +90,44 @@ const props = defineProps({
 
 // ============== COMPUTED ==============
 
-const computedStyle = computed(() => {
+// Style inline - SEMPRE injeta cor (sem branching semantic/custom)
+// resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
+const customColorStyle = computed(() => {
   const style: Record<string, string> = {};
 
-  if (props.bg) {
-    style.backgroundColor = resolveColor(props.bg);
+  // Background color runtime
+  if (props.bgColor) {
+    const resolved = resolveColor(props.bgColor);
+    style['--corp-runtime-badge-bg'] = resolved;
   }
 
-  if (props.color) {
-    style.color = resolveColor(props.color);
+  // Text color runtime
+  if (props.textColor) {
+    const resolved = resolveColor(props.textColor);
+    style['--corp-runtime-badge-color'] = resolved;
   }
 
   // Adiciona opacidade suave
   style.opacity = (props.opacity / 100).toString();
 
   return style;
+});
+
+// Classes de cor - SEMPRE usa CSS variable (funciona pra qualquer cor)
+const colorClasses = computed(() => {
+  const classes = [];
+
+  // Background color runtime
+  if (props.bgColor) {
+    classes.push('bg-[var(--corp-runtime-badge-bg)]');
+  }
+
+  // Text color runtime
+  if (props.textColor) {
+    classes.push('text-[var(--corp-runtime-badge-color)]');
+  }
+
+  return classes.join(' ');
 });
 
 const computedClasses = computed(() => {
@@ -123,8 +153,8 @@ const computedClasses = computed(() => {
 
 <template>
   <div
-    :class="cn(badgeVariants({ variant }), computedClasses)"
-    :style="computedStyle"
+    :class="cn(badgeVariants({ variant }), colorClasses, computedClasses)"
+    :style="customColorStyle"
   >
     <CorpIcon
       v-if="icon && iconPosition === 'left'"
