@@ -8,6 +8,9 @@ Checkboxes em sua forma mais simples alternam entre dois estados (checked/unchec
 
 :::corp-code
 <CorpCheckbox name="newsletter" label="Receber newsletter" v-model="checkboxForm.newsletter" />
+<p class="text-sm text-muted-foreground mt-2">
+  Valor: <code>{{ checkboxForm.newsletter }}</code>
+</p>
 
 <!-- @disp-code -->
 ```vue
@@ -20,6 +23,9 @@ const newsletter = ref(false)
 
 <template>
   <CorpCheckbox name="newsletter" label="Receber newsletter" v-model="newsletter" />
+  <p class="text-sm text-muted-foreground mt-2">
+    Valor: <code>{{ newsletter }}</code>
+  </p>
 </template>
 ```
 :::
@@ -247,21 +253,27 @@ Por padrão, o checkbox emite `true`/`false`. Use `trueValue` e `falseValue` par
 :::corp-code
 <!-- String: 'yes' / 'no' -->
 <CorpCheckbox
-  name="status"
-  label="Status"
-  model-value="yes"
+  v-model="checkboxForm.statusYesNo"
+  name="statusYesNo"
+  label="Status (yes/no)"
   true-value="yes"
   false-value="no"
 />
+<p class="text-sm text-muted-foreground mt-2">
+  Valor: <code>{{ checkboxForm.statusYesNo }}</code> (string)
+</p>
 
 <!-- Number: 1 / 0 -->
 <CorpCheckbox
+  v-model="checkboxForm.nivel"
   name="nivel"
-  label="Nível de acesso"
-  :model-value="1"
+  label="Nível (1/0)"
   :true-value="1"
   :false-value="0"
 />
+<p class="text-sm text-muted-foreground mt-2">
+  Valor: <code>{{ checkboxForm.nivel }}</code> (number)
+</p>
 :::
 
 > **Útil para:** APIs que esperam strings (`'yes'`/`'no'`), números (`1`/`0`), ou status específicos.
@@ -343,7 +355,70 @@ Use `indeterminate` para estado intermediário (útil quando alguns itens estão
 
 ---
 
-## API
+## Acessibilidade
+
+- ✅ Suporte a navegação por teclado (Space, Enter)
+- ✅ Estados ARIA (`aria-checked`, `aria-disabled`)
+- ✅ Label clicável (aumenta área de interação)
+- ✅ Focus visible com ring de destaque
+- ✅ Suporte a leitores de tela
+
+---
+
+## Exemplos Avançados
+
+### Preferências de Comunicação
+
+:::corp-code
+<div class="space-y-4">
+  <CorpCheckbox
+    name="updatesAdvanced"
+    label="Atualizações do produto"
+    hint="Novidades, melhorias e novos recursos"
+    color="primary"
+    v-model="checkboxForm.updates"
+  />
+
+  <CorpCheckbox
+    name="offersAdvanced"
+    label="Ofertas e promoções"
+    hint="Descontos exclusivos e ofertas especiais"
+    color="success"
+    v-model="checkboxForm.offers"
+  />
+
+  <CorpCheckbox
+    name="newsletterAdvanced"
+    label="Newsletter mensal"
+    hint="Conteúdo exclusivo e dicas úteis"
+    color="info"
+    v-model="checkboxForm.newsletter"
+  />
+
+  <CorpCheckbox
+    name="marketingAdvanced"
+    label="Marketing de parceiros"
+    hint="Ofertas de empresas parceiras selecionadas"
+    color="warning"
+    v-model="checkboxForm.marketing"
+  />
+</div>
+:::
+
+---
+
+## Dicas
+
+💡 **Label clicável:** Toda a área do label é clicável, melhorando a UX
+💡 **Validação automática:** Use com `useForm` para validação sem boilerplate
+💡 **Cores universais:** Suporta HEX, RGB, HSL, variáveis CSS e nomes CSS
+💡 **Valores customizados:** Use `trueValue`/`falseValue` para APIs específicas
+💡 **Estado indeterminado:** Perfeito para "select all" parcial
+💡 **Disabled com cores:** Checkboxes disabled mantêm a cor (mais clara) do tema
+
+---
+
+## API Reference
 
 ### Props
 
@@ -375,66 +450,3 @@ Use `indeterminate` para estado intermediário (útil quando alguns itens estão
 | Evento | Payload | Descrição |
 |--------|---------|-----------|
 | `update:modelValue` | `boolean \| string \| number` | Emitido ao alterar o valor |
-
----
-
-## Acessibilidade
-
-- ✅ Suporte a navegação por teclado (Space, Enter)
-- ✅ Estados ARIA (`aria-checked`, `aria-disabled`)
-- ✅ Label clicável (aumenta área de interação)
-- ✅ Focus visible com ring de destaque
-- ✅ Suporte a leitores de tela
-
----
-
-## Exemplos Avançados
-
-### Preferências de Comunicação
-
-:::corp-code
-<div class="space-y-4">
-  <CorpCheckbox
-    name="updates"
-    label="Atualizações do produto"
-    hint="Novidades, melhorias e novos recursos"
-    color="primary"
-    v-model="checkboxForm.updates"
-  />
-
-  <CorpCheckbox
-    name="offers"
-    label="Ofertas e promoções"
-    hint="Descontos exclusivos e ofertas especiais"
-    color="success"
-    v-model="checkboxForm.offers"
-  />
-
-  <CorpCheckbox
-    name="newsletter"
-    label="Newsletter mensal"
-    hint="Conteúdo exclusivo e dicas úteis"
-    color="info"
-    v-model="checkboxForm.newsletter"
-  />
-
-  <CorpCheckbox
-    name="marketing"
-    label="Marketing de parceiros"
-    hint="Ofertas de empresas parceiras selecionadas"
-    color="warning"
-    v-model="checkboxForm.marketing"
-  />
-</div>
-:::
-
----
-
-## Dicas
-
-💡 **Label clicável:** Toda a área do label é clicável, melhorando a UX
-💡 **Validação automática:** Use com `useForm` para validação sem boilerplate
-💡 **Cores universais:** Suporta HEX, RGB, HSL, variáveis CSS e nomes CSS
-💡 **Valores customizados:** Use `trueValue`/`falseValue` para APIs específicas
-💡 **Estado indeterminado:** Perfeito para "select all" parcial
-💡 **Disabled com cores:** Checkboxes disabled mantêm a cor (mais clara) do tema

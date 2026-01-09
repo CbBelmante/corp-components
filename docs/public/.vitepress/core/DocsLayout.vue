@@ -180,8 +180,8 @@ const { form: switchForm } = useForm({
     pink: true,
     cyan: true,
     orange: true,
-    status: 'active',
-    nivel: 1,
+    status: 'inactive',
+    nivel: 0,
     terms: false,
     emailNotifications: true,
     pushNotifications: false,
@@ -221,8 +221,8 @@ const { form: checkboxForm } = useForm({
     cyan: true,
     orange: true,
     // Valores customizados
-    status: 'yes',
-    nivel: 1,
+    statusYesNo: 'no',
+    nivel: 0,
     // Validação
     terms: false,
     // Exemplos avançados

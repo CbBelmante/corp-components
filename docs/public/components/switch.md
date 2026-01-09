@@ -8,6 +8,9 @@ Switches em sua forma mais simples alternam entre dois estados (on/off).
 
 :::corp-code
 <CorpSwitch name="active" label="Empresa ativa" v-model="switchForm.active" />
+<p class="text-sm text-muted-foreground mt-2">
+  Valor: <code>{{ switchForm.active }}</code>
+</p>
 
 <!-- @disp-code -->
 ```vue
@@ -20,6 +23,9 @@ const active = ref(false)
 
 <template>
   <CorpSwitch name="active" label="Empresa ativa" v-model="active" />
+  <p class="text-sm text-muted-foreground mt-2">
+    Valor: <code>{{ active }}</code>
+  </p>
 </template>
 ```
 :::
@@ -239,21 +245,27 @@ Por padrão, o switch emite `true`/`false`. Use `trueValue` e `falseValue` para 
 :::corp-code
 <!-- String: 'active' / 'inactive' -->
 <CorpSwitch
+  v-model="switchForm.status"
   name="status"
   label="Status da empresa"
-  model-value="active"
   :true-value="'active'"
   :false-value="'inactive'"
 />
+<p class="text-sm text-muted-foreground mt-2">
+  Valor: <code>{{ switchForm.status }}</code> (string)
+</p>
 
 <!-- Number: 1 / 0 -->
 <CorpSwitch
+  v-model="switchForm.nivel"
   name="nivel"
   label="Nível de acesso"
-  :model-value="1"
   :true-value="1"
   :false-value="0"
 />
+<p class="text-sm text-muted-foreground mt-2">
+  Valor: <code>{{ switchForm.nivel }}</code> (number)
+</p>
 :::
 
 > **Útil para:** APIs que esperam strings (`'yes'`/`'no'`), números (`1`/`0`), ou status específicos.
@@ -400,7 +412,71 @@ Use `indeterminate` para estado intermediário (útil em seleções parciais).
 
 ---
 
-## API
+## Acessibilidade
+
+- ✅ Suporte a navegação por teclado (Space, Enter)
+- ✅ Estados ARIA (`aria-checked`, `aria-disabled`)
+- ✅ Label clicável (aumenta área de interação)
+- ✅ Focus visible com ring de destaque
+- ✅ Suporte a leitores de tela
+
+---
+
+## Exemplos Avançados
+
+### Configurações de Notificação
+
+:::corp-code
+<div class="space-y-4">
+  <CorpSwitch
+    name="emailNotificationsAdvanced"
+    label="Notificações por Email"
+    hint="Receber atualizações importantes por email"
+    color="primary"
+    v-model="switchForm.emailNotifications"
+  />
+
+  <CorpSwitch
+    name="pushNotificationsAdvanced"
+    label="Notificações Push"
+    hint="Notificações no navegador e dispositivo móvel"
+    color="info"
+    v-model="switchForm.pushNotifications"
+  />
+
+  <CorpSwitch
+    name="smsNotificationsAdvanced"
+    label="Notificações SMS"
+    hint="Apenas para alertas críticos (taxas podem ser aplicadas)"
+    color="warning"
+    v-model="switchForm.smsNotifications"
+  />
+
+  <CorpSwitch
+    name="twoFactorAdvanced"
+    label="Autenticação de dois fatores"
+    hint="Adiciona camada extra de segurança"
+    color="success"
+    v-model="switchForm.twoFactor"
+  />
+</div>
+:::
+
+---
+
+## Dicas
+
+💡 **Label clicável:** Toda a área do label é clicável, melhorando a UX
+💡 **Validação automática:** Use com `useForm` para validação sem boilerplate
+💡 **Cores universais:** Suporta HEX, RGB, HSL, variáveis CSS e nomes CSS
+💡 **Valores customizados:** Use `trueValue`/`falseValue` para APIs específicas
+💡 **Loading state:** Mostre feedback visual durante operações assíncronas
+💡 **Densidade:** Ajuste o tamanho com `density` (compact/standard/comfortable)
+💡 **Erros externos:** Use `externalErrors` para erros de backend/API
+
+---
+
+## API Reference
 
 ### Props
 
@@ -433,67 +509,3 @@ Use `indeterminate` para estado intermediário (útil em seleções parciais).
 | Evento | Payload | Descrição |
 |--------|---------|-----------|
 | `update:modelValue` | `boolean \| string \| number` | Emitido ao alterar o valor |
-
----
-
-## Acessibilidade
-
-- ✅ Suporte a navegação por teclado (Space, Enter)
-- ✅ Estados ARIA (`aria-checked`, `aria-disabled`)
-- ✅ Label clicável (aumenta área de interação)
-- ✅ Focus visible com ring de destaque
-- ✅ Suporte a leitores de tela
-
----
-
-## Exemplos Avançados
-
-### Configurações de Notificação
-
-:::corp-code
-<div class="space-y-4">
-  <CorpSwitch
-    name="emailNotifications"
-    label="Notificações por Email"
-    hint="Receber atualizações importantes por email"
-    color="primary"
-    v-model="switchForm.emailNotifications"
-  />
-
-  <CorpSwitch
-    name="pushNotifications"
-    label="Notificações Push"
-    hint="Notificações no navegador e dispositivo móvel"
-    color="info"
-    v-model="switchForm.pushNotifications"
-  />
-
-  <CorpSwitch
-    name="smsNotifications"
-    label="Notificações SMS"
-    hint="Apenas para alertas críticos (taxas podem ser aplicadas)"
-    color="warning"
-    v-model="switchForm.smsNotifications"
-  />
-
-  <CorpSwitch
-    name="twoFactor"
-    label="Autenticação de dois fatores"
-    hint="Adiciona camada extra de segurança"
-    color="success"
-    v-model="switchForm.twoFactor"
-  />
-</div>
-:::
-
----
-
-## Dicas
-
-💡 **Label clicável:** Toda a área do label é clicável, melhorando a UX
-💡 **Validação automática:** Use com `useForm` para validação sem boilerplate
-💡 **Cores universais:** Suporta HEX, RGB, HSL, variáveis CSS e nomes CSS
-💡 **Valores customizados:** Use `trueValue`/`falseValue` para APIs específicas
-💡 **Loading state:** Mostre feedback visual durante operações assíncronas
-💡 **Densidade:** Ajuste o tamanho com `density` (compact/standard/comfortable)
-💡 **Erros externos:** Use `externalErrors` para erros de backend/API
