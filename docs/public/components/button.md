@@ -112,13 +112,55 @@ Para controle total e granular, use `bgColor` e `textColor` que **sobrescrevem**
 :::
 
 **Hierarquia de prioridade:**
-1. `bgColor` → Sobrescreve background (não gera hover automático)
-2. `textColor` → Sobrescreve texto (prioridade máxima)
+1. `bgColor` → **Override total do background** - bloqueia background e hover do `color`
+2. `textColor` → **Override total do texto** - bloqueia cor do texto do `color`
 3. `color` → Atalho semântico (gera background, texto, hover e focus automaticamente)
 
+**Comportamento:**
+- **`color`**: Gera bg, texto, hover e focus automáticos (variants: solid, outline, ghost, link)
+- **`bgColor`**: Sobrescreve background **e bloqueia hover** (você controla o hover manualmente)
+- **`textColor`**: Sobrescreve texto **e bloqueia classes de texto** (você controla a cor do texto)
+
 **Quando usar:**
-- **`color`**: Para cores semânticas ou customizadas com hover/focus automático
-- **`bgColor`/`textColor`**: Para controle manual total (ex: gradientes, transparência)
+- **`color`**: Para cores semânticas ou customizadas com hover/focus automático ✅
+- **`bgColor`/`textColor`**: Para controle manual total - gradientes, transparência, hover customizado
+
+#### Exemplos Comparativos
+
+**Exemplo 1: `color` vs `bgColor` (hover bloqueado)**
+
+:::corp-code
+<!-- COM hover automático (color) -->
+<CorpButton color="#8b5cf6" variant="solid">Color com hover ✅</CorpButton>
+
+<!-- SEM hover automático (bgColor bloqueia) -->
+<CorpButton color="#8b5cf6" bgColor="#8b5cf6" variant="solid">bgColor bloqueia hover ❌</CorpButton>
+
+<!-- Controle manual do hover (você controla) -->
+<CorpButton bgColor="#8b5cf6" textColor="white" variant="solid">bgColor manual</CorpButton>
+:::
+
+**Exemplo 2: Ghost variant com override**
+
+:::corp-code
+<!-- Ghost com hover automático -->
+<CorpButton color="success" variant="ghost">Hover verde automático ✅</CorpButton>
+
+<!-- Ghost com bgColor (você controla hover) -->
+<CorpButton bgColor="transparent" textColor="#22c55e" variant="ghost">Sem hover (manual)</CorpButton>
+:::
+
+**Exemplo 3: Combinando color + textColor**
+
+:::corp-code
+<!-- color gera bg+hover, textColor sobrescreve texto -->
+<CorpButton color="primary" textColor="yellow" variant="solid">Bg laranja, texto amarelo</CorpButton>
+
+<!-- Útil para ajustar contraste -->
+<CorpButton color="#1e293b" textColor="#fbbf24" variant="solid">Contraste customizado</CorpButton>
+:::
+
+---
 
 ### Size
 
@@ -550,8 +592,8 @@ Icon buttons em uma toolbar:
 |------|------|---------|-----------|
 | `variant` | `'solid' \| 'outline' \| 'ghost' \| 'link'` | `'solid'` | Estilo visual do botão |
 | `color` | `'primary' \| 'secondary' \| 'destructive' \| 'success' \| 'warning' \| 'info' \| string` | `'primary'` | **Atalho semântico** que gera bg, texto, hover e focus automaticamente (HEX, RGB, HSL, CSS) |
-| `bgColor` | `string` | `undefined` | **Override** manual do background - sobrescreve `color` (não gera hover automático) |
-| `textColor` | `string` | `undefined` | **Override** manual do texto - sobrescreve `color` (prioridade máxima) |
+| `bgColor` | `string` | `undefined` | **Override total** do background - sobrescreve `color` **e bloqueia hover automático** |
+| `textColor` | `string` | `undefined` | **Override total** do texto - sobrescreve `color` **e bloqueia classes de texto** |
 | `size` | `'default' \| 'sm' \| 'lg' \| 'xs' \| 'icon' \| 'icon-sm' \| 'icon-lg'` | `'default'` | Tamanho do botão |
 | `rounded` | `'default' \| 'none' \| 'sm' \| 'lg' \| 'xl' \| 'full' \| string` | `'default'` | Preset ou valor custom (Tailwind class ou CSS) |
 | `block` | `boolean` | `false` | Largura total (100%) |
@@ -567,7 +609,7 @@ Icon buttons em uma toolbar:
 | `asChild` | `boolean` | `false` | Mescla props com elemento filho |
 | `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | Tipo HTML do botão |
 
-> **Hierarquia de cores:** `color` → `bgColor` → `textColor`. Use `color` para atalho semântico (gera hover/focus automático). Use `bgColor`/`textColor` para controle total manual.
+> **Hierarquia de cores:** `color` → `bgColor` (bloqueia bg+hover) → `textColor` (bloqueia texto). Use `color` para atalho semântico com hover/focus automático. Use `bgColor`/`textColor` para override total e controle manual.
 
 ### Slots
 

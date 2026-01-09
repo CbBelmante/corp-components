@@ -168,16 +168,57 @@ const simulateLoading = () => {
         </div>
       </div>
 
-      <!-- bgColor/textColor (mantém inline style) -->
+      <!-- bgColor/textColor Override -->
       <div class="space-y-2">
         <h3 class="text-sm font-medium text-muted-foreground">
-          bgColor/textColor Props
+          color vs bgColor/textColor (Override)
         </h3>
-        <div
-          class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
-        >
-          <Button bgColor="#22c55e" textColor="white">Custom BG</Button>
-          <Button bgColor="var(--error)" textColor="white">Error BG</Button>
+        <div class="p-4 bg-card border border-border rounded-lg space-y-4">
+          <!-- Exemplo 1: Hover bloqueado -->
+          <div class="space-y-2">
+            <p class="text-xs text-muted-foreground">
+              ✅ color gera hover | ❌ bgColor bloqueia hover
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <Button color="#8b5cf6" variant="solid"
+                >Color com hover ✅</Button
+              >
+              <Button color="#8b5cf6" bgColor="#8b5cf6" variant="solid"
+                >bgColor bloqueia ❌</Button
+              >
+              <Button bgColor="#8b5cf6" textColor="white" variant="solid"
+                >bgColor manual</Button
+              >
+            </div>
+          </div>
+
+          <!-- Exemplo 2: Ghost variant -->
+          <div class="space-y-2">
+            <p class="text-xs text-muted-foreground">Ghost variant</p>
+            <div class="flex flex-wrap gap-4">
+              <Button color="success" variant="ghost"
+                >Hover verde automático ✅</Button
+              >
+              <Button bgColor="transparent" textColor="#22c55e" variant="ghost"
+                >Sem hover (manual)</Button
+              >
+            </div>
+          </div>
+
+          <!-- Exemplo 3: Combinando props -->
+          <div class="space-y-2">
+            <p class="text-xs text-muted-foreground">
+              Combinando color + textColor
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <Button color="primary" textColor="yellow" variant="solid"
+                >Bg laranja, texto amarelo</Button
+              >
+              <Button color="#1e293b" textColor="#fbbf24" variant="solid"
+                >Contraste customizado</Button
+              >
+            </div>
+          </div>
         </div>
       </div>
     </section>

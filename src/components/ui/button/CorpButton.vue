@@ -235,6 +235,7 @@ const customColorStyle = computed(() => {
 });
 
 // Classes de cor - SEMPRE usa CSS variables (funciona pra qualquer cor)
+// bgColor/textColor têm prioridade (bloqueiam classes de bg/text respectivamente)
 const colorClasses = computed(() => {
   if (!props.color) return [];
 
@@ -242,18 +243,31 @@ const colorClasses = computed(() => {
   const colorHover = 'var(--corp-runtime-btn-color-hover)';
   const colorLight = 'var(--corp-runtime-btn-color-light)';
 
+  // bgColor tem prioridade: bloqueia classes de background
+  const hasBgOverride = !!props.bgColor;
+  // textColor tem prioridade: bloqueia classes de texto
+  const hasTextOverride = !!props.textColor;
+
   if (props.variant === 'solid') {
-    return [`bg-[${color}]`, `hover:bg-[${colorHover}]`, 'text-white'];
+    const classes: string[] = [];
+    if (!hasBgOverride) classes.push(`bg-[${color}]`, `hover:bg-[${colorHover}]`);
+    if (!hasTextOverride) classes.push('text-white');
+    return classes;
   } else if (props.variant === 'outline') {
-    return [`border-[${color}]`, `text-[${color}]`, `hover:bg-[${colorLight}]`];
+    const classes: string[] = [];
+    if (!hasBgOverride) classes.push(`hover:bg-[${colorLight}]`);
+    if (!hasTextOverride) classes.push(`text-[${color}]`);
+    classes.push(`border-[${color}]`); // Border sempre usa color
+    return classes;
   } else if (props.variant === 'ghost') {
-    return [
-      `text-[${color}]`,
-      `hover:bg-[${colorLight}]`,
-      `hover:text-[${color}]`,
-    ];
+    const classes: string[] = [];
+    if (!hasBgOverride) classes.push(`hover:bg-[${colorLight}]`);
+    if (!hasTextOverride) classes.push(`text-[${color}]`, `hover:text-[${color}]`);
+    return classes;
   } else if (props.variant === 'link') {
-    return [`text-[${color}]`];
+    const classes: string[] = [];
+    if (!hasTextOverride) classes.push(`text-[${color}]`);
+    return classes;
   }
 
   return [];
