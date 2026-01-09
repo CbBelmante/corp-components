@@ -63,6 +63,43 @@ Use `disabled` para desabilitar a interação.
 <CorpCheckbox name="disabled2" label="Disabled marcado" disabled model-value />
 :::
 
+### Disabled + Cores
+
+Checkboxes disabled mantêm a cor (mais clara) quando marcados.
+
+:::corp-code
+<div class="grid grid-cols-2 gap-4">
+  <CorpCheckbox name="dis-primary-off" label="Primary OFF" color="primary" disabled />
+  <CorpCheckbox name="dis-primary-on" label="Primary ON" color="primary" disabled model-value />
+
+  <CorpCheckbox name="dis-success-off" label="Success OFF" color="success" disabled />
+  <CorpCheckbox name="dis-success-on" label="Success ON" color="success" disabled model-value />
+
+  <CorpCheckbox name="dis-warning-off" label="Warning OFF" color="warning" disabled />
+  <CorpCheckbox name="dis-warning-on" label="Warning ON" color="warning" disabled model-value />
+
+  <CorpCheckbox name="dis-info-off" label="Info OFF" color="info" disabled />
+  <CorpCheckbox name="dis-info-on" label="Info ON" color="info" disabled model-value />
+</div>
+:::
+
+### Disabled + Cores Customizadas
+
+Cores customizadas também funcionam em estado disabled.
+
+:::corp-code
+<div class="grid grid-cols-2 gap-4">
+  <CorpCheckbox name="dis-purple-off" label="Roxo OFF" color="#8b5cf6" disabled />
+  <CorpCheckbox name="dis-purple-on" label="Roxo ON" color="#8b5cf6" disabled model-value />
+
+  <CorpCheckbox name="dis-pink-off" label="Rosa OFF" color="#ec4899" disabled />
+  <CorpCheckbox name="dis-pink-on" label="Rosa ON" color="#ec4899" disabled model-value />
+
+  <CorpCheckbox name="dis-cyan-off" label="Cyan OFF" color="cyan" disabled />
+  <CorpCheckbox name="dis-cyan-on" label="Cyan ON" color="cyan" disabled model-value />
+</div>
+:::
+
 ### Readonly
 
 Use `readonly` para exibir o estado sem permitir alteração.
@@ -135,6 +172,72 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
 
 ---
 
+## Densidade (Density)
+
+Controle o tamanho do checkbox com a prop `density`.
+
+:::corp-code
+<CorpCheckbox name="compact" label="Compact (padrão)" density="compact" model-value />
+<CorpCheckbox name="standard" label="Standard" density="standard" model-value />
+<CorpCheckbox name="comfortable" label="Comfortable" density="comfortable" model-value />
+:::
+
+### Densidade com Hints Longos
+
+Teste de alinhamento com textos longos.
+
+:::corp-code
+<CorpCheckbox
+  name="compactHint"
+  label="Compact com hint longo"
+  hint="Este é um hint bem longo para testar o alinhamento do checkbox em modo compact. Vamos verificar se o texto quebra corretamente."
+  density="compact"
+  model-value
+/>
+
+<CorpCheckbox
+  name="standardHint"
+  label="Standard com hint longo"
+  hint="Este é um hint bem longo para testar o alinhamento do checkbox em modo standard. Vamos verificar se o texto quebra corretamente."
+  density="standard"
+  model-value
+/>
+
+<CorpCheckbox
+  name="comfortableHint"
+  label="Comfortable com hint longo"
+  hint="Este é um hint bem longo para testar o alinhamento do checkbox em modo comfortable. Vamos verificar se o texto quebra corretamente."
+  density="comfortable"
+  model-value
+/>
+:::
+
+---
+
+## Posição do Label
+
+Use `labelPosition` para alterar a posição do label.
+
+:::corp-code
+<CorpCheckbox
+  name="right"
+  label="Label à direita (padrão)"
+  hint="O hint também fica alinhado à esquerda com o label"
+  label-position="right"
+  model-value
+/>
+
+<CorpCheckbox
+  name="left"
+  label="Label à esquerda"
+  hint="O hint fica alinhado à direita quando label está à esquerda"
+  label-position="left"
+  model-value
+/>
+:::
+
+---
+
 ## Valores Customizados
 
 ### trueValue e falseValue
@@ -181,29 +284,6 @@ O `CorpCheckbox` integra-se com o sistema de validação `useForm`. O asterisco 
 
 ---
 
-## Densidade (Density)
-
-Controle o tamanho do checkbox com a prop `density`.
-
-:::corp-code
-<CorpCheckbox name="compact" label="Compact (padrão)" density="compact" model-value />
-<CorpCheckbox name="standard" label="Standard" density="standard" model-value />
-<CorpCheckbox name="comfortable" label="Comfortable" density="comfortable" model-value />
-:::
-
----
-
-## Posição do Label
-
-Use `labelPosition` para alterar a posição do label.
-
-:::corp-code
-<CorpCheckbox name="right" label="Label à direita (padrão)" label-position="right" model-value />
-<CorpCheckbox name="left" label="Label à esquerda" label-position="left" model-value />
-:::
-
----
-
 ## Erros Externos
 
 Use `externalErrors` para exibir erros vindos do backend/API.
@@ -213,6 +293,36 @@ Use `externalErrors` para exibir erros vindos do backend/API.
   name="external"
   label="Campo com erro do backend"
   :external-errors="['Este campo tem erro do servidor']"
+/>
+:::
+
+### Force Error
+
+Use `forceError` para forçar visual de erro (sem mensagem).
+
+:::corp-code
+<CorpCheckbox
+  name="forceError"
+  label="Campo com erro forçado"
+  hint="Visual de erro sem mensagem"
+  force-error
+/>
+:::
+
+### Messages e MaxErrors
+
+:::corp-code
+<CorpCheckbox
+  name="messages"
+  label="Com mensagens genéricas"
+  :messages="['Info: Esta é uma mensagem de informação', 'Warning: Aviso importante']"
+/>
+
+<CorpCheckbox
+  name="maxErrors"
+  label="Limitando erros (maxErrors=1)"
+  :external-errors="['Erro 1', 'Erro 2', 'Erro 3']"
+  :max-errors="1"
 />
 :::
 
@@ -289,7 +399,7 @@ Use `indeterminate` para estado intermediário (útil quando alguns itens estão
     label="Atualizações do produto"
     hint="Novidades, melhorias e novos recursos"
     color="primary"
-    model-value
+    v-model="checkboxForm.updates"
   />
 
   <CorpCheckbox
@@ -297,6 +407,7 @@ Use `indeterminate` para estado intermediário (útil quando alguns itens estão
     label="Ofertas e promoções"
     hint="Descontos exclusivos e ofertas especiais"
     color="success"
+    v-model="checkboxForm.offers"
   />
 
   <CorpCheckbox
@@ -304,6 +415,15 @@ Use `indeterminate` para estado intermediário (útil quando alguns itens estão
     label="Newsletter mensal"
     hint="Conteúdo exclusivo e dicas úteis"
     color="info"
+    v-model="checkboxForm.newsletter"
+  />
+
+  <CorpCheckbox
+    name="marketing"
+    label="Marketing de parceiros"
+    hint="Ofertas de empresas parceiras selecionadas"
+    color="warning"
+    v-model="checkboxForm.marketing"
   />
 </div>
 :::
@@ -317,3 +437,4 @@ Use `indeterminate` para estado intermediário (útil quando alguns itens estão
 💡 **Cores universais:** Suporta HEX, RGB, HSL, variáveis CSS e nomes CSS
 💡 **Valores customizados:** Use `trueValue`/`falseValue` para APIs específicas
 💡 **Estado indeterminado:** Perfeito para "select all" parcial
+💡 **Disabled com cores:** Checkboxes disabled mantêm a cor (mais clara) do tema

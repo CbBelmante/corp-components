@@ -2,34 +2,20 @@
 /**
  * 🧩 CorpCheckbox - Checkbox com validação, cores e layout horizontal
  *
- * Manipulação direta do Checkbox shadcn (reka-ui) com validação própria (useForm),
- * cores customizadas e layout horizontal (checkbox à esquerda, label e hint à direita).
+ * Layout horizontal (checkbox à esquerda, label e hint à direita).
+ * Suporta cores customizadas (semantic ou hex/rgb).
+ * Integra com useForm (inject) para validação opcional.
  *
- * 🔗 DEPENDÊNCIAS:
- * - useForm (inject) - Validação opcional
+ * 🔗 DEPENDÊNCIAS ESPECIAIS:
  * - reka-ui (CheckboxRoot, CheckboxIndicator)
- * - CorpHintLine
- * - CorpColorUtils (resolveColor)
- *
- * @example
- * // Básico
- * <CorpCheckbox name="terms" label="Aceito os termos" />
- *
- * // Com hint
- * <CorpCheckbox name="newsletter" label="Receber newsletter" hint="Cancelável a qualquer momento" />
- *
- * // Com validação (asterisco aparece automaticamente com rules.required)
- * <CorpCheckbox name="age" label="Tenho +18 anos" :rules="[rules.required]" />
- *
- * // Com cor customizada
- * <CorpCheckbox name="premium" label="Conta premium" color="#8b5cf6" />
+ * - useForm (inject pattern)
  */
 
 // ============== DEPENDÊNCIAS EXTERNAS ==============
-import { computed, watch, ref, inject, type PropType } from 'vue';
 import { CheckboxRoot, CheckboxIndicator } from 'reka-ui';
 
 // ============== DEPENDÊNCIAS INTERNAS ==============
+import { computed, watch, ref, inject, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import CorpHintLine from '@/components/forms/CorpHintLine.vue';
@@ -38,7 +24,7 @@ import {
   resolveColor,
   darken,
   lighten,
-  toHex,
+  getComputedColor,
   hexToHslWithWrapper,
 } from '@/utils/CorpColorUtils';
 import type { ValidationRule } from '@/validations/rules';
@@ -210,16 +196,15 @@ const isDisabled = computed(() => {
   return props.disabled || props.readonly;
 });
 
-// Custom color styles - injeta variáveis com darken (semantic E custom)
-// IMPORTANTE: Unchecked SEMPRE usa theme.ts, só checked usa runtime
+// Style inline - SEMPRE injeta cor (sem branching semantic/custom)
+// resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
+// NOTA: Unchecked usa theme.ts, só checked usa runtime (por isso "checked" no nome)
 const customColorStyle = computed(() => {
   if (!props.color) return {};
 
-  // Resolve cor (semantic ou custom)
   const resolved = resolveColor(props.color);
-
-  // Converte para HEX (pega valor computado de variáveis CSS)
-  const hexColor = toHex(resolved);
+  // getComputedColor resolve CSS vars em runtime pra poder usar com darken/lighten
+  const hexColor = getComputedColor(resolved);
 
   // ENABLED: cor normal + borda escurecida
   const darkenedHex = darken(hexColor); // HEX 20% mais escuro
@@ -250,7 +235,7 @@ const customColorStyle = computed(() => {
   };
 });
 
-// Classes de cor - sempre usa variável calculada com darken
+// Classes de cor - SEMPRE usa CSS variable (funciona pra qualquer cor)
 const colorClasses = computed(() => {
   // NÃO aplica quando disabled (disabled tem suas próprias classes)
   if (isDisabled.value) return '';

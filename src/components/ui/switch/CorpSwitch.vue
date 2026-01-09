@@ -2,30 +2,19 @@
 /**
  * 🧩 CorpSwitch - Switch toggle com validação e layout horizontal
  *
- * Manipulação direta do Switch shadcn (reka-ui) com validação própria (useForm)
- * e layout horizontal (switch à esquerda, label e hint à direita).
+ * Layout horizontal (switch à esquerda, label e hint à direita).
+ * Integra com useForm (inject) para validação opcional.
  *
- * 🔗 DEPENDÊNCIAS:
- * - useFormValidation (inject) - Validação opcional
+ * 🔗 DEPENDÊNCIAS ESPECIAIS:
  * - reka-ui (SwitchRoot, SwitchThumb)
- * - CorpHintLine
- *
- * @example
- * // Básico
- * <CorpSwitch name="isActive" label="Empresa ativa" />
- *
- * // Com hint
- * <CorpSwitch name="isPayer" label="Empresa pagadora" hint="Descrição aqui" />
- *
- * // Com validação (asterisco aparece automaticamente com rules.required)
- * <CorpSwitch name="terms" label="Aceito os termos" :rules="[rules.required]" />
+ * - useFormValidation (inject pattern)
  */
 
 // ============== DEPENDÊNCIAS EXTERNAS ==============
-import { computed, watch, ref, inject, type PropType } from 'vue';
 import { SwitchRoot, SwitchThumb } from 'reka-ui';
 
 // ============== DEPENDÊNCIAS INTERNAS ==============
+import { computed, watch, ref, inject, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import CorpHintLine from '@/components/forms/CorpHintLine.vue';
@@ -33,7 +22,6 @@ import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
 import { resolveColor } from '@/utils/CorpColorUtils';
 import type { ValidationRule } from '@/validations/rules';
 import type { CorpValidationContext } from '@/composables/useForm';
-import { SEMANTIC_COLORS } from '@/constants/semanticColors.js';
 
 // ============== PROPS ==============
 
@@ -142,7 +130,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits<{
-  'update:modelValue': [value: boolean];
+  'update:modelValue': [value: boolean | string | number];
 }>();
 
 // ============== VALIDATION ==============
@@ -201,42 +189,23 @@ const isDisabled = computed(() => {
   return props.disabled || props.readonly || props.loading;
 });
 
-// Verifica se color é semantic ou custom
-const isColorSemantic = computed(() => {
-  return SEMANTIC_COLORS.includes(props.color as any);
-});
-
-// Style inline para color customizado
+// Style inline - SEMPRE injeta cor (sem branching semantic/custom)
+// resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
 const customColorStyle = computed(() => {
   if (!props.color) return {};
 
   const resolved = resolveColor(props.color);
 
-  // Semantic colors: só injeta focus ring
-  if (isColorSemantic.value) {
-    return {
-      '--corp-runtime-switch-track-focus': resolved, // Trilho
-      '--corp-runtime-switch-thumb-focus': resolved, // Bolinha
-    };
-  }
-
-  // Color customizado (não-semantic): injeta tudo
   return {
     '--corp-runtime-switch-color': resolved,
-    '--corp-runtime-switch-track-focus': resolved, // Trilho
-    '--corp-runtime-switch-thumb-focus': resolved, // Bolinha
+    '--corp-runtime-switch-track-focus': resolved,
+    '--corp-runtime-switch-thumb-focus': resolved,
   };
 });
 
-// Classes de cor (geração dinâmica - safelist garante)
+// Classes de cor - SEMPRE usa CSS variable (funciona pra qualquer cor)
 const colorClasses = computed(() => {
-  if (!isColorSemantic.value) {
-    // Custom color: usa CSS variable
-    return 'data-[state=checked]:bg-[var(--corp-runtime-switch-color)]';
-  }
-
-  // Semantic colors: geração dinâmica (pattern no safelist gera as classes)
-  return `data-[state=checked]:bg-${props.color}`;
+  return 'data-[state=checked]:bg-[var(--corp-runtime-switch-color)]';
 });
 
 // Classes de focus - runtime override ou padrão do tema
@@ -290,7 +259,7 @@ watch(
  */
 watch(internalValue, newVal => {
   const valueToEmit = newVal ? props.trueValue : props.falseValue;
-  emit('update:modelValue', valueToEmit as any);
+  emit('update:modelValue', valueToEmit);
 });
 
 // ============== METHODS ==============

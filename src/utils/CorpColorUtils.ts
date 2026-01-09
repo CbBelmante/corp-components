@@ -536,6 +536,41 @@ export const lighten = (color: string, percent: number = 20): string => {
 // ============== COLOR RESOLUTION ==============
 
 /**
+ * 🌉 Resolve qualquer cor para seu valor computado do DOM (SSR-safe)
+ *
+ * Esta é a função "ponte" que transforma strings CSS (incluindo variáveis)
+ * em valores reais que podem ser manipulados (darken, lighten, toRgba, etc).
+ *
+ * Fluxo típico:
+ * ```
+ * 'primary' → resolveColor() → 'hsl(var(--primary))' → getComputedColor() → '#FF7133'
+ * ```
+ *
+ * @param {string} color - Cor em qualquer formato (hex, rgb, hsl, var(), nome semântico)
+ * @returns {string} Cor em formato HEX (#RRGGBB) ou a string original se não puder resolver
+ *
+ * @example
+ * getComputedColor('hsl(var(--primary))')  // '#FF7133' (resolvido do DOM)
+ * getComputedColor('var(--success)')       // '#22C55E' (resolvido do DOM)
+ * getComputedColor('#FF5733')              // '#FF5733' (já é hex, passthrough)
+ * getComputedColor('primary')              // '#FF7133' (resolve nome + DOM)
+ *
+ * // Uso típico com manipulação:
+ * const hex = getComputedColor(resolveColor('primary'))
+ * const hover = toRgba(hex, 0.9)  // Agora funciona!
+ */
+export const getComputedColor = (color: string): string => {
+  // Se for nome semântico, resolve primeiro
+  const colorType = getColorType(color);
+  if (colorType === 'named' && CSS_VARIABLES[color]) {
+    color = resolveColor(color);
+  }
+
+  // Delega para toHex que já faz toda a resolução de DOM
+  return toHex(color);
+};
+
+/**
  * 🎨 Resolve nomes de cores para valores reais
  *
  * Converte nomes de cores do sistema para valores CSS válidos.

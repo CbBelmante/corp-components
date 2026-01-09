@@ -52,8 +52,6 @@ const disabledOn = ref(true);
 const readonlyOff = ref(false);
 const readonlyOn = ref(true);
 const indeterminateSwitch = ref(false);
-const statusSwitch = ref<'active' | 'inactive'>('inactive');
-const levelSwitch = ref<1 | 0>(0);
 const externalErrorsExample = ref<string[]>(['Erro do servidor ao salvar']);
 const showExternalError = ref(true);
 

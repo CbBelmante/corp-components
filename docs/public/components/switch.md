@@ -59,8 +59,45 @@ Use `label` para texto descritivo e `hint` para informações adicionais.
 Use `disabled` para desabilitar a interação.
 
 :::corp-code
-<CorpSwitch name="disabled1" label="Disabled OFF" disabled />
-<CorpSwitch name="disabled2" label="Disabled ON" disabled model-value />
+<CorpSwitch name="disabled1" label="Disabled desligado" disabled />
+<CorpSwitch name="disabled2" label="Disabled ligado" disabled model-value />
+:::
+
+### Disabled + Cores
+
+Switches disabled mantêm a cor (mais clara) quando ligados.
+
+:::corp-code
+<div class="grid grid-cols-2 gap-4">
+  <CorpSwitch name="dis-primary-off" label="Primary OFF" color="primary" disabled />
+  <CorpSwitch name="dis-primary-on" label="Primary ON" color="primary" disabled model-value />
+
+  <CorpSwitch name="dis-success-off" label="Success OFF" color="success" disabled />
+  <CorpSwitch name="dis-success-on" label="Success ON" color="success" disabled model-value />
+
+  <CorpSwitch name="dis-warning-off" label="Warning OFF" color="warning" disabled />
+  <CorpSwitch name="dis-warning-on" label="Warning ON" color="warning" disabled model-value />
+
+  <CorpSwitch name="dis-info-off" label="Info OFF" color="info" disabled />
+  <CorpSwitch name="dis-info-on" label="Info ON" color="info" disabled model-value />
+</div>
+:::
+
+### Disabled + Cores Customizadas
+
+Cores customizadas também funcionam em estado disabled.
+
+:::corp-code
+<div class="grid grid-cols-2 gap-4">
+  <CorpSwitch name="dis-purple-off" label="Roxo OFF" color="#8b5cf6" disabled />
+  <CorpSwitch name="dis-purple-on" label="Roxo ON" color="#8b5cf6" disabled model-value />
+
+  <CorpSwitch name="dis-pink-off" label="Rosa OFF" color="#ec4899" disabled />
+  <CorpSwitch name="dis-pink-on" label="Rosa ON" color="#ec4899" disabled model-value />
+
+  <CorpSwitch name="dis-cyan-off" label="Cyan OFF" color="cyan" disabled />
+  <CorpSwitch name="dis-cyan-on" label="Cyan ON" color="cyan" disabled model-value />
+</div>
 :::
 
 ### Readonly
@@ -249,6 +286,36 @@ Controle o tamanho do switch com a prop `density`.
 <CorpSwitch name="comfortable" label="Comfortable" density="comfortable" model-value />
 :::
 
+### Densidade com Hints Longos
+
+Teste de alinhamento com textos longos.
+
+:::corp-code
+<CorpSwitch
+  name="compactHint"
+  label="Compact com hint longo"
+  hint="Este é um hint bem longo para testar o alinhamento do switch em modo compact. Vamos verificar se o texto quebra corretamente."
+  density="compact"
+  model-value
+/>
+
+<CorpSwitch
+  name="standardHint"
+  label="Standard com hint longo"
+  hint="Este é um hint bem longo para testar o alinhamento do switch em modo standard. Vamos verificar se o texto quebra corretamente."
+  density="standard"
+  model-value
+/>
+
+<CorpSwitch
+  name="comfortableHint"
+  label="Comfortable com hint longo"
+  hint="Este é um hint bem longo para testar o alinhamento do switch em modo comfortable. Vamos verificar se o texto quebra corretamente."
+  density="comfortable"
+  model-value
+/>
+:::
+
 ---
 
 ## Posição do Label
@@ -256,8 +323,21 @@ Controle o tamanho do switch com a prop `density`.
 Use `labelPosition` para alterar a posição do label.
 
 :::corp-code
-<CorpSwitch name="right" label="Label à direita (padrão)" label-position="right" model-value />
-<CorpSwitch name="left" label="Label à esquerda" label-position="left" model-value />
+<CorpSwitch
+  name="right"
+  label="Label à direita (padrão)"
+  hint="O hint também fica alinhado à esquerda com o label"
+  label-position="right"
+  model-value
+/>
+
+<CorpSwitch
+  name="left"
+  label="Label à esquerda"
+  hint="O hint fica alinhado à direita quando label está à esquerda"
+  label-position="left"
+  model-value
+/>
 :::
 
 ---
@@ -270,7 +350,37 @@ Use `externalErrors` para exibir erros vindos do backend/API.
 <CorpSwitch
   name="external"
   label="Campo com erro do backend"
-  :external-errors="['Erro ao salvar no servidor']"
+  :external-errors="['Este campo tem erro do servidor']"
+/>
+:::
+
+### Force Error
+
+Use `forceError` para forçar visual de erro (sem mensagem).
+
+:::corp-code
+<CorpSwitch
+  name="forceError"
+  label="Campo com erro forçado"
+  hint="Visual de erro sem mensagem"
+  force-error
+/>
+:::
+
+### Messages e MaxErrors
+
+:::corp-code
+<CorpSwitch
+  name="messages"
+  label="Com mensagens genéricas"
+  :messages="['Info: Esta é uma mensagem de informação', 'Warning: Aviso importante']"
+/>
+
+<CorpSwitch
+  name="maxErrors"
+  label="Limitando erros (maxErrors=1)"
+  :external-errors="['Erro 1', 'Erro 2', 'Erro 3']"
+  :max-errors="1"
 />
 :::
 
@@ -343,40 +453,37 @@ Use `indeterminate` para estado intermediário (útil em seleções parciais).
 :::corp-code
 <div class="space-y-4">
   <CorpSwitch
-    name="email"
+    name="emailNotifications"
     label="Notificações por Email"
     hint="Receber atualizações importantes por email"
     color="primary"
-    model-value
+    v-model="switchForm.emailNotifications"
   />
 
   <CorpSwitch
-    name="push"
+    name="pushNotifications"
     label="Notificações Push"
     hint="Notificações no navegador e dispositivo móvel"
     color="info"
+    v-model="switchForm.pushNotifications"
   />
 
   <CorpSwitch
-    name="sms"
+    name="smsNotifications"
     label="Notificações SMS"
     hint="Apenas para alertas críticos (taxas podem ser aplicadas)"
     color="warning"
+    v-model="switchForm.smsNotifications"
+  />
+
+  <CorpSwitch
+    name="twoFactor"
+    label="Autenticação de dois fatores"
+    hint="Adiciona camada extra de segurança"
+    color="success"
+    v-model="switchForm.twoFactor"
   />
 </div>
-:::
-
-### Configuração com Loading
-
-:::corp-code
-<CorpSwitch
-  name="twoFactor"
-  label="Autenticação de dois fatores"
-  hint="Adiciona camada extra de segurança"
-  color="success"
-  loading
-  model-value
-/>
 :::
 
 ---

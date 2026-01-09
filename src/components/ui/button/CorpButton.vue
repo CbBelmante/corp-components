@@ -15,9 +15,9 @@ import { Primitive } from 'reka-ui';
 // ============== DEPENDÊNCIAS INTERNAS ==============
 import { computed, useSlots, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
-import { buttonVariants, type ButtonVariants, SEMANTIC_COLORS } from '.';
+import { buttonVariants, type ButtonVariants } from '.';
 import CorpIcon from '@components/ui/icon/CorpIcon.vue';
-import { resolveColor, toRgba } from '@/utils/CorpColorUtils';
+import { resolveColor, toRgba, getComputedColor } from '@/utils/CorpColorUtils';
 
 // ============== TIPOS ==============
 
@@ -207,32 +207,23 @@ const customElevatedClass = computed(() => {
   return '';
 });
 
-// Verifica se color é semantic ou custom
-const isColorSemantic = computed(() => {
-  return SEMANTIC_COLORS.includes(props.color as ButtonVariants['color']);
-});
-
-// Custom color styles (bgColor/textColor overrides OU color não-semantic)
+// Custom color styles - SEMPRE injeta variáveis (sem branching semantic/custom)
+// resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
 const customColorStyle = computed(() => {
   const styles: Record<string, string> = {};
 
   // bgColor tem prioridade sobre color
   if (props.bgColor) {
     styles.backgroundColor = resolveColor(props.bgColor);
-  } else if (!isColorSemantic.value && props.color) {
-    // Color customizado (não-preset) - injeta CSS variables com diferentes opacities
-    // IMPORTANTE: toRgba() ANTES de resolveColor() para processar var() corretamente
-    // TODO: Criar toHsla() em CorpColorUtils para padronizar com HSL em vez de RGBA
-    //       Checkbox e Switch já usam HSL, Button ainda usa RGBA (funciona mas não é consistente)
-    styles['--corp-runtime-btn-color'] = resolveColor(props.color);
-    styles['--corp-runtime-btn-color-hover'] = toRgba(props.color, 0.9); // 90% para solid
-    styles['--corp-runtime-btn-color-light'] = toRgba(props.color, 0.1); // 10% para outline/ghost
-    styles['--corp-runtime-btn-focus-ring'] = resolveColor(props.color); // Focus ring
-  }
+  } else if (props.color) {
+    const resolved = resolveColor(props.color);
+    // getComputedColor resolve CSS vars em runtime pra poder usar com toRgba
+    const hex = getComputedColor(resolved);
 
-  // Cor semântica: injeta apenas focus ring
-  if (isColorSemantic.value && props.color) {
-    styles['--corp-runtime-btn-focus-ring'] = resolveColor(props.color);
+    styles['--corp-runtime-btn-color'] = resolved;
+    styles['--corp-runtime-btn-color-hover'] = toRgba(hex, 0.9);
+    styles['--corp-runtime-btn-color-light'] = toRgba(hex, 0.1);
+    styles['--corp-runtime-btn-focus-ring'] = resolved;
   }
 
   // textColor tem prioridade final
@@ -243,10 +234,9 @@ const customColorStyle = computed(() => {
   return styles;
 });
 
-// Classes de cor customizadas (Tailwind arbitrary values para hover/focus)
+// Classes de cor - SEMPRE usa CSS variables (funciona pra qualquer cor)
 const colorClasses = computed(() => {
-  // Só aplica se cor não é semantic E existe
-  if (isColorSemantic.value || !props.color) return [];
+  if (!props.color) return [];
 
   const color = 'var(--corp-runtime-btn-color)';
   const colorHover = 'var(--corp-runtime-btn-color-hover)';
@@ -290,9 +280,8 @@ const buttonClasses = computed(() => {
   return cn(
     buttonVariants({
       variant: props.variant,
-      color: isColorSemantic.value
-        ? (props.color as ButtonVariants['color'])
-        : undefined,
+      // Não passa color pro CVA - usamos CSS variables pra TODAS as cores
+      color: undefined,
       size: props.size,
       rounded: isRoundedPreset.value
         ? (props.rounded as RoundedPreset)

@@ -201,6 +201,37 @@ const simulateLoadingSwitch = () => {
   }, 2000);
 };
 
+// ============== CHECKBOX.MD - Estados ==============
+const { form: checkboxForm } = useForm({
+  initialValues: {
+    // Uso básico
+    newsletter: false,
+    notifications: false,
+    marketing: false,
+    // Cores semânticas
+    primary: true,
+    secondary: true,
+    destructive: true,
+    success: true,
+    warning: true,
+    info: true,
+    // Cores customizadas
+    purple: true,
+    pink: true,
+    cyan: true,
+    orange: true,
+    // Valores customizados
+    status: 'yes',
+    nivel: 1,
+    // Validação
+    terms: false,
+    // Exemplos avançados
+    updates: true,
+    offers: false,
+  },
+  formName: 'CheckboxForm',
+});
+
 const validationRules = [
   rules.required,
   (value: string[] | undefined) =>
@@ -250,6 +281,9 @@ injectDocsContext({
   switchForm,
   loadingSwitch,
   simulateLoadingSwitch,
+
+  // Checkbox.md
+  checkboxForm,
 });
 </script>
 

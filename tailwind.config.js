@@ -1,6 +1,5 @@
 import tailwindcssAnimate from 'tailwindcss-animate';
 import typography from '@tailwindcss/typography';
-import { SEMANTIC_COLORS } from './src/constants/semanticColors.js';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -13,27 +12,12 @@ export default {
     './docs/.vitepress/**/*.{js,ts,vue}',
   ],
   safelist: [
-    // ==================== SEMANTIC COLORS (Patterns) ====================
-    // Button semantic colors - garantir que Tailwind gere todas as classes
-    {
-      pattern: new RegExp(
-        `^(bg|text|border|hover:bg|hover:text)-(${SEMANTIC_COLORS.join('|')})(/\\d+)?$`
-      ),
-    },
-    // Switch semantic colors - data-[state=checked]:bg-{color} + focus:ring-{color}
-    {
-      pattern: new RegExp(
-        `^(data-\\[state=checked\\]:bg|focus-visible:ring)-(${SEMANTIC_COLORS.join('|')})$`
-      ),
-    },
-    // Checkbox semantic colors - data-[state=checked]:bg-{color} e border-{color}
-    {
-      pattern: new RegExp(
-        `^data-\\[state=checked\\]:(bg|border)-(${SEMANTIC_COLORS.join('|')})$`
-      ),
-    },
+    // ==================== ARQUITETURA UNIFICADA ====================
+    // Todos os componentes (Button, Switch, Checkbox) usam CSS variables
+    // em runtime. Não precisamos mais de patterns para SEMANTIC_COLORS
+    // pois resolveColor() + getComputedColor() tratam qualquer cor.
 
-    // ==================== BUTTON (Runtime Custom Colors) ====================
+    // ==================== BUTTON (Runtime CSS Variables) ====================
     'bg-[var(--corp-runtime-btn-color)]',
     'hover:bg-[var(--corp-runtime-btn-color-hover)]',
     'hover:bg-[var(--corp-runtime-btn-color-light)]',
@@ -60,13 +44,8 @@ export default {
     'data-[state=checked]:border-[var(--corp-runtime-checkbox-checked-border)]',
     // Checkbox - Unchecked state (theme.ts)
     'data-[state=unchecked]:border-[var(--checkbox-unchecked-border)]',
-    // Checkbox - Disabled checked (runtime: lighten no mesmo tom)
-    'data-[state=checked]:disabled:bg-[var(--corp-runtime-checkbox-checked-disabled-bg)]',
-    'data-[state=checked]:disabled:border-[var(--corp-runtime-checkbox-checked-disabled-border)]',
-    'data-[state=checked]:disabled:text-[var(--corp-runtime-checkbox-checked-disabled-border)]',
-    // Checkbox - Disabled unchecked (theme.ts: cinza neutro)
-    'data-[state=unchecked]:disabled:bg-[var(--checkbox-unchecked-disabled-bg)]',
-    'data-[state=unchecked]:disabled:border-[var(--checkbox-unchecked-disabled-border)]',
+    // Checkbox - Disabled states: tratados via CSS <style> block com !important
+    // (não precisam de safelist - variáveis -light/-dark resolvidas no CSS)
     // Checkbox - Focus ring (theme.ts default + runtime override)
     'focus-visible:ring-[var(--checkbox-ring)]',
     'focus-visible:ring-[var(--corp-runtime-checkbox-focus-ring)]',
