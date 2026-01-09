@@ -6,6 +6,7 @@ import InputTest from './pages/InputTest.vue';
 import SelectTest from './pages/SelectTest.vue';
 import SwitchTest from './pages/SwitchTest.vue';
 import CheckboxTest from './pages/CheckboxTest.vue';
+import RadioGroupTest from './pages/RadioGroupTest.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -44,6 +45,11 @@ const router = createRouter({
       path: '/checkboxes',
       name: 'checkboxes',
       component: CheckboxTest,
+    },
+    {
+      path: '/radiogroups',
+      name: 'radiogroups',
+      component: RadioGroupTest,
     },
   ],
 });

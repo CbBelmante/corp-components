@@ -53,6 +53,14 @@ export default {
     'focus-visible:ring-[var(--checkbox-ring)]',
     'focus-visible:ring-[var(--corp-runtime-checkbox-focus-ring)]',
 
+    // ==================== RADIO GROUP ====================
+    // RadioGroup - Border + Checked state (runtime custom color)
+    'border-[var(--corp-runtime-radio-color)]',
+    'data-[state=checked]:bg-[var(--corp-runtime-radio-color)]',
+    'data-[state=checked]:border-[var(--corp-runtime-radio-color)]',
+    // RadioGroup - Focus ring (runtime custom color)
+    'focus-visible:ring-[var(--corp-runtime-radio-color)]',
+
     // ==================== INPUT ====================
     // Input - Border default (theme.ts corp-def-input-*)
     'border-[var(--corp-def-input-border)]',
