@@ -242,7 +242,7 @@ const customColorStyle = computed(() => {
 const colorClasses = computed(() => {
   // Se não tem cor, usa padrão do tema corp-def-select-border-focus
   if (!props.borderColor)
-    return 'focus:border-[var(--corp-def-select-border-focus)]';
+    return 'focus:border-[hsl(var(--corp-def-select-border-focus))]';
   return 'border-[var(--corp-runtime-select-border)] focus:border-[var(--corp-runtime-select-border-focus)]';
 });
 
@@ -250,7 +250,7 @@ const colorClasses = computed(() => {
 const focusClasses = computed(() => {
   // Se não tem cor customizada, usa padrão do tema corp-def-select-ring
   if (!props.borderColor)
-    return 'focus-visible:ring-[var(--corp-def-select-ring)]';
+    return 'focus-visible:ring-[hsl(var(--corp-def-select-ring))]';
   return 'focus-visible:ring-[var(--corp-runtime-select-focus-ring)]';
 });
 
@@ -335,7 +335,7 @@ const removeChip = (value: string | number): void => {
       :class="{ 'text-destructive': hasError }"
       style="
         font-size: var(--corp-def-select-label-size);
-        color: var(--corp-def-select-label-color);
+        color: hsl(var(--corp-def-select-label-color));
       "
     >
       {{ label }}
@@ -353,7 +353,7 @@ const removeChip = (value: string | number): void => {
         @update:open="handleOpenChange"
       >
         <SelectTrigger
-          class="corpSelectTrigger bg-[hsl(var(--corp-def-select-bg))] border-[var(--corp-def-select-border)] focus:ring-[length:var(--ring-width)]"
+          class="corpSelectTrigger bg-[hsl(var(--corp-def-select-bg))] border-[hsl(var(--corp-def-select-border))] focus:ring-[length:var(--ring-width)]"
           :class="
             cn(
               {

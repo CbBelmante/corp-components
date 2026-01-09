@@ -297,7 +297,7 @@ const colorClasses = computed(() => {
 
   // Se não tem cor, usa padrão do tema corp-def-input-border-focus
   if (!props.borderColor)
-    return 'focus:border-[var(--corp-def-input-border-focus)]';
+    return 'focus:border-[hsl(var(--corp-def-input-border-focus))]';
 
   // Usa variáveis injetadas dinamicamente (borda + borda focus mais escura com darken)
   return 'border-[var(--corp-runtime-input-border)] focus:border-[var(--corp-runtime-input-border-focus)]';
@@ -307,7 +307,7 @@ const colorClasses = computed(() => {
 const focusClasses = computed(() => {
   // Se não tem cor customizada, usa padrão do tema corp-def-input-ring
   if (!props.borderColor)
-    return 'focus-visible:ring-[var(--corp-def-input-ring)]';
+    return 'focus-visible:ring-[hsl(var(--corp-def-input-ring))]';
 
   // Cor customizada: usa variável runtime
   return 'focus-visible:ring-[var(--corp-runtime-input-focus-ring)]';
@@ -496,7 +496,7 @@ const inputDynamicPadding = computed(() => {
       :class="{ 'text-destructive': hasError }"
       style="
         font-size: var(--corp-def-input-label-size);
-        color: var(--corp-def-input-label-color);
+        color: hsl(var(--corp-def-input-label-color));
       "
     >
       {{ label }}
@@ -596,7 +596,7 @@ const inputDynamicPadding = computed(() => {
           :readonly="readonly"
           :class="
             cn(
-              'flex h-9 w-full rounded-md border border-[var(--corp-def-input-border)] bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--corp-def-input-placeholder)] focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
+              'flex h-9 w-full rounded-md border border-[hsl(var(--corp-def-input-border))] bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--corp-def-input-placeholder)] focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
               {
                 'border-destructive': hasError,
                 ...inputPaddingClasses,
@@ -608,7 +608,7 @@ const inputDynamicPadding = computed(() => {
           "
           :style="{
             'background-color': 'hsl(var(--corp-def-input-bg))',
-            color: 'var(--corp-def-input-text)',
+            color: 'hsl(var(--corp-def-input-text))',
             ...inputDynamicPadding,
             ...customColorStyle,
           }"

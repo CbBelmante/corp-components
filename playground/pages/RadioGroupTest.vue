@@ -40,6 +40,8 @@ const readonlySelection = ref<string>('option2');
 const numericSelection = ref<number>(1);
 const externalErrorsExample = ref<string[]>(['Plano inválido para sua conta']);
 const showExternalError = ref(true);
+const densitySelection = ref<string>('compact');
+const labelPositionSelection = ref<string>('right');
 
 // ============== HANDLERS ==============
 const handleSubmit = () => {
@@ -63,7 +65,8 @@ const handleSubmit = () => {
     <div>
       <h1 class="text-2xl font-bold text-foreground mb-2">RadioGroup Test</h1>
       <p class="text-muted-foreground">
-        Teste todas as variantes e funcionalidades do CorpRadioGroup
+        Teste todas as variantes e funcionalidades do CorpRadioGroup: cores,
+        validação, density, labelPosition, messages, forceError e mais
       </p>
     </div>
 
@@ -430,6 +433,196 @@ const handleSubmit = () => {
       </div>
     </section>
 
+    <!-- Density (Tamanhos) -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Density (Tamanhos: compact, standard, comfortable)
+      </h2>
+      <div class="space-y-6 p-4 bg-card border border-border rounded-lg">
+        <div>
+          <h3 class="text-sm font-medium mb-2">Compact (padrão):</h3>
+          <CorpRadioGroup
+            v-model="densitySelection"
+            name="densityCompact"
+            label="Tamanho Compact"
+          >
+            <CorpRadioGroupItem
+              value="compact"
+              label="Compact"
+              density="compact"
+            />
+            <CorpRadioGroupItem
+              value="standard"
+              label="Standard"
+              density="compact"
+            />
+            <CorpRadioGroupItem
+              value="comfortable"
+              label="Comfortable"
+              density="compact"
+            />
+          </CorpRadioGroup>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium mb-2">Standard:</h3>
+          <CorpRadioGroup
+            v-model="densitySelection"
+            name="densityStandard"
+            label="Tamanho Standard"
+          >
+            <CorpRadioGroupItem
+              value="compact"
+              label="Compact"
+              density="standard"
+            />
+            <CorpRadioGroupItem
+              value="standard"
+              label="Standard"
+              density="standard"
+            />
+            <CorpRadioGroupItem
+              value="comfortable"
+              label="Comfortable"
+              density="standard"
+            />
+          </CorpRadioGroup>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium mb-2">Comfortable:</h3>
+          <CorpRadioGroup
+            v-model="densitySelection"
+            name="densityComfortable"
+            label="Tamanho Comfortable"
+          >
+            <CorpRadioGroupItem
+              value="compact"
+              label="Compact"
+              density="comfortable"
+            />
+            <CorpRadioGroupItem
+              value="standard"
+              label="Standard"
+              density="comfortable"
+            />
+            <CorpRadioGroupItem
+              value="comfortable"
+              label="Comfortable"
+              density="comfortable"
+            />
+          </CorpRadioGroup>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Selecionado:
+          <code>{{ densitySelection }}</code>
+        </p>
+      </div>
+    </section>
+
+    <!-- Label Position (Posição do Label) -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Label Position (Esquerda vs Direita)
+      </h2>
+      <div class="space-y-6 p-4 bg-card border border-border rounded-lg">
+        <div>
+          <h3 class="text-sm font-medium mb-2">Right (padrão):</h3>
+          <CorpRadioGroup
+            v-model="labelPositionSelection"
+            name="labelPositionRight"
+            label="Label à direita"
+          >
+            <CorpRadioGroupItem
+              value="right"
+              label="Radio à esquerda, Label à direita"
+              label-position="right"
+            />
+            <CorpRadioGroupItem
+              value="option2"
+              label="Opção 2"
+              label-position="right"
+            />
+            <CorpRadioGroupItem
+              value="option3"
+              label="Opção 3"
+              label-position="right"
+            />
+          </CorpRadioGroup>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium mb-2">Left:</h3>
+          <CorpRadioGroup
+            v-model="labelPositionSelection"
+            name="labelPositionLeft"
+            label="Label à esquerda"
+          >
+            <CorpRadioGroupItem
+              value="left"
+              label="Label à esquerda, Radio à direita"
+              label-position="left"
+            />
+            <CorpRadioGroupItem
+              value="option2"
+              label="Opção 2"
+              label-position="left"
+            />
+            <CorpRadioGroupItem
+              value="option3"
+              label="Opção 3"
+              label-position="left"
+            />
+          </CorpRadioGroup>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Selecionado:
+          <code>{{ labelPositionSelection }}</code>
+        </p>
+      </div>
+    </section>
+
+    <!-- Combinando Density + LabelPosition + Colors -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Combinando: Density + LabelPosition + Colors
+      </h2>
+      <div class="space-y-4 p-4 bg-card border border-border rounded-lg">
+        <CorpRadioGroup
+          v-model="colorChoice"
+          name="combined"
+          label="Exemplo Combinado"
+          hint="Comfortable + Left + Cores customizadas"
+        >
+          <CorpRadioGroupItem
+            value="option1"
+            label="Opção 1 (Comfortable + Left + Purple)"
+            density="comfortable"
+            label-position="left"
+            color="#8b5cf6"
+          />
+          <CorpRadioGroupItem
+            value="option2"
+            label="Opção 2 (Standard + Right + Success)"
+            density="standard"
+            label-position="right"
+            color="success"
+          />
+          <CorpRadioGroupItem
+            value="option3"
+            label="Opção 3 (Compact + Right + Info)"
+            density="compact"
+            label-position="right"
+            color="info"
+          />
+        </CorpRadioGroup>
+        <p class="text-sm text-muted-foreground">
+          Selecionado:
+          <code>{{ colorChoice }}</code>
+        </p>
+      </div>
+    </section>
+
     <!-- Exemplo Real: Seleção de Plano -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">
@@ -447,24 +640,28 @@ const handleSubmit = () => {
             label="Pequena (1-10 funcionários)"
             hint="Ideal para startups e pequenos negócios"
             color="success"
+            density="standard"
           />
           <CorpRadioGroupItem
             value="medium"
             label="Média (11-50 funcionários)"
             hint="Perfeito para empresas em crescimento"
             color="info"
+            density="standard"
           />
           <CorpRadioGroupItem
             value="large"
             label="Grande (51-200 funcionários)"
             hint="Para empresas estabelecidas"
             color="warning"
+            density="standard"
           />
           <CorpRadioGroupItem
             value="enterprise"
             label="Enterprise (200+ funcionários)"
             hint="Soluções customizadas e suporte dedicado"
             color="primary"
+            density="comfortable"
           />
         </CorpRadioGroup>
         <p class="text-sm text-muted-foreground">

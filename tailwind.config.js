@@ -26,8 +26,7 @@ export default {
     'border-[var(--corp-runtime-btn-color)]',
     // Button - Focus ring (runtime override)
     'focus-visible:ring-[var(--corp-runtime-btn-focus-ring)]',
-    // Button - Border default (theme.ts corp-def-button-*)
-    'border-[length:var(--corp-def-button-border-width)]',
+    // Button - Border color (theme.ts corp-def-button-*)
     'border-[var(--corp-def-button-border-color)]',
 
     // ==================== SWITCH ====================
@@ -80,8 +79,7 @@ export default {
     'bg-[hsl(var(--corp-def-badge-bg))]',
     'text-[hsl(var(--corp-def-badge-text))]',
     'border-[hsl(var(--corp-def-badge-border))]',
-    // Badge - Border default (theme.ts corp-def-badge-*)
-    'border-[length:var(--corp-def-badge-border-width)]',
+    // Badge - Border color (theme.ts corp-def-badge-*)
     'border-[var(--corp-def-badge-border-color)]',
     // Badge - Runtime custom color (via prop color)
     'bg-[var(--corp-runtime-badge-color)]',

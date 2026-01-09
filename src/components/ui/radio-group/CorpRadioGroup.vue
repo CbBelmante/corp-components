@@ -47,19 +47,6 @@ const props = defineProps({
     default: () => [],
   },
 
-  // v-model
-  modelValue: {
-    type: [String, Number] as PropType<string | number>,
-    default: undefined,
-  },
-
-  // Orientação do layout
-  orientation: {
-    type: String as PropType<'vertical' | 'horizontal'>,
-    default: 'vertical',
-    validator: (value: string) => ['vertical', 'horizontal'].includes(value),
-  },
-
   // Estados
   disabled: {
     type: Boolean,
@@ -80,6 +67,12 @@ const props = defineProps({
     default: '',
   },
 
+  orientation: {
+    type: String as PropType<'vertical' | 'horizontal'>,
+    default: 'vertical',
+    validator: (value: string) => ['vertical', 'horizontal'].includes(value),
+  },
+
   // Display
   class: {
     type: String,
@@ -98,6 +91,11 @@ const props = defineProps({
   maxErrors: {
     type: Number,
     default: 1,
+  },
+
+  modelValue: {
+    type: [String, Number] as PropType<string | number>,
+    default: undefined,
   },
 });
 
@@ -129,21 +127,21 @@ const touched = ref<boolean>(false);
 // Estado de foco: esconde erro enquanto usuário interage
 const isFocused = ref<boolean>(false);
 
-// const hasError = computed<boolean>(() => {
-//   // forceError sempre mostra erro (mesmo focado)
-//   if (props.forceError) return true;
+const hasError = computed<boolean>(() => {
+  // forceError sempre mostra erro (mesmo focado)
+  if (props.forceError) return true;
 
-//   // Erros normais (esconde enquanto focado)
-//   return errorMessages.value.length > 0 && !isFocused.value;
-// });
+  // Erros normais (esconde enquanto focado)
+  return errorMessages.value.length > 0 && !isFocused.value;
+});
 
 // ============== COMPUTED PROPERTIES ==============
 
-// const hasRequiredRule = computed(() => {
-//   return props.rules.some(
-//     rule => rule.name === 'required' || rule.toString().includes('obrigatório')
-//   );
-// });
+const hasRequiredRule = computed(() => {
+  return props.rules.some(
+    rule => rule.name === 'required' || rule.toString().includes('obrigatório')
+  );
+});
 
 // ============== METHODS ==============
 
@@ -167,14 +165,15 @@ const handleBlur = (): void => {
 </script>
 
 <template>
-  <div
-    :class="cn('flex flex-col gap-2', props.class)"
-    @focusin="handleFocus"
-    @focusout="handleBlur"
-  >
+  <div class="space-y-1 w-full">
     <!-- Label principal -->
-    <Label v-if="props.label" class="text-sm font-medium">
+    <Label
+      v-if="props.label"
+      :class="{ 'text-destructive': hasError }"
+      class="text-sm font-medium"
+    >
       {{ props.label }}
+      <span v-if="hasRequiredRule" class="text-destructive">*</span>
     </Label>
 
     <!-- Radio Group -->
@@ -182,10 +181,15 @@ const handleBlur = (): void => {
       :model-value="props.modelValue"
       @update:model-value="handleUpdate"
       :disabled="props.disabled || props.readonly"
+      @focusin="handleFocus"
+      @focusout="handleBlur"
       :class="
         cn(
           'flex',
-          props.orientation === 'vertical' ? 'flex-col gap-2' : 'flex-row gap-4'
+          props.orientation === 'vertical'
+            ? 'flex-col gap-2'
+            : 'flex-row gap-4',
+          props.class
         )
       "
     >

@@ -329,7 +329,7 @@ const handleBlur = (): void => {
 </script>
 
 <template>
-  <div class="space-y-1 w-full">
+  <div class="flex flex-col gap-0 w-full">
     <!-- Checkbox + Label alinhados -->
     <div
       :class="
@@ -350,7 +350,7 @@ const handleBlur = (): void => {
         :style="customColorStyle"
         :class="
           cn(
-            'grid place-content-center peer shrink-0 rounded-sm border shadow focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed data-[state=checked]:text-primary-foreground data-[state=unchecked]:border-[var(--checkbox-unchecked-border)]',
+            'grid place-content-center peer shrink-0 rounded-sm border-[length:var(--corp-def-checkbox-border-width)] shadow focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed data-[state=checked]:text-primary-foreground data-[state=unchecked]:border-[var(--checkbox-unchecked-border)]',
             densityClasses,
             colorClasses,
             focusClasses,

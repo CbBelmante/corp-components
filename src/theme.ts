@@ -51,19 +51,36 @@ export interface ColorDefinition {
   type: ThemeColorType;
 }
 
-// ==================== PRIMARY COLOR (usado como base para cálculos) ====================
-const PRIMARY_LIGHT = '#FF7133';
-const PRIMARY_DARK = '#FF7133';
-
-// ==================== SECONDARY COLOR ====================
-const SECONDARY_LIGHT = '#334155';
-const SECONDARY_DARK = '#1e3a5f';
+// ==================== BASE STYLES (Fonte Única de Verdade) ====================
+const BASE_STYLES = {
+  primary: {
+    light: '#FF7133',
+    dark: '#FF7133',
+  },
+  secondary: {
+    light: '#334155',
+    dark: '#1e3a5f',
+  },
+  // Bordas de componentes (checkbox, radio, switch - unchecked)
+  borderComponent: {
+    light: '#aec0d2ff',
+    dark: '#484f58',
+  },
+  // Bordas de inputs de texto (input, select, textarea)
+  borderInput: {
+    light: '#aec0d2ff',
+    dark: '#2e333eff',
+  },
+  // Border widths (espessura das bordas)
+  borderWidthSlim: '1px', // Checkbox, Radio, Switch
+  borderWidthNormal: '1.5px', // Button, Badge
+} as const;
 
 export const themeDefinition = {
   // ==================== PRIMARY PALETTE ====================
   primary: {
-    light: PRIMARY_LIGHT,
-    dark: PRIMARY_DARK,
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
     type: THEME_COLOR_TYPES.BOTH,
   },
   'primary-foreground': {
@@ -89,8 +106,8 @@ export const themeDefinition = {
 
   // ==================== SECONDARY PALETTE ====================
   secondary: {
-    light: SECONDARY_LIGHT,
-    dark: SECONDARY_DARK,
+    light: BASE_STYLES.secondary.light,
+    dark: BASE_STYLES.secondary.dark,
     type: THEME_COLOR_TYPES.BOTH,
   },
   'secondary-foreground': {
@@ -228,18 +245,18 @@ export const themeDefinition = {
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-input-border': {
-    light: '#aec0d2ff',
-    dark: '#2e333eff',
+    light: BASE_STYLES.borderInput.light,
+    dark: BASE_STYLES.borderInput.dark,
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-input-border-focus': {
-    light: PRIMARY_LIGHT,
-    dark: PRIMARY_DARK,
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-input-ring': {
-    light: PRIMARY_LIGHT,
-    dark: PRIMARY_DARK,
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-input-text': {
@@ -270,18 +287,18 @@ export const themeDefinition = {
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-select-border': {
-    light: '#aec0d2ff',
-    dark: '#2e333eff',
+    light: BASE_STYLES.borderInput.light,
+    dark: BASE_STYLES.borderInput.dark,
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-select-border-focus': {
-    light: PRIMARY_LIGHT,
-    dark: PRIMARY_DARK,
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-select-ring': {
-    light: PRIMARY_LIGHT,
-    dark: PRIMARY_DARK,
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-select-text': {
@@ -302,8 +319,8 @@ export const themeDefinition = {
 
   // ============== CORP BADGE ==============
   'corp-def-badge-bg': {
-    light: SECONDARY_LIGHT,
-    dark: SECONDARY_DARK,
+    light: BASE_STYLES.secondary.light,
+    dark: BASE_STYLES.secondary.dark,
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-badge-text': {
@@ -312,13 +329,13 @@ export const themeDefinition = {
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-badge-border': {
-    light: SECONDARY_LIGHT,
-    dark: SECONDARY_DARK,
+    light: BASE_STYLES.secondary.light,
+    dark: BASE_STYLES.secondary.dark,
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-badge-border-width': {
-    light: '1.5px',
-    dark: '1.5px',
+    light: BASE_STYLES.borderWidthNormal,
+    dark: BASE_STYLES.borderWidthNormal,
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-badge-border-color': {
@@ -329,8 +346,8 @@ export const themeDefinition = {
 
   // ============== CORP BUTTON ==============
   'corp-def-button-border-width': {
-    light: '2px',
-    dark: '2px',
+    light: BASE_STYLES.borderWidthNormal,
+    dark: BASE_STYLES.borderWidthNormal,
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-button-border-color': {
@@ -540,8 +557,8 @@ export const themeDefinition = {
 
   // Checkbox - Checked state
   'checkbox-checked-border': {
-    light: darken(PRIMARY_LIGHT, 15), // 15% mais escuro que o bg
-    dark: lighten(PRIMARY_DARK, 15), // 15% mais claro (contraste no dark)
+    light: darken(BASE_STYLES.primary.light, 15), // 15% mais escuro que o bg
+    dark: lighten(BASE_STYLES.primary.dark, 15), // 15% mais claro (contraste no dark)
     type: THEME_COLOR_TYPES.ONLY_THEME,
   },
   // checkbox-checked-disabled-* removidas: agora calculadas em runtime
@@ -554,8 +571,8 @@ export const themeDefinition = {
     type: THEME_COLOR_TYPES.ONLY_THEME,
   },
   'checkbox-unchecked-border': {
-    light: '#94a3b8',
-    dark: '#484f58',
+    light: BASE_STYLES.borderComponent.light,
+    dark: BASE_STYLES.borderComponent.dark,
     type: THEME_COLOR_TYPES.ONLY_THEME,
   },
   'checkbox-unchecked-disabled-bg': {
@@ -571,8 +588,15 @@ export const themeDefinition = {
 
   // Checkbox - Focus state
   'checkbox-ring': {
-    light: PRIMARY_LIGHT,
-    dark: PRIMARY_DARK,
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
+    type: THEME_COLOR_TYPES.ONLY_THEME,
+  },
+
+  // Checkbox - Border width
+  'corp-def-checkbox-border-width': {
+    light: BASE_STYLES.borderWidthSlim,
+    dark: BASE_STYLES.borderWidthSlim,
     type: THEME_COLOR_TYPES.ONLY_THEME,
   },
 
@@ -604,8 +628,36 @@ export const themeDefinition = {
 
   // Switch - Focus state
   'switch-ring': {
-    light: PRIMARY_LIGHT,
-    dark: PRIMARY_DARK,
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
+    type: THEME_COLOR_TYPES.ONLY_THEME,
+  },
+
+  // Switch - Border width
+  'corp-def-switch-border-width': {
+    light: BASE_STYLES.borderWidthSlim,
+    dark: BASE_STYLES.borderWidthSlim,
+    type: THEME_COLOR_TYPES.ONLY_THEME,
+  },
+
+  // Radio - Unchecked state
+  'radio-unchecked-border': {
+    light: BASE_STYLES.borderComponent.light,
+    dark: BASE_STYLES.borderComponent.dark,
+    type: THEME_COLOR_TYPES.ONLY_THEME,
+  },
+
+  // Radio - Focus state
+  'radio-ring': {
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
+    type: THEME_COLOR_TYPES.ONLY_THEME,
+  },
+
+  // Radio - Border width
+  'corp-def-radio-border-width': {
+    light: BASE_STYLES.borderWidthSlim,
+    dark: BASE_STYLES.borderWidthSlim,
     type: THEME_COLOR_TYPES.ONLY_THEME,
   },
 

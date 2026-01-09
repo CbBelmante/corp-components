@@ -289,7 +289,7 @@ const handleBlur = (): void => {
 </script>
 
 <template>
-  <div class="space-y-1 w-full">
+  <div class="flex flex-col gap-0 w-full">
     <!-- Switch + Label alinhados -->
     <div
       :class="
@@ -310,7 +310,7 @@ const handleBlur = (): void => {
         :style="customColorStyle"
         :class="
           cn(
-            'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed data-[state=unchecked]:bg-[var(--switch-unchecked)]',
+            'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-[length:var(--corp-def-switch-border-width)] border-transparent shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed data-[state=unchecked]:bg-[var(--switch-unchecked)]',
             densityClasses.track,
             colorClasses,
             focusClasses,

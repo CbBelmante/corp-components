@@ -62,7 +62,7 @@
   --corp-def-badge-text: 0 0% 98%;
   --corp-def-badge-border: 215 25% 27%;
   --corp-def-badge-border-width: 1.5px;
-  --corp-def-button-border-width: 2px;
+  --corp-def-button-border-width: 1.5px;
   --ring-width: 2px;
   --text: 224 60% 5%;
   --text-muted: 215 16% 47%;
@@ -144,7 +144,7 @@
   --corp-def-badge-text: 0 0% 98%;
   --corp-def-badge-border: 214 52% 25%;
   --corp-def-badge-border-width: 1.5px;
-  --corp-def-button-border-width: 2px;
+  --corp-def-button-border-width: 1.5px;
   --ring-width: 2px;
   --text: 208 35% 93%;
   --text-muted: 215 8% 53%;
