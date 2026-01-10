@@ -33,7 +33,7 @@ const props = defineProps({
     default: 'solid',
   },
   color: {
-    type: String as PropType<ButtonVariants['color'] | string>,
+    type: String,
     default: 'primary',
   },
   size: {
@@ -296,8 +296,6 @@ const buttonClasses = computed(() => {
   return cn(
     buttonVariants({
       variant: props.variant,
-      // Não passa color pro CVA - usamos CSS variables pra TODAS as cores
-      color: undefined,
       size: props.size,
       rounded: isRoundedPreset.value
         ? (props.rounded as RoundedPreset)

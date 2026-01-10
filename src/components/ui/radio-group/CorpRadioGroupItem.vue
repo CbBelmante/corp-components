@@ -190,7 +190,9 @@ const radioClasses = computed(() => {
         :class="radioClasses"
       >
         <RadioGroupIndicator class="flex items-center justify-center">
-          <div :class="cn('rounded-full', indicatorColorClass, indicatorSizes)" />
+          <div
+            :class="cn('rounded-full', indicatorColorClass, indicatorSizes)"
+          />
         </RadioGroupIndicator>
       </RadioGroupItem>
 

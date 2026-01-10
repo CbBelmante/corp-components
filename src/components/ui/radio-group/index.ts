@@ -7,7 +7,7 @@ export { default as CorpRadioGroupItem } from './CorpRadioGroupItem.vue';
 // ============== RADIO GROUP ITEM VARIANTS (CVA) ==============
 
 /**
- * Variants para o RadioGroupItem
+ * CVA define estrutura, cores tratadas no componente via CSS variables
  *
  * - solid: Fundo colorido quando checked, bolinha branca
  * - ghost: Fundo sutil (10%) quando checked, bolinha colorida
@@ -52,6 +52,8 @@ export const indicatorSizeMap = {
   comfortable: 'h-3 w-3',
 } as const;
 
-export type RadioGroupItemVariants = VariantProps<typeof radioGroupItemVariants>;
+export type RadioGroupItemVariants = VariantProps<
+  typeof radioGroupItemVariants
+>;
 export type RadioDensity = 'compact' | 'standard' | 'comfortable';
 export type RadioVariant = 'solid' | 'ghost' | 'outline';
