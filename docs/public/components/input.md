@@ -90,6 +90,104 @@ const email = ref('')
 
 ---
 
+## Variant
+
+A prop `variant` define o estilo visual do input. Por padrão usa `solo` (fundo + borda).
+
+:::corp-code
+<div class="space-y-4 max-w-md">
+  <CorpInput
+    v-model="form.variantSolo"
+    name="variantSolo"
+    label="Solo (padrão)"
+    variant="solo"
+    placeholder="Fundo + borda"
+  />
+  <CorpInput
+    v-model="form.variantFilled"
+    name="variantFilled"
+    label="Filled"
+    variant="filled"
+    placeholder="Só fundo, sem borda"
+  />
+</div>
+
+<!-- @disp-code -->
+```vue
+<template>
+  <!-- Solo: fundo + borda (padrão) -->
+  <CorpInput
+    v-model="name"
+    name="name"
+    label="Solo (padrão)"
+    variant="solo"
+  />
+
+  <!-- Filled: só fundo, sem borda -->
+  <CorpInput
+    v-model="email"
+    name="email"
+    label="Filled"
+    variant="filled"
+  />
+</template>
+```
+:::
+
+| Variant | Descrição |
+|---------|-----------|
+| `solo` | Fundo + borda (padrão) |
+| `filled` | Só fundo, sem borda visível |
+
+---
+
+## Density
+
+A prop `density` controla o tamanho (altura) do input.
+
+:::corp-code
+<div class="space-y-4 max-w-md">
+  <CorpInput
+    v-model="form.densityCompact"
+    name="densityCompact"
+    label="Compact (h-8)"
+    density="compact"
+    placeholder="Compacto"
+  />
+  <CorpInput
+    v-model="form.densityRegular"
+    name="densityRegular"
+    label="Regular (h-9)"
+    density="regular"
+    placeholder="Regular (padrão)"
+  />
+  <CorpInput
+    v-model="form.densityComfortable"
+    name="densityComfortable"
+    label="Comfortable (h-10)"
+    density="comfortable"
+    placeholder="Confortável"
+  />
+</div>
+
+<!-- @disp-code -->
+```vue
+<template>
+  <CorpInput label="Compact" density="compact" />
+  <CorpInput label="Regular" density="regular" />
+  <CorpInput label="Comfortable" density="comfortable" />
+</template>
+```
+:::
+
+| Density | Altura | Uso |
+|---------|--------|-----|
+| `compact` | `h-8` (32px) | Interfaces densas, tabelas |
+| `regular` | `h-9` (36px) | Uso geral (padrão) |
+| `comfortable` | `h-10` (40px) | Formulários espaçosos |
+
+---
+
 ## BorderColor
 
 A prop `borderColor` define a **cor da borda e focus ring** do input. Aceita cores semânticas ou customizadas.
@@ -1501,6 +1599,8 @@ const handleClear = () => {
 | `name` | `string` | **required** | Nome do campo (identificador único) |
 | `label` | `string` | `''` | Label acima do input |
 | `modelValue` | `string \| number` | `undefined` | Valor do input (v-model) |
+| `variant` | `'solo' \| 'filled'` | `'solo'` | Estilo visual (solo = fundo + borda, filled = só fundo) |
+| `density` | `'compact' \| 'regular' \| 'comfortable'` | `'regular'` | Tamanho/altura do input |
 | `type` | `string` | `'text'` | Tipo HTML do input (text, password, email, etc) |
 | `placeholder` | `string` | `''` | Texto de placeholder |
 | `hint` | `string` | `''` | Mensagem de ajuda abaixo do input |

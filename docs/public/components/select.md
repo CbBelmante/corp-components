@@ -252,6 +252,110 @@ Estados de desabilitado e somente leitura.
 
 ---
 
+## Variant
+
+A prop `variant` define o estilo visual do select. Por padrão usa `solo` (fundo + borda).
+
+:::corp-code
+<div class="space-y-4 max-w-md">
+  <CorpSelect
+    v-model="selectForm.variantSolo"
+    name="variantSolo"
+    :items="['Vue', 'React', 'Angular']"
+    label="Solo (padrão)"
+    variant="solo"
+    placeholder="Fundo + borda"
+  />
+  <CorpSelect
+    v-model="selectForm.variantFilled"
+    name="variantFilled"
+    :items="['Vue', 'React', 'Angular']"
+    label="Filled"
+    variant="filled"
+    placeholder="Só fundo, sem borda"
+  />
+</div>
+
+<!-- @disp-code -->
+```vue
+<template>
+  <!-- Solo: fundo + borda (padrão) -->
+  <CorpSelect
+    v-model="framework"
+    name="framework"
+    :items="['Vue', 'React', 'Angular']"
+    label="Solo (padrão)"
+    variant="solo"
+  />
+
+  <!-- Filled: só fundo, sem borda -->
+  <CorpSelect
+    v-model="framework"
+    name="framework"
+    :items="['Vue', 'React', 'Angular']"
+    label="Filled"
+    variant="filled"
+  />
+</template>
+```
+:::
+
+| Variant | Descrição |
+|---------|-----------|
+| `solo` | Fundo + borda (padrão) |
+| `filled` | Só fundo, sem borda visível |
+
+---
+
+## Density
+
+A prop `density` controla o tamanho (altura) do select.
+
+:::corp-code
+<div class="space-y-4 max-w-md">
+  <CorpSelect
+    v-model="selectForm.densityCompact"
+    name="densityCompact"
+    :items="['Vue', 'React', 'Angular']"
+    label="Compact (h-8)"
+    density="compact"
+    placeholder="Compacto"
+  />
+  <CorpSelect
+    v-model="selectForm.densityRegular"
+    name="densityRegular"
+    :items="['Vue', 'React', 'Angular']"
+    label="Regular (h-9)"
+    density="regular"
+    placeholder="Regular (padrão)"
+  />
+  <CorpSelect
+    v-model="selectForm.densityComfortable"
+    name="densityComfortable"
+    :items="['Vue', 'React', 'Angular']"
+    label="Comfortable (h-10)"
+    density="comfortable"
+    placeholder="Confortável"
+  />
+</div>
+
+<!-- @disp-code -->
+```vue
+<template>
+  <CorpSelect :items="items" label="Compact" density="compact" />
+  <CorpSelect :items="items" label="Regular" density="regular" />
+  <CorpSelect :items="items" label="Comfortable" density="comfortable" />
+</template>
+```
+:::
+
+| Density | Altura | Uso |
+|---------|--------|-----|
+| `compact` | `h-8` (32px) | Interfaces densas, tabelas |
+| `regular` | `h-9` (36px) | Uso geral (padrão) |
+| `comfortable` | `h-10` (40px) | Formulários espaçosos |
+
+---
 
 ### Validation
 
@@ -397,3 +501,37 @@ O `CorpSelect` usa os primitivos do **reka-ui** que seguem as especificações *
 - Estado de erro indicado via `aria-invalid`
 - Foco visível com ring do Tailwind
 - Label associado corretamente com `for` + `id`
+
+---
+
+## API Reference
+
+### Props
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `name` | `string` | **required** | Nome do campo (identificador único) |
+| `items` | `string[] \| {value, label}[]` | **required** | Opções do select |
+| `label` | `string` | `''` | Label acima do select |
+| `modelValue` | `string \| number \| array` | `undefined` | Valor selecionado (v-model) |
+| `variant` | `'solo' \| 'filled'` | `'solo'` | Estilo visual (solo = fundo + borda, filled = só fundo) |
+| `density` | `'compact' \| 'regular' \| 'comfortable'` | `'regular'` | Tamanho/altura do select |
+| `placeholder` | `string` | `'Selecione...'` | Texto de placeholder |
+| `hint` | `string` | `''` | Mensagem de ajuda abaixo do select |
+| `rules` | `ValidationRule[]` | `[]` | Array de regras de validação |
+| `disabled` | `boolean` | `false` | Desabilita o select |
+| `readonly` | `boolean` | `false` | Select somente leitura |
+| `multiple` | `boolean` | `false` | Habilita seleção múltipla |
+| `chips` | `boolean` | `false` | Exibe seleções como chips (requer multiple) |
+| `clearable` | `boolean` | `false` | Mostra botão para limpar seleção |
+| `borderColor` | `string` | `undefined` | Cor da borda (semântica ou custom) |
+| `chipColor` | `string` | `undefined` | Cor dos chips (requer multiple + chips) |
+| `hideDetails` | `boolean` | `false` | Oculta hint/error |
+| `persistentHint` | `boolean` | `false` | Mantém hint visível mesmo com erro |
+| `loading` | `boolean` | `false` | Exibe estado de loading |
+
+### Events
+
+| Event | Payload | Descrição |
+|-------|---------|-----------|
+| `update:modelValue` | `string \| number \| array` | Emitido quando a seleção muda |

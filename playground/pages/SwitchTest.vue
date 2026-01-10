@@ -136,8 +136,8 @@ const handleSubmit = () => {
           v-model="form.active"
           name="densityStandardHint"
           label="Standard com hint longo"
-          hint="Este é um hint bem longo para testar o alinhamento do switch em modo standard. Vamos verificar se o texto quebra corretamente e se o switch permanece alinhado."
-          density="standard"
+          hint="Este é um hint bem longo para testar o alinhamento do switch em modo regular. Vamos verificar se o texto quebra corretamente e se o switch permanece alinhado."
+          density="regular"
         />
         <CorpSwitch
           v-model="form.active"
@@ -455,7 +455,7 @@ const handleSubmit = () => {
           v-model="form.active"
           name="densityStandard"
           label="Standard (padrão visual)"
-          density="standard"
+          density="regular"
         />
         <CorpSwitch
           v-model="form.active"

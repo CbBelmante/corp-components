@@ -1,41 +1,22 @@
 <script setup lang="ts">
 /**
- * 🧩 CorpInput - Input com validação, máscaras e sistema de slots/ícones
+ * 🧩 CorpInput - Input com validação, máscaras e slots
  *
- * Input avançado com validação (useForm), máscaras BR (CPF, CNPJ, phone, CEP),
- * 4 slots (prepend, prepend-inner, append-inner, append), clearable e counter.
+ * Suporta validação (useForm), máscaras BR (CPF, CNPJ, phone, CEP),
+ * slots (prepend, append), clearable e counter.
  *
- * 🔗 DEPENDÊNCIAS:
- * - CorpIcon - Sistema de ícones
- * - CorpHintLine - Mensagens de erro/hint
- * - useForm (inject) - Validação opcional
- * - stringUtils - Máscaras brasileiras
- *
- * @example
- * // Básico com validação (asterisco aparece automaticamente com rules.required)
- * <CorpInput name="name" label="Nome" :rules="[rules.required]" />
- *
- * // Com máscara e regras
- * <CorpInput name="cpf" label="CPF" mask="cpf" :rules="[rules.required, rules.cpf]" />
- *
- * // Com ícones + clearable
- * <CorpInput name="search" prepend-icon="Search" clearable />
- *
- * // Com contador e limite
- * <CorpInput name="bio" label="Bio" :counter="200" />
+ * 🔗 DEPENDÊNCIAS ESPECIAIS:
+ * - reka-ui (validação via inject)
+ * - stringUtils (máscaras brasileiras)
  */
 
-// ============== DEPENDÊNCIAS EXTERNAS ==============
-import type { HTMLAttributes, PropType } from 'vue';
-
 // ============== DEPENDÊNCIAS INTERNAS ==============
-import { computed, watch, ref, useSlots, inject } from 'vue';
+import type { HTMLAttributes } from 'vue';
+import { computed, watch, ref, useSlots, inject, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
 import CorpHintLine from '@/components/forms/CorpHintLine.vue';
-import type { ValidationRule } from '@/validations/rules';
-import type { CorpValidationContext } from '@/composables/useForm';
 import {
   applyCPFMask,
   applyCNPJMask,
@@ -49,6 +30,9 @@ import {
   getComputedColor,
   hexToHslWithWrapper,
 } from '@/utils/CorpColorUtils';
+import { inputVariants, type InputVariant, type InputDensity } from '.';
+import type { ValidationRule } from '@/validations/rules';
+import type { CorpValidationContext } from '@/composables/useForm';
 
 // ============== PROPS ==============
 
@@ -208,6 +192,18 @@ const props = defineProps({
     type: [String, Object, Array] as PropType<HTMLAttributes['class']>,
     default: undefined,
   },
+
+  // Variant (estilo visual)
+  variant: {
+    type: String as PropType<InputVariant>,
+    default: 'solo',
+  },
+
+  // Density (tamanho)
+  density: {
+    type: String as PropType<InputDensity>,
+    default: 'regular',
+  },
 });
 
 // ============== EMITS ==============
@@ -252,7 +248,7 @@ const hasRequiredRule = computed(() => {
   );
 });
 
-// ============== CUSTOM COLOR STYLES ==============
+// ============== COMPUTED PROPERTIES ==============
 
 const isDisabled = computed(() => {
   return props.disabled || props.readonly;
@@ -313,6 +309,23 @@ const focusClasses = computed(() => {
   return 'focus-visible:ring-[var(--corp-runtime-input-focus-ring)]';
 });
 
+// Classes finais do input (usa CVA)
+const inputClasses = computed(() => {
+  return cn(
+    inputVariants({
+      variant: props.variant,
+      density: props.density,
+    }),
+    colorClasses.value,
+    focusClasses.value,
+    {
+      'border-destructive': hasError.value,
+    },
+    inputPaddingClasses.value,
+    props.class
+  );
+});
+
 // ============== MÁSCARAS ==============
 
 const maskFunctions: Record<string, (value: string) => string> = {
@@ -359,7 +372,7 @@ watch(internalValue, newVal => {
   emit('update:modelValue', newVal);
 });
 
-// ============== HANDLERS ==============
+// ============== METHODS ==============
 
 const handleInput = (event: Event): void => {
   const target = event.target as HTMLInputElement;
@@ -412,8 +425,6 @@ const handleAppendOuterClick = (): void => {
 const PREFIX_SUFFIX_BASE = 0.75; // Padding base inicial (posição left-3 ou right-2)
 const PREFIX_SUFFIX_GAP = 0.75; // Gap entre o prefix/suffix e o texto digitado
 const PREFIX_SUFFIX_CHAR_WIDTH = 0.3; // Largura aproximada por caractere em text-sm
-
-// ============== COMPUTED ==============
 
 const showClearButton = computed(() => {
   return (
@@ -594,18 +605,7 @@ const inputDynamicPadding = computed(() => {
           :placeholder="placeholder"
           :disabled="disabled"
           :readonly="readonly"
-          :class="
-            cn(
-              'flex h-9 w-full rounded-md border border-[hsl(var(--corp-def-input-border))] bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--corp-def-input-placeholder)] focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
-              {
-                'border-destructive': hasError,
-                ...inputPaddingClasses,
-              },
-              colorClasses,
-              focusClasses,
-              props.class
-            )
-          "
+          :class="inputClasses"
           :style="{
             'background-color': 'hsl(var(--corp-def-input-bg))',
             color: 'hsl(var(--corp-def-input-text))',

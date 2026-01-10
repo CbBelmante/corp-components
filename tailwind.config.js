@@ -68,18 +68,14 @@ export default {
     'focus-visible:ring-[var(--corp-runtime-radio-ring)]',
 
     // ==================== INPUT ====================
-    // Input - Border default (theme.ts corp-def-input-*)
-    'border-[var(--corp-def-input-border)]',
-    'focus:border-[var(--corp-def-input-border-focus)]',
-    'placeholder:text-[var(--corp-def-input-placeholder)]',
-    // Input - Border runtime (custom color)
+    // Input - Border focus (colorClasses runtime)
+    'focus:border-[hsl(var(--corp-def-input-border-focus))]',
     'border-[var(--corp-runtime-input-border)]',
     'focus:border-[var(--corp-runtime-input-border-focus)]',
     // Input - Focus ring (theme.ts default + runtime override)
-    'focus-visible:ring-[var(--corp-def-input-ring)]',
+    'focus-visible:ring-[hsl(var(--corp-def-input-ring))]',
     'focus-visible:ring-[var(--corp-runtime-input-focus-ring)]',
-    // Input - Disabled: tratados via CSS <style> block com !important
-    // (não precisam de safelist - variáveis -light/-dark resolvidas no CSS)
+    // Input - Base classes agora no CVA (border, placeholder)
 
     // ==================== BADGE ====================
     // Badge - Default colors (theme.ts corp-def-badge-* - HSL com wrapper)
@@ -108,15 +104,14 @@ export default {
     'rounded-full',
 
     // ==================== SELECT ====================
-    // Select - Border default (theme.ts corp-def-select-*)
-    'border-[var(--corp-def-select-border)]',
-    'focus:border-[var(--corp-def-select-border-focus)]',
-    // Select - Border runtime (custom color)
+    // Select - Border focus (colorClasses runtime)
+    'focus:border-[hsl(var(--corp-def-select-border-focus))]',
     'border-[var(--corp-runtime-select-border)]',
     'focus:border-[var(--corp-runtime-select-border-focus)]',
     // Select - Focus ring (theme.ts default + runtime override)
-    'focus-visible:ring-[var(--corp-def-select-ring)]',
+    'focus-visible:ring-[hsl(var(--corp-def-select-ring))]',
     'focus-visible:ring-[var(--corp-runtime-select-focus-ring)]',
+    // Select - Base classes agora no CVA (bg, border)
   ],
   theme: {
     extend: {

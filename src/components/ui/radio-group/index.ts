@@ -32,7 +32,7 @@ export const radioGroupItemVariants = cva(
       },
       density: {
         compact: 'h-4 w-4',
-        standard: 'h-[18px] w-[18px]',
+        regular: 'h-[18px] w-[18px]',
         comfortable: 'h-5 w-5',
       },
     },
@@ -48,12 +48,12 @@ export const radioGroupItemVariants = cva(
  */
 export const indicatorSizeMap = {
   compact: 'h-2 w-2',
-  standard: 'h-2.5 w-2.5',
+  regular: 'h-2.5 w-2.5',
   comfortable: 'h-3 w-3',
 } as const;
 
 export type RadioGroupItemVariants = VariantProps<
   typeof radioGroupItemVariants
 >;
-export type RadioDensity = 'compact' | 'standard' | 'comfortable';
+export type RadioDensity = 'compact' | 'regular' | 'comfortable';
 export type RadioVariant = 'solid' | 'ghost' | 'outline';

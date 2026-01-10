@@ -8,7 +8,7 @@
 
 | Fase | Status | Progresso |
 |------|--------|-----------|
-| 1. CVA Padronização | 🟡 Em andamento | 5/7 |
+| 1. CVA Padronização | ✅ Concluído | 7/7 |
 | 2. Shared Variants | ⚪ Pendente | 0/3 |
 | 3. JSDoc Cleanup | ⚪ Pendente | 0/4 |
 | 4. Build & Package | ⚪ Pendente | 0/5 |
@@ -31,8 +31,8 @@ Garantir que todos os componentes sigam o mesmo padrão arquitetural.
 - [x] **Checkbox** - Implementado prop `variant` (solid/ghost/outline)
 - [x] **Switch** - Implementado CVA com `variant` (solid/ghost) e `density`
 - [x] **Badge** - Ajustado JSDoc + tipos explícitos no CVA
-- [ ] **Input** - Criar CVA com `density`
-- [ ] **Select** - Criar CVA com `density`
+- [x] **Input** - Implementado CVA com `variant` (solo/filled) e `density`
+- [x] **Select** - Implementado CVA com `variant` (solo/filled) e `density`
 
 ### Detalhes Checkbox (✅ CONCLUÍDO):
 ```
@@ -71,13 +71,16 @@ src/
 ### Conteúdo variants.ts:
 ```typescript
 // Tipos compartilhados
-export type Density = 'compact' | 'standard' | 'comfortable';
-export type Variant = 'solid' | 'ghost' | 'outline';
+export type Density = 'compact' | 'regular' | 'comfortable';
+
+// Variants por tipo de componente
+export type ActionVariant = 'solid' | 'ghost' | 'outline';  // Button, Checkbox, Radio, Switch
+export type InputVariant = 'solo' | 'filled';               // Input, Select
 
 // Density sizes (compartilhado)
 export const densitySizeMap = {
   compact: { box: 'h-4 w-4', icon: 14, indicator: 'h-2 w-2' },
-  standard: { box: 'h-[18px] w-[18px]', icon: 16, indicator: 'h-2.5 w-2.5' },
+  regular: { box: 'h-[18px] w-[18px]', icon: 16, indicator: 'h-2.5 w-2.5' },
   comfortable: { box: 'h-5 w-5', icon: 18, indicator: 'h-3 w-3' },
 } as const;
 ```
@@ -200,6 +203,47 @@ CSS Variables       → --corp-runtime-{component}-{property}
 - CorpCheckbox ✅
 - CorpSwitch ✅
 - CorpRadioGroupItem ✅
+- CorpInput ✅
+- CorpSelect ✅
+
+### Arquitetura de Variants (Definida)
+```
+Componentes de AÇÃO/ESTADO (solid/ghost/outline):
+- Button, Checkbox, Radio, Switch
+
+Componentes de ENTRADA (solo/filled):
+- Input, Select
+  - solo: fundo + borda (padrão)
+  - filled: só fundo, sem borda
+```
+
+### Arquitetura de Density (Definida)
+```
+Todos os componentes usam:
+- compact: menor (h-8 para inputs)
+- regular: meio-termo (h-9 para inputs) - PADRÃO
+- comfortable: maior (h-10 para inputs)
+
+Nota: "standard" foi renomeado para "regular"
+```
+
+### Documentação & Playground (✅ Atualizado)
+```
+Arquivos atualizados com novas props (variant, density):
+
+Docs:
+- docs/public/components/input.md (seções Variant, Density, API Reference)
+- docs/public/components/select.md (seções Variant, Density, API Reference)
+- docs/public/components/checkbox.md (density: regular)
+- docs/public/components/switch.md (density: regular)
+
+Playground:
+- playground/pages/InputTest.vue (seções Variant, Density)
+- playground/pages/SelectTest.vue (seções Variant, Density)
+- playground/pages/CheckboxTest.vue (density: regular)
+- playground/pages/SwitchTest.vue (density: regular)
+- playground/pages/RadioGroupTest.vue (density: regular)
+```
 
 ---
 

@@ -141,8 +141,8 @@ const handleSubmit = () => {
           v-model="checkedColor"
           name="densityStandardHint"
           label="Standard com hint longo"
-          hint="Este é um hint bem longo para testar o alinhamento do checkbox em modo standard. Vamos verificar se o texto quebra corretamente e se o checkbox permanece alinhado."
-          density="standard"
+          hint="Este é um hint bem longo para testar o alinhamento do checkbox em modo regular. Vamos verificar se o texto quebra corretamente e se o checkbox permanece alinhado."
+          density="regular"
         />
         <CorpCheckbox
           v-model="checkedColor"
@@ -538,7 +538,7 @@ const handleSubmit = () => {
           v-model="checkedColor"
           name="densityStandard"
           label="Standard (padrão visual)"
-          density="standard"
+          density="regular"
         />
         <CorpCheckbox
           v-model="checkedColor"

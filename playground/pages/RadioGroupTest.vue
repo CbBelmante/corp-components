@@ -610,7 +610,7 @@ const handleSubmit = () => {
     <!-- Density (Tamanhos) -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">
-        Density (Tamanhos: compact, standard, comfortable)
+        Density (Tamanhos: compact, regular, comfortable)
       </h2>
       <div class="space-y-6 p-4 bg-card border border-border rounded-lg">
         <div>
@@ -626,7 +626,7 @@ const handleSubmit = () => {
               density="compact"
             />
             <CorpRadioGroupItem
-              value="standard"
+              value="regular"
               label="Standard"
               density="compact"
             />
@@ -648,17 +648,17 @@ const handleSubmit = () => {
             <CorpRadioGroupItem
               value="compact"
               label="Compact"
-              density="standard"
+              density="regular"
             />
             <CorpRadioGroupItem
-              value="standard"
+              value="regular"
               label="Standard"
-              density="standard"
+              density="regular"
             />
             <CorpRadioGroupItem
               value="comfortable"
               label="Comfortable"
-              density="standard"
+              density="regular"
             />
           </CorpRadioGroup>
         </div>
@@ -676,7 +676,7 @@ const handleSubmit = () => {
               density="comfortable"
             />
             <CorpRadioGroupItem
-              value="standard"
+              value="regular"
               label="Standard"
               density="comfortable"
             />
@@ -778,7 +778,7 @@ const handleSubmit = () => {
           <CorpRadioGroupItem
             value="option2"
             label="Opção 2 (Standard + Right + Success)"
-            density="standard"
+            density="regular"
             label-position="right"
             color="success"
           />
@@ -814,21 +814,21 @@ const handleSubmit = () => {
             label="Pequena (1-10 funcionários)"
             hint="Ideal para startups e pequenos negócios"
             color="success"
-            density="standard"
+            density="regular"
           />
           <CorpRadioGroupItem
             value="medium"
             label="Média (11-50 funcionários)"
             hint="Perfeito para empresas em crescimento"
             color="info"
-            density="standard"
+            density="regular"
           />
           <CorpRadioGroupItem
             value="large"
             label="Grande (51-200 funcionários)"
             hint="Para empresas estabelecidas"
             color="warning"
-            density="standard"
+            density="regular"
           />
           <CorpRadioGroupItem
             value="enterprise"

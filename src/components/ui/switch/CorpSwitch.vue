@@ -19,11 +19,7 @@ import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import CorpHintLine from '@/components/forms/CorpHintLine.vue';
 import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
-import {
-  resolveColor,
-  getComputedColor,
-  toRgba,
-} from '@/utils/CorpColorUtils';
+import { resolveColor, getComputedColor, toRgba } from '@/utils/CorpColorUtils';
 import {
   switchVariants,
   thumbSizeMap,
@@ -229,7 +225,9 @@ const colorClasses = computed(() => {
   switch (props.variant) {
     case 'solid':
       // Solid: fundo colorido quando checked
-      classes.push('data-[state=checked]:bg-[var(--corp-runtime-switch-color)]');
+      classes.push(
+        'data-[state=checked]:bg-[var(--corp-runtime-switch-color)]'
+      );
       break;
 
     case 'ghost':

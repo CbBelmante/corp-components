@@ -31,7 +31,7 @@ export const switchVariants = cva(
       },
       density: {
         compact: 'h-5 w-9',
-        standard: 'h-5 w-10',
+        regular: 'h-5 w-10',
         comfortable: 'h-6 w-12',
       },
     },
@@ -47,7 +47,7 @@ export const switchVariants = cva(
  */
 export const thumbSizeMap = {
   compact: 'h-4 w-4',
-  standard: 'h-4 w-4',
+  regular: 'h-4 w-4',
   comfortable: 'h-5 w-5',
 } as const;
 
@@ -56,10 +56,10 @@ export const thumbSizeMap = {
  */
 export const thumbTranslateMap = {
   compact: 'data-[state=checked]:translate-x-4',
-  standard: 'data-[state=checked]:translate-x-5',
+  regular: 'data-[state=checked]:translate-x-5',
   comfortable: 'data-[state=checked]:translate-x-6',
 } as const;
 
 export type SwitchVariants = VariantProps<typeof switchVariants>;
-export type SwitchDensity = 'compact' | 'standard' | 'comfortable';
+export type SwitchDensity = 'compact' | 'regular' | 'comfortable';
 export type SwitchVariant = 'solid' | 'ghost';

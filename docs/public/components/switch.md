@@ -300,7 +300,7 @@ Controle o tamanho do switch com a prop `density`.
 
 :::corp-code
 <CorpSwitch name="compact" label="Compact (padrão)" density="compact" model-value />
-<CorpSwitch name="standard" label="Standard" density="standard" model-value />
+<CorpSwitch name="regular" label="Standard" density="regular" model-value />
 <CorpSwitch name="comfortable" label="Comfortable" density="comfortable" model-value />
 :::
 
@@ -318,10 +318,10 @@ Teste de alinhamento com textos longos.
 />
 
 <CorpSwitch
-  name="standardHint"
+  name="regularHint"
   label="Standard com hint longo"
-  hint="Este é um hint bem longo para testar o alinhamento do switch em modo standard. Vamos verificar se o texto quebra corretamente."
-  density="standard"
+  hint="Este é um hint bem longo para testar o alinhamento do switch em modo regular. Vamos verificar se o texto quebra corretamente."
+  density="regular"
   model-value
 />
 
@@ -477,7 +477,7 @@ Use `indeterminate` para estado intermediário (útil em seleções parciais).
 💡 **Cores universais:** Suporta HEX, RGB, HSL, variáveis CSS e nomes CSS
 💡 **Valores customizados:** Use `trueValue`/`falseValue` para APIs específicas
 💡 **Loading state:** Mostre feedback visual durante operações assíncronas
-💡 **Densidade:** Ajuste o tamanho com `density` (compact/standard/comfortable)
+💡 **Densidade:** Ajuste o tamanho com `density` (compact/regular/comfortable)
 💡 **Erros externos:** Use `externalErrors` para erros de backend/API
 
 ---
@@ -503,7 +503,7 @@ Use `indeterminate` para estado intermediário (útil em seleções parciais).
 | `externalErrors` | `string \| string[]` | `''` | Erros externos (backend/API) |
 | `messages` | `string[]` | `[]` | Mensagens genéricas (info/warning) |
 | `maxErrors` | `number` | `1` | Limite de erros exibidos |
-| `density` | `'compact' \| 'standard' \| 'comfortable'` | `'compact'` | Tamanho do switch |
+| `density` | `'compact' \| 'regular' \| 'comfortable'` | `'compact'` | Tamanho do switch |
 | `labelPosition` | `'left' \| 'right'` | `'right'` | Posição do label |
 | `rules` | `ValidationRule[]` | `[]` | Regras de validação |
 | `hideDetails` | `boolean` | `false` | Esconde hint/erro |

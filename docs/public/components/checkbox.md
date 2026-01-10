@@ -190,7 +190,7 @@ Controle o tamanho do checkbox com a prop `density`.
 
 :::corp-code
 <CorpCheckbox name="compact" label="Compact (padrão)" density="compact" model-value />
-<CorpCheckbox name="standard" label="Standard" density="standard" model-value />
+<CorpCheckbox name="regular" label="Standard" density="regular" model-value />
 <CorpCheckbox name="comfortable" label="Comfortable" density="comfortable" model-value />
 :::
 
@@ -208,10 +208,10 @@ Teste de alinhamento com textos longos.
 />
 
 <CorpCheckbox
-  name="standardHint"
+  name="regularHint"
   label="Standard com hint longo"
-  hint="Este é um hint bem longo para testar o alinhamento do checkbox em modo standard. Vamos verificar se o texto quebra corretamente."
-  density="standard"
+  hint="Este é um hint bem longo para testar o alinhamento do checkbox em modo regular. Vamos verificar se o texto quebra corretamente."
+  density="regular"
   model-value
 />
 
@@ -444,7 +444,7 @@ Use `indeterminate` para estado intermediário (útil quando alguns itens estão
 | `externalErrors` | `string \| string[]` | `''` | Erros externos (backend/API) |
 | `messages` | `string[]` | `[]` | Mensagens genéricas (info/warning) |
 | `maxErrors` | `number` | `1` | Limite de erros exibidos |
-| `density` | `'compact' \| 'standard' \| 'comfortable'` | `'compact'` | Tamanho do checkbox |
+| `density` | `'compact' \| 'regular' \| 'comfortable'` | `'compact'` | Tamanho do checkbox |
 | `labelPosition` | `'left' \| 'right'` | `'right'` | Posição do label |
 | `rules` | `ValidationRule[]` | `[]` | Regras de validação |
 | `hideDetails` | `boolean` | `false` | Esconde hint/erro |

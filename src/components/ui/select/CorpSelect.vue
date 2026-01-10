@@ -2,31 +2,17 @@
 /**
  * 🧩 CorpSelect - Select com validação e normalização de items
  *
- * Select avançado com validação (useForm), aceita arrays de strings ou objetos
- * {value, label}, clearable, multiple e chips.
+ * Aceita arrays de strings ou objetos {value, label}.
+ * Suporta clearable, multiple e chips.
  *
- * 🔗 DEPENDÊNCIAS:
- * - SelectRoot, SelectTrigger, SelectContent, SelectItem, SelectValue (reka-ui)
- * - CorpHintLine - Mensagens de erro/hint
- * - CorpBadge - Chips para seleção múltipla
- * - useForm (inject) - Validação opcional
- *
- * @example
- * // Array de objetos
- * <CorpSelect name="state" :items="states" label="Estado" :rules="[rules.required]" />
- *
- * // Array simples
- * <CorpSelect name="status" :items="['active', 'inactive']" label="Status" />
- *
- * // Com clearable
- * <CorpSelect name="filter" :items="filters" clearable />
- *
- * // Múltipla seleção com chips
- * <CorpSelect name="tags" :items="tags" label="Tags" multiple chips />
+ * 🔗 DEPENDÊNCIAS ESPECIAIS:
+ * - reka-ui (SelectRoot, SelectTrigger, etc)
+ * - useForm (inject pattern)
  */
 
-import type { HTMLAttributes, PropType } from 'vue';
-import { computed, watch, ref, inject } from 'vue';
+// ============== DEPENDÊNCIAS INTERNAS ==============
+import type { HTMLAttributes } from 'vue';
+import { computed, watch, ref, inject, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import Select from './Select.vue';
@@ -37,8 +23,6 @@ import SelectValue from './SelectValue.vue';
 import CorpHintLine from '@/components/forms/CorpHintLine.vue';
 import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
 import { CorpBadge } from '@/components/ui/badge';
-import type { ValidationRule } from '@/validations/rules';
-import type { CorpValidationContext } from '@/composables/useForm';
 import {
   resolveColor,
   darken,
@@ -46,6 +30,9 @@ import {
   getComputedColor,
   hexToHslWithWrapper,
 } from '@/utils/CorpColorUtils';
+import { selectVariants, type SelectVariant, type SelectDensity } from '.';
+import type { ValidationRule } from '@/validations/rules';
+import type { CorpValidationContext } from '@/composables/useForm';
 
 // ============== TYPES ==============
 
@@ -140,6 +127,18 @@ const props = defineProps({
     type: [String, Object, Array] as PropType<HTMLAttributes['class']>,
     default: undefined,
   },
+
+  // Variant (estilo visual)
+  variant: {
+    type: String as PropType<SelectVariant>,
+    default: 'solo',
+  },
+
+  // Density (tamanho)
+  density: {
+    type: String as PropType<SelectDensity>,
+    default: 'regular',
+  },
 });
 
 const emit = defineEmits<{
@@ -178,7 +177,7 @@ const hasRequiredRule = computed(() => {
   );
 });
 
-// ============== COMPUTED ==============
+// ============== COMPUTED PROPERTIES ==============
 
 const normalizedItems = computed<SelectItemNormalized[]>(() => {
   return props.items.map(item => {
@@ -252,6 +251,26 @@ const focusClasses = computed(() => {
   if (!props.borderColor)
     return 'focus-visible:ring-[hsl(var(--corp-def-select-ring))]';
   return 'focus-visible:ring-[var(--corp-runtime-select-focus-ring)]';
+});
+
+// Classes finais do select trigger (usa CVA)
+const selectClasses = computed(() => {
+  return cn(
+    selectVariants({
+      variant: props.variant,
+      density: props.density,
+    }),
+    colorClasses.value,
+    focusClasses.value,
+    {
+      'border-destructive': hasError.value,
+      'pr-10':
+        props.clearable && hasValue.value && !props.disabled && !props.readonly,
+      'h-auto min-h-10':
+        props.multiple && props.chips && selectedItems.value.length > 0,
+    },
+    props.class
+  );
 });
 
 // ============== WATCHERS ==============
@@ -353,19 +372,8 @@ const removeChip = (value: string | number): void => {
         @update:open="handleOpenChange"
       >
         <SelectTrigger
-          class="corpSelectTrigger bg-[hsl(var(--corp-def-select-bg))] border-[hsl(var(--corp-def-select-border))] focus:ring-[length:var(--ring-width)]"
-          :class="
-            cn(
-              {
-                'border-destructive': hasError,
-                'pr-10': clearable && hasValue && !disabled && !readonly,
-                'h-auto min-h-10':
-                  multiple && chips && selectedItems.length > 0,
-              },
-              colorClasses,
-              focusClasses
-            )
-          "
+          class="corpSelectTrigger"
+          :class="selectClasses"
           :style="customColorStyle"
           @focus="handleFocus"
           @blur="handleBlur"

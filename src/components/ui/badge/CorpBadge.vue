@@ -15,11 +15,7 @@ import { computed, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
 import { resolveColor, toRgba, getComputedColor } from '@/utils/CorpColorUtils';
-import {
-  badgeVariants,
-  type BadgeVariant,
-  type BadgeRounded,
-} from '.';
+import { badgeVariants, type BadgeVariant, type BadgeRounded } from '.';
 
 // ============== PROPS ==============
 

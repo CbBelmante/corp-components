@@ -126,6 +126,59 @@ const handleClear = () => {
       </div>
     </section>
 
+    <!-- Variant (solo/filled) -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Variant (solo/filled)
+      </h2>
+      <div class="p-4 bg-card border border-border rounded-lg space-y-4">
+        <CorpSelect
+          name="variantSolo"
+          :items="frameworks"
+          label="Solo (padrão)"
+          variant="solo"
+          placeholder="Fundo + borda"
+        />
+        <CorpSelect
+          name="variantFilled"
+          :items="frameworks"
+          label="Filled"
+          variant="filled"
+          placeholder="Só fundo, sem borda"
+        />
+      </div>
+    </section>
+
+    <!-- Density (compact/regular/comfortable) -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Density (compact/regular/comfortable)
+      </h2>
+      <div class="p-4 bg-card border border-border rounded-lg space-y-4">
+        <CorpSelect
+          name="densityCompact"
+          :items="frameworks"
+          label="Compact (h-8)"
+          density="compact"
+          placeholder="Compacto"
+        />
+        <CorpSelect
+          name="densityRegular"
+          :items="frameworks"
+          label="Regular (h-9)"
+          density="regular"
+          placeholder="Regular (padrão)"
+        />
+        <CorpSelect
+          name="densityComfortable"
+          :items="frameworks"
+          label="Comfortable (h-10)"
+          density="comfortable"
+          placeholder="Confortável"
+        />
+      </div>
+    </section>
+
     <!-- Items: string[] vs {value, label}[] -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">

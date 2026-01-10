@@ -34,7 +34,7 @@ export const checkboxVariants = cva(
       },
       density: {
         compact: 'h-4 w-4',
-        standard: 'h-[18px] w-[18px]',
+        regular: 'h-[18px] w-[18px]',
         comfortable: 'h-5 w-5',
       },
     },
@@ -50,10 +50,10 @@ export const checkboxVariants = cva(
  */
 export const iconSizeMap = {
   compact: 14,
-  standard: 16,
+  regular: 16,
   comfortable: 18,
 } as const;
 
 export type CheckboxVariants = VariantProps<typeof checkboxVariants>;
-export type CheckboxDensity = 'compact' | 'standard' | 'comfortable';
+export type CheckboxDensity = 'compact' | 'regular' | 'comfortable';
 export type CheckboxVariant = 'solid' | 'ghost' | 'outline';
