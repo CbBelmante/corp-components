@@ -33,6 +33,7 @@ const form = formRaw as unknown as Ref<RadioGroupTestForm>;
 
 // ============== STATE ==============
 const simplePlan = ref<string>('');
+const variantSelection = ref<string>('option1');
 const orientation = ref<string>('option1');
 const colorChoice = ref<string>('primary');
 const disabledSelection = ref<string>('option1');
@@ -87,6 +88,179 @@ const handleSubmit = () => {
           Valor selecionado:
           <code>{{ simplePlan || 'nenhum' }}</code>
         </p>
+      </div>
+    </section>
+
+    <!-- Variants (solid, ghost, outline) -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Variants (solid, ghost, outline)
+      </h2>
+      <div class="space-y-6 p-4 bg-card border border-border rounded-lg">
+        <div>
+          <h3 class="text-sm font-medium mb-2">Solid (padrão):</h3>
+          <p class="text-xs text-muted-foreground mb-2">
+            Fundo colorido quando checked, bolinha branca
+          </p>
+          <CorpRadioGroup
+            v-model="variantSelection"
+            name="variantSolid"
+            orientation="horizontal"
+          >
+            <CorpRadioGroupItem
+              value="option1"
+              label="Opção 1"
+              variant="solid"
+            />
+            <CorpRadioGroupItem
+              value="option2"
+              label="Opção 2"
+              variant="solid"
+            />
+            <CorpRadioGroupItem
+              value="option3"
+              label="Opção 3"
+              variant="solid"
+            />
+          </CorpRadioGroup>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium mb-2">Ghost:</h3>
+          <p class="text-xs text-muted-foreground mb-2">
+            Fundo sutil (10%) quando checked, borda e bolinha coloridas
+          </p>
+          <CorpRadioGroup
+            v-model="variantSelection"
+            name="variantGhost"
+            orientation="horizontal"
+          >
+            <CorpRadioGroupItem
+              value="option1"
+              label="Opção 1"
+              variant="ghost"
+            />
+            <CorpRadioGroupItem
+              value="option2"
+              label="Opção 2"
+              variant="ghost"
+            />
+            <CorpRadioGroupItem
+              value="option3"
+              label="Opção 3"
+              variant="ghost"
+            />
+          </CorpRadioGroup>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium mb-2">Outline:</h3>
+          <p class="text-xs text-muted-foreground mb-2">
+            Apenas bolinha colorida quando checked, borda mantém tema
+          </p>
+          <CorpRadioGroup
+            v-model="variantSelection"
+            name="variantOutline"
+            orientation="horizontal"
+          >
+            <CorpRadioGroupItem
+              value="option1"
+              label="Opção 1"
+              variant="outline"
+            />
+            <CorpRadioGroupItem
+              value="option2"
+              label="Opção 2"
+              variant="outline"
+            />
+            <CorpRadioGroupItem
+              value="option3"
+              label="Opção 3"
+              variant="outline"
+            />
+          </CorpRadioGroup>
+        </div>
+
+        <p class="text-sm text-muted-foreground">
+          Selecionado:
+          <code>{{ variantSelection }}</code>
+        </p>
+      </div>
+    </section>
+
+    <!-- Variants + Cores -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        Variants + Cores Semânticas
+      </h2>
+      <div class="space-y-6 p-4 bg-card border border-border rounded-lg">
+        <div>
+          <h3 class="text-sm font-medium mb-2">Ghost com cores:</h3>
+          <CorpRadioGroup
+            v-model="colorChoice"
+            name="variantGhostColors"
+            orientation="horizontal"
+          >
+            <CorpRadioGroupItem
+              value="primary"
+              label="Primary"
+              variant="ghost"
+              color="primary"
+            />
+            <CorpRadioGroupItem
+              value="success"
+              label="Success"
+              variant="ghost"
+              color="success"
+            />
+            <CorpRadioGroupItem
+              value="warning"
+              label="Warning"
+              variant="ghost"
+              color="warning"
+            />
+            <CorpRadioGroupItem
+              value="destructive"
+              label="Destructive"
+              variant="ghost"
+              color="destructive"
+            />
+          </CorpRadioGroup>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium mb-2">Outline com cores:</h3>
+          <CorpRadioGroup
+            v-model="colorChoice"
+            name="variantOutlineColors"
+            orientation="horizontal"
+          >
+            <CorpRadioGroupItem
+              value="primary"
+              label="Primary"
+              variant="outline"
+              color="primary"
+            />
+            <CorpRadioGroupItem
+              value="success"
+              label="Success"
+              variant="outline"
+              color="success"
+            />
+            <CorpRadioGroupItem
+              value="info"
+              label="Info"
+              variant="outline"
+              color="info"
+            />
+            <CorpRadioGroupItem
+              value="secondary"
+              label="Secondary"
+              variant="outline"
+              color="secondary"
+            />
+          </CorpRadioGroup>
+        </div>
       </div>
     </section>
 

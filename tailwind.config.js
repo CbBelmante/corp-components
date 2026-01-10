@@ -53,12 +53,16 @@ export default {
     'focus-visible:ring-[var(--corp-runtime-checkbox-focus-ring)]',
 
     // ==================== RADIO GROUP ====================
-    // RadioGroup - Border + Checked state (runtime custom color)
-    'border-[var(--corp-runtime-radio-color)]',
+    // RadioGroup - Checked state por variant (runtime custom color)
+    // Solid: fundo colorido
     'data-[state=checked]:bg-[var(--corp-runtime-radio-color)]',
+    // Ghost: fundo sutil + borda colorida
+    'data-[state=checked]:bg-[var(--corp-runtime-radio-color-light)]',
     'data-[state=checked]:border-[var(--corp-runtime-radio-color)]',
+    // Indicador (bolinha) - ghost/outline
+    'bg-[var(--corp-runtime-radio-color)]',
     // RadioGroup - Focus ring (runtime custom color)
-    'focus-visible:ring-[var(--corp-runtime-radio-color)]',
+    'focus-visible:ring-[var(--corp-runtime-radio-ring)]',
 
     // ==================== INPUT ====================
     // Input - Border default (theme.ts corp-def-input-*)

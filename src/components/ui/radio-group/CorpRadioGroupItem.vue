@@ -20,11 +20,22 @@
  * </CorpRadioGroup>
  */
 
+// ============== DEPENDÊNCIAS EXTERNAS ==============
 import { RadioGroupItem, RadioGroupIndicator } from 'reka-ui';
+
+// ============== DEPENDÊNCIAS INTERNAS ==============
 import { computed, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
-import { resolveColor } from '@/utils/CorpColorUtils';
+import { resolveColor, toRgba, getComputedColor } from '@/utils/CorpColorUtils';
+import {
+  radioGroupItemVariants,
+  indicatorSizeMap,
+  type RadioVariant,
+  type RadioDensity,
+} from '.';
+
+// ============== PROPS ==============
 
 const props = defineProps({
   value: {
@@ -64,61 +75,99 @@ const props = defineProps({
 
   // Density (tamanho)
   density: {
-    type: String as PropType<'compact' | 'standard' | 'comfortable'>,
+    type: String as PropType<RadioDensity>,
     default: 'compact',
+  },
+
+  // Variant (estilo visual)
+  variant: {
+    type: String as PropType<RadioVariant>,
+    default: 'solid',
   },
 });
 
-// Style inline - SEMPRE injeta cor (sem branching semantic/custom)
-// resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
-// NOTA: Unchecked usa theme.ts (igual Input/Select), só checked usa runtime
+// ============== COMPUTED PROPERTIES ==============
+
+// Style inline - injeta variáveis CSS para cores runtime
 const customColorStyle = computed(() => {
   const resolved = resolveColor(props.color);
+  const hex = getComputedColor(resolved);
+
   return {
     '--corp-runtime-radio-color': resolved,
     '--corp-runtime-radio-ring': resolved,
+    '--corp-runtime-radio-color-light': toRgba(hex, 0.1),
   };
 });
 
-// Classes de cor - SEMPRE usa CSS variable (funciona pra qualquer cor)
+// Classes de cor baseadas na variant
 const colorClasses = computed(() => {
-  return [
-    // Unchecked: usa tema padrão (igual Input/Select)
+  const classes: string[] = [
+    // Unchecked: sempre usa tema padrão
     'data-[state=unchecked]:border-[var(--radio-unchecked-border)]',
-    // Checked: usa cor customizada
-    'data-[state=checked]:bg-[var(--corp-runtime-radio-color)]',
-    'data-[state=checked]:border-[var(--corp-runtime-radio-color)]',
   ];
+
+  switch (props.variant) {
+    case 'solid':
+      // Solid: fundo colorido quando checked, sem borda visível
+      classes.push(
+        'data-[state=checked]:bg-[var(--corp-runtime-radio-color)]',
+        'data-[state=checked]:border-transparent'
+      );
+      break;
+
+    case 'ghost':
+      // Ghost: fundo sutil (10%) + borda colorida quando checked
+      classes.push(
+        'data-[state=checked]:bg-[var(--corp-runtime-radio-color-light)]',
+        'data-[state=checked]:border-[var(--corp-runtime-radio-color)]'
+      );
+      break;
+
+    case 'outline':
+      // Outline: borda mantém tema, sem fundo
+      classes.push(
+        'data-[state=checked]:border-[var(--radio-unchecked-border)]'
+      );
+      break;
+  }
+
+  return classes;
 });
 
-// Classes de focus - runtime override ou padrão do tema
+// Classes de focus
 const focusClasses = computed(() => {
-  // Se não tem cor customizada, usa padrão do tema (radio-ring = primary)
   if (!props.color || props.color === 'primary') {
     return 'focus-visible:ring-[var(--radio-ring)]';
   }
-  // Cor customizada: usa variável runtime
   return 'focus-visible:ring-[var(--corp-runtime-radio-ring)]';
 });
 
-// Classes de density (tamanho)
-const densityClasses = computed(() => {
-  const map = {
-    compact: 'h-4 w-4',
-    standard: 'h-[18px] w-[18px]',
-    comfortable: 'h-5 w-5',
-  };
-  return map[props.density];
+// Cor da bolinha interna (branca para solid, colorida para ghost/outline)
+const indicatorColorClass = computed(() => {
+  if (props.variant === 'solid') {
+    return 'bg-white';
+  }
+  // Ghost e Outline: bolinha colorida
+  return 'bg-[var(--corp-runtime-radio-color)]';
 });
 
-// Tamanho do indicador interno (bolinha branca)
+// Tamanho do indicador interno (bolinha)
 const indicatorSizes = computed(() => {
-  const map = {
-    compact: 'h-2 w-2',
-    standard: 'h-2.5 w-2.5',
-    comfortable: 'h-3 w-3',
-  };
-  return map[props.density];
+  return indicatorSizeMap[props.density];
+});
+
+// Classes finais do radio button
+const radioClasses = computed(() => {
+  return cn(
+    radioGroupItemVariants({
+      variant: props.variant,
+      density: props.density,
+    }),
+    colorClasses.value,
+    focusClasses.value,
+    props.class
+  );
 });
 </script>
 
@@ -138,21 +187,10 @@ const indicatorSizes = computed(() => {
       <RadioGroupItem
         :value="props.value"
         :disabled="props.disabled"
-        :class="
-          cn(
-            'peer aspect-square shrink-0 rounded-full border-[length:var(--corp-def-radio-border-width)] shadow-sm transition-all',
-            'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
-            'disabled:cursor-not-allowed disabled:opacity-50',
-            'data-[state=checked]:border-0',
-            densityClasses,
-            colorClasses,
-            focusClasses,
-            props.class
-          )
-        "
+        :class="radioClasses"
       >
         <RadioGroupIndicator class="flex items-center justify-center">
-          <div :class="cn('rounded-full bg-white', indicatorSizes)" />
+          <div :class="cn('rounded-full', indicatorColorClass, indicatorSizes)" />
         </RadioGroupIndicator>
       </RadioGroupItem>
 

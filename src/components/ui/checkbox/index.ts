@@ -1,2 +1,59 @@
+import type { VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
+
 export { default as CorpCheckbox } from './CorpCheckbox.vue';
 export { default as Checkbox } from './CorpCheckbox.vue'; // alias
+
+// ============== CHECKBOX VARIANTS (CVA) ==============
+
+/**
+ * Variants para o Checkbox
+ *
+ * - solid: Fundo colorido quando checked, ícone branco (padrão atual)
+ * - ghost: Fundo sutil (10%) quando checked, borda e ícone coloridos
+ * - outline: Apenas ícone colorido quando checked, borda mantém tema
+ */
+export const checkboxVariants = cva(
+  [
+    // Base
+    'grid place-content-center peer shrink-0 rounded-sm shadow',
+    'border-[length:var(--corp-def-checkbox-border-width)]',
+    // Focus
+    'focus-visible:outline-none focus-visible:ring-1',
+    // Disabled
+    'disabled:cursor-not-allowed',
+    // Unchecked (sempre usa tema)
+    'data-[state=unchecked]:border-[var(--checkbox-unchecked-border)]',
+  ],
+  {
+    variants: {
+      variant: {
+        solid: '',
+        ghost: '',
+        outline: '',
+      },
+      density: {
+        compact: 'h-4 w-4',
+        standard: 'h-[18px] w-[18px]',
+        comfortable: 'h-5 w-5',
+      },
+    },
+    defaultVariants: {
+      variant: 'solid',
+      density: 'compact',
+    },
+  }
+);
+
+/**
+ * Tamanho dos ícones por density
+ */
+export const iconSizeMap = {
+  compact: 14,
+  standard: 16,
+  comfortable: 18,
+} as const;
+
+export type CheckboxVariants = VariantProps<typeof checkboxVariants>;
+export type CheckboxDensity = 'compact' | 'standard' | 'comfortable';
+export type CheckboxVariant = 'solid' | 'ghost' | 'outline';
