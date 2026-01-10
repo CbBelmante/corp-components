@@ -19,7 +19,18 @@ import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import CorpHintLine from '@/components/forms/CorpHintLine.vue';
 import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
-import { resolveColor } from '@/utils/CorpColorUtils';
+import {
+  resolveColor,
+  getComputedColor,
+  toRgba,
+} from '@/utils/CorpColorUtils';
+import {
+  switchVariants,
+  thumbSizeMap,
+  thumbTranslateMap,
+  type SwitchVariant,
+  type SwitchDensity,
+} from '.';
 import type { ValidationRule } from '@/validations/rules';
 import type { CorpValidationContext } from '@/composables/useForm';
 
@@ -113,8 +124,14 @@ const props = defineProps({
 
   // Density (tamanho)
   density: {
-    type: String as PropType<'compact' | 'standard' | 'comfortable'>,
+    type: String as PropType<SwitchDensity>,
     default: 'compact',
+  },
+
+  // Variant (estilo visual)
+  variant: {
+    type: String as PropType<SwitchVariant>,
+    default: 'solid',
   },
 
   modelValue: {
@@ -176,8 +193,6 @@ const hasError = computed<boolean>(() => {
 
 // ============== COMPUTED PROPERTIES ==============
 
-const customClass = computed(() => props.class);
-
 const hasRequiredRule = computed(() => {
   return props.rules.some(
     rule => rule.name === 'required' || rule.toString().includes('obrigatório')
@@ -195,17 +210,38 @@ const customColorStyle = computed(() => {
   if (!props.color) return {};
 
   const resolved = resolveColor(props.color);
+  const hexColor = getComputedColor(resolved);
 
   return {
     '--corp-runtime-switch-color': resolved,
+    '--corp-runtime-switch-color-light': toRgba(hexColor, 0.15), // Para ghost variant
     '--corp-runtime-switch-track-focus': resolved,
     '--corp-runtime-switch-thumb-focus': resolved,
   };
 });
 
-// Classes de cor - SEMPRE usa CSS variable (funciona pra qualquer cor)
+// Classes de cor baseadas na variant
 const colorClasses = computed(() => {
-  return 'data-[state=checked]:bg-[var(--corp-runtime-switch-color)]';
+  if (isDisabled.value) return [];
+
+  const classes: string[] = [];
+
+  switch (props.variant) {
+    case 'solid':
+      // Solid: fundo colorido quando checked
+      classes.push('data-[state=checked]:bg-[var(--corp-runtime-switch-color)]');
+      break;
+
+    case 'ghost':
+      // Ghost: fundo sutil (15%) + borda colorida quando checked
+      classes.push(
+        'data-[state=checked]:bg-[var(--corp-runtime-switch-color-light)]',
+        'data-[state=checked]:border-[var(--corp-runtime-switch-color)]'
+      );
+      break;
+  }
+
+  return classes;
 });
 
 // Classes de focus - runtime override ou padrão do tema
@@ -217,22 +253,30 @@ const focusClasses = computed(() => {
   return 'focus-visible:ring-[var(--corp-runtime-switch-track-focus)]';
 });
 
-// Classes de density (tamanho)
-const densityClasses = computed(() => {
-  const thumbSizes = {
-    compact: 'h-4 w-4',
-    standard: 'h-4 w-4',
-    comfortable: 'h-5 w-5',
-  };
-  const trackSizes = {
-    compact: 'h-5 w-9',
-    standard: 'h-5 w-10',
-    comfortable: 'h-6 w-12',
-  };
-  return {
-    thumb: thumbSizes[props.density],
-    track: trackSizes[props.density],
-  };
+// Classes finais do switch (usa CVA)
+const switchClasses = computed(() => {
+  return cn(
+    switchVariants({
+      variant: props.variant,
+      density: props.density,
+    }),
+    colorClasses.value,
+    focusClasses.value,
+    {
+      'border-destructive': hasError.value,
+    },
+    props.class
+  );
+});
+
+// Classes do thumb (bolinha)
+const thumbClasses = computed(() => {
+  return cn(
+    'pointer-events-none flex items-center justify-center rounded-full bg-background shadow-lg ring-0 transition-transform',
+    'data-[state=unchecked]:translate-x-0',
+    thumbSizeMap[props.density],
+    thumbTranslateMap[props.density]
+  );
 });
 
 // ============== WATCHERS ==============
@@ -308,27 +352,9 @@ const handleBlur = (): void => {
         @focus="handleFocus"
         @blur="handleBlur"
         :style="customColorStyle"
-        :class="
-          cn(
-            'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-[length:var(--corp-def-switch-border-width)] border-transparent shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed data-[state=unchecked]:bg-[var(--switch-unchecked)]',
-            densityClasses.track,
-            colorClasses,
-            focusClasses,
-            {
-              'border-destructive': hasError,
-            },
-            customClass
-          )
-        "
+        :class="switchClasses"
       >
-        <SwitchThumb
-          :class="
-            cn(
-              'pointer-events-none flex items-center justify-center rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0',
-              densityClasses.thumb
-            )
-          "
-        >
+        <SwitchThumb :class="thumbClasses">
           <!-- Loading spinner -->
           <CorpIcon
             v-if="loading"

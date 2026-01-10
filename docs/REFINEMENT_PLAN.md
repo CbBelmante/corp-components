@@ -8,7 +8,7 @@
 
 | Fase | Status | Progresso |
 |------|--------|-----------|
-| 1. CVA Padronização | 🟡 Em andamento | 2/4 |
+| 1. CVA Padronização | 🟡 Em andamento | 5/7 |
 | 2. Shared Variants | ⚪ Pendente | 0/3 |
 | 3. JSDoc Cleanup | ⚪ Pendente | 0/4 |
 | 4. Build & Package | ⚪ Pendente | 0/5 |
@@ -28,20 +28,22 @@ Garantir que todos os componentes sigam o mesmo padrão arquitetural.
 
 - [x] **Button** - Limpar compoundVariants mortos (235→87 linhas)
 - [x] **Radio** - Já estava ok, ajustado JSDoc
-- [ ] **Checkbox** - Implementar prop `variant` (solid/ghost/outline)
-- [ ] **Switch** - Verificar se precisa `variant`
+- [x] **Checkbox** - Implementado prop `variant` (solid/ghost/outline)
+- [x] **Switch** - Implementado CVA com `variant` (solid/ghost) e `density`
+- [x] **Badge** - Ajustado JSDoc + tipos explícitos no CVA
+- [ ] **Input** - Criar CVA com `density`
+- [ ] **Select** - Criar CVA com `density`
 
-### Detalhes Checkbox:
+### Detalhes Checkbox (✅ CONCLUÍDO):
 ```
-Problemas:
-- checkboxVariants no index.ts é CÓDIGO MORTO
-- Componente não tem prop variant
-- Só funciona como "solid" hardcoded
-
-Solução:
-- Adicionar prop variant ao CorpCheckbox.vue
-- Implementar switch(variant) igual ao radio
-- Usar checkboxVariants do index.ts
+Implementado:
+- Prop variant (solid/ghost/outline)
+- Import de checkboxVariants, iconSizeMap do index.ts
+- CSS variable --corp-runtime-checkbox-color-light (ghost)
+- colorClasses com switch(variant)
+- iconColorClass (branco para solid, colorido para ghost/outline)
+- checkboxClasses usando CVA
+- Template atualizado com checkboxClasses e iconColorClass
 ```
 
 ---

@@ -1,50 +1,31 @@
 <script setup lang="ts">
 /**
- * 🧩 CorpBadge - Badge customizável com ícones, cores e contadores
+ * 🧩 CorpBadge - Badge com ícones, cores e contadores
  *
- * Badge inline com suporte a cores customizadas, ícones, contadores (max 99+),
- * mini badge (dot) e animações.
+ * Suporta cores customizadas (semantic ou hex/rgb), ícones,
+ * contadores (max 99+), mini badge (dot) e animações.
  *
- * 🔗 DEPENDÊNCIAS:
- * - badgeVariants - Variantes do shadcn badge
- * - CorpIcon - Ícones Lucide
- * - CorpColorUtils - Resolução de cores
- *
- * @example
- * // Básico (slot)
- * <CorpBadge color="primary">Active</CorpBadge>
- *
- * // Com content prop e max
- * <CorpBadge :content="142" :max="99" color="destructive" />  <!-- Renderiza: 99+ -->
- *
- * // Dot (mini badge)
- * <CorpBadge dot color="success" />
- *
- * // Com ícone e cores customizadas
- * <CorpBadge icon="Check" bgColor="success" contentColor="white">Approved</CorpBadge>
- *
- * // Com animação e rounded
- * <CorpBadge animation="pulse" rounded="full">Alert</CorpBadge>
+ * 🔗 DEPENDÊNCIAS ESPECIAIS:
+ * - CorpColorUtils (resolução de cores runtime)
  */
 
+// ============== DEPENDÊNCIAS INTERNAS ==============
 import type { HTMLAttributes } from 'vue';
-import type { PropType } from 'vue';
-import type { BadgeVariants } from '.';
-import { computed } from 'vue';
+import { computed, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
-import { badgeVariants } from '.';
 import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
 import { resolveColor, toRgba, getComputedColor } from '@/utils/CorpColorUtils';
-
-// ============== TIPOS ==============
-
-type RoundedPreset = 'default' | 'none' | 'sm' | 'lg' | 'xl' | 'full';
+import {
+  badgeVariants,
+  type BadgeVariant,
+  type BadgeRounded,
+} from '.';
 
 // ============== PROPS ==============
 
 const props = defineProps({
   variant: {
-    type: String as () => BadgeVariants['variant'],
+    type: String as PropType<BadgeVariant>,
     default: 'solid',
   },
   // Color shortcut (gera bg/text/hover/border automaticamente)
@@ -76,9 +57,9 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  // Border-radius (presets: default, none, sm, lg, xl, full OU custom: rounded-3xl, 10px)
+  // Border-radius (presets OU custom: rounded-3xl, 10px)
   rounded: {
-    type: String,
+    type: String as PropType<BadgeRounded | string>,
     default: 'default',
   },
   icon: {
@@ -119,7 +100,7 @@ const props = defineProps({
   },
 });
 
-// ============== COMPUTED ==============
+// ============== COMPUTED PROPERTIES ==============
 
 // Style inline - SEMPRE injeta cor (sem branching semantic/custom)
 // resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red

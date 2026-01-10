@@ -30,24 +30,27 @@ export default {
     'border-[var(--corp-def-button-border-color)]',
 
     // ==================== SWITCH ====================
-    // Switch - Checked state (runtime custom color)
+    // Switch - Solid variant (fundo colorido)
     'data-[state=checked]:bg-[var(--corp-runtime-switch-color)]',
+    // Switch - Ghost variant (fundo sutil + borda colorida)
+    'data-[state=checked]:bg-[var(--corp-runtime-switch-color-light)]',
+    'data-[state=checked]:border-[var(--corp-runtime-switch-color)]',
     // Switch - Unchecked state (theme.ts)
     'data-[state=unchecked]:bg-[var(--switch-unchecked)]',
-    // Switch - Focus ring trilho (theme.ts default + runtime override)
+    // Switch - Focus ring (theme.ts default + runtime override)
     'focus-visible:ring-[var(--switch-ring)]',
     'focus-visible:ring-[var(--corp-runtime-switch-track-focus)]',
-    // Switch - Focus ring bolinha (CSS, não precisa safelist, mas documentado aqui)
-    // 'var(--corp-runtime-switch-thumb-focus)' usado em CSS :deep()
 
     // ==================== CHECKBOX ====================
-    // Checkbox - Checked state (runtime custom color + border darkened)
+    // Checkbox - Solid variant (fundo colorido + borda escurecida)
     'data-[state=checked]:bg-[var(--corp-runtime-checkbox-checked-color)]',
     'data-[state=checked]:border-[var(--corp-runtime-checkbox-checked-border)]',
+    // Checkbox - Ghost variant (fundo sutil + borda colorida)
+    'data-[state=checked]:bg-[var(--corp-runtime-checkbox-color-light)]',
     // Checkbox - Unchecked state (theme.ts)
     'data-[state=unchecked]:border-[var(--checkbox-unchecked-border)]',
-    // Checkbox - Disabled states: tratados via CSS <style> block com !important
-    // (não precisam de safelist - variáveis -light/-dark resolvidas no CSS)
+    // Checkbox - Ícone colorido (ghost/outline)
+    'text-[var(--corp-runtime-checkbox-checked-color)]',
     // Checkbox - Focus ring (theme.ts default + runtime override)
     'focus-visible:ring-[var(--checkbox-ring)]',
     'focus-visible:ring-[var(--corp-runtime-checkbox-focus-ring)]',

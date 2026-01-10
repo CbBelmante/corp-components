@@ -7,9 +7,9 @@ export { default as Checkbox } from './CorpCheckbox.vue'; // alias
 // ============== CHECKBOX VARIANTS (CVA) ==============
 
 /**
- * Variants para o Checkbox
+ * CVA define estrutura, cores tratadas no componente via CSS variables
  *
- * - solid: Fundo colorido quando checked, ícone branco (padrão atual)
+ * - solid: Fundo colorido quando checked, ícone branco
  * - ghost: Fundo sutil (10%) quando checked, borda e ícone coloridos
  * - outline: Apenas ícone colorido quando checked, borda mantém tema
  */

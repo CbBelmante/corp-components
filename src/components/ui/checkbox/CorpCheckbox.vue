@@ -26,7 +26,14 @@ import {
   lighten,
   getComputedColor,
   hexToHslWithWrapper,
+  toRgba,
 } from '@/utils/CorpColorUtils';
+import {
+  checkboxVariants,
+  iconSizeMap,
+  type CheckboxVariant,
+  type CheckboxDensity,
+} from '.';
 import type { ValidationRule } from '@/validations/rules';
 import type { CorpValidationContext } from '@/composables/useForm';
 
@@ -125,8 +132,14 @@ const props = defineProps({
 
   // Density (tamanho)
   density: {
-    type: String as PropType<'compact' | 'standard' | 'comfortable'>,
+    type: String as PropType<CheckboxDensity>,
     default: 'compact',
+  },
+
+  // Variant (estilo visual)
+  variant: {
+    type: String as PropType<CheckboxVariant>,
+    default: 'solid',
   },
 
   // Debug
@@ -183,8 +196,6 @@ const hasError = computed<boolean>(() => {
 
 // ============== COMPUTED PROPERTIES ==============
 
-const customClass = computed(() => props.class);
-
 const hasRequiredRule = computed(() => {
   return props.rules.some(
     rule => rule.name === 'required' || rule.toString().includes('obrigatório')
@@ -223,6 +234,7 @@ const customColorStyle = computed(() => {
     // Enabled checked
     '--corp-runtime-checkbox-checked-color': resolved,
     '--corp-runtime-checkbox-checked-border': darkenedHsl,
+    '--corp-runtime-checkbox-color-light': toRgba(hexColor, 0.1), // Para ghost variant
     // Focus ring (usa cor base)
     '--corp-runtime-checkbox-focus-ring': resolved,
     // Disabled checked (2 variáveis: light e dark)
@@ -235,13 +247,39 @@ const customColorStyle = computed(() => {
   };
 });
 
-// Classes de cor - SEMPRE usa CSS variable (funciona pra qualquer cor)
+// Classes de cor baseadas na variant
 const colorClasses = computed(() => {
   // NÃO aplica quando disabled (disabled tem suas próprias classes)
-  if (isDisabled.value) return '';
+  if (isDisabled.value) return [];
 
-  // Usa variáveis injetadas dinamicamente (bg + border mais escura com darken)
-  return 'data-[state=checked]:bg-[var(--corp-runtime-checkbox-checked-color)] data-[state=checked]:border-[var(--corp-runtime-checkbox-checked-border)]';
+  const classes: string[] = [];
+
+  switch (props.variant) {
+    case 'solid':
+      // Solid: fundo colorido quando checked, borda escurecida
+      classes.push(
+        'data-[state=checked]:bg-[var(--corp-runtime-checkbox-checked-color)]',
+        'data-[state=checked]:border-[var(--corp-runtime-checkbox-checked-border)]'
+      );
+      break;
+
+    case 'ghost':
+      // Ghost: fundo sutil (10%) + borda colorida quando checked
+      classes.push(
+        'data-[state=checked]:bg-[var(--corp-runtime-checkbox-color-light)]',
+        'data-[state=checked]:border-[var(--corp-runtime-checkbox-checked-color)]'
+      );
+      break;
+
+    case 'outline':
+      // Outline: borda mantém tema, sem fundo
+      classes.push(
+        'data-[state=checked]:border-[var(--checkbox-unchecked-border)]'
+      );
+      break;
+  }
+
+  return classes;
 });
 
 // Classes de focus - runtime override ou padrão do tema
@@ -253,24 +291,36 @@ const focusClasses = computed(() => {
   return 'focus-visible:ring-[var(--corp-runtime-checkbox-focus-ring)]';
 });
 
-// Classes de density (tamanho)
-const densityClasses = computed(() => {
-  const map = {
-    compact: 'h-4 w-4',
-    standard: 'h-[18px] w-[18px]',
-    comfortable: 'h-5 w-5',
-  };
-  return map[props.density];
+// Cor do ícone (branco para solid, colorido para ghost/outline)
+const iconColorClass = computed(() => {
+  if (props.variant === 'solid') {
+    return 'text-white';
+  }
+  // Ghost e Outline: ícone colorido
+  return 'text-[var(--corp-runtime-checkbox-checked-color)]';
 });
 
-// Tamanhos dos ícones por density
+// Tamanhos dos ícones por density (usa iconSizeMap do index.ts)
 const iconSizes = computed(() => {
-  const map = {
-    compact: 14,
-    standard: 16,
-    comfortable: 18,
-  };
-  return map[props.density];
+  return iconSizeMap[props.density];
+});
+
+// Classes finais do checkbox (usa CVA)
+const checkboxClasses = computed(() => {
+  return cn(
+    checkboxVariants({
+      variant: props.variant,
+      density: props.density,
+    }),
+    colorClasses.value,
+    focusClasses.value,
+    {
+      'border-destructive': hasError.value,
+      'corp-checkbox-checked': internalValue.value,
+      'corp-checkbox-unchecked': !internalValue.value,
+    },
+    props.class
+  );
 });
 
 // Classes de estado disabled removidas - agora usa CSS global (estilo não-scoped)
@@ -348,36 +398,40 @@ const handleBlur = (): void => {
         @focus="handleFocus"
         @blur="handleBlur"
         :style="customColorStyle"
-        :class="
-          cn(
-            'grid place-content-center peer shrink-0 rounded-sm border-[length:var(--corp-def-checkbox-border-width)] shadow focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed data-[state=checked]:text-primary-foreground data-[state=unchecked]:border-[var(--checkbox-unchecked-border)]',
-            densityClasses,
-            colorClasses,
-            focusClasses,
-            {
-              'border-destructive': hasError,
-              'corp-checkbox-checked': internalValue,
-              'corp-checkbox-unchecked': !internalValue,
-            },
-            customClass
-          )
-        "
+        :class="checkboxClasses"
       >
         <!-- Forçar ícone quando disabled (reka-ui não renderiza CheckboxIndicator corretamente) -->
         <template v-if="isDisabled && internalValue">
-          <CorpIcon v-if="indeterminate" icon="luc-minus" :size="iconSizes" />
-          <CorpIcon v-else icon="luc-check" :size="iconSizes" />
+          <CorpIcon
+            v-if="indeterminate"
+            icon="luc-minus"
+            :size="iconSizes"
+            :class="iconColorClass"
+          />
+          <CorpIcon
+            v-else
+            icon="luc-check"
+            :size="iconSizes"
+            :class="iconColorClass"
+          />
         </template>
 
         <!-- Normal: usa CheckboxIndicator -->
-        <CheckboxIndicator
-          v-else
-          class="grid place-content-center text-current"
-        >
+        <CheckboxIndicator v-else class="grid place-content-center">
           <!-- Indeterminate: ícone Minus -->
-          <CorpIcon v-if="indeterminate" icon="luc-minus" :size="iconSizes" />
+          <CorpIcon
+            v-if="indeterminate"
+            icon="luc-minus"
+            :size="iconSizes"
+            :class="iconColorClass"
+          />
           <!-- Checked: ícone Check -->
-          <CorpIcon v-else icon="luc-check" :size="iconSizes" />
+          <CorpIcon
+            v-else
+            icon="luc-check"
+            :size="iconSizes"
+            :class="iconColorClass"
+          />
         </CheckboxIndicator>
       </CheckboxRoot>
 
