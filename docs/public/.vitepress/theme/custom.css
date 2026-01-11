@@ -151,6 +151,26 @@
   border-style: solid !important;
 }
 
+/* Fix: VitePress base.css aplica "border: 0" em inputs */
+.componentPreview input,
+.codePreview input,
+.vp-doc input {
+  border-style: solid !important;
+}
+
+/* Fix: VitePress remove borda dos triggers de select (reka-ui) */
+.componentPreview [data-radix-popper-content-wrapper],
+.codePreview [data-radix-popper-content-wrapper],
+.vp-doc [data-radix-popper-content-wrapper] {
+  border-style: solid !important;
+}
+
+.componentPreview button[data-state],
+.codePreview button[data-state],
+.vp-doc button[data-state] {
+  border-style: solid !important;
+}
+
 /* Fix: VitePress sobrescreve cor da borda do variant outline */
 .componentPreview button.border-button-outline,
 .codePreview button.border-button-outline,
