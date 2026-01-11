@@ -670,6 +670,6 @@ export const formatDuration = (seconds: number): string => {
 
 *📅 Criado em*: 18 JAN 2025  
 *📅 Última atualização*: 10 JAN 2026  
-*📋 Versão*: 5.0 - Pragmático + Estruturado  
+*📋 Versão*: 3.0
 *👥 Responsável*: CbBelmante  
 *🏷️ Tags*: [documentação, jsdoc, vue3, typescript, pragmático, estruturado]
