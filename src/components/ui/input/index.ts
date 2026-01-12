@@ -1,7 +1,10 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
+import type { Density, InputVariant } from '../_shared';
 
 export { default as CorpInput } from './CorpInput.vue';
+
+export type { Density as InputDensity, InputVariant };
 
 // ============== INPUT VARIANTS (CVA) ==============
 
@@ -45,5 +48,3 @@ export const inputVariants = cva(
 );
 
 export type InputVariants = VariantProps<typeof inputVariants>;
-export type InputVariant = 'solo' | 'filled';
-export type InputDensity = 'compact' | 'regular' | 'comfortable';

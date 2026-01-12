@@ -1,7 +1,10 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
+import type { Density, SwitchVariant } from '../_shared';
 
 export { default as CorpSwitch } from './CorpSwitch.vue';
+
+export type { Density as SwitchDensity, SwitchVariant };
 
 // ============== SWITCH VARIANTS (CVA) ==============
 
@@ -61,5 +64,3 @@ export const thumbTranslateMap = {
 } as const;
 
 export type SwitchVariants = VariantProps<typeof switchVariants>;
-export type SwitchDensity = 'compact' | 'regular' | 'comfortable';
-export type SwitchVariant = 'solid' | 'ghost';

@@ -1,8 +1,11 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
+import type { ButtonVariant } from '../_shared';
 
 export { default as CorpButton } from './CorpButton.vue';
 export { default as Button } from './CorpButton.vue'; // alias
+
+export type { ButtonVariant };
 
 // ============== BUTTON VARIANTS (CVA) ==============
 
@@ -85,7 +88,6 @@ export const buttonVariants = cva(
 );
 
 export type ButtonVariants = VariantProps<typeof buttonVariants>;
-export type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'link';
 export type ButtonSize =
   | 'default'
   | 'xs'

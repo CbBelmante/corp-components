@@ -1,7 +1,10 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
+import type { Density, InputVariant } from '../_shared';
 
 export { default as CorpSelect } from './CorpSelect.vue';
+
+export type { Density as SelectDensity, InputVariant as SelectVariant };
 export { default as Select } from './Select.vue';
 export { default as SelectContent } from './SelectContent.vue';
 export { default as SelectGroup } from './SelectGroup.vue';
@@ -54,5 +57,3 @@ export const selectVariants = cva(
 );
 
 export type SelectVariants = VariantProps<typeof selectVariants>;
-export type SelectVariant = 'solo' | 'filled';
-export type SelectDensity = 'compact' | 'regular' | 'comfortable';

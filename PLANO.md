@@ -105,7 +105,7 @@ corp-components/
 | 1 | Setup do Repositório | ✅ Concluído | 7/7 |
 | 2 | Configuração de Build | ✅ Concluído | 8/8 |
 | 2.5 | Tailwind + shadcn-vue CLI | ✅ Concluído | 5/5 |
-| 3 | Componentes UI (shadcn) | 🔄 Em Andamento | 8/19 |
+| 3 | Componentes UI (v1.0) | 🔄 Em Andamento | 11/17 |
 | 4 | Migração de Composables | 🔄 Em Andamento | 1/6 |
 | 5 | Migração de Utils | ⬜ Pendente | 0/7 |
 | 6 | Documentação (VitePress) | ✅ Concluído | 8/8 |
@@ -114,13 +114,34 @@ corp-components/
 
 **Total:** 33/64 tarefas (~52%)
 
-### Componentes Implementados
+### Componentes Implementados (11/17 para v1.0)
 
-| Componente | Props | Status |
-|------------|-------|--------|
-| **CorpButton** | variant, size, rounded, block, stacked, loading, disabled, prependIcon, appendIcon, iconSize, as, asChild, type | ✅ Completo |
-| **CorpIcon** | name, size, color, strokeWidth, tag, start, end, clickable, disabled | ✅ Completo |
+| Componente | Props Principais | Status |
+|------------|------------------|--------|
+| **CorpButton** | variant, size, rounded, block, stacked, loading, icons | ✅ Completo |
+| **CorpIcon** | name, size, color, tag, start, end, clickable | ✅ Completo |
+| **CorpInput** | variant, density, validation, clearable, masks, icons | ✅ Completo |
+| **CorpSelect** | variant, density, validation, clearable, multiple, chips | ✅ Completo |
+| **CorpCheckbox** | variant, density, color, validation, indeterminate | ✅ Completo |
+| **CorpSwitch** | variant, density, color, validation, loading | ✅ Completo |
+| **CorpRadioGroup** | variant, density, color, validation | ✅ Completo |
+| **CorpRadioGroupItem** | variant, density, color, value | ✅ Completo |
+| **CorpBadge** | variant, color, bgColor, textColor, icon, animation | ✅ Completo |
+| **CorpHintLine** | errorMessages, hint, persistentHint | ✅ Completo |
+| **CorpThemeToggle** | - | ✅ Completo |
 | **CodePreview** | (slots: default, code) | ✅ Completo |
+
+### Componentes Pendentes v1.0 (6 restantes)
+
+| Componente | Descrição |
+|------------|-----------|
+| **CorpAutocomplete** | Input com busca/seleção (combobox) |
+| **CorpButtonGroup** | Grupo de botões toggle |
+| **CorpTextarea** | Input multilinha |
+| **CorpCard** | Container com header/content/footer |
+| **CorpTooltip** | Dica flutuante |
+| **CorpSlider** | Range input visual |
+| **CorpProgress** | Barra de progresso |
 
 ---
 
@@ -258,27 +279,43 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 
 ### Mapeamento de Componentes
 
-| CbAdmin | corp-components | Prioridade | Status |
-|---------|---------------|------------|--------|
-| Button (shadcn) | CorpButton.vue | 🔴 Alta | ✅ Completo (variant/size/rounded/block/stacked/loading/icons) |
-| CbIcon.vue | CorpIcon.vue | 🔴 Alta | ✅ Completo (tag/start/end/clickable) |
-| CbInput.vue | CorpInput.vue | 🔴 Alta | ✅ Completo (validation/clearable/masks/icons/counter) |
-| CbSelect.vue | CorpSelect.vue | 🔴 Alta | ✅ Completo (validation/clearable/multiple/chips) |
-| CbBadge.vue | CorpBadge.vue | 🔴 Alta | ✅ Completo (variant/color/bgColor/textColor/opacity/icon/animation) |
-| CbHintLine.vue | CorpHintLine.vue | 🔴 Alta | ✅ Completo (error/hint/persistent/debug) |
-| CbCheckbox.vue | CorpCheckbox.vue | 🔴 Alta | ✅ Completo (color/validation/disabled/indeterminate/density/trueValue/falseValue) |
-| CbSwitch.vue | CorpSwitch.vue | 🔴 Alta | ✅ Completo (color/validation/loading/readonly/trueValue/falseValue) |
-| N/A | CorpRadioButton.vue | 🔴 Alta | ⬜ Pendente |
-| N/A | CorpRadioGroup.vue | 🔴 Alta | ⬜ Pendente |
-| N/A | CorpAutocomplete.vue | 🔴 Alta | ⬜ Pendente |
-| CbDate.vue | CorpDate.vue | 🟡 Média | ⬜ Pendente |
-| CbTimeField.vue | CorpTimeField.vue | 🟡 Média | ⬜ Pendente |
-| CbButtonGroup.vue | CorpButtonGroup.vue | 🟡 Média | ⬜ Pendente |
-| CbAddress.vue | CorpAddress.vue | 🟡 Média | ⬜ Pendente |
-| CbAddressList.vue | CorpAddressList.vue | 🟡 Média | ⬜ Pendente |
-| CbFileUpload.vue | CorpFileUpload.vue | 🟡 Média | ⬜ Pendente |
-| CbImageUpload.vue | CorpImageUpload.vue | 🟡 Média | ⬜ Pendente |
-| CbLocation.vue | CorpLocation.vue | 🟢 Baixa | ⬜ Pendente |
+#### 🎯 Escopo v1.0 (17 componentes)
+
+| CbAdmin | corp-components | Release | Status |
+|---------|---------------|---------|--------|
+| Button (shadcn) | CorpButton.vue | 1.0 | ✅ Completo |
+| CbIcon.vue | CorpIcon.vue | 1.0 | ✅ Completo |
+| CbInput.vue | CorpInput.vue | 1.0 | ✅ Completo |
+| CbSelect.vue | CorpSelect.vue | 1.0 | ✅ Completo |
+| CbBadge.vue | CorpBadge.vue | 1.0 | ✅ Completo |
+| CbHintLine.vue | CorpHintLine.vue | 1.0 | ✅ Completo |
+| CbCheckbox.vue | CorpCheckbox.vue | 1.0 | ✅ Completo |
+| CbSwitch.vue | CorpSwitch.vue | 1.0 | ✅ Completo |
+| N/A | CorpRadioGroup.vue | 1.0 | ✅ Completo |
+| N/A | CorpRadioGroupItem.vue | 1.0 | ✅ Completo |
+| N/A | CorpThemeToggle.vue | 1.0 | ✅ Completo |
+| N/A | **CorpAutocomplete.vue** | 1.0 | ⬜ Pendente |
+| CbButtonGroup.vue | **CorpButtonGroup.vue** | 1.0 | ⬜ Pendente |
+| N/A | **CorpTextarea.vue** | 1.0 | ⬜ Pendente |
+| N/A | **CorpCard.vue** | 1.0 | ⬜ Pendente |
+| N/A | **CorpTooltip.vue** | 1.0 | ⬜ Pendente |
+| N/A | **CorpSlider.vue** | 1.0 | ⬜ Pendente |
+| N/A | **CorpProgress.vue** | 1.0 | ⬜ Pendente |
+
+**v1.0 Status:** 11/17 completos (65%)
+
+#### 📅 Escopo v1.1+ (8 componentes)
+
+| CbAdmin | corp-components | Release | Status |
+|---------|---------------|---------|--------|
+| CbDate.vue | CorpDate.vue | 1.1 | ⬜ Pendente |
+| CbTimeField.vue | CorpTimeField.vue | 1.1 | ⬜ Pendente |
+| CbAddress.vue | CorpAddress.vue | 1.1 | ⬜ Pendente |
+| CbAddressList.vue | CorpAddressList.vue | 1.1 | ⬜ Pendente |
+| CbFileUpload.vue | CorpFileUpload.vue | 1.1 | ⬜ Pendente |
+| CbImageUpload.vue | CorpImageUpload.vue | 1.1 | ⬜ Pendente |
+| CbLocation.vue | CorpLocation.vue | 1.1 | ⬜ Pendente |
+| N/A | CorpDateRange.vue | 1.1 | ⬜ Pendente |
 
 ### Tarefas
 
@@ -880,24 +917,37 @@ Suporte light/dark mode com variáveis separadas:
 - CSS vars: `var(--accent)`, `var(--info)`
 - CSS names: `cyan`, `orange`, `pink`
 
-### Próximos Passos Imediatos
+### Próximos Passos Imediatos (v1.0)
 - [x] Instalar VitePress para documentação ✅
 - [x] Criar showcase do Button ✅
 - [x] Unified Color Architecture ✅
-- [ ] Adicionar CorpRadioButton/CorpRadioGroup
-- [ ] Adicionar CorpAutocomplete
+- [x] CorpRadioGroup/CorpRadioGroupItem ✅
+- [x] Shared Variants (_shared/variants.ts) ✅
+- [ ] **CorpAutocomplete** (combobox)
+- [ ] **CorpButtonGroup** (toggle group)
+- [ ] **CorpTextarea** (multilinha)
+- [ ] **CorpCard** (container)
+- [ ] **CorpTooltip** (dica flutuante)
+- [ ] **CorpSlider** (range input)
+- [ ] **CorpProgress** (barra de progresso)
 - [ ] Configurar preview live dos componentes na docs
+- [ ] Build & Publicar npm
 
-### Próximas Versões (v0.2.0+)
-- [ ] Componentes avançados (Address, FileUpload, ImageUpload)
+### Próximas Versões (v1.1+)
+- [ ] CorpDate (calendar picker)
+- [ ] CorpTimeField
+- [ ] CorpDateRange
+- [ ] CorpAddress/AddressList (Leaflet)
+- [ ] CorpFileUpload/ImageUpload (cropper)
+- [ ] CorpLocation
 - [ ] Testes unitários (Vitest)
 - [ ] CI/CD (GitHub Actions)
 
 ---
 
-**Última atualização:** 09 de Janeiro de 2026
-**Responsável:** Cabo Belmante
-**Status:** 🔄 Em Execução (FASE 3 - Componentes UI - 8/19 completos)
+**Última atualização:** 11 de Janeiro de 2026
+**Responsável:** Cabo Belmante + Soldado Claude
+**Status:** 🔄 Em Execução (v1.0 - 11/17 componentes completos - 65%)
 
 ---
 

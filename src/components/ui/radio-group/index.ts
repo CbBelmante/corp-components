@@ -1,8 +1,11 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
+import type { Density, ActionVariant } from '../_shared';
 
 export { default as CorpRadioGroup } from './CorpRadioGroup.vue';
 export { default as CorpRadioGroupItem } from './CorpRadioGroupItem.vue';
+
+export type { Density as RadioDensity, ActionVariant as RadioVariant };
 
 // ============== RADIO GROUP ITEM VARIANTS (CVA) ==============
 
@@ -55,5 +58,3 @@ export const indicatorSizeMap = {
 export type RadioGroupItemVariants = VariantProps<
   typeof radioGroupItemVariants
 >;
-export type RadioDensity = 'compact' | 'regular' | 'comfortable';
-export type RadioVariant = 'solid' | 'ghost' | 'outline';

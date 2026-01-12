@@ -9,9 +9,9 @@
 | Fase | Status | Progresso |
 |------|--------|-----------|
 | 1. CVA Padronização | ✅ Concluído | 7/7 |
-| 2. Shared Variants | ⚪ Pendente | 0/3 |
+| 2. Shared Variants | ✅ Concluído | 3/3 |
 | 3. JSDoc Cleanup | ⚪ Pendente | 0/4 |
-| 4. Build & Package | ⚪ Pendente | 0/5 |
+| 4. Build & Package | 🔄 Em Andamento | 2/8 |
 
 ---
 
@@ -48,42 +48,43 @@ Implementado:
 
 ---
 
-## 📋 Fase 2: Shared Variants
+## 📋 Fase 2: Shared Variants (✅ CONCLUÍDO)
 
 Centralizar tipos e valores compartilhados entre componentes.
 
-### Estrutura Proposta:
+### Estrutura Implementada:
 ```
-src/
-  components/
-    ui/
-      _shared/
-        variants.ts      # Tipos e variants compartilhados
-        index.ts         # Re-exports
+src/components/ui/_shared/
+  ├── variants.ts    # Tipos centralizados
+  └── index.ts       # Re-exports
 ```
 
 ### Tarefas:
 
-- [ ] Criar `_shared/variants.ts` com tipos compartilhados
-- [ ] Extrair `Density`, `Variant` types
-- [ ] Atualizar componentes para usar shared types
+- [x] Criar `_shared/variants.ts` com tipos compartilhados
+- [x] Extrair `Density`, `Variant` types
+- [x] Atualizar componentes para usar shared types
 
-### Conteúdo variants.ts:
+### Tipos Centralizados:
 ```typescript
-// Tipos compartilhados
+// _shared/variants.ts
 export type Density = 'compact' | 'regular' | 'comfortable';
-
-// Variants por tipo de componente
-export type ActionVariant = 'solid' | 'ghost' | 'outline';  // Button, Checkbox, Radio, Switch
+export type ActionVariant = 'solid' | 'ghost' | 'outline';  // Checkbox, Radio
+export type SwitchVariant = 'solid' | 'ghost';              // Switch (sem outline)
+export type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'link'; // Button (com link)
 export type InputVariant = 'solo' | 'filled';               // Input, Select
-
-// Density sizes (compartilhado)
-export const densitySizeMap = {
-  compact: { box: 'h-4 w-4', icon: 14, indicator: 'h-2 w-2' },
-  regular: { box: 'h-[18px] w-[18px]', icon: 16, indicator: 'h-2.5 w-2.5' },
-  comfortable: { box: 'h-5 w-5', icon: 18, indicator: 'h-3 w-3' },
-} as const;
+export const densitySizeMap = { ... } as const;
 ```
+
+### Componentes Atualizados:
+| Componente | Imports de _shared |
+|------------|-------------------|
+| Checkbox | `Density`, `ActionVariant` |
+| Radio | `Density`, `ActionVariant` |
+| Switch | `Density`, `SwitchVariant` |
+| Button | `ButtonVariant` |
+| Input | `Density`, `InputVariant` |
+| Select | `Density`, `InputVariant` |
 
 ---
 
@@ -110,38 +111,28 @@ Padronizar documentação seguindo JSDOC_GUIDE.md
 
 Preparar para distribuição como biblioteca npm.
 
-### Tarefas:
+### Status package.json (Análise 11 JAN 2026):
 
-- [ ] Configurar `vite.config.ts` (library mode)
-- [ ] Configurar `package.json` (exports, peerDependencies)
-- [ ] Criar `src/index.ts` (entry point com todos exports)
-- [ ] Configurar geração de tipos (`vite-plugin-dts`)
+| Campo | Status | Observação |
+|-------|--------|------------|
+| `name`, `version`, `type` | ✅ OK | `corp-components`, `0.1.0`, `module` |
+| `main`, `module`, `types` | ✅ OK | Paths corretos para dist/ |
+| `exports` | ✅ OK | types, import, require, style.css |
+| `files` | ✅ OK | `["dist"]` |
+| `peerDependencies` | ✅ OK | vue ^3.4.0 + FontAwesome (optional) |
+| `prepublishOnly` | ✅ OK | `npm run build` |
+| `keywords/repo/license` | ✅ OK | Metadados completos |
+
+### Tarefas Pendentes:
+
+- [x] ~~Configurar `vite.config.ts` (library mode)~~ → Já configurado
+- [x] ~~Configurar `package.json` (exports, peerDependencies)~~ → Já configurado
+- [ ] Verificar `src/index.ts` (entry point exporta todos componentes e tipos?)
+- [ ] Adicionar `tailwindcss` como peerDependency (avaliar necessidade)
 - [ ] Criar `tailwind.preset.js` para usuários
-
-### package.json (estrutura):
-```json
-{
-  "name": "corp-components",
-  "version": "1.0.0",
-  "type": "module",
-  "main": "./dist/index.umd.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.umd.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./style.css": "./dist/style.css"
-  },
-  "files": ["dist"],
-  "peerDependencies": {
-    "vue": "^3.4.0",
-    "tailwindcss": "^3.4.0"
-  }
-}
-```
+- [ ] Testar build final (`npm run build`)
+- [ ] Testar instalação local (`npm link` ou `npm pack`)
+- [ ] Publicar no npm (`npm publish --access public`)
 
 ### src/index.ts (entry point):
 ```typescript
@@ -160,7 +151,13 @@ export { useForm } from './composables/useForm';
 export { resolveColor, getComputedColor } from './utils/CorpColorUtils';
 
 // Types
-export type { Density, Variant } from './components/ui/_shared/variants';
+export type {
+  Density,
+  ActionVariant,
+  SwitchVariant,
+  ButtonVariant,
+  InputVariant,
+} from './components/ui/_shared';
 ```
 
 ---
@@ -247,5 +244,5 @@ Playground:
 
 ---
 
-*Última atualização*: 10 JAN 2026
+*Última atualização*: 11 JAN 2026
 *Responsável*: Soldado Claude + CbBelmante

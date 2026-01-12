@@ -1,8 +1,11 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
+import type { Density, ActionVariant } from '../_shared';
 
 export { default as CorpCheckbox } from './CorpCheckbox.vue';
 export { default as Checkbox } from './CorpCheckbox.vue'; // alias
+
+export type { Density as CheckboxDensity, ActionVariant as CheckboxVariant };
 
 // ============== CHECKBOX VARIANTS (CVA) ==============
 
@@ -55,5 +58,3 @@ export const iconSizeMap = {
 } as const;
 
 export type CheckboxVariants = VariantProps<typeof checkboxVariants>;
-export type CheckboxDensity = 'compact' | 'regular' | 'comfortable';
-export type CheckboxVariant = 'solid' | 'ghost' | 'outline';
