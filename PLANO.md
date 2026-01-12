@@ -105,7 +105,7 @@ corp-components/
 | 1 | Setup do Repositório | ✅ Concluído | 7/7 |
 | 2 | Configuração de Build | ✅ Concluído | 8/8 |
 | 2.5 | Tailwind + shadcn-vue CLI | ✅ Concluído | 5/5 |
-| 3 | Componentes UI (v1.0) | 🔄 Em Andamento | 11/17 |
+| 3 | Componentes UI (v1.0) | 🔄 Em Andamento | 8/15 |
 | 4 | Migração de Composables | 🔄 Em Andamento | 1/6 |
 | 5 | Migração de Utils | ⬜ Pendente | 0/7 |
 | 6 | Documentação (VitePress) | ✅ Concluído | 8/8 |
@@ -114,7 +114,7 @@ corp-components/
 
 **Total:** 33/64 tarefas (~52%)
 
-### Componentes Implementados (11/17 para v1.0)
+### Componentes Públicos v1.0 (8/15 completos)
 
 | Componente | Props Principais | Status |
 |------------|------------------|--------|
@@ -124,14 +124,18 @@ corp-components/
 | **CorpSelect** | variant, density, validation, clearable, multiple, chips | ✅ Completo |
 | **CorpCheckbox** | variant, density, color, validation, indeterminate | ✅ Completo |
 | **CorpSwitch** | variant, density, color, validation, loading | ✅ Completo |
-| **CorpRadioGroup** | variant, density, color, validation | ✅ Completo |
-| **CorpRadioGroupItem** | variant, density, color, value | ✅ Completo |
+| **CorpRadioGroup** | variant, density, color, validation (inclui RadioGroupItem) | ✅ Completo |
 | **CorpBadge** | variant, color, bgColor, textColor, icon, animation | ✅ Completo |
-| **CorpHintLine** | errorMessages, hint, persistentHint | ✅ Completo |
-| **CorpThemeToggle** | - | ✅ Completo |
-| **CodePreview** | (slots: default, code) | ✅ Completo |
 
-### Componentes Pendentes v1.0 (6 restantes)
+### Componentes Internos (não contam no total)
+
+| Componente | Uso |
+|------------|-----|
+| CorpHintLine | Helper para validação (usado por Input, Select, etc.) |
+| CorpThemeToggle | Toggle de tema (uso interno docs/playground) |
+| CodePreview | Componente de docs (VitePress) |
+
+### Componentes Pendentes v1.0 (7 restantes)
 
 | Componente | Descrição |
 |------------|-----------|
@@ -279,7 +283,7 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 
 ### Mapeamento de Componentes
 
-#### 🎯 Escopo v1.0 (17 componentes)
+#### 🎯 Escopo v1.0 (15 componentes públicos)
 
 | CbAdmin | corp-components | Release | Status |
 |---------|---------------|---------|--------|
@@ -288,12 +292,9 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 | CbInput.vue | CorpInput.vue | 1.0 | ✅ Completo |
 | CbSelect.vue | CorpSelect.vue | 1.0 | ✅ Completo |
 | CbBadge.vue | CorpBadge.vue | 1.0 | ✅ Completo |
-| CbHintLine.vue | CorpHintLine.vue | 1.0 | ✅ Completo |
 | CbCheckbox.vue | CorpCheckbox.vue | 1.0 | ✅ Completo |
 | CbSwitch.vue | CorpSwitch.vue | 1.0 | ✅ Completo |
 | N/A | CorpRadioGroup.vue | 1.0 | ✅ Completo |
-| N/A | CorpRadioGroupItem.vue | 1.0 | ✅ Completo |
-| N/A | CorpThemeToggle.vue | 1.0 | ✅ Completo |
 | N/A | **CorpAutocomplete.vue** | 1.0 | ⬜ Pendente |
 | CbButtonGroup.vue | **CorpButtonGroup.vue** | 1.0 | ⬜ Pendente |
 | N/A | **CorpTextarea.vue** | 1.0 | ⬜ Pendente |
@@ -302,7 +303,15 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 | N/A | **CorpSlider.vue** | 1.0 | ⬜ Pendente |
 | N/A | **CorpProgress.vue** | 1.0 | ⬜ Pendente |
 
-**v1.0 Status:** 11/17 completos (65%)
+**v1.0 Status:** 8/15 completos (53%)
+
+#### 🔧 Componentes Internos (não exportados)
+
+| Componente | Uso |
+|------------|-----|
+| CorpHintLine.vue | Helper de validação (usado internamente) |
+| CorpRadioGroupItem.vue | Parte do CorpRadioGroup |
+| CorpThemeToggle.vue | Toggle tema (docs/playground) |
 
 #### 📅 Escopo v1.1+ (8 componentes)
 
@@ -947,7 +956,7 @@ Suporte light/dark mode com variáveis separadas:
 
 **Última atualização:** 11 de Janeiro de 2026
 **Responsável:** Cabo Belmante + Soldado Claude
-**Status:** 🔄 Em Execução (v1.0 - 11/17 componentes completos - 65%)
+**Status:** 🔄 Em Execução (v1.0 - 8/15 componentes públicos - 53%)
 
 ---
 
