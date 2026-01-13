@@ -359,6 +359,23 @@ export const themeDefinition = {
     type: THEME_COLOR_TYPES.BOTH,
   },
 
+  // ============== CORP PROGRESS ==============
+  'corp-def-progress-bg': {
+    light: lighten(BASE_STYLES.primary.light, 60),
+    dark: darken(BASE_STYLES.primary.dark, 60),
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-progress-bar': {
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-progress-buffer': {
+    light: lighten(BASE_STYLES.primary.light, 40),
+    dark: darken(BASE_STYLES.primary.dark, 40),
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+
   // ============== CORP BADGE ==============
   'corp-def-badge-bg': {
     light: BASE_STYLES.secondary.light,

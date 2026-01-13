@@ -28,6 +28,6 @@ const { isDark, toggleTheme } = useTheme();
     :title="isDark ? 'Ativar tema claro' : 'Ativar tema escuro'"
     @click="toggleTheme"
   >
-    <CorpIcon :name="isDark ? 'luc-moon' : 'luc-sun'" :size="16" />
+    <CorpIcon :icon="isDark ? 'luc-moon' : 'luc-sun'" :size="16" />
   </CorpButton>
 </template>

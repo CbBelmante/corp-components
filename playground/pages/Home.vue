@@ -20,7 +20,9 @@ const components = getSortedComponents();
         :to="component.path"
         class="p-6 border border-border rounded-lg hover:border-primary hover:bg-accent/50 transition-colors"
       >
-        <h3 class="font-semibold text-foreground mb-1">{{ component.title }}</h3>
+        <h3 class="font-semibold text-foreground mb-1">
+          {{ component.title }}
+        </h3>
         <p class="text-sm text-muted-foreground">{{ component.description }}</p>
       </RouterLink>
     </div>

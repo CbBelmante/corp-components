@@ -11,13 +11,14 @@ import DocsLayout from '../core/DocsLayout.vue';
 import { CorpCode } from '@components/layout';
 import { CorpBadge } from '@components/ui/badge';
 import { CorpButton } from '@components/ui/button';
+import { CorpCheckbox } from '@components/ui/checkbox';
+import { CorpIcon } from '@components/ui/icon';
 import { CorpInput } from '@components/ui/input';
+import { CorpProgress } from '@components/ui/progress';
+import { CorpRadioGroup, CorpRadioGroupItem } from '@components/ui/radio-group';
 import { CorpSelect } from '@components/ui/select';
 import { CorpSwitch } from '@components/ui/switch';
-import { CorpCheckbox } from '@components/ui/checkbox';
-import { CorpRadioGroup, CorpRadioGroupItem } from '@components/ui/radio-group';
 import { CorpTextarea } from '@components/ui/textarea';
-import { CorpIcon } from '@components/ui/icon';
 
 // i18n centralizado (igual playground)
 import { i18n } from '@locales';
@@ -33,14 +34,15 @@ export default {
     app.component('CodePreview', CorpCode); // Alias para compatibilidade
     app.component('CorpBadge', CorpBadge);
     app.component('CorpButton', CorpButton);
-    app.component('CorpInput', CorpInput);
-    app.component('CorpSelect', CorpSelect);
-    app.component('CorpSwitch', CorpSwitch);
     app.component('CorpCheckbox', CorpCheckbox);
+    app.component('CorpIcon', CorpIcon);
+    app.component('CorpInput', CorpInput);
+    app.component('CorpProgress', CorpProgress);
     app.component('CorpRadioGroup', CorpRadioGroup);
     app.component('CorpRadioGroupItem', CorpRadioGroupItem);
+    app.component('CorpSelect', CorpSelect);
+    app.component('CorpSwitch', CorpSwitch);
     app.component('CorpTextarea', CorpTextarea);
-    app.component('CorpIcon', CorpIcon);
 
     // ============== PLUGINS ==============
     app.use(i18n);

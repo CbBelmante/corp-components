@@ -18,9 +18,9 @@
 // ============== TYPES ==============
 
 export interface IDocsComponent {
-  name: string;   // Nome do arquivo .md (sem extensão)
-  label: string;  // Texto do sidebar
-  order: number;  // Ordem de exibição (menor = primeiro)
+  name: string; // Nome do arquivo .md (sem extensão)
+  label: string; // Texto do sidebar
+  order: number; // Ordem de exibição (menor = primeiro)
 }
 
 // ============== COMPONENTES ==============
@@ -31,10 +31,11 @@ export const DOCS_COMPONENTS: IDocsComponent[] = [
   { name: 'checkbox', label: 'Checkbox', order: 3 },
   { name: 'icon', label: 'Icon', order: 4 },
   { name: 'input', label: 'Input', order: 5 },
-  { name: 'radio-group', label: 'Radio Group', order: 6 },
-  { name: 'select', label: 'Select', order: 7 },
-  { name: 'switch', label: 'Switch', order: 8 },
-  { name: 'textarea', label: 'Textarea', order: 9 },
+  { name: 'progress', label: 'Progress', order: 6 },
+  { name: 'radio-group', label: 'Radio Group', order: 7 },
+  { name: 'select', label: 'Select', order: 8 },
+  { name: 'switch', label: 'Switch', order: 9 },
+  { name: 'textarea', label: 'Textarea', order: 10 },
 ];
 
 // ============== HELPERS ==============
@@ -51,6 +52,8 @@ export const getDocsSidebarItems = () => {
   }));
 };
 
-export const getComponentByName = (name: string): IDocsComponent | undefined => {
+export const getComponentByName = (
+  name: string
+): IDocsComponent | undefined => {
   return DOCS_COMPONENTS.find(c => c.name === name);
 };

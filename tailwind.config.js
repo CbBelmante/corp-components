@@ -122,6 +122,23 @@ export default {
     'focus-visible:ring-[hsl(var(--corp-def-textarea-ring))]',
     'focus-visible:ring-[var(--corp-runtime-textarea-focus-ring)]',
     // Textarea - Base classes agora no CVA (bg, border, placeholder)
+
+    // ==================== PROGRESS ====================
+    // Progress - Background (theme.ts corp-def-progress-*)
+    'bg-[hsl(var(--corp-def-progress-bg))]',
+    // Progress - Bar color (runtime custom color)
+    'bg-[var(--corp-runtime-progress-bar)]',
+    // Progress - Bar opacity (runtime custom opacity)
+    'opacity-[var(--corp-runtime-progress-opacity)]',
+    // Progress - Buffer color (theme.ts default + runtime override)
+    'bg-[hsl(var(--corp-def-progress-buffer))]',
+    'bg-[var(--corp-runtime-progress-buffer)]',
+    // Progress - Buffer opacity (runtime custom opacity)
+    'opacity-[var(--corp-runtime-progress-buffer-opacity)]',
+    // Progress - Custom height (runtime number → px)
+    'h-[var(--corp-runtime-progress-height)]',
+    // Progress - Custom rounded (runtime number → px)
+    'rounded-[var(--corp-runtime-progress-rounded)]',
   ],
   theme: {
     extend: {

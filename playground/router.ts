@@ -4,6 +4,7 @@ import BadgeTest from './pages/BadgeTest.vue';
 import ButtonTest from './pages/ButtonTest.vue';
 import CheckboxTest from './pages/CheckboxTest.vue';
 import InputTest from './pages/InputTest.vue';
+import ProgressTest from './pages/ProgressTest.vue';
 import RadioGroupTest from './pages/RadioGroupTest.vue';
 import SelectTest from './pages/SelectTest.vue';
 import SwitchTest from './pages/SwitchTest.vue';
@@ -23,6 +24,7 @@ const router = createRouter({
       Button: ButtonTest,
       Checkbox: CheckboxTest,
       Input: InputTest,
+      Progress: ProgressTest,
       RadioGroup: RadioGroupTest,
       Select: SelectTest,
       Switch: SwitchTest,

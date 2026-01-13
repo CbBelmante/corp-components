@@ -66,6 +66,9 @@
   --corp-def-textarea-placeholder: 0 0% 45%;
   --corp-def-textarea-label-color: 224 60% 5%;
   --corp-def-textarea-label-size: 0.875rem;
+  --corp-def-progress-bg: 18 100% 84%;
+  --corp-def-progress-bar: 18 100% 60%;
+  --corp-def-progress-buffer: 18 100% 76%;
   --corp-def-badge-bg: 215 25% 27%;
   --corp-def-badge-text: 0 0% 98%;
   --corp-def-badge-border: 215 25% 27%;
@@ -156,6 +159,9 @@
   --corp-def-textarea-placeholder: 215 8% 53%;
   --corp-def-textarea-label-color: 208 35% 93%;
   --corp-def-textarea-label-size: 0.875rem;
+  --corp-def-progress-bg: 18 67% 24%;
+  --corp-def-progress-bar: 18 100% 60%;
+  --corp-def-progress-buffer: 18 66% 36%;
   --corp-def-badge-bg: 214 52% 25%;
   --corp-def-badge-text: 0 0% 98%;
   --corp-def-badge-border: 214 52% 25%;

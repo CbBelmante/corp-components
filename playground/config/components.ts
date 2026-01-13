@@ -61,13 +61,22 @@ export const PLAYGROUND_COMPONENTS: IPlaygroundComponent[] = [
     order: 4,
   },
   {
+    name: 'Progress',
+    path: '/progress',
+    routeName: 'progress',
+    fileName: 'ProgressTest',
+    title: 'Progress',
+    description: 'Testar progress bars com cores, animacoes e chunks',
+    order: 5,
+  },
+  {
     name: 'RadioGroup',
     path: '/radiogroups',
     routeName: 'radiogroups',
     fileName: 'RadioGroupTest',
     title: 'RadioGroups',
     description: 'Testar radio groups com cores, orientacao e validacao',
-    order: 5,
+    order: 6,
   },
   {
     name: 'Select',
@@ -76,7 +85,7 @@ export const PLAYGROUND_COMPONENTS: IPlaygroundComponent[] = [
     fileName: 'SelectTest',
     title: 'Selects',
     description: 'Testar selects com multiple, chips e validacao',
-    order: 6,
+    order: 7,
   },
   {
     name: 'Switch',
@@ -85,7 +94,7 @@ export const PLAYGROUND_COMPONENTS: IPlaygroundComponent[] = [
     fileName: 'SwitchTest',
     title: 'Switches',
     description: 'Testar switches com cores, estados e validacao',
-    order: 7,
+    order: 8,
   },
   {
     name: 'Textarea',
@@ -94,7 +103,7 @@ export const PLAYGROUND_COMPONENTS: IPlaygroundComponent[] = [
     fileName: 'TextareaTest',
     title: 'Textareas',
     description: 'Testar textareas com auto-grow, counter e validacao',
-    order: 8,
+    order: 9,
   },
 ];
 
