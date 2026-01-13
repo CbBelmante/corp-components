@@ -232,6 +232,42 @@ const { form: checkboxForm } = useForm({
   formName: 'CheckboxForm',
 });
 
+// ============== RADIO-GROUP.MD - Estados ==============
+const { form: radioForm, validateForm: validateRadioForm } = useForm({
+  initialValues: {
+    // Uso básico
+    plan: '',
+    notification: 'email',
+    // Cores
+    colorSemantic: 'primary',
+    colorCustom: 'purple',
+    // Orientação
+    orientationVertical: 'vert1',
+    orientationHorizontal: 'horiz1',
+    // Estados
+    disabledGroup: 'disGroup1',
+    disabledItem: 'disItem1',
+    readonlySelection: 'readonly2',
+    // Valores numéricos
+    numericSelection: 1,
+    // Density
+    densityCompact: 'compact1',
+    densityRegular: 'regular1',
+    densityComfortable: 'comfort1',
+    // Label Position
+    labelRight: 'posRight1',
+    labelLeft: 'posLeft1',
+    // Variant
+    variantSolid: 'solid1',
+    variantGhost: 'ghost1',
+    variantOutline: 'outline1',
+    // Exemplo real
+    companySize: 'medium',
+    paymentMethod: '',
+  },
+  formName: 'RadioForm',
+});
+
 const validationRules = [
   rules.required,
   (value: string[] | undefined) =>
@@ -284,6 +320,10 @@ injectDocsContext({
 
   // Checkbox.md
   checkboxForm,
+
+  // Radio-group.md
+  radioForm,
+  validateRadioForm,
 });
 </script>
 

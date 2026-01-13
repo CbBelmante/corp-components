@@ -80,6 +80,7 @@ export default defineConfig(async () => {
             { text: 'Checkbox', link: '/components/checkbox' },
             { text: 'Icon', link: '/components/icon' },
             { text: 'Input', link: '/components/input' },
+            { text: 'Radio Group', link: '/components/radio-group' },
             { text: 'Select', link: '/components/select' },
             { text: 'Switch', link: '/components/switch' },
           ],

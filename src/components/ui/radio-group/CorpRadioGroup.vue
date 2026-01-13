@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * 🎯 CorpRadioGroup - Container para Radio Buttons com validação
+ * 🧩 CorpRadioGroup - Container para Radio Buttons com validação
  *
  * Container que gerencia múltiplos CorpRadioGroupItem com suporte a:
  * - v-model (string/number)
@@ -9,25 +9,25 @@
  * - Integração com useForm (inject pattern)
  * - CorpHintLine para hints e erros
  *
- * 🔗 DEPENDÊNCIAS:
+ * 🔗 DEPENDÊNCIAS ESPECIAIS:
  * - reka-ui (RadioGroupRoot)
  * - CorpRadioGroupItem (itens individuais)
  * - useFormValidation (inject pattern)
- *
- * @example
- * <CorpRadioGroup v-model="selected" name="plan" label="Escolha um plano">
- *   <CorpRadioGroupItem value="free" label="Free" />
- *   <CorpRadioGroupItem value="pro" label="Pro" />
- * </CorpRadioGroup>
  */
 
+// ============== DEPENDÊNCIAS EXTERNAS ==============
 import { RadioGroupRoot } from 'reka-ui';
-import { computed, inject, ref, type PropType } from 'vue';
+
+// ============== DEPENDÊNCIAS INTERNAS ==============
+import { computed, inject, ref, provide, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import CorpHintLine from '@/components/forms/CorpHintLine.vue';
 import type { ValidationRule } from '@/validations/rules';
 import type { CorpValidationContext } from '@/composables/useForm';
+import type { RadioDensity, RadioVariant } from '.';
+
+// ============== PROPS ==============
 
 const props = defineProps({
   name: {
@@ -67,6 +67,7 @@ const props = defineProps({
     default: '',
   },
 
+  // Layout
   orientation: {
     type: String as PropType<'vertical' | 'horizontal'>,
     default: 'vertical',
@@ -93,6 +94,18 @@ const props = defineProps({
     default: 1,
   },
 
+  // Density (tamanho) - herdado pelos items
+  density: {
+    type: String as PropType<RadioDensity>,
+    default: 'compact',
+  },
+
+  // Variant (estilo visual) - herdado pelos items
+  variant: {
+    type: String as PropType<RadioVariant>,
+    default: 'solid',
+  },
+
   modelValue: {
     type: [String, Number] as PropType<string | number>,
     default: undefined,
@@ -102,6 +115,11 @@ const props = defineProps({
 const emit = defineEmits<{
   'update:modelValue': [value: string | number];
 }>();
+
+// ============== PROVIDE (para items herdarem) ==============
+
+provide('corpRadioGroupDensity', computed(() => props.density));
+provide('corpRadioGroupVariant', computed(() => props.variant));
 
 // ============== VALIDATION ==============
 
@@ -165,12 +183,12 @@ const handleBlur = (): void => {
 </script>
 
 <template>
-  <div class="space-y-1 w-full">
+  <div class="space-y-2 w-full">
     <!-- Label principal -->
     <Label
       v-if="props.label"
       :class="{ 'text-destructive': hasError }"
-      class="text-sm font-medium"
+      class="text-base font-semibold"
     >
       {{ props.label }}
       <span v-if="hasRequiredRule" class="text-destructive">*</span>
@@ -188,7 +206,7 @@ const handleBlur = (): void => {
           'flex',
           props.orientation === 'vertical'
             ? 'flex-col gap-2'
-            : 'flex-row gap-4',
+            : 'flex-row flex-wrap gap-6',
           props.class
         )
       "

@@ -1,32 +1,28 @@
 <script setup lang="ts">
 /**
- * 🎯 CorpRadioGroupItem - Item individual de Radio Button
+ * 🧩 CorpRadioGroupItem - Item individual de Radio Button
  *
  * Radio button com suporte a:
  * - Cores semânticas e customizadas (HEX, RGB, var(), etc)
  * - Label + hint integrados
  * - Disabled individual
  * - Runtime CSS variables para cores
+ * - Herda density/variant do CorpRadioGroup pai
  *
- * 🔗 DEPENDÊNCIAS:
+ * 🔗 DEPENDÊNCIAS ESPECIAIS:
  * - reka-ui (RadioGroupItem, RadioGroupIndicator)
  * - CorpColorUtils (resolução de cores)
- *
- * @example
- * <CorpRadioGroup v-model="selected">
- *   <CorpRadioGroupItem value="opt1" label="Opção 1" />
- *   <CorpRadioGroupItem value="opt2" label="Opção 2" color="success" />
- *   <CorpRadioGroupItem value="opt3" label="Opção 3" disabled />
- * </CorpRadioGroup>
+ * - CorpRadioGroup (inject pattern)
  */
 
 // ============== DEPENDÊNCIAS EXTERNAS ==============
 import { RadioGroupItem, RadioGroupIndicator } from 'reka-ui';
 
 // ============== DEPENDÊNCIAS INTERNAS ==============
-import { computed, type PropType } from 'vue';
+import { computed, inject, type PropType, type ComputedRef } from 'vue';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
+import CorpHintLine from '@/components/forms/CorpHintLine.vue';
 import { resolveColor, toRgba, getComputedColor } from '@/utils/CorpColorUtils';
 import {
   radioGroupItemVariants,
@@ -68,23 +64,43 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  hideDetails: {
+    type: Boolean,
+    default: false,
+  },
   labelPosition: {
     type: String as PropType<'left' | 'right'>,
     default: 'right',
   },
 
-  // Density (tamanho)
+  // Density (tamanho) - pode sobrescrever o do grupo
   density: {
     type: String as PropType<RadioDensity>,
-    default: 'compact',
+    default: undefined,
   },
 
-  // Variant (estilo visual)
+  // Variant (estilo visual) - pode sobrescrever o do grupo
   variant: {
     type: String as PropType<RadioVariant>,
-    default: 'solid',
+    default: undefined,
   },
 });
+
+// ============== INJECT (herda do grupo) ==============
+
+const injectedDensity = inject<ComputedRef<RadioDensity>>(
+  'corpRadioGroupDensity',
+  computed(() => 'compact')
+);
+
+const injectedVariant = inject<ComputedRef<RadioVariant>>(
+  'corpRadioGroupVariant',
+  computed(() => 'solid')
+);
+
+// Props locais têm prioridade sobre valores injetados
+const effectiveDensity = computed(() => props.density ?? injectedDensity.value);
+const effectiveVariant = computed(() => props.variant ?? injectedVariant.value);
 
 // ============== COMPUTED PROPERTIES ==============
 
@@ -107,7 +123,7 @@ const colorClasses = computed(() => {
     'data-[state=unchecked]:border-[var(--radio-unchecked-border)]',
   ];
 
-  switch (props.variant) {
+  switch (effectiveVariant.value) {
     case 'solid':
       // Solid: fundo colorido quando checked, sem borda visível
       classes.push(
@@ -145,7 +161,7 @@ const focusClasses = computed(() => {
 
 // Cor da bolinha interna (branca para solid, colorida para ghost/outline)
 const indicatorColorClass = computed(() => {
-  if (props.variant === 'solid') {
+  if (effectiveVariant.value === 'solid') {
     return 'bg-white';
   }
   // Ghost e Outline: bolinha colorida
@@ -154,15 +170,15 @@ const indicatorColorClass = computed(() => {
 
 // Tamanho do indicador interno (bolinha)
 const indicatorSizes = computed(() => {
-  return indicatorSizeMap[props.density];
+  return indicatorSizeMap[effectiveDensity.value];
 });
 
 // Classes finais do radio button
 const radioClasses = computed(() => {
   return cn(
     radioGroupItemVariants({
-      variant: props.variant,
-      density: props.density,
+      variant: effectiveVariant.value,
+      density: effectiveDensity.value,
     }),
     colorClasses.value,
     focusClasses.value,
@@ -172,7 +188,7 @@ const radioClasses = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-0 w-full" :style="customColorStyle">
+  <div class="flex flex-col gap-0" :style="customColorStyle">
     <!-- Radio Button + Label alinhados -->
     <div
       :class="
@@ -185,6 +201,7 @@ const radioClasses = computed(() => {
     >
       <!-- Radio Button -->
       <RadioGroupItem
+        :id="`radio-${props.value}`"
         :value="props.value"
         :disabled="props.disabled"
         :class="radioClasses"
@@ -199,6 +216,7 @@ const radioClasses = computed(() => {
       <!-- Label -->
       <Label
         v-if="props.label"
+        :for="`radio-${props.value}`"
         class="cursor-pointer font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
       >
         {{ props.label }}
@@ -208,19 +226,16 @@ const radioClasses = computed(() => {
       <slot v-if="$slots.default" />
     </div>
 
-    <!-- Hint (separado, alinhado com label) -->
+    <!-- Área de hint (separada, alinhada com label) -->
     <div
-      v-if="props.hint"
       :class="
         cn({
-          'pl-7': props.labelPosition === 'right',
-          'pr-7 text-right': props.labelPosition === 'left',
+          'pl-8': props.labelPosition === 'right',
+          'pr-8 text-right': props.labelPosition === 'left',
         })
       "
     >
-      <p class="text-xs text-muted-foreground">
-        {{ props.hint }}
-      </p>
+      <CorpHintLine :hint="props.hint" :hide-details="props.hideDetails" />
     </div>
   </div>
 </template>

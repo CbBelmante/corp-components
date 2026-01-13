@@ -15,6 +15,7 @@ import { CorpInput } from '@components/ui/input';
 import { CorpSelect } from '@components/ui/select';
 import { CorpSwitch } from '@components/ui/switch';
 import { CorpCheckbox } from '@components/ui/checkbox';
+import { CorpRadioGroup, CorpRadioGroupItem } from '@components/ui/radio-group';
 import { CorpIcon } from '@components/ui/icon';
 
 // i18n centralizado (igual playground)
@@ -35,6 +36,8 @@ export default {
     app.component('CorpSelect', CorpSelect);
     app.component('CorpSwitch', CorpSwitch);
     app.component('CorpCheckbox', CorpCheckbox);
+    app.component('CorpRadioGroup', CorpRadioGroup);
+    app.component('CorpRadioGroupItem', CorpRadioGroupItem);
     app.component('CorpIcon', CorpIcon);
 
     // ============== PLUGINS ==============

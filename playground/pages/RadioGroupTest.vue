@@ -33,7 +33,7 @@ const form = formRaw as unknown as Ref<RadioGroupTestForm>;
 
 // ============== STATE ==============
 const simplePlan = ref<string>('');
-const variantSelection = ref<string>('option1');
+const variantSelection = ref<string>('solid1');
 const orientation = ref<string>('option1');
 const colorChoice = ref<string>('primary');
 const disabledSelection = ref<string>('option1');
@@ -41,7 +41,7 @@ const readonlySelection = ref<string>('option2');
 const numericSelection = ref<number>(1);
 const externalErrorsExample = ref<string[]>(['Plano inválido para sua conta']);
 const showExternalError = ref(true);
-const densitySelection = ref<string>('compact');
+const densitySelection = ref<string>('compact1');
 const labelPositionSelection = ref<string>('right');
 
 // ============== HANDLERS ==============
@@ -105,23 +105,12 @@ const handleSubmit = () => {
           <CorpRadioGroup
             v-model="variantSelection"
             name="variantSolid"
+            variant="solid"
             orientation="horizontal"
           >
-            <CorpRadioGroupItem
-              value="option1"
-              label="Opção 1"
-              variant="solid"
-            />
-            <CorpRadioGroupItem
-              value="option2"
-              label="Opção 2"
-              variant="solid"
-            />
-            <CorpRadioGroupItem
-              value="option3"
-              label="Opção 3"
-              variant="solid"
-            />
+            <CorpRadioGroupItem value="solid1" label="Opção 1" />
+            <CorpRadioGroupItem value="solid2" label="Opção 2" />
+            <CorpRadioGroupItem value="solid3" label="Opção 3" />
           </CorpRadioGroup>
         </div>
 
@@ -133,23 +122,12 @@ const handleSubmit = () => {
           <CorpRadioGroup
             v-model="variantSelection"
             name="variantGhost"
+            variant="ghost"
             orientation="horizontal"
           >
-            <CorpRadioGroupItem
-              value="option1"
-              label="Opção 1"
-              variant="ghost"
-            />
-            <CorpRadioGroupItem
-              value="option2"
-              label="Opção 2"
-              variant="ghost"
-            />
-            <CorpRadioGroupItem
-              value="option3"
-              label="Opção 3"
-              variant="ghost"
-            />
+            <CorpRadioGroupItem value="ghost1" label="Opção 1" />
+            <CorpRadioGroupItem value="ghost2" label="Opção 2" />
+            <CorpRadioGroupItem value="ghost3" label="Opção 3" />
           </CorpRadioGroup>
         </div>
 
@@ -161,23 +139,12 @@ const handleSubmit = () => {
           <CorpRadioGroup
             v-model="variantSelection"
             name="variantOutline"
+            variant="outline"
             orientation="horizontal"
           >
-            <CorpRadioGroupItem
-              value="option1"
-              label="Opção 1"
-              variant="outline"
-            />
-            <CorpRadioGroupItem
-              value="option2"
-              label="Opção 2"
-              variant="outline"
-            />
-            <CorpRadioGroupItem
-              value="option3"
-              label="Opção 3"
-              variant="outline"
-            />
+            <CorpRadioGroupItem value="outline1" label="Opção 1" />
+            <CorpRadioGroupItem value="outline2" label="Opção 2" />
+            <CorpRadioGroupItem value="outline3" label="Opção 3" />
           </CorpRadioGroup>
         </div>
 
@@ -199,32 +166,13 @@ const handleSubmit = () => {
           <CorpRadioGroup
             v-model="colorChoice"
             name="variantGhostColors"
+            variant="ghost"
             orientation="horizontal"
           >
-            <CorpRadioGroupItem
-              value="primary"
-              label="Primary"
-              variant="ghost"
-              color="primary"
-            />
-            <CorpRadioGroupItem
-              value="success"
-              label="Success"
-              variant="ghost"
-              color="success"
-            />
-            <CorpRadioGroupItem
-              value="warning"
-              label="Warning"
-              variant="ghost"
-              color="warning"
-            />
-            <CorpRadioGroupItem
-              value="destructive"
-              label="Destructive"
-              variant="ghost"
-              color="destructive"
-            />
+            <CorpRadioGroupItem value="primary" label="Primary" color="primary" />
+            <CorpRadioGroupItem value="success" label="Success" color="success" />
+            <CorpRadioGroupItem value="warning" label="Warning" color="warning" />
+            <CorpRadioGroupItem value="destructive" label="Destructive" color="destructive" />
           </CorpRadioGroup>
         </div>
 
@@ -233,32 +181,13 @@ const handleSubmit = () => {
           <CorpRadioGroup
             v-model="colorChoice"
             name="variantOutlineColors"
+            variant="outline"
             orientation="horizontal"
           >
-            <CorpRadioGroupItem
-              value="primary"
-              label="Primary"
-              variant="outline"
-              color="primary"
-            />
-            <CorpRadioGroupItem
-              value="success"
-              label="Success"
-              variant="outline"
-              color="success"
-            />
-            <CorpRadioGroupItem
-              value="info"
-              label="Info"
-              variant="outline"
-              color="info"
-            />
-            <CorpRadioGroupItem
-              value="secondary"
-              label="Secondary"
-              variant="outline"
-              color="secondary"
-            />
+            <CorpRadioGroupItem value="primary" label="Primary" color="primary" />
+            <CorpRadioGroupItem value="success" label="Success" color="success" />
+            <CorpRadioGroupItem value="info" label="Info" color="info" />
+            <CorpRadioGroupItem value="secondary" label="Secondary" color="secondary" />
           </CorpRadioGroup>
         </div>
       </div>
@@ -619,47 +548,27 @@ const handleSubmit = () => {
             v-model="densitySelection"
             name="densityCompact"
             label="Tamanho Compact"
+            density="compact"
+            orientation="horizontal"
           >
-            <CorpRadioGroupItem
-              value="compact"
-              label="Compact"
-              density="compact"
-            />
-            <CorpRadioGroupItem
-              value="regular"
-              label="Standard"
-              density="compact"
-            />
-            <CorpRadioGroupItem
-              value="comfortable"
-              label="Comfortable"
-              density="compact"
-            />
+            <CorpRadioGroupItem value="compact1" label="Opção 1" />
+            <CorpRadioGroupItem value="compact2" label="Opção 2" />
+            <CorpRadioGroupItem value="compact3" label="Opção 3" />
           </CorpRadioGroup>
         </div>
 
         <div>
-          <h3 class="text-sm font-medium mb-2">Standard:</h3>
+          <h3 class="text-sm font-medium mb-2">Regular:</h3>
           <CorpRadioGroup
             v-model="densitySelection"
-            name="densityStandard"
-            label="Tamanho Standard"
+            name="densityRegular"
+            label="Tamanho Regular"
+            density="regular"
+            orientation="horizontal"
           >
-            <CorpRadioGroupItem
-              value="compact"
-              label="Compact"
-              density="regular"
-            />
-            <CorpRadioGroupItem
-              value="regular"
-              label="Standard"
-              density="regular"
-            />
-            <CorpRadioGroupItem
-              value="comfortable"
-              label="Comfortable"
-              density="regular"
-            />
+            <CorpRadioGroupItem value="regular1" label="Opção 1" />
+            <CorpRadioGroupItem value="regular2" label="Opção 2" />
+            <CorpRadioGroupItem value="regular3" label="Opção 3" />
           </CorpRadioGroup>
         </div>
 
@@ -669,22 +578,12 @@ const handleSubmit = () => {
             v-model="densitySelection"
             name="densityComfortable"
             label="Tamanho Comfortable"
+            density="comfortable"
+            orientation="horizontal"
           >
-            <CorpRadioGroupItem
-              value="compact"
-              label="Compact"
-              density="comfortable"
-            />
-            <CorpRadioGroupItem
-              value="regular"
-              label="Standard"
-              density="comfortable"
-            />
-            <CorpRadioGroupItem
-              value="comfortable"
-              label="Comfortable"
-              density="comfortable"
-            />
+            <CorpRadioGroupItem value="comfort1" label="Opção 1" />
+            <CorpRadioGroupItem value="comfort2" label="Opção 2" />
+            <CorpRadioGroupItem value="comfort3" label="Opção 3" />
           </CorpRadioGroup>
         </div>
         <p class="text-sm text-muted-foreground">
@@ -808,34 +707,31 @@ const handleSubmit = () => {
           name="size"
           label="Tamanho da sua empresa"
           hint="Isso nos ajuda a recomendar o melhor plano"
+          density="regular"
         >
           <CorpRadioGroupItem
             value="small"
             label="Pequena (1-10 funcionários)"
             hint="Ideal para startups e pequenos negócios"
             color="success"
-            density="regular"
           />
           <CorpRadioGroupItem
             value="medium"
             label="Média (11-50 funcionários)"
             hint="Perfeito para empresas em crescimento"
             color="info"
-            density="regular"
           />
           <CorpRadioGroupItem
             value="large"
             label="Grande (51-200 funcionários)"
             hint="Para empresas estabelecidas"
             color="warning"
-            density="regular"
           />
           <CorpRadioGroupItem
             value="enterprise"
             label="Enterprise (200+ funcionários)"
             hint="Soluções customizadas e suporte dedicado"
             color="primary"
-            density="comfortable"
           />
         </CorpRadioGroup>
         <p class="text-sm text-muted-foreground">
