@@ -268,6 +268,53 @@ const { form: radioForm, validateForm: validateRadioForm } = useForm({
   formName: 'RadioForm',
 });
 
+// ============== TEXTAREA.MD - Estados ==============
+const { form: textareaForm, validateForm: validateTextareaForm } = useForm({
+  initialValues: {
+    // Uso básico
+    bioUsage: '',
+    bio1: '',
+    description1: '',
+    // Variant
+    variantSolo: '',
+    variantFilled: '',
+    // Density
+    densityCompact: '',
+    densityRegular: '',
+    densityComfortable: '',
+    // BorderColor
+    bio2: '',
+    description2: '',
+    // Validação
+    bio3: '',
+    comments1: '',
+    // Ícones
+    message1: '',
+    notes1: '',
+    // Clearable
+    feedback1: '',
+    review1: '',
+    // Counter
+    bio4: '',
+    description3: '',
+    // Auto-grow
+    bio5: '',
+    bio6: '',
+    // Rows
+    description4: '',
+    description5: '',
+    description6: '',
+    // No resize
+    description7: '',
+    // Loading
+    feedback2: '',
+    // Formulário completo
+    bioForm: '',
+    feedbackForm: '',
+  },
+  formName: 'TextareaForm',
+});
+
 const validationRules = [
   rules.required,
   (value: string[] | undefined) =>
@@ -287,6 +334,27 @@ const validateSelectForm = () => {
   } else {
     alert('❌ Selecione pelo menos 2 frameworks!');
   }
+};
+
+// ============== TEXTAREA.MD - Handlers ==============
+const handleSubmitTextarea = () => {
+  const schema = {
+    bioForm: [rules.required, rules.minLength(10)],
+    feedbackForm: [rules.required, rules.minLength(20)],
+  };
+
+  const isValid = validateTextareaForm(schema);
+
+  if (isValid) {
+    alert('✅ Formulário válido e enviado!');
+  } else {
+    alert('❌ Formulário inválido! Verifique os campos.');
+  }
+};
+
+const handleClearTextarea = () => {
+  textareaForm.bioForm = '';
+  textareaForm.feedbackForm = '';
 };
 
 // ============== INJETAR EM GLOBALPROPERTIES ==============
@@ -324,6 +392,12 @@ injectDocsContext({
   // Radio-group.md
   radioForm,
   validateRadioForm,
+
+  // Textarea.md
+  textareaForm,
+  validateTextareaForm,
+  handleSubmitTextarea,
+  handleClearTextarea,
 });
 </script>
 

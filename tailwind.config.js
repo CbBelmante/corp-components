@@ -112,6 +112,16 @@ export default {
     'focus-visible:ring-[hsl(var(--corp-def-select-ring))]',
     'focus-visible:ring-[var(--corp-runtime-select-focus-ring)]',
     // Select - Base classes agora no CVA (bg, border)
+
+    // ==================== TEXTAREA ====================
+    // Textarea - Border focus (colorClasses runtime)
+    'focus:border-[hsl(var(--corp-def-textarea-border-focus))]',
+    'border-[var(--corp-runtime-textarea-border)]',
+    'focus:border-[var(--corp-runtime-textarea-border-focus)]',
+    // Textarea - Focus ring (theme.ts default + runtime override)
+    'focus-visible:ring-[hsl(var(--corp-def-textarea-ring))]',
+    'focus-visible:ring-[var(--corp-runtime-textarea-focus-ring)]',
+    // Textarea - Base classes agora no CVA (bg, border, placeholder)
   ],
   theme: {
     extend: {

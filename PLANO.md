@@ -105,16 +105,16 @@ corp-components/
 | 1 | Setup do Repositório | ✅ Concluído | 7/7 |
 | 2 | Configuração de Build | ✅ Concluído | 8/8 |
 | 2.5 | Tailwind + shadcn-vue CLI | ✅ Concluído | 5/5 |
-| 3 | Componentes UI (v1.0) | 🔄 Em Andamento | 8/15 |
+| 3 | Componentes UI (v1.0) | 🔄 Em Andamento | 9/22 |
 | 4 | Migração de Composables | 🔄 Em Andamento | 1/6 |
 | 5 | Migração de Utils | ⬜ Pendente | 0/7 |
 | 6 | Documentação (VitePress) | ✅ Concluído | 8/8 |
 | 7 | Testes e Publicação | 🔄 Em Andamento | 2/8 |
 | 8 | Integração no CbAdmin | ⬜ Pendente | 0/5 |
 
-**Total:** 33/64 tarefas (~52%)
+**Total:** 34/71 tarefas (~48%)
 
-### Componentes Públicos v1.0 (8/15 completos)
+### Componentes Públicos v1.0 (9/22 completos)
 
 | Componente | Props Principais | Status |
 |------------|------------------|--------|
@@ -126,6 +126,7 @@ corp-components/
 | **CorpSwitch** | variant, density, color, validation, loading | ✅ Completo |
 | **CorpRadioGroup** | variant, density, color, validation (inclui RadioGroupItem) | ✅ Completo |
 | **CorpBadge** | variant, color, bgColor, textColor, icon, animation | ✅ Completo |
+| **CorpTextarea** | variant, density, validation, clearable, counter, autoGrow, rows | ✅ Completo |
 
 ### Componentes Internos (não contam no total)
 
@@ -135,17 +136,23 @@ corp-components/
 | CorpThemeToggle | Toggle de tema (uso interno docs/playground) |
 | CodePreview | Componente de docs (VitePress) |
 
-### Componentes Pendentes v1.0 (7 restantes)
+### Componentes Pendentes v1.0 (13 restantes - ordenados por dificuldade)
 
-| Componente | Descrição |
-|------------|-----------|
-| **CorpAutocomplete** | Input com busca/seleção (combobox) |
-| **CorpButtonGroup** | Grupo de botões toggle |
-| **CorpTextarea** | Input multilinha |
-| **CorpCard** | Container com header/content/footer |
-| **CorpTooltip** | Dica flutuante |
-| **CorpSlider** | Range input visual |
-| **CorpProgress** | Barra de progresso |
+| Componente | Descrição | Dificuldade |
+|------------|-----------|-------------|
+| **CorpProgress** | Barra de progresso | 🟢 Fácil |
+| **CorpBreadcrumb** | Navegação de caminho (Home > Produtos > Item) | 🟢 Fácil |
+| **CorpCard** | Container com header/content/footer | 🟢 Fácil |
+| **CorpButtonGroup** | Grupo de botões toggle | 🟡 Médio-Fácil |
+| **CorpTooltip** | Dica flutuante (hover) | 🟡 Médio-Fácil |
+| **CorpPopover** | Conteúdo flutuante (trigger + content) | 🟡 Médio-Fácil |
+| **CorpTabs** | Navegação entre seções (TabsList + TabsContent) | 🟡 Médio-Fácil |
+| **CorpAccordion** | Seções colapsáveis (FAQ, expansion panels) | 🟠 Médio |
+| **CorpDialog** | Modal/Dialog (confirmação, forms) | 🟠 Médio |
+| **CorpSlider** | Range input visual (dragging) | 🟠 Médio-Difícil |
+| **CorpAutocomplete** | Input com busca/seleção (combobox) | 🔴 Difícil |
+| **CorpSidebar** | Sidebar colapsável e responsiva | 🔴 Difícil |
+| **CorpNavigationBar** | Barra de navegação (top menu, mobile) | 🔴 Difícil |
 
 ---
 
@@ -295,15 +302,22 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 | CbCheckbox.vue | CorpCheckbox.vue | 1.0 | ✅ Completo |
 | CbSwitch.vue | CorpSwitch.vue | 1.0 | ✅ Completo |
 | N/A | CorpRadioGroup.vue | 1.0 | ✅ Completo |
-| N/A | **CorpAutocomplete.vue** | 1.0 | ⬜ Pendente |
-| CbButtonGroup.vue | **CorpButtonGroup.vue** | 1.0 | ⬜ Pendente |
-| N/A | **CorpTextarea.vue** | 1.0 | ⬜ Pendente |
-| N/A | **CorpCard.vue** | 1.0 | ⬜ Pendente |
-| N/A | **CorpTooltip.vue** | 1.0 | ⬜ Pendente |
-| N/A | **CorpSlider.vue** | 1.0 | ⬜ Pendente |
-| N/A | **CorpProgress.vue** | 1.0 | ⬜ Pendente |
+| N/A | CorpTextarea.vue | 1.0 | ✅ Completo |
+| N/A | **CorpProgress.vue** | 1.0 | ⬜ Pendente (🟢 Fácil) |
+| N/A | **CorpBreadcrumb.vue** | 1.0 | ⬜ Pendente (🟢 Fácil) |
+| N/A | **CorpCard.vue** | 1.0 | ⬜ Pendente (🟢 Fácil) |
+| CbButtonGroup.vue | **CorpButtonGroup.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
+| N/A | **CorpTooltip.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
+| N/A | **CorpPopover.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
+| N/A | **CorpTabs.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
+| N/A | **CorpAccordion.vue** | 1.0 | ⬜ Pendente (🟠 Médio) |
+| N/A | **CorpDialog.vue** | 1.0 | ⬜ Pendente (🟠 Médio) |
+| N/A | **CorpSlider.vue** | 1.0 | ⬜ Pendente (🟠 Médio-Difícil) |
+| N/A | **CorpAutocomplete.vue** | 1.0 | ⬜ Pendente (🔴 Difícil) |
+| N/A | **CorpSidebar.vue** | 1.0 | ⬜ Pendente (🔴 Difícil) |
+| N/A | **CorpNavigationBar.vue** | 1.0 | ⬜ Pendente (🔴 Difícil) |
 
-**v1.0 Status:** 8/15 completos (53%)
+**v1.0 Status:** 9/22 completos (41%)
 
 #### 🔧 Componentes Internos (não exportados)
 
@@ -891,6 +905,20 @@ Os componentes originais ficam em:
 | 09/01/2026 | Checkbox: confirmado completo (color/disabled/validation) | ✅ |
 | 09/01/2026 | Documentação atualizada: RGB/HEX/HSL/CSS vars em todos componentes | ✅ |
 | 09/01/2026 | Playground: BorderColor/ChipColor/Disabled examples para todos | ✅ |
+| 13/01/2026 | **🎨 Border Width Architecture** implementada | ✅ |
+| 13/01/2026 | BASE_STYLES expandido: `borderWidthSlim` (1px) e `borderWidthNormal` (1.5px) | ✅ |
+| 13/01/2026 | 5 variáveis `corp-def-*-border-width` criadas (button, badge, checkbox, radio, switch) | ✅ |
+| 13/01/2026 | Border-width padronizado: Normal (1.5px) Button/Badge, Slim (1px) Checkbox/Radio/Switch | ✅ |
+| 13/01/2026 | RadioGroupItem refatorado: estrutura igual Checkbox/Switch (hint separado, `pl-7` alignment) | ✅ |
+| 13/01/2026 | Alinhamento label+hint: `gap-0` em Checkbox/Radio/Switch (labels totalmente coladas) | ✅ |
+| 13/01/2026 | Safelist limpo: removidas 5 linhas desnecessárias (classes literais auto-detectadas) | ✅ |
+| 13/01/2026 | Arquitetura 100% unificada: mesma estrutura template, comentários, props order | ✅ |
+| 13/01/2026 | **CorpTextarea** criado: variant (solo/filled), density (px+py proporcional), auto-grow, counter | ✅ |
+| 13/01/2026 | Textarea: clearable, loading, validation, rows, maxRows, noResize, prependOuterIcon/appendOuterIcon | ✅ |
+| 13/01/2026 | Docs textarea.md: Uso, Variant, Density, BorderColor, Validação, Ícones, Counter, Auto-grow | ✅ |
+| 13/01/2026 | Playground TextareaTest.vue: 18 seções de teste (Básico, Variant, Density, Cores, Estados, etc) | ✅ |
+| 13/01/2026 | Config centralizado: docs/config/components.ts e playground/config/components.ts (geração automática) | ✅ |
+| 13/01/2026 | Textarea density: px-2/px-3/px-4 proporcional (compact/regular/comfortable) além do py/min-h | ✅ |
 
 ### 🎨 Arquitetura de Cores Unificada
 
@@ -926,19 +954,83 @@ Suporte light/dark mode com variáveis separadas:
 - CSS vars: `var(--accent)`, `var(--info)`
 - CSS names: `cyan`, `orange`, `pink`
 
-### Próximos Passos Imediatos (v1.0)
+### 📏 Arquitetura de Border Width Unificada
+
+**Implementado em 13/01/2026** - Sistema centralizado de espessura de bordas:
+
+#### BASE_STYLES (Fonte Única):
+```typescript
+BASE_STYLES = {
+  primary, secondary,
+  borderComponent,      // Cores de bordas (checkbox, radio, switch)
+  borderInput,          // Cores de bordas (input, select)
+  borderWidthSlim,      // 1px (form controls: checkbox, radio, switch)
+  borderWidthNormal,    // 1.5px (action elements: button, badge)
+}
+```
+
+#### Mapeamento de Border Width:
+| Componente | Variável CSS | Valor | Categoria |
+|------------|--------------|-------|-----------|
+| **Button** | `--corp-def-button-border-width` | 1.5px (Normal) | Action |
+| **Badge** | `--corp-def-badge-border-width` | 1.5px (Normal) | Action |
+| **Checkbox** | `--corp-def-checkbox-border-width` | 1px (Slim) | Form Control |
+| **Radio** | `--corp-def-radio-border-width` | 1px (Slim) | Form Control |
+| **Switch** | `--corp-def-switch-border-width` | 1px (Slim) | Form Control |
+
+#### Estrutura de Template Unificada:
+Checkbox, Radio e Switch seguem **EXATAMENTE** a mesma estrutura:
+```vue
+<div class="flex flex-col gap-0 w-full">  <!-- gap-0 = labels coladas -->
+  <div class="flex items-center space-x-3">  <!-- Control + Label -->
+    <Component class="border-[length:var(--corp-def-*-border-width)]" />
+    <Label />
+  </div>
+  <div :class="pl-X">  <!-- Hint alinhado com label -->
+    <p>hint text</p>
+  </div>
+</div>
+```
+
+#### Consistência de Código:
+- **Comentários padronizados**: "Style inline - SEMPRE injeta...", "Classes de cor - SEMPRE usa..."
+- **Props order**: name, label, hint, rules → Estados → Display → Mensagens → modelValue
+- **Computed properties**: customColorStyle → colorClasses → focusClasses → densityClasses
+
+### Próximos Passos Imediatos (v1.0 - 13 componentes restantes)
+
+**✅ Completos (9/22):**
 - [x] Instalar VitePress para documentação ✅
 - [x] Criar showcase do Button ✅
 - [x] Unified Color Architecture ✅
 - [x] CorpRadioGroup/CorpRadioGroupItem ✅
 - [x] Shared Variants (_shared/variants.ts) ✅
-- [ ] **CorpAutocomplete** (combobox)
-- [ ] **CorpButtonGroup** (toggle group)
-- [ ] **CorpTextarea** (multilinha)
-- [ ] **CorpCard** (container)
-- [ ] **CorpTooltip** (dica flutuante)
-- [ ] **CorpSlider** (range input)
-- [ ] **CorpProgress** (barra de progresso)
+- [x] CorpTextarea ✅
+
+**🟢 Fácil (próximos 3):**
+- [ ] **CorpProgress** - barra de progresso
+- [ ] **CorpBreadcrumb** - navegação de caminho
+- [ ] **CorpCard** - container com slots
+
+**🟡 Médio-Fácil (4):**
+- [ ] **CorpButtonGroup** - toggle group
+- [ ] **CorpTooltip** - dica flutuante (hover)
+- [ ] **CorpPopover** - conteúdo flutuante (click)
+- [ ] **CorpTabs** - navegação entre seções
+
+**🟠 Médio (2):**
+- [ ] **CorpAccordion** - seções colapsáveis (FAQ)
+- [ ] **CorpDialog** - modal/dialog (confirmação, forms)
+
+**🟠 Médio-Difícil (1):**
+- [ ] **CorpSlider** - range input visual (dragging)
+
+**🔴 Difícil (3):**
+- [ ] **CorpAutocomplete** - combobox com search
+- [ ] **CorpSidebar** - sidebar colapsável e responsiva
+- [ ] **CorpNavigationBar** - top menu com mobile
+
+**📦 Publicação:**
 - [ ] Configurar preview live dos componentes na docs
 - [ ] Build & Publicar npm
 
@@ -954,9 +1046,9 @@ Suporte light/dark mode com variáveis separadas:
 
 ---
 
-**Última atualização:** 11 de Janeiro de 2026
+**Última atualização:** 13 de Janeiro de 2026
 **Responsável:** Cabo Belmante + Soldado Claude
-**Status:** 🔄 Em Execução (v1.0 - 8/15 componentes públicos - 53%)
+**Status:** 🔄 Em Execução (v1.0 - 9/22 componentes públicos - 41%)
 
 ---
 

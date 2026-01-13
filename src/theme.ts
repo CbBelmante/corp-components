@@ -317,6 +317,48 @@ export const themeDefinition = {
     type: THEME_COLOR_TYPES.BOTH,
   },
 
+  // ============== CORP TEXTAREA ==============
+  'corp-def-textarea-bg': {
+    light: '#D1DCE5',
+    dark: '#1c2128',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-textarea-border': {
+    light: BASE_STYLES.borderInput.light,
+    dark: BASE_STYLES.borderInput.dark,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-textarea-border-focus': {
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-textarea-ring': {
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-textarea-text': {
+    light: '#050914',
+    dark: '#e6edf3',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-textarea-placeholder': {
+    light: '#737373',
+    dark: '#7d8590',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-textarea-label-color': {
+    light: '#050914',
+    dark: '#e6edf3',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-textarea-label-size': {
+    light: '0.875rem',
+    dark: '0.875rem',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+
   // ============== CORP BADGE ==============
   'corp-def-badge-bg': {
     light: BASE_STYLES.secondary.light,

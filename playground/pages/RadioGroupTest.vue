@@ -169,10 +169,26 @@ const handleSubmit = () => {
             variant="ghost"
             orientation="horizontal"
           >
-            <CorpRadioGroupItem value="primary" label="Primary" color="primary" />
-            <CorpRadioGroupItem value="success" label="Success" color="success" />
-            <CorpRadioGroupItem value="warning" label="Warning" color="warning" />
-            <CorpRadioGroupItem value="destructive" label="Destructive" color="destructive" />
+            <CorpRadioGroupItem
+              value="primary"
+              label="Primary"
+              color="primary"
+            />
+            <CorpRadioGroupItem
+              value="success"
+              label="Success"
+              color="success"
+            />
+            <CorpRadioGroupItem
+              value="warning"
+              label="Warning"
+              color="warning"
+            />
+            <CorpRadioGroupItem
+              value="destructive"
+              label="Destructive"
+              color="destructive"
+            />
           </CorpRadioGroup>
         </div>
 
@@ -184,10 +200,22 @@ const handleSubmit = () => {
             variant="outline"
             orientation="horizontal"
           >
-            <CorpRadioGroupItem value="primary" label="Primary" color="primary" />
-            <CorpRadioGroupItem value="success" label="Success" color="success" />
+            <CorpRadioGroupItem
+              value="primary"
+              label="Primary"
+              color="primary"
+            />
+            <CorpRadioGroupItem
+              value="success"
+              label="Success"
+              color="success"
+            />
             <CorpRadioGroupItem value="info" label="Info" color="info" />
-            <CorpRadioGroupItem value="secondary" label="Secondary" color="secondary" />
+            <CorpRadioGroupItem
+              value="secondary"
+              label="Secondary"
+              color="secondary"
+            />
           </CorpRadioGroup>
         </div>
       </div>

@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
+import { getSortedComponents } from '../config/components';
+
+const components = getSortedComponents();
 </script>
 
 <template>
@@ -9,63 +12,16 @@ import { RouterLink } from 'vue-router';
       Playground de desenvolvimento - teste seus componentes aqui
     </p>
 
+    <!-- ✅ Cards gerados automaticamente de config/components.ts -->
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
       <RouterLink
-        to="/buttons"
+        v-for="component in components"
+        :key="component.name"
+        :to="component.path"
         class="p-6 border border-border rounded-lg hover:border-primary hover:bg-accent/50 transition-colors"
       >
-        <h3 class="font-semibold text-foreground mb-1">Buttons</h3>
-        <p class="text-sm text-muted-foreground">Testar variantes de botoes</p>
-      </RouterLink>
-
-      <RouterLink
-        to="/inputs"
-        class="p-6 border border-border rounded-lg hover:border-primary hover:bg-accent/50 transition-colors"
-      >
-        <h3 class="font-semibold text-foreground mb-1">Inputs</h3>
-        <p class="text-sm text-muted-foreground">
-          Testar inputs com validacao e mascaras
-        </p>
-      </RouterLink>
-
-      <RouterLink
-        to="/selects"
-        class="p-6 border border-border rounded-lg hover:border-primary hover:bg-accent/50 transition-colors"
-      >
-        <h3 class="font-semibold text-foreground mb-1">Selects</h3>
-        <p class="text-sm text-muted-foreground">
-          Testar selects com multiple, chips e validacao
-        </p>
-      </RouterLink>
-
-      <RouterLink
-        to="/switches"
-        class="p-6 border border-border rounded-lg hover:border-primary hover:bg-accent/50 transition-colors"
-      >
-        <h3 class="font-semibold text-foreground mb-1">Switches</h3>
-        <p class="text-sm text-muted-foreground">
-          Testar switches com cores, estados e validacao
-        </p>
-      </RouterLink>
-
-      <RouterLink
-        to="/checkboxes"
-        class="p-6 border border-border rounded-lg hover:border-primary hover:bg-accent/50 transition-colors"
-      >
-        <h3 class="font-semibold text-foreground mb-1">Checkboxes</h3>
-        <p class="text-sm text-muted-foreground">
-          Testar checkboxes com cores, estados e validacao
-        </p>
-      </RouterLink>
-
-      <RouterLink
-        to="/radiogroups"
-        class="p-6 border border-border rounded-lg hover:border-primary hover:bg-accent/50 transition-colors"
-      >
-        <h3 class="font-semibold text-foreground mb-1">RadioGroups</h3>
-        <p class="text-sm text-muted-foreground">
-          Testar radio groups com cores, orientacao e validacao
-        </p>
+        <h3 class="font-semibold text-foreground mb-1">{{ component.title }}</h3>
+        <p class="text-sm text-muted-foreground">{{ component.description }}</p>
       </RouterLink>
     </div>
   </div>

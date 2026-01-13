@@ -118,8 +118,14 @@ const emit = defineEmits<{
 
 // ============== PROVIDE (para items herdarem) ==============
 
-provide('corpRadioGroupDensity', computed(() => props.density));
-provide('corpRadioGroupVariant', computed(() => props.variant));
+provide(
+  'corpRadioGroupDensity',
+  computed(() => props.density)
+);
+provide(
+  'corpRadioGroupVariant',
+  computed(() => props.variant)
+);
 
 // ============== VALIDATION ==============
 

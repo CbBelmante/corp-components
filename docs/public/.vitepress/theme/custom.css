@@ -2,6 +2,36 @@
  * Corp Components - VitePress Theme
  */
 
+/* ============================================= */
+/* FIX: VitePress Remove Bordas dos Componentes */
+/* ============================================= */
+/*
+ * 🚨 PROBLEMA:
+ * VitePress base.css aplica "border: 0" globalmente em:
+ * - button
+ * - input
+ * - textarea
+ * - select (triggers reka-ui)
+ *
+ * ✅ SOLUÇÃO:
+ * Forçar "border-style: solid !important" nos contextos:
+ * - .componentPreview (blocos :::corp-code)
+ * - .codePreview (componente CorpCode)
+ * - .vp-doc (markdown geral)
+ *
+ * 📋 QUANDO ADICIONAR NOVO COMPONENTE COM BORDA:
+ * 1. Testar componente na docs
+ * 2. Se borda sumir, adicionar regra no final deste arquivo
+ * 3. Seguir padrão: .componentPreview, .codePreview, .vp-doc
+ *
+ * Exemplo:
+ * .componentPreview .novo-elemento,
+ * .codePreview .novo-elemento,
+ * .vp-doc .novo-elemento {
+ *   border-style: solid !important;
+ * }
+ */
+
 :root {
   /* Primary - Laranja */
   --vp-c-brand-1: #FF7133;
@@ -155,6 +185,13 @@
 .componentPreview input,
 .codePreview input,
 .vp-doc input {
+  border-style: solid !important;
+}
+
+/* Fix: VitePress base.css aplica "border: 0" em textareas */
+.componentPreview textarea,
+.codePreview textarea,
+.vp-doc textarea {
   border-style: solid !important;
 }
 

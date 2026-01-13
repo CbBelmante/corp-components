@@ -10,6 +10,7 @@ import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 import { getAliases } from '../../../../src/config';
 import { corpCodePlugin } from './corpCodePlugin';
+import { getDocsSidebarItems } from '@docs/config/components';
 
 export default defineConfig(async () => {
   const aliases = await getAliases(new URL('../../../../', import.meta.url));
@@ -74,16 +75,7 @@ export default defineConfig(async () => {
         },
         {
           text: 'UI Components',
-          items: [
-            { text: 'Badge', link: '/components/badge' },
-            { text: 'Button', link: '/components/button' },
-            { text: 'Checkbox', link: '/components/checkbox' },
-            { text: 'Icon', link: '/components/icon' },
-            { text: 'Input', link: '/components/input' },
-            { text: 'Radio Group', link: '/components/radio-group' },
-            { text: 'Select', link: '/components/select' },
-            { text: 'Switch', link: '/components/switch' },
-          ],
+          items: getDocsSidebarItems(),
         },
       ],
 
