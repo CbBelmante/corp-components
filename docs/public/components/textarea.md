@@ -273,16 +273,16 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
   <CorpTextarea
     v-model="textareaForm.description2"
     name="textareaPurple"
-    label="Roxo (HEX)"
-    borderColor="#8b5cf6"
-    placeholder="HEX: #8b5cf6"
+    label="Marrom (HEX)"
+    borderColor="#8B4513"
+    placeholder="HEX: #8B4513"
   />
   <CorpTextarea
     v-model="textareaForm.description2"
     name="textareaPink"
-    label="Rosa (HEX)"
-    borderColor="#ec4899"
-    placeholder="HEX: #ec4899"
+    label="Cobre (HEX)"
+    borderColor="#B87333"
+    placeholder="HEX: #B87333"
   />
 
   <!-- RGB -->
@@ -290,8 +290,8 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
     v-model="textareaForm.description2"
     name="textareaRgb"
     label="RGB"
-    borderColor="rgb(139, 92, 246)"
-    placeholder="RGB: rgb(139, 92, 246)"
+    borderColor="rgb(139, 69, 19)"
+    placeholder="RGB: rgb(139, 69, 19)"
   />
 
   <!-- HSL -->
@@ -299,17 +299,17 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
     v-model="textareaForm.description2"
     name="textareaHsl"
     label="HSL"
-    borderColor="hsl(280, 87%, 65%)"
-    placeholder="HSL: hsl(280, 87%, 65%)"
+    borderColor="hsl(25, 76%, 31%)"
+    placeholder="HSL: hsl(25, 76%, 31%)"
   />
 
   <!-- Nomes CSS -->
   <CorpTextarea
     v-model="textareaForm.description2"
-    name="textareaCyan"
-    label="Cyan (CSS)"
-    borderColor="cyan"
-    placeholder="Nome CSS: cyan"
+    name="textareaOlive"
+    label="Olive (CSS)"
+    borderColor="#6B8E23"
+    placeholder="HEX: #6B8E23 (Olive)"
   />
   <CorpTextarea
     v-model="textareaForm.description2"
@@ -345,16 +345,16 @@ Textareas disabled mantêm a cor da borda (mais clara) quando têm cor customiza
   />
   <CorpTextarea
     name="disabledPurple"
-    label="Roxo"
-    borderColor="#8b5cf6"
-    model-value="Disabled purple com múltiplas linhas"
+    label="Marrom"
+    borderColor="#8B4513"
+    model-value="Disabled marrom com múltiplas linhas"
     disabled
   />
   <CorpTextarea
     name="disabledPink"
-    label="Rosa"
-    borderColor="#ec4899"
-    model-value="Disabled pink com múltiplas linhas"
+    label="Cobre"
+    borderColor="#B87333"
+    model-value="Disabled cobre com múltiplas linhas"
     disabled
   />
 </div>

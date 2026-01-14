@@ -11,3 +11,10 @@ export {
   ROUNDED_PRESETS,
   densitySizeMap,
 } from './variants';
+
+export {
+  resolveRounded,
+  getDisabledColors,
+  type IDisabledColors,
+  type IDisabledColorsOptions,
+} from './CorpStyleUtils';

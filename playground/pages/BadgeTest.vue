@@ -98,10 +98,10 @@ const maxValue = ref(99);
         <div
           class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
         >
-          <Badge color="#8b5cf6" variant="solid">HEX Solid</Badge>
-          <Badge color="#8b5cf6" variant="outline">HEX Outline (hover!)</Badge>
-          <Badge color="#8b5cf6" variant="ghost">HEX Ghost (hover!)</Badge>
-          <Badge color="#ec4899" variant="ghost">Rosa Ghost</Badge>
+          <Badge color="#8B4513" variant="solid">HEX Solid</Badge>
+          <Badge color="#8B4513" variant="outline">HEX Outline (hover!)</Badge>
+          <Badge color="#8B4513" variant="ghost">HEX Ghost (hover!)</Badge>
+          <Badge color="#B87333" variant="ghost">Cobre Ghost</Badge>
         </div>
       </div>
 
@@ -111,11 +111,11 @@ const maxValue = ref(99);
         <div
           class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
         >
-          <Badge color="rgb(139, 92, 246)" variant="solid">RGB Solid</Badge>
-          <Badge color="rgb(139, 92, 246)" variant="outline">
+          <Badge color="rgb(139, 69, 19)" variant="solid">RGB Solid</Badge>
+          <Badge color="rgb(139, 69, 19)" variant="outline">
             RGB Outline (hover!)
           </Badge>
-          <Badge color="rgb(139, 92, 246)" variant="ghost">
+          <Badge color="rgb(139, 69, 19)" variant="ghost">
             RGB Ghost (hover!)
           </Badge>
         </div>
@@ -148,9 +148,11 @@ const maxValue = ref(99);
         <div
           class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
         >
-          <Badge color="cyan" variant="solid">Cyan Solid</Badge>
-          <Badge color="cyan" variant="outline">Cyan Outline (hover!)</Badge>
-          <Badge color="cyan" variant="ghost">Cyan Ghost (hover!)</Badge>
+          <Badge color="#6B8E23" variant="solid">Olive Solid</Badge>
+          <Badge color="#6B8E23" variant="outline">
+            Olive Outline (hover!)
+          </Badge>
+          <Badge color="#6B8E23" variant="ghost">Olive Ghost (hover!)</Badge>
           <Badge color="pink" variant="ghost">Pink Ghost</Badge>
           <Badge color="orange" variant="ghost">Orange Ghost</Badge>
           <Badge color="teal" variant="outline">Teal Outline</Badge>
@@ -169,11 +171,11 @@ const maxValue = ref(99);
               ✅ color gera hover | ❌ bgColor bloqueia hover
             </p>
             <div class="flex flex-wrap gap-4">
-              <Badge color="#8b5cf6" variant="solid">Color com hover ✅</Badge>
-              <Badge color="#8b5cf6" bgColor="#8b5cf6" variant="solid">
+              <Badge color="#8B4513" variant="solid">Color com hover ✅</Badge>
+              <Badge color="#8B4513" bgColor="#8B4513" variant="solid">
                 bgColor bloqueia ❌
               </Badge>
-              <Badge bgColor="#8b5cf6" contentColor="white" variant="solid">
+              <Badge bgColor="#8B4513" contentColor="white" variant="solid">
                 bgColor manual
               </Badge>
             </div>

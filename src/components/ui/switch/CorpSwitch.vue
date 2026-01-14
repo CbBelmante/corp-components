@@ -20,6 +20,7 @@ import { Label } from '@/components/ui/label';
 import CorpHintLine from '@/components/forms/CorpHintLine.vue';
 import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
 import { resolveColor, getComputedColor, toRgba } from '@/utils/CorpColorUtils';
+import { getDisabledColors } from '@/components/ui/commonStyles';
 import {
   switchVariants,
   thumbSizeMap,
@@ -203,16 +204,27 @@ const isDisabled = computed(() => {
 // Style inline - SEMPRE injeta cor (sem branching semantic/custom)
 // resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
 const customColorStyle = computed(() => {
-  if (!props.color) return {};
-
-  const resolved = resolveColor(props.color);
+  // Usa 'primary' como fallback quando sem color prop
+  const finalColor = props.color || 'primary';
+  const resolved = resolveColor(finalColor);
   const hexColor = getComputedColor(resolved);
+
+  // Checked disabled - deriva da cor escolhida
+  const checkedDisabled = getDisabledColors(hexColor);
+
+  // Unchecked disabled - deriva de um cinza neutro base
+  const uncheckedDisabled = getDisabledColors('#9ca3af');
 
   return {
     '--corp-runtime-switch-color': resolved,
-    '--corp-runtime-switch-color-light': toRgba(hexColor, 0.15), // Para ghost variant
+    '--corp-runtime-switch-color-light': toRgba(hexColor, 0.15),
     '--corp-runtime-switch-track-focus': resolved,
     '--corp-runtime-switch-thumb-focus': resolved,
+    '--corp-runtime-switch-checked-disabled-light': checkedDisabled.light.bg,
+    '--corp-runtime-switch-checked-disabled-dark': checkedDisabled.dark.bg,
+    '--corp-runtime-switch-unchecked-disabled-light':
+      uncheckedDisabled.light.bg,
+    '--corp-runtime-switch-unchecked-disabled-dark': uncheckedDisabled.dark.bg,
   };
 });
 
@@ -242,12 +254,8 @@ const colorClasses = computed(() => {
   return classes;
 });
 
-// Classes de focus - runtime override ou padrão do tema
+// Classes de focus - SEMPRE usa runtime
 const focusClasses = computed(() => {
-  // Se não tem cor, usa padrão do tema (switch-ring = primary)
-  if (!props.color) return 'focus-visible:ring-[var(--switch-ring)]';
-
-  // TODAS as cores (semantic E custom) usam variável runtime do TRILHO
   return 'focus-visible:ring-[var(--corp-runtime-switch-track-focus)]';
 });
 
@@ -306,15 +314,6 @@ watch(internalValue, newVal => {
 
 // ============== METHODS ==============
 
-/**
- * Handler do click no switch - toggle manual
- */
-const handleSwitchClick = () => {
-  if (!isDisabled.value) {
-    internalValue.value = !internalValue.value;
-  }
-};
-
 const handleFocus = (): void => {
   isFocused.value = true;
 };
@@ -344,9 +343,8 @@ const handleBlur = (): void => {
       <SwitchRoot
         :id="name"
         :name="name"
-        :checked="indeterminate ? 'indeterminate' : internalValue"
+        v-model="internalValue"
         :disabled="isDisabled"
-        @click="handleSwitchClick"
         @focus="handleFocus"
         @blur="handleBlur"
         :style="customColorStyle"
@@ -413,27 +411,33 @@ const handleBlur = (): void => {
   background-color: var(--switch-unchecked) !important;
 }
 
-/* Dark mode - checked disabled - IGUAL CHECKBOX */
-.dark :deep(button[data-state='checked']:disabled) {
-  background-color: var(--checkbox-checked-disabled-bg) !important;
-  opacity: 1 !important;
-}
-
-/* Light mode - checked disabled - IGUAL CHECKBOX */
+/* Light mode - checked disabled */
 :deep(button[data-state='checked']:disabled) {
-  background-color: var(--checkbox-checked-disabled-bg) !important;
+  background-color: var(
+    --corp-runtime-switch-checked-disabled-light
+  ) !important;
   opacity: 1 !important;
 }
 
-/* Unchecked disabled - IGUAL checkbox */
+/* Dark mode - checked disabled */
+.dark :deep(button[data-state='checked']:disabled) {
+  background-color: var(--corp-runtime-switch-checked-disabled-dark) !important;
+  opacity: 1 !important;
+}
+
+/* Light mode - unchecked disabled */
 :deep(button[data-state='unchecked']:disabled) {
-  background-color: var(--switch-unchecked-disabled-bg) !important;
+  background-color: var(
+    --corp-runtime-switch-unchecked-disabled-light
+  ) !important;
   opacity: 1 !important;
 }
 
-/* Dark mode - unchecked disabled - IGUAL checkbox */
+/* Dark mode - unchecked disabled */
 .dark :deep(button[data-state='unchecked']:disabled) {
-  background-color: var(--switch-unchecked-disabled-bg) !important;
+  background-color: var(
+    --corp-runtime-switch-unchecked-disabled-dark
+  ) !important;
   opacity: 1 !important;
 }
 
@@ -443,24 +447,30 @@ const handleBlur = (): void => {
 }
 
 /* Hover disabled - mantém cores iguais ao estado normal */
-.dark :deep(button[data-state='checked']:disabled:hover) {
-  background-color: var(--checkbox-checked-disabled-bg) !important;
+:deep(button[data-state='checked']:disabled:hover) {
+  background-color: var(
+    --corp-runtime-switch-checked-disabled-light
+  ) !important;
   filter: none !important;
 }
 
-:deep(button[data-state='checked']:disabled:hover) {
-  background-color: var(--checkbox-checked-disabled-bg) !important;
+.dark :deep(button[data-state='checked']:disabled:hover) {
+  background-color: var(--corp-runtime-switch-checked-disabled-dark) !important;
   filter: none !important;
 }
 
 /* Unchecked disabled hover - mantém cor igual ao estado normal */
 :deep(button[data-state='unchecked']:disabled:hover) {
-  background-color: var(--switch-unchecked-disabled-bg) !important;
+  background-color: var(
+    --corp-runtime-switch-unchecked-disabled-light
+  ) !important;
   filter: none !important;
 }
 
 .dark :deep(button[data-state='unchecked']:disabled:hover) {
-  background-color: var(--switch-unchecked-disabled-bg) !important;
+  background-color: var(
+    --corp-runtime-switch-unchecked-disabled-dark
+  ) !important;
   filter: none !important;
 }
 

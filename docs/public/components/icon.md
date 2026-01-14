@@ -132,8 +132,8 @@ Use a prop `color` para alterar a cor. Aceita **cores CSS**, **HEX**, **RGB** e 
 <CorpIcon icon="luc-check" color="seagreen" />
 
 <!-- HEX -->
-<CorpIcon icon="luc-star" color="#8b5cf6" />
-<CorpIcon icon="luc-mail" color="#ec4899" />
+<CorpIcon icon="luc-star" color="#8B4513" />
+<CorpIcon icon="luc-mail" color="#B87333" />
 
 <!-- RGB -->
 <CorpIcon icon="luc-bell" color="rgb(6, 182, 212)" />

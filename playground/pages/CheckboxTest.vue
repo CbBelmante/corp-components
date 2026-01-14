@@ -247,45 +247,45 @@ const handleSubmit = () => {
           <CorpCheckbox
             :model-value="false"
             name="disabled-purple-off"
-            label="Roxo desmarcado"
-            color="#8b5cf6"
+            label="Marrom desmarcado"
+            color="#8B4513"
             disabled
           />
           <CorpCheckbox
             v-model="disabledPurpleOn"
             name="disabled-purple-on"
-            label="Roxo marcado"
-            color="#8b5cf6"
+            label="Marrom marcado"
+            color="#8B4513"
             disabled
           />
 
           <CorpCheckbox
             :model-value="false"
             name="disabled-pink-off"
-            label="Rosa desmarcado"
-            color="#ec4899"
+            label="Cobre desmarcado"
+            color="#B87333"
             disabled
           />
           <CorpCheckbox
             v-model="disabledPinkOn"
             name="disabled-pink-on"
-            label="Rosa marcado"
-            color="#ec4899"
+            label="Cobre marcado"
+            color="#B87333"
             disabled
           />
 
           <CorpCheckbox
             :model-value="false"
             name="disabled-cyan-off"
-            label="Cyan desmarcado"
-            color="cyan"
+            label="Olive desmarcado"
+            color="#6B8E23"
             disabled
           />
           <CorpCheckbox
             v-model="disabledCyanOn"
             name="disabled-cyan-on"
-            label="Cyan marcado"
-            color="cyan"
+            label="Olive marcado"
+            color="#6B8E23"
             disabled
           />
 
@@ -378,20 +378,20 @@ const handleSubmit = () => {
         <CorpCheckbox
           v-model="checkedColor"
           name="purple"
-          label="Roxo (#8b5cf6)"
-          color="#8b5cf6"
+          label="Marrom (#8B4513)"
+          color="#8B4513"
         />
         <CorpCheckbox
           v-model="checkedColor"
           name="pink"
-          label="Rosa (#ec4899)"
-          color="#ec4899"
+          label="Cobre (#B87333)"
+          color="#B87333"
         />
         <CorpCheckbox
           v-model="checkedColor"
           name="cyan"
-          label="Cyan (nome CSS)"
-          color="cyan"
+          label="Olive (#6B8E23)"
+          color="#6B8E23"
         />
         <CorpCheckbox
           v-model="checkedColor"

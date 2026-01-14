@@ -1,6 +1,6 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
-import type { Density, ActionVariant } from '../_shared';
+import type { Density, ActionVariant } from '../commonStyles';
 
 export { default as CorpCheckbox } from './CorpCheckbox.vue';
 export { default as Checkbox } from './CorpCheckbox.vue'; // alias

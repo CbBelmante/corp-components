@@ -1,6 +1,6 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
-import type { Density, SwitchVariant } from '../_shared';
+import type { Density, SwitchVariant } from '../commonStyles';
 
 export { default as CorpSwitch } from './CorpSwitch.vue';
 

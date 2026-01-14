@@ -1,10 +1,14 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
-import type { Density, InputVariant, FormRoundedPreset } from '../_shared';
+import type { Density, InputVariant, FormRoundedPreset } from '../commonStyles';
 
 export { default as CorpSelect } from './CorpSelect.vue';
 
-export type { Density as SelectDensity, InputVariant as SelectVariant, FormRoundedPreset };
+export type {
+  Density as SelectDensity,
+  InputVariant as SelectVariant,
+  FormRoundedPreset,
+};
 export { default as Select } from './Select.vue';
 export { default as SelectContent } from './SelectContent.vue';
 export { default as SelectGroup } from './SelectGroup.vue';

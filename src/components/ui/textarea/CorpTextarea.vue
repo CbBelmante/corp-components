@@ -18,17 +18,19 @@ import CorpHintLine from '@/components/forms/CorpHintLine.vue';
 import {
   resolveColor,
   darken,
-  lighten,
   getComputedColor,
   hexToHslWithWrapper,
 } from '@/utils/CorpColorUtils';
-import { resolveRounded } from '@/utils/CorpStyleUtils';
+import {
+  resolveRounded,
+  getDisabledColors,
+  type RoundedValue,
+} from '@commonStyles';
 import {
   textareaVariants,
   type TextareaVariant,
   type TextareaDensity,
 } from '.';
-import type { RoundedValue } from '@/components/ui/_shared';
 import type { ValidationRule } from '@/validations/rules';
 import type { CorpValidationContext } from '@/composables/useForm';
 
@@ -225,46 +227,38 @@ const isDisabled = computed(() => {
   return props.disabled || props.readonly;
 });
 
-// Style inline - SEMPRE injeta cor (sem branching semantic/custom)
+// Style inline - só injeta cor quando borderColor é passado
 const customColorStyle = computed(() => {
   if (!props.borderColor) return {};
 
   const resolved = resolveColor(props.borderColor);
   const hexColor = getComputedColor(resolved);
 
-  // ENABLED: borda normal + borda focus escurecida
-  const darkenedHex = darken(hexColor);
-  const darkenedHsl = hexToHslWithWrapper(darkenedHex);
-
-  // DISABLED: light-dark() automático
-  const lightenedDisabledBorderHsl = hexToHslWithWrapper(lighten(hexColor, 50));
-  const darkenedDisabledBorderHsl = hexToHslWithWrapper(darken(hexColor, 40));
+  const darkenedHsl = hexToHslWithWrapper(darken(hexColor));
+  const disabled = getDisabledColors(hexColor, { borderOnly: true });
 
   return {
     '--corp-runtime-textarea-border': resolved,
     '--corp-runtime-textarea-border-focus': darkenedHsl,
     '--corp-runtime-textarea-focus-ring': resolved,
-    '--corp-runtime-textarea-disabled-border-light': lightenedDisabledBorderHsl,
-    '--corp-runtime-textarea-disabled-border-dark': darkenedDisabledBorderHsl,
+    '--corp-runtime-textarea-disabled-border-light': disabled.light.border,
+    '--corp-runtime-textarea-disabled-border-dark': disabled.dark.border,
   };
 });
 
-// Classes de cor - SEMPRE usa CSS variable
+// Classes de cor - usa runtime só quando borderColor é passado
 const colorClasses = computed(() => {
   if (isDisabled.value) return '';
   if (props.variant === 'filled') return '';
 
-  if (!props.borderColor)
-    return 'focus:border-[hsl(var(--corp-def-textarea-border-focus))]';
-
-  return 'border-[var(--corp-runtime-textarea-border)] focus:border-[var(--corp-runtime-textarea-border-focus)]';
+  if (props.borderColor) {
+    return 'border-[var(--corp-runtime-textarea-border)] focus:border-[var(--corp-runtime-textarea-border-focus)]';
+  }
+  return '';
 });
 
-// Classes de focus - runtime override ou padrão do tema
+// Classes de focus - SEMPRE usa runtime
 const focusClasses = computed(() => {
-  if (!props.borderColor)
-    return 'focus-visible:ring-[hsl(var(--corp-def-textarea-ring))]';
-
   return 'focus-visible:ring-[var(--corp-runtime-textarea-focus-ring)]';
 });
 

@@ -18,8 +18,8 @@ import { cn } from '@/lib/utils';
 import { buttonVariants, type ButtonVariants } from '.';
 import CorpIcon from '@components/ui/icon/CorpIcon.vue';
 import { resolveColor, toRgba, getComputedColor } from '@/utils/CorpColorUtils';
-import { resolveRounded } from '@/utils/CorpStyleUtils';
-import type { RoundedValue } from '@/components/ui/_shared';
+import { resolveRounded } from '@/components/ui/commonStyles';
+import type { RoundedValue } from '@/components/ui/commonStyles';
 
 // ============== TIPOS ==============
 

@@ -394,18 +394,18 @@ const handleSubmit = () => {
         >
           <CorpRadioGroupItem
             value="purple"
-            label="Roxo (#8b5cf6)"
-            color="#8b5cf6"
+            label="Marrom (#8B4513)"
+            color="#8B4513"
           />
           <CorpRadioGroupItem
             value="pink"
-            label="Rosa (#ec4899)"
-            color="#ec4899"
+            label="Cobre (#B87333)"
+            color="#B87333"
           />
           <CorpRadioGroupItem
             value="cyan"
-            label="Cyan (nome CSS)"
-            color="cyan"
+            label="Olive (#6B8E23)"
+            color="#6B8E23"
           />
           <CorpRadioGroupItem
             value="orange"
@@ -700,7 +700,7 @@ const handleSubmit = () => {
             label="Opção 1 (Comfortable + Left + Purple)"
             density="comfortable"
             label-position="left"
-            color="#8b5cf6"
+            color="#8B4513"
           />
           <CorpRadioGroupItem
             value="option2"

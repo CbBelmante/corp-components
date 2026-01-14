@@ -50,8 +50,8 @@ Use `color` para definir a cor da barra **e do fundo** (track deriva automaticam
 <CorpProgressBar :model-value="60" color="success" class="mb-4" />
 <CorpProgressBar :model-value="60" color="warning" class="mb-4" />
 <CorpProgressBar :model-value="60" color="destructive" class="mb-4" />
-<CorpProgressBar :model-value="60" color="#8b5cf6" class="mb-4" />
-<CorpProgressBar :model-value="60" color="#ec4899" />
+<CorpProgressBar :model-value="60" color="#8B4513" class="mb-4" />
+<CorpProgressBar :model-value="60" color="#B87333" />
 :::
 
 ---
@@ -84,47 +84,37 @@ Use `height` para controlar a altura da barra. Aceita presets (`compact`, `regul
 
 ### Rounded
 
-Use a prop `rounded` para controlar o border-radius. Aceita **13 presets**, classes Tailwind custom, valores CSS, números ou booleanos:
+Use a prop `rounded` para controlar o border-radius. Aceita presets, classes Tailwind, valores CSS ou números:
 
 :::corp-code
-<!-- Presets básicos -->
-<CorpProgressBar :model-value="60" rounded="none" class="mb-4" />
-<CorpProgressBar :model-value="60" rounded="xs" class="mb-4" />
-<CorpProgressBar :model-value="60" rounded="sm" class="mb-4" />
-<CorpProgressBar :model-value="60" rounded="default" class="mb-4" />
-<CorpProgressBar :model-value="60" rounded="md" class="mb-4" />
-<CorpProgressBar :model-value="60" rounded="lg" class="mb-4" />
-<CorpProgressBar :model-value="60" rounded="xl" class="mb-4" />
-
-<!-- Presets grandes -->
-<CorpProgressBar :model-value="60" rounded="2xl" class="mb-4" />
-<CorpProgressBar :model-value="60" rounded="3xl" class="mb-4" />
-
-<!-- Presets especiais -->
-<CorpProgressBar :model-value="60" rounded="full" class="mb-4" />
-<CorpProgressBar :model-value="60" rounded="pill" class="mb-4" />
-<CorpProgressBar :model-value="60" rounded="circle" class="mb-4" />
-<CorpProgressBar :model-value="60" rounded="shaped" class="mb-4" />
+<!-- De reto a arredondado -->
+<CorpProgressBar :model-value="50" rounded="none" color="#B7410E" class="mb-4" />
+<CorpProgressBar :model-value="55" rounded="sm" color="#CD853F" class="mb-4" />
+<CorpProgressBar :model-value="60" rounded="md" color="#6B8E23" class="mb-4" />
+<CorpProgressBar :model-value="65" rounded="lg" color="#B87333" class="mb-4" />
+<CorpProgressBar :model-value="70" rounded="xl" color="#8B4513" class="mb-4" />
+<CorpProgressBar :model-value="75" rounded="full" color="#A0522D" />
 :::
 
-#### Rounded Custom (Classes Tailwind e CSS)
+#### Rounded Custom
 
-Além dos presets, aceita classes Tailwind, valores CSS, números (px) ou booleanos:
+Aceita classes Tailwind, valores CSS, números (px) ou booleanos:
 
 :::corp-code
-<!-- Tailwind custom -->
-<CorpProgressBar :model-value="60" rounded="rounded-2xl" class="mb-4" />
+<CorpProgressBar :model-value="60" :rounded="0" color="#CD5C5C" class="mb-4" />
+<CorpProgressBar :model-value="65" :rounded="8" color="#D2691E" class="mb-4" />
+<CorpProgressBar :model-value="70" rounded="12px" color="#556B2F" class="mb-4" />
+<CorpProgressBar :model-value="75" :rounded="true" color="#8B6914" />
+:::
 
-<!-- Número (convertido para px) -->
-<CorpProgressBar :model-value="60" :rounded="16" class="mb-4" />
-<CorpProgressBar :model-value="60" :rounded="0" class="mb-4" />
+#### Rounded Assimétrico
 
-<!-- Booleano (true → full, false → none) -->
-<CorpProgressBar :model-value="60" :rounded="true" class="mb-4" />
-<CorpProgressBar :model-value="60" :rounded="false" class="mb-4" />
+Use classes Tailwind para arredondamentos diferentes em cada lado:
 
-<!-- CSS value -->
-<CorpProgressBar :model-value="60" rounded="8px" />
+:::corp-code
+<CorpProgressBar :model-value="60" :height="10" color="#6B8E23" rounded="rounded-l-none rounded-r-full" class="mb-4" />
+<CorpProgressBar :model-value="65" :height="10" color="#B87333" rounded="rounded-l-full rounded-r-none" class="mb-4" />
+<CorpProgressBar :model-value="70" :height="10" color="#A0522D" rounded="rounded-l-sm rounded-r-xl" />
 :::
 
 ---
@@ -138,7 +128,7 @@ Use `indeterminate` para mostrar um loading infinito quando o progresso é desco
 :::corp-code
 <CorpProgressBar indeterminate class="mb-4" />
 <CorpProgressBar indeterminate color="success" class="mb-4" />
-<CorpProgressBar indeterminate color="#8b5cf6" />
+<CorpProgressBar indeterminate color="#8B4513" />
 :::
 
 ---
@@ -173,7 +163,7 @@ Use `buffer-value` para mostrar uma barra secundária de buffer (útil para stre
 :::corp-code
 <CorpProgressBar :model-value="40" :buffer-value="70" class="mb-4" />
 <CorpProgressBar :model-value="60" :buffer-value="85" color="success" class="mb-4" />
-<CorpProgressBar :model-value="30" :buffer-value="60" buffer-color="#8b5cf6" />
+<CorpProgressBar :model-value="30" :buffer-value="60" buffer-color="#8B4513" />
 :::
 
 ---
@@ -324,46 +314,10 @@ Use ambos os slots juntos para ter texto na parte preenchida E centralizado na b
 
 ## Exemplos Avançados
 
-### Progress com Porcentagem
-
-:::corp-code
-<div class="space-y-4 max-w-md">
-  <CorpProgressBar :model-value="45" :height="28" color="success">
-    <template #default="{ value }">
-      <div class="flex items-center justify-center h-full text-xs font-bold text-white">
-        {{ value }}% completo
-      </div>
-    </template>
-  </CorpProgressBar>
-</div>
-
-<!-- @disp-code -->
-```vue
-<script setup>
-import { ref } from 'vue'
-import { CorpProgressBar } from 'corp-components'
-
-const uploadProgress = ref(45)
-</script>
-
-<template>
-  <CorpProgressBar :model-value="uploadProgress" :height="28" color="success">
-    <template #default="{ value }">
-      <div class="text-xs font-bold text-white">
-        {{ value }}% completo
-      </div>
-    </template>
-  </CorpProgressBar>
-</template>
-```
-:::
-
----
-
 ### Download com Buffer
 
 :::corp-code
-<div class="space-y-4 max-w-md">
+<div class="space-y-4">
   <CorpProgressBar
     :model-value="55"
     :buffer-value="80"
@@ -399,18 +353,18 @@ const buffered = ref(80)
 ### Skill Bars com Chunks
 
 :::corp-code
-<div class="space-y-4 max-w-md">
+<div class="space-y-4">
   <div>
     <p class="text-sm font-medium mb-2">Vue.js</p>
-    <CorpProgressBar :model-value="90" :chunk-count="10" color="success" />
+    <CorpProgressBar :model-value="90" :chunk-count="10" :chunk-width="40" color="success" />
   </div>
   <div>
     <p class="text-sm font-medium mb-2">TypeScript</p>
-    <CorpProgressBar :model-value="80" :chunk-count="10" color="#3178c6" />
+    <CorpProgressBar :model-value="80" :chunk-count="10" :chunk-width="40" color="#3178c6" />
   </div>
   <div>
     <p class="text-sm font-medium mb-2">Tailwind CSS</p>
-    <CorpProgressBar :model-value="95" :chunk-count="10" color="#06b6d4" />
+    <CorpProgressBar :model-value="95" :chunk-count="10" :chunk-width="40" color="#06b6d4" />
   </div>
 </div>
 

@@ -83,12 +83,12 @@ const bufferProgress = ref(80);
       <h2 class="text-lg font-semibold text-foreground">Cores Customizadas</h2>
       <div class="p-4 bg-card border border-border rounded-lg space-y-4">
         <div class="space-y-2">
-          <p class="text-sm">Roxo (#8b5cf6)</p>
-          <CorpProgressBar :model-value="60" color="#8b5cf6" />
+          <p class="text-sm">Marrom (#8B4513)</p>
+          <CorpProgressBar :model-value="60" color="#8B4513" />
         </div>
         <div class="space-y-2">
-          <p class="text-sm">Rosa (#ec4899)</p>
-          <CorpProgressBar :model-value="60" color="#ec4899" />
+          <p class="text-sm">Cobre (#B87333)</p>
+          <CorpProgressBar :model-value="60" color="#B87333" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Cyan (#06b6d4)</p>
@@ -178,8 +178,8 @@ const bufferProgress = ref(80);
           <CorpProgressBar indeterminate color="success" />
         </div>
         <div class="space-y-2">
-          <p class="text-sm">Indeterminate - Roxo</p>
-          <CorpProgressBar indeterminate color="#8b5cf6" />
+          <p class="text-sm">Indeterminate - Marrom</p>
+          <CorpProgressBar indeterminate color="#8B4513" />
         </div>
       </div>
     </section>
@@ -256,7 +256,7 @@ const bufferProgress = ref(80);
           <CorpProgressBar
             :model-value="30"
             :buffer-value="60"
-            buffer-color="#8b5cf6"
+            buffer-color="#8B4513"
           />
         </div>
       </div>

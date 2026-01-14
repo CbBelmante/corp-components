@@ -1,6 +1,6 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
-import type { RoundedPreset } from '../_shared';
+import type { RoundedPreset } from '../commonStyles';
 
 export { default as CorpBadge } from './CorpBadge.vue';
 export type { RoundedPreset };

@@ -95,14 +95,14 @@ Cores customizadas também funcionam em estado disabled.
 
 :::corp-code
 <div class="grid grid-cols-2 gap-4">
-  <CorpSwitch name="dis-purple-off" label="Roxo OFF" color="#8b5cf6" disabled />
-  <CorpSwitch name="dis-purple-on" label="Roxo ON" color="#8b5cf6" disabled model-value />
+  <CorpSwitch name="dis-purple-off" label="Marrom OFF" color="#8B4513" disabled />
+  <CorpSwitch name="dis-purple-on" label="Marrom ON" color="#8B4513" disabled model-value />
 
-  <CorpSwitch name="dis-pink-off" label="Rosa OFF" color="#ec4899" disabled />
-  <CorpSwitch name="dis-pink-on" label="Rosa ON" color="#ec4899" disabled model-value />
+  <CorpSwitch name="dis-pink-off" label="Cobre OFF" color="#B87333" disabled />
+  <CorpSwitch name="dis-pink-on" label="Cobre ON" color="#B87333" disabled model-value />
 
-  <CorpSwitch name="dis-cyan-off" label="Cyan OFF" color="cyan" disabled />
-  <CorpSwitch name="dis-cyan-on" label="Cyan ON" color="cyan" disabled model-value />
+  <CorpSwitch name="dis-cyan-off" label="Olive OFF" color="#6B8E23" disabled />
+  <CorpSwitch name="dis-cyan-on" label="Olive ON" color="#6B8E23" disabled model-value />
 </div>
 :::
 
@@ -224,17 +224,17 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
 
 :::corp-code
 <!-- HEX -->
-<CorpSwitch name="purple" label="Roxo (HEX)" color="#8b5cf6" model-value />
-<CorpSwitch name="pink" label="Rosa (HEX)" color="#ec4899" model-value />
+<CorpSwitch name="purple" label="Marrom (HEX)" color="#8B4513" model-value />
+<CorpSwitch name="pink" label="Cobre (HEX)" color="#B87333" model-value />
 
 <!-- RGB -->
-<CorpSwitch name="rgb" label="RGB" color="rgb(139, 92, 246)" model-value />
+<CorpSwitch name="rgb" label="RGB" color="rgb(139, 69, 19)" model-value />
 
 <!-- HSL -->
-<CorpSwitch name="hsl" label="HSL" color="hsl(280, 87%, 65%)" model-value />
+<CorpSwitch name="hsl" label="HSL" color="hsl(25, 76%, 31%)" model-value />
 
 <!-- Nomes CSS -->
-<CorpSwitch name="cyan" label="Cyan (CSS)" color="cyan" model-value />
+<CorpSwitch name="cyan" label="Olive (HEX)" color="#6B8E23" model-value />
 <CorpSwitch name="orange" label="Orange (CSS)" color="orange" model-value />
 :::
 

@@ -200,22 +200,22 @@ const handleSubmit = () => {
         <CorpTextarea
           v-model="form.description1"
           name="colorPurple"
-          label="Roxo (#8b5cf6)"
-          border-color="#8b5cf6"
+          label="Marrom (#8B4513)"
+          border-color="#8B4513"
           placeholder="Cor HEX"
         />
         <CorpTextarea
           v-model="form.description1"
           name="colorPink"
-          label="Rosa (#ec4899)"
-          border-color="#ec4899"
+          label="Cobre (#B87333)"
+          border-color="#B87333"
           placeholder="Cor HEX"
         />
         <CorpTextarea
           v-model="form.description1"
           name="colorCyan"
-          label="Cyan (nome CSS)"
-          border-color="cyan"
+          label="Olive (#6B8E23)"
+          border-color="#6B8E23"
           placeholder="Nome CSS"
         />
         <CorpTextarea
@@ -249,15 +249,15 @@ const handleSubmit = () => {
           />
           <CorpTextarea
             name="disabledPurple"
-            label="Roxo"
-            border-color="#8b5cf6"
+            label="Marrom"
+            border-color="#8B4513"
             model-value="Disabled purple com múltiplas linhas"
             disabled
           />
           <CorpTextarea
             name="disabledPink"
-            label="Rosa"
-            border-color="#ec4899"
+            label="Cobre"
+            border-color="#B87333"
             model-value="Disabled pink com múltiplas linhas"
             disabled
           />

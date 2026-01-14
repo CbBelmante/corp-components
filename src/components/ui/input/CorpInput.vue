@@ -26,13 +26,15 @@ import {
 import {
   resolveColor,
   darken,
-  lighten,
   getComputedColor,
   hexToHslWithWrapper,
 } from '@/utils/CorpColorUtils';
-import { resolveRounded } from '@/utils/CorpStyleUtils';
+import {
+  resolveRounded,
+  getDisabledColors,
+  type RoundedValue,
+} from '@commonStyles';
 import { inputVariants, type InputVariant, type InputDensity } from '.';
-import type { RoundedValue } from '@/components/ui/_shared';
 import type { ValidationRule } from '@/validations/rules';
 import type { CorpValidationContext } from '@/composables/useForm';
 
@@ -265,57 +267,40 @@ const isDisabled = computed(() => {
 // Resolve rounded (preset/class/style)
 const rounded = computed(() => resolveRounded(props.rounded));
 
-// Style inline - SEMPRE injeta cor (sem branching semantic/custom)
-// resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
+// Style inline - só injeta cor quando borderColor é passado
 const customColorStyle = computed(() => {
   if (!props.borderColor) return {};
 
   const resolved = resolveColor(props.borderColor);
-  // getComputedColor resolve CSS vars em runtime pra poder usar com darken/lighten
   const hexColor = getComputedColor(resolved);
 
-  // ENABLED: borda normal + borda focus escurecida
-  const darkenedHex = darken(hexColor); // HEX 20% mais escuro
-  const darkenedHsl = hexToHslWithWrapper(darkenedHex);
-
-  // DISABLED: light-dark() automático (lighten no light, darken no dark)
-  // Light mode: lighten (bem claro/lavado)
-  const lightenedDisabledBorderHsl = hexToHslWithWrapper(lighten(hexColor, 50));
-
-  // Dark mode: darken (menos apagado)
-  const darkenedDisabledBorderHsl = hexToHslWithWrapper(darken(hexColor, 40));
+  const darkenedHsl = hexToHslWithWrapper(darken(hexColor));
+  const disabled = getDisabledColors(hexColor, { borderOnly: true });
 
   return {
-    // Enabled
     '--corp-runtime-input-border': resolved,
     '--corp-runtime-input-border-focus': darkenedHsl,
-    // Focus ring (usa cor base)
     '--corp-runtime-input-focus-ring': resolved,
-    // Disabled (2 variáveis: light e dark)
-    '--corp-runtime-input-disabled-border-light': lightenedDisabledBorderHsl,
-    '--corp-runtime-input-disabled-border-dark': darkenedDisabledBorderHsl,
+    '--corp-runtime-input-disabled-border-light': disabled.light.border,
+    '--corp-runtime-input-disabled-border-dark': disabled.dark.border,
   };
 });
 
-// Classes de cor - SEMPRE usa CSS variable (funciona pra qualquer cor)
+// Classes de cor - usa runtime só quando borderColor é passado
 const colorClasses = computed(() => {
-  // NÃO aplica quando disabled (disabled tem suas próprias classes)
   if (isDisabled.value) return '';
 
-  // Se não tem cor, usa padrão do tema corp-def-input-border-focus
-  if (!props.borderColor)
-    return 'focus:border-[hsl(var(--corp-def-input-border-focus))]';
+  // Se tem borderColor custom, usa runtime
+  if (props.borderColor) {
+    return 'border-[var(--corp-runtime-input-border)] focus:border-[var(--corp-runtime-input-border-focus)]';
+  }
 
-  // Usa variáveis injetadas dinamicamente (borda + borda focus mais escura com darken)
-  return 'border-[var(--corp-runtime-input-border)] focus:border-[var(--corp-runtime-input-border-focus)]';
+  // Senão, usa padrão do tema
+  return '';
 });
 
-// Classes de focus - runtime override ou padrão do tema
+// Classes de focus - SEMPRE usa runtime
 const focusClasses = computed(() => {
-  // Se não tem cor customizada, usa padrão do tema corp-def-input-ring
-  if (!props.borderColor)
-    return 'focus-visible:ring-[hsl(var(--corp-def-input-ring))]';
-
   // Cor customizada: usa variável runtime
   return 'focus-visible:ring-[var(--corp-runtime-input-focus-ring)]';
 });

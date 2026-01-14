@@ -197,9 +197,9 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
 
 :::corp-code
 <CorpRadioGroup v-model="radioForm.colorCustom" name="customColors" label="Cores Customizadas">
-  <CorpRadioGroupItem value="purple" label="Roxo (#8b5cf6)" color="#8b5cf6" />
-  <CorpRadioGroupItem value="pink" label="Rosa (#ec4899)" color="#ec4899" />
-  <CorpRadioGroupItem value="cyan" label="Cyan (nome CSS)" color="cyan" />
+  <CorpRadioGroupItem value="purple" label="Marrom (#8B4513)" color="#8B4513" />
+  <CorpRadioGroupItem value="pink" label="Cobre (#B87333)" color="#B87333" />
+  <CorpRadioGroupItem value="cyan" label="Olive (nome CSS)" color="#6B8E23" />
   <CorpRadioGroupItem value="orange" label="Orange (nome CSS)" color="orange" />
 </CorpRadioGroup>
 :::

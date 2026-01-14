@@ -440,17 +440,17 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
 
 :::corp-code
 <!-- HEX -->
-<CorpSelect name="purple" label="Roxo (HEX)" :items="['Vue', 'React']" borderColor="#8b5cf6" />
-<CorpSelect name="pink" label="Rosa (HEX)" :items="['Vue', 'React']" borderColor="#ec4899" />
+<CorpSelect name="purple" label="Marrom (HEX)" :items="['Vue', 'React']" borderColor="#8B4513" />
+<CorpSelect name="pink" label="Cobre (HEX)" :items="['Vue', 'React']" borderColor="#B87333" />
 
 <!-- RGB -->
-<CorpSelect name="rgb" label="RGB" :items="['Vue', 'React']" borderColor="rgb(139, 92, 246)" />
+<CorpSelect name="rgb" label="RGB" :items="['Vue', 'React']" borderColor="rgb(139, 69, 19)" />
 
 <!-- HSL -->
-<CorpSelect name="hsl" label="HSL" :items="['Vue', 'React']" borderColor="hsl(280, 87%, 65%)" />
+<CorpSelect name="hsl" label="HSL" :items="['Vue', 'React']" borderColor="hsl(25, 76%, 31%)" />
 
 <!-- Nomes CSS -->
-<CorpSelect name="cyan" label="Cyan (CSS)" :items="['Vue', 'React']" borderColor="cyan" />
+<CorpSelect name="cyan" label="Olive (CSS)" :items="['Vue', 'React']" borderColor="#6B8E23" />
 <CorpSelect name="orange" label="Orange (CSS)" :items="['Vue', 'React']" borderColor="orange" />
 :::
 
@@ -465,8 +465,8 @@ A prop `chipColor` define a cor dos chips quando `multiple` e `chips` estão ati
 <CorpSelect name="chipsSuccess" label="Success (semântica)" :items="['TS', 'JS', 'Go']" chipColor="success" multiple chips />
 
 <!-- HEX -->
-<CorpSelect name="chipsPurple" label="Roxo (HEX)" :items="['TS', 'JS', 'Go']" chipColor="#8b5cf6" multiple chips />
-<CorpSelect name="chipsPink" label="Rosa (HEX)" :items="['TS', 'JS', 'Go']" chipColor="#ec4899" multiple chips />
+<CorpSelect name="chipsPurple" label="Marrom (HEX)" :items="['TS', 'JS', 'Go']" chipColor="#8B4513" multiple chips />
+<CorpSelect name="chipsPink" label="Cobre (HEX)" :items="['TS', 'JS', 'Go']" chipColor="#B87333" multiple chips />
 
 <!-- RGB -->
 <CorpSelect name="chipsRgb" label="RGB" :items="['TS', 'JS', 'Go']" chipColor="rgb(236, 72, 153)" multiple chips />
@@ -485,8 +485,8 @@ Selects disabled mantêm a cor (mais clara) quando têm `borderColor` customizad
 <div class="grid grid-cols-2 gap-4">
   <CorpSelect name="dis1" label="Primary" :items="['Vue']" borderColor="primary" modelValue="Vue" disabled />
   <CorpSelect name="dis2" label="Success" :items="['Vue']" borderColor="success" modelValue="Vue" disabled />
-  <CorpSelect name="dis3" label="Roxo" :items="['Vue']" borderColor="#8b5cf6" modelValue="Vue" disabled />
-  <CorpSelect name="dis4" label="Rosa" :items="['Vue']" borderColor="#ec4899" modelValue="Vue" disabled />
+  <CorpSelect name="dis3" label="Marrom" :items="['Vue']" borderColor="#8B4513" modelValue="Vue" disabled />
+  <CorpSelect name="dis4" label="Cobre" :items="['Vue']" borderColor="#B87333" modelValue="Vue" disabled />
 </div>
 :::
 

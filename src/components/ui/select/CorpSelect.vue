@@ -26,13 +26,15 @@ import { CorpBadge } from '@/components/ui/badge';
 import {
   resolveColor,
   darken,
-  lighten,
   getComputedColor,
   hexToHslWithWrapper,
 } from '@/utils/CorpColorUtils';
-import { resolveRounded } from '@/utils/CorpStyleUtils';
+import {
+  resolveRounded,
+  getDisabledColors,
+  type RoundedValue,
+} from '@commonStyles';
 import { selectVariants, type SelectVariant, type SelectDensity } from '.';
-import type { RoundedValue } from '@/components/ui/_shared';
 import type { ValidationRule } from '@/validations/rules';
 import type { CorpValidationContext } from '@/composables/useForm';
 
@@ -220,44 +222,35 @@ const selectedItems = computed<SelectItemNormalized[]>(() => {
     .filter(Boolean);
 });
 
-// Style inline - SEMPRE injeta cor (sem branching semantic/custom)
-// resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
+// Style inline - só injeta cor quando borderColor é passado
 const customColorStyle = computed(() => {
   if (!props.borderColor) return {};
 
   const resolved = resolveColor(props.borderColor);
   const hexColor = getComputedColor(resolved);
 
-  // ENABLED: borda normal + borda focus escurecida
-  const darkenedHex = darken(hexColor);
-  const darkenedHsl = hexToHslWithWrapper(darkenedHex);
-
-  // DISABLED: light-dark() automático (lighten no light, darken no dark)
-  const lightenedDisabledBorderHsl = hexToHslWithWrapper(lighten(hexColor, 50));
-  const darkenedDisabledBorderHsl = hexToHslWithWrapper(darken(hexColor, 40));
+  const darkenedHsl = hexToHslWithWrapper(darken(hexColor));
+  const disabled = getDisabledColors(hexColor, { borderOnly: true });
 
   return {
     '--corp-runtime-select-border': resolved,
     '--corp-runtime-select-border-focus': darkenedHsl,
     '--corp-runtime-select-focus-ring': resolved,
-    '--corp-runtime-select-disabled-border-light': lightenedDisabledBorderHsl,
-    '--corp-runtime-select-disabled-border-dark': darkenedDisabledBorderHsl,
+    '--corp-runtime-select-disabled-border-light': disabled.light.border,
+    '--corp-runtime-select-disabled-border-dark': disabled.dark.border,
   };
 });
 
-// Classes de cor - SEMPRE usa CSS variable (funciona pra qualquer cor)
+// Classes de cor - usa runtime só quando borderColor é passado
 const colorClasses = computed(() => {
-  // Se não tem cor, usa padrão do tema corp-def-select-border-focus
-  if (!props.borderColor)
-    return 'focus:border-[hsl(var(--corp-def-select-border-focus))]';
-  return 'border-[var(--corp-runtime-select-border)] focus:border-[var(--corp-runtime-select-border-focus)]';
+  if (props.borderColor) {
+    return 'border-[var(--corp-runtime-select-border)] focus:border-[var(--corp-runtime-select-border-focus)]';
+  }
+  return '';
 });
 
-// Classes de focus - runtime override ou padrão do tema
+// Classes de focus - SEMPRE usa runtime
 const focusClasses = computed(() => {
-  // Se não tem cor customizada, usa padrão do tema corp-def-select-ring
-  if (!props.borderColor)
-    return 'focus-visible:ring-[hsl(var(--corp-def-select-ring))]';
   return 'focus-visible:ring-[var(--corp-runtime-select-focus-ring)]';
 });
 

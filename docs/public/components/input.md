@@ -273,16 +273,16 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
   <CorpInput
     v-model="form.name1"
     name="inputPurple"
-    label="Roxo (HEX)"
-    borderColor="#8b5cf6"
-    placeholder="HEX: #8b5cf6"
+    label="Marrom (HEX)"
+    borderColor="#8B4513"
+    placeholder="HEX: #8B4513"
   />
   <CorpInput
     v-model="form.name1"
     name="inputPink"
-    label="Rosa (HEX)"
-    borderColor="#ec4899"
-    placeholder="HEX: #ec4899"
+    label="Cobre (HEX)"
+    borderColor="#B87333"
+    placeholder="HEX: #B87333"
   />
 
   <!-- RGB -->
@@ -290,8 +290,8 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
     v-model="form.name1"
     name="inputRgb"
     label="RGB"
-    borderColor="rgb(139, 92, 246)"
-    placeholder="RGB: rgb(139, 92, 246)"
+    borderColor="rgb(139, 69, 19)"
+    placeholder="RGB: rgb(139, 69, 19)"
   />
 
   <!-- HSL -->
@@ -299,17 +299,17 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
     v-model="form.name1"
     name="inputHsl"
     label="HSL"
-    borderColor="hsl(280, 87%, 65%)"
-    placeholder="HSL: hsl(280, 87%, 65%)"
+    borderColor="hsl(25, 76%, 31%)"
+    placeholder="HSL: hsl(25, 76%, 31%)"
   />
 
   <!-- Nomes CSS -->
   <CorpInput
     v-model="form.name1"
-    name="inputCyan"
-    label="Cyan (CSS)"
-    borderColor="cyan"
-    placeholder="Nome CSS: cyan"
+    name="inputOlive"
+    label="Olive (CSS)"
+    borderColor="#6B8E23"
+    placeholder="HEX: #6B8E23 (Olive)"
   />
   <CorpInput
     v-model="form.name1"
@@ -345,16 +345,16 @@ Inputs disabled mantêm a cor da borda (mais clara) quando têm cor customizada.
   />
   <CorpInput
     name="disabledPurple"
-    label="Roxo"
-    borderColor="#8b5cf6"
-    model-value="Disabled purple"
+    label="Marrom"
+    borderColor="#8B4513"
+    model-value="Disabled marrom"
     disabled
   />
   <CorpInput
     name="disabledPink"
-    label="Rosa"
-    borderColor="#ec4899"
-    model-value="Disabled pink"
+    label="Cobre"
+    borderColor="#B87333"
+    model-value="Disabled cobre"
     disabled
   />
 </div>
@@ -554,7 +554,7 @@ Personalize a cor de cada ícone individualmente. Todas as props de cor suportam
     label="Cor padrão customizada"
     prepend-icon="luc-user"
     append-icon="luc-settings"
-    iconColor="text-purple-500"
+    iconColor="text-amber-700"
     hint="Todos os ícones herdam a cor padrão"
   />
 </div>
@@ -598,7 +598,7 @@ const user = ref('')
     label="Usuário"
     prepend-icon="luc-user"
     append-icon="luc-settings"
-    iconColor="text-purple-500"
+    iconColor="text-amber-700"
   />
 </template>
 ```

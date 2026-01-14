@@ -156,13 +156,13 @@ const handleSubmit = () => {
         <CorpSwitch
           v-model="disabledOff"
           name="disabledOff"
-          label="Disabled OFF"
+          :label="`Disabled -> value: ${disabledOff ? 'ON' : 'OFF'}`"
           disabled
         />
         <CorpSwitch
           v-model="disabledOn"
           name="disabledOn"
-          label="Disabled ON"
+          :label="`Disabled -> value: ${disabledOn ? 'ON' : 'OFF'}`"
           disabled
         />
       </div>
@@ -175,13 +175,13 @@ const handleSubmit = () => {
         <CorpSwitch
           v-model="readonlyOff"
           name="readonlyOff"
-          label="Readonly OFF"
+          :label="`Readonly -> value: ${readonlyOff ? 'ON' : 'OFF'}`"
           readonly
         />
         <CorpSwitch
           v-model="readonlyOn"
           name="readonlyOn"
-          label="Readonly ON"
+          :label="`Readonly -> value: ${readonlyOn ? 'ON' : 'OFF'}`"
           readonly
         />
       </div>
@@ -256,20 +256,20 @@ const handleSubmit = () => {
         <CorpSwitch
           v-model="form.active"
           name="purple"
-          label="Roxo (#8b5cf6)"
-          color="#8b5cf6"
+          label="Marrom (#8B4513)"
+          color="#8B4513"
         />
         <CorpSwitch
           v-model="form.active"
           name="pink"
-          label="Rosa (#ec4899)"
-          color="#ec4899"
+          label="Cobre (#B87333)"
+          color="#B87333"
         />
         <CorpSwitch
           v-model="form.active"
           name="cyan"
-          label="Cyan (nome CSS)"
-          color="cyan"
+          label="Olive (#6B8E23)"
+          color="#6B8E23"
         />
         <CorpSwitch
           v-model="form.active"

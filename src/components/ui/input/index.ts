@@ -1,6 +1,6 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
-import type { Density, InputVariant, FormRoundedPreset } from '../_shared';
+import type { Density, InputVariant, FormRoundedPreset } from '../commonStyles';
 
 export { default as CorpInput } from './CorpInput.vue';
 

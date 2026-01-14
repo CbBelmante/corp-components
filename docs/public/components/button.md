@@ -82,20 +82,20 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
 
 :::corp-code
 <!-- HEX -->
-<CorpButton color="#8b5cf6" variant="solid">Roxo (HEX)</CorpButton>
-<CorpButton color="#ec4899" variant="outline">Rosa (HEX)</CorpButton>
+<CorpButton color="#8B4513" variant="solid">Marrom (HEX)</CorpButton>
+<CorpButton color="#B87333" variant="outline">Cobre (HEX)</CorpButton>
 
 <!-- RGB -->
-<CorpButton color="rgb(139, 92, 246)" variant="solid">RGB</CorpButton>
+<CorpButton color="rgb(139, 69, 19)" variant="solid">RGB</CorpButton>
 
 <!-- HSL -->
-<CorpButton color="hsl(280, 87%, 65%)" variant="outline">HSL</CorpButton>
+<CorpButton color="hsl(25, 76%, 31%)" variant="outline">HSL</CorpButton>
 
 <!-- Variável CSS -->
 <CorpButton color="var(--info)" variant="ghost">Variável CSS</CorpButton>
 
 <!-- Nomes CSS -->
-<CorpButton color="cyan" variant="ghost">Cyan (CSS)</CorpButton>
+<CorpButton color="#6B8E23" variant="ghost">Olive (HEX)</CorpButton>
 <CorpButton color="orange" variant="solid">Orange (CSS)</CorpButton>
 :::
 
@@ -108,7 +108,7 @@ Para controle total e granular, use `bgColor` e `textColor` que **sobrescrevem**
 :::corp-code
 <CorpButton bgColor="#22c55e" textColor="white">Custom Background</CorpButton>
 <CorpButton variant="outline" bgColor="transparent" textColor="#f59e0b">Custom Outline</CorpButton>
-<CorpButton variant="ghost" bgColor="transparent" textColor="#8b5cf6">Ghost Custom</CorpButton>
+<CorpButton variant="ghost" bgColor="transparent" textColor="#8B4513">Ghost Custom</CorpButton>
 :::
 
 **Hierarquia de prioridade:**
@@ -131,13 +131,13 @@ Para controle total e granular, use `bgColor` e `textColor` que **sobrescrevem**
 
 :::corp-code
 <!-- COM hover automático (color) -->
-<CorpButton color="#8b5cf6" variant="solid">Color com hover ✅</CorpButton>
+<CorpButton color="#8B4513" variant="solid">Color com hover ✅</CorpButton>
 
 <!-- SEM hover automático (bgColor bloqueia) -->
-<CorpButton color="#8b5cf6" bgColor="#8b5cf6" variant="solid">bgColor bloqueia hover ❌</CorpButton>
+<CorpButton color="#8B4513" bgColor="#8B4513" variant="solid">bgColor bloqueia hover ❌</CorpButton>
 
 <!-- Controle manual do hover (você controla) -->
-<CorpButton bgColor="#8b5cf6" textColor="white" variant="solid">bgColor manual</CorpButton>
+<CorpButton bgColor="#8B4513" textColor="white" variant="solid">bgColor manual</CorpButton>
 :::
 
 **Exemplo 2: Ghost variant com override**
@@ -610,7 +610,7 @@ Botões com ícones de redes sociais usando FontAwesome Brands e cores oficiais:
 <CorpButton variant="outline" prepend-icon="fa-fab fa-youtube" p-icon-color="rgb(255, 0, 0)" />
 
 <!-- Nome de cor CSS -->
-<CorpButton variant="outline" prepend-icon="fa-fab fa-twitch" p-icon-color="purple" />
+<CorpButton variant="outline" prepend-icon="fa-fab fa-twitch" p-icon-color="marrom" />
 :::
 
 ### Bottom Navigation

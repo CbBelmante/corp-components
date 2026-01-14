@@ -12,8 +12,9 @@
 // Nenhuma - funções puras usando apenas APIs nativas
 
 // ============== DEPENDÊNCIAS INTERNAS ==============
-import type { RoundedPreset, RoundedValue } from '@/components/ui/_shared';
-import { ROUNDED_PRESETS } from '@/components/ui/_shared';
+import type { RoundedPreset, RoundedValue } from './variants';
+import { ROUNDED_PRESETS } from './variants';
+import { darken, lighten, toRgba } from '@/utils/CorpColorUtils';
 
 // ============== ROUNDED HELPERS (INTERNOS) ==============
 
@@ -82,5 +83,47 @@ export function resolveRounded(value: RoundedValue) {
     preset: undefined,
     class: '',
     style: { borderRadius },
+  };
+}
+
+// ============== DISABLED COLORS ==============
+
+export interface IDisabledColors {
+  light: { bg: string; border: string };
+  dark: { bg: string; border: string };
+}
+
+export interface IDisabledColorsOptions {
+  borderOnly?: boolean;
+}
+
+/**
+ * Cores padronizadas para estado disabled
+ * Mexeu aqui, mexeu em todos (Checkbox, Switch, Progress, Input, etc)
+ *
+ * @param borderOnly - Para inputs/selects que só precisam de borda (valores mais sutis)
+ */
+export function getDisabledColors(
+  hexColor: string,
+  options: IDisabledColorsOptions = {}
+): IDisabledColors {
+  const { borderOnly = false } = options;
+
+  if (borderOnly) {
+    return {
+      light: { bg: '', border: toRgba(lighten(hexColor, 30), 0.4) },
+      dark: { bg: '', border: toRgba(darken(hexColor, 40), 0.4) },
+    };
+  }
+
+  return {
+    light: {
+      bg: toRgba(lighten(hexColor, 30), 0.3),
+      border: toRgba(lighten(hexColor, 20), 0.5),
+    },
+    dark: {
+      bg: toRgba(darken(hexColor, 30), 0.3),
+      border: toRgba(darken(hexColor, 40), 0.5),
+    },
   };
 }

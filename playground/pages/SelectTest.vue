@@ -281,8 +281,8 @@ const handleClear = () => {
         <CorpSelect
           name="chipsPurple"
           :items="skills"
-          label="Roxo chips (#8b5cf6)"
-          chip-color="#8b5cf6"
+          label="Marrom chips (#8B4513)"
+          chip-color="#8B4513"
           modelValue="['Rust', 'Java']"
           multiple
           chips
@@ -290,8 +290,8 @@ const handleClear = () => {
         <CorpSelect
           name="chipsPink"
           :items="skills"
-          label="Rosa chips (#ec4899)"
-          chip-color="#ec4899"
+          label="Cobre chips (#B87333)"
+          chip-color="#B87333"
           modelValue="['TypeScript', 'Rust']"
           multiple
           chips
@@ -442,22 +442,22 @@ const handleClear = () => {
         <CorpSelect
           name="selectPurple"
           :items="frameworks"
-          label="Roxo (#8b5cf6)"
-          border-color="#8b5cf6"
+          label="Marrom (#8B4513)"
+          border-color="#8B4513"
           modelValue="Vue"
         />
         <CorpSelect
           name="selectPink"
           :items="frameworks"
-          label="Rosa (#ec4899)"
-          border-color="#ec4899"
+          label="Cobre (#B87333)"
+          border-color="#B87333"
           modelValue="React"
         />
         <CorpSelect
           name="selectCyan"
           :items="frameworks"
           label="Cyan (nome CSS)"
-          border-color="cyan"
+          border-color="#6B8E23"
           modelValue="Angular"
         />
         <CorpSelect
@@ -494,16 +494,16 @@ const handleClear = () => {
           <CorpSelect
             name="disabledPurple"
             :items="frameworks"
-            label="Roxo"
-            border-color="#8b5cf6"
+            label="Marrom"
+            border-color="#8B4513"
             modelValue="Angular"
             disabled
           />
           <CorpSelect
             name="disabledPink"
             :items="frameworks"
-            label="Rosa"
-            border-color="#ec4899"
+            label="Cobre"
+            border-color="#B87333"
             modelValue="Svelte"
             disabled
           />

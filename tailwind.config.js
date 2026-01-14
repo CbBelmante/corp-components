@@ -51,8 +51,7 @@ export default {
     'data-[state=unchecked]:border-[var(--checkbox-unchecked-border)]',
     // Checkbox - Ícone colorido (ghost/outline)
     'text-[var(--corp-runtime-checkbox-checked-color)]',
-    // Checkbox - Focus ring (theme.ts default + runtime override)
-    'focus-visible:ring-[var(--checkbox-ring)]',
+    // Checkbox - Focus ring (runtime - sempre derivada da cor)
     'focus-visible:ring-[var(--corp-runtime-checkbox-focus-ring)]',
 
     // ==================== RADIO GROUP ====================
@@ -68,14 +67,11 @@ export default {
     'focus-visible:ring-[var(--corp-runtime-radio-ring)]',
 
     // ==================== INPUT ====================
-    // Input - Border focus (colorClasses runtime)
-    'focus:border-[hsl(var(--corp-def-input-border-focus))]',
+    // Input - Border focus (runtime - sempre derivada da cor)
     'border-[var(--corp-runtime-input-border)]',
     'focus:border-[var(--corp-runtime-input-border-focus)]',
-    // Input - Focus ring (theme.ts default + runtime override)
-    'focus-visible:ring-[hsl(var(--corp-def-input-ring))]',
+    // Input - Focus ring (runtime - sempre derivada da cor)
     'focus-visible:ring-[var(--corp-runtime-input-focus-ring)]',
-    // Input - Base classes agora no CVA (border, placeholder)
 
     // ==================== BADGE ====================
     // Badge - Default colors (theme.ts corp-def-badge-* - HSL com wrapper)
@@ -104,36 +100,28 @@ export default {
     'rounded-full',
 
     // ==================== SELECT ====================
-    // Select - Border focus (colorClasses runtime)
-    'focus:border-[hsl(var(--corp-def-select-border-focus))]',
+    // Select - Border focus (runtime - sempre derivada da cor)
     'border-[var(--corp-runtime-select-border)]',
     'focus:border-[var(--corp-runtime-select-border-focus)]',
-    // Select - Focus ring (theme.ts default + runtime override)
-    'focus-visible:ring-[hsl(var(--corp-def-select-ring))]',
+    // Select - Focus ring (runtime - sempre derivada da cor)
     'focus-visible:ring-[var(--corp-runtime-select-focus-ring)]',
-    // Select - Base classes agora no CVA (bg, border)
 
     // ==================== TEXTAREA ====================
-    // Textarea - Border focus (colorClasses runtime)
-    'focus:border-[hsl(var(--corp-def-textarea-border-focus))]',
+    // Textarea - Border focus (runtime - sempre derivada da cor)
     'border-[var(--corp-runtime-textarea-border)]',
     'focus:border-[var(--corp-runtime-textarea-border-focus)]',
-    // Textarea - Focus ring (theme.ts default + runtime override)
-    'focus-visible:ring-[hsl(var(--corp-def-textarea-ring))]',
+    // Textarea - Focus ring (runtime - sempre derivada da cor)
     'focus-visible:ring-[var(--corp-runtime-textarea-focus-ring)]',
-    // Textarea - Base classes agora no CVA (bg, border, placeholder)
 
     // ==================== PROGRESS ====================
-    // Progress - Track/Background (theme.ts default + runtime override)
-    'bg-[hsl(var(--corp-def-progress-bar-track))]',
+    // Progress - Track/Background (runtime - sempre derivada da cor)
     'bg-[var(--corp-runtime-progress-bar-track)]',
     'opacity-[var(--corp-runtime-progress-bar-track-opacity)]',
     // Progress - Bar color (runtime custom color)
     'bg-[var(--corp-runtime-progress-bar)]',
     // Progress - Bar opacity (runtime custom opacity)
     'opacity-[var(--corp-runtime-progress-opacity)]',
-    // Progress - Buffer color (theme.ts default + runtime override)
-    'bg-[hsl(var(--corp-def-progress-buffer))]',
+    // Progress - Buffer color (runtime - sempre derivada da cor)
     'bg-[var(--corp-runtime-progress-buffer)]',
     // Progress - Buffer opacity (runtime custom opacity)
     'opacity-[var(--corp-runtime-progress-buffer-opacity)]',

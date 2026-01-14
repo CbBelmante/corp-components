@@ -25,18 +25,12 @@ import { computed, ref, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import {
   progressVariants,
+  getProgressColors,
   type ProgressHeight,
   type ProgressVariants,
 } from '.';
-import {
-  resolveColor,
-  getComputedColor,
-  lighten,
-  darken,
-  hexToHslWithWrapper,
-} from '@/utils/CorpColorUtils';
-import { resolveRounded } from '@/utils/CorpStyleUtils';
-import type { RoundedValue } from '@/components/ui/_shared';
+import { resolveColor, getComputedColor, darken } from '@/utils/CorpColorUtils';
+import { resolveRounded, type RoundedValue } from '@commonStyles';
 
 // ============== PROPS ==============
 
@@ -200,46 +194,39 @@ const bufferPercentage = computed<number>(() => {
 const customColorStyle = computed(() => {
   const styles: Record<string, string> = {};
 
-  // Hierarquia da barra: barColor (override) → color (semântico)
-  const finalBarColor = props.barColor || props.color;
+  const finalBarColor = props.barColor || props.color || 'primary';
   const resolved = resolveColor(finalBarColor);
   const hexColor = getComputedColor(resolved);
+  const progressColors = getProgressColors(hexColor);
 
-  // ENABLED: cor normal
+  // ENABLED
   styles['--corp-runtime-progress-bar'] = resolved;
   styles['--corp-runtime-progress-bar-hex'] = hexColor;
 
-  // DISABLED: light-dark() automático (seguindo padrão Checkbox)
-  // Light mode: lighten (bem claro/lavado)
-  const lightenedDisabledBarHsl = hexToHslWithWrapper(lighten(hexColor, 70));
-  const lightenedDisabledTrackHsl = hexToHslWithWrapper(lighten(hexColor, 80));
-
-  // Dark mode: darken (menos apagado)
-  const darkenedDisabledBarHsl = hexToHslWithWrapper(darken(hexColor, 25));
-  const darkenedDisabledTrackHsl = hexToHslWithWrapper(darken(hexColor, 40));
-
+  // DISABLED
   styles['--corp-runtime-progress-bar-disabled-light'] =
-    lightenedDisabledBarHsl;
-  styles['--corp-runtime-progress-bar-disabled-dark'] = darkenedDisabledBarHsl;
+    progressColors.disabled.bar.light;
+  styles['--corp-runtime-progress-bar-disabled-dark'] =
+    progressColors.disabled.bar.dark;
   styles['--corp-runtime-progress-track-disabled-light'] =
-    lightenedDisabledTrackHsl;
+    progressColors.disabled.track.light;
   styles['--corp-runtime-progress-track-disabled-dark'] =
-    darkenedDisabledTrackHsl;
+    progressColors.disabled.track.dark;
 
-  // Track color: trackColor (override) → darken(barColor, 40%)
+  // Track color
   if (props.trackColor) {
-    const resolvedTrack = resolveColor(props.trackColor);
-    styles['--corp-runtime-progress-bar-track'] = resolvedTrack;
+    styles['--corp-runtime-progress-bar-track'] = resolveColor(
+      props.trackColor
+    );
   } else {
-    // Deriva da cor da barra (darken 40%)
-    const derivedTrack = darken(hexColor, 40);
-    styles['--corp-runtime-progress-bar-track'] = derivedTrack;
+    styles['--corp-runtime-progress-bar-track'] = darken(hexColor, 40);
   }
 
   // Buffer color
   if (props.bufferColor) {
-    const resolvedBuffer = resolveColor(props.bufferColor);
-    styles['--corp-runtime-progress-buffer'] = resolvedBuffer;
+    styles['--corp-runtime-progress-buffer'] = resolveColor(props.bufferColor);
+  } else {
+    styles['--corp-runtime-progress-buffer'] = progressColors.buffer;
   }
 
   // Opacities
@@ -265,16 +252,10 @@ const customColorStyle = computed(() => {
   return styles;
 });
 
-// Classes de cor - SEMPRE usa CSS variables (funciona pra qualquer cor)
+// Classes de cor - SEMPRE usa runtime (track deriva da barra)
 const colorClasses = computed(() => {
-  if (!props.color) return [];
-
-  const classes: string[] = [];
-
-  // Track sempre usa runtime (derivada ou override)
-  classes.push('bg-[var(--corp-runtime-progress-bar-track)]');
-
-  return classes;
+  // Track sempre usa runtime (derivada ou override) - nunca mais usa default do tema
+  return ['bg-[var(--corp-runtime-progress-bar-track)]'];
 });
 
 // Combina custom rounded + custom color + custom height styles
@@ -314,7 +295,7 @@ const progressClasses = computed(() => {
 
 // Classes da barra
 const barClasses = computed(() => {
-  return cn('h-full transition-all', {
+  return cn('relative z-10 h-full transition-all', {
     // Cor
     'bg-[var(--corp-runtime-progress-bar)]': true,
     // Opacity
@@ -334,11 +315,10 @@ const barClasses = computed(() => {
   });
 });
 
-// Classes do buffer
+// Classes do buffer - sempre usa runtime (derivado da cor da barra)
 const bufferClasses = computed(() => {
   return cn('absolute inset-0 h-full transition-all', {
-    'bg-[var(--corp-runtime-progress-buffer)]': props.bufferColor,
-    'bg-[hsl(var(--corp-def-progress-buffer))]': !props.bufferColor,
+    'bg-[var(--corp-runtime-progress-buffer)]': true,
     'opacity-[var(--corp-runtime-progress-buffer-opacity)]':
       props.bufferOpacity !== undefined,
   });

@@ -95,14 +95,14 @@ Cores customizadas também funcionam em estado disabled.
 
 :::corp-code
 <div class="grid grid-cols-2 gap-4">
-  <CorpCheckbox name="dis-purple-off" label="Roxo OFF" color="#8b5cf6" disabled />
-  <CorpCheckbox name="dis-purple-on" label="Roxo ON" color="#8b5cf6" disabled model-value />
+  <CorpCheckbox name="dis-purple-off" label="Marrom OFF" color="#8B4513" disabled />
+  <CorpCheckbox name="dis-purple-on" label="Marrom ON" color="#8B4513" disabled model-value />
 
-  <CorpCheckbox name="dis-pink-off" label="Rosa OFF" color="#ec4899" disabled />
-  <CorpCheckbox name="dis-pink-on" label="Rosa ON" color="#ec4899" disabled model-value />
+  <CorpCheckbox name="dis-pink-off" label="Cobre OFF" color="#B87333" disabled />
+  <CorpCheckbox name="dis-pink-on" label="Cobre ON" color="#B87333" disabled model-value />
 
-  <CorpCheckbox name="dis-cyan-off" label="Cyan OFF" color="cyan" disabled />
-  <CorpCheckbox name="dis-cyan-on" label="Cyan ON" color="cyan" disabled model-value />
+  <CorpCheckbox name="dis-cyan-off" label="Olive OFF" color="#6B8E23" disabled />
+  <CorpCheckbox name="dis-cyan-on" label="Olive ON" color="#6B8E23" disabled model-value />
 </div>
 :::
 
@@ -166,17 +166,17 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
 
 :::corp-code
 <!-- HEX -->
-<CorpCheckbox name="purple" label="Roxo (HEX)" color="#8b5cf6" model-value />
-<CorpCheckbox name="pink" label="Rosa (HEX)" color="#ec4899" model-value />
+<CorpCheckbox name="purple" label="Marrom (HEX)" color="#8B4513" model-value />
+<CorpCheckbox name="pink" label="Cobre (HEX)" color="#B87333" model-value />
 
 <!-- RGB -->
-<CorpCheckbox name="rgb" label="RGB" color="rgb(139, 92, 246)" model-value />
+<CorpCheckbox name="rgb" label="RGB" color="rgb(139, 69, 19)" model-value />
 
 <!-- HSL -->
-<CorpCheckbox name="hsl" label="HSL" color="hsl(280, 87%, 65%)" model-value />
+<CorpCheckbox name="hsl" label="HSL" color="hsl(25, 76%, 31%)" model-value />
 
 <!-- Nomes CSS -->
-<CorpCheckbox name="cyan" label="Cyan (CSS)" color="cyan" model-value />
+<CorpCheckbox name="cyan" label="Olive (HEX)" color="#6B8E23" model-value />
 <CorpCheckbox name="orange" label="Orange (CSS)" color="orange" model-value />
 :::
 

@@ -533,6 +533,39 @@ export const lighten = (color: string, percent: number = 20): string => {
   return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 };
 
+/**
+ * 🌫️ Desatura uma cor hexadecimal (acinzenta/neutraliza)
+ *
+ * Reduz a saturação da cor, tornando-a mais cinza/neutra.
+ * Mantém o tom (hue) e luminosidade, apenas reduz a vivacidade.
+ * Útil para criar cores de buffer, backgrounds sutis, estados desabilitados.
+ *
+ * @param {string} color - Cor em formato hexadecimal
+ * @param {number} [percent=50] - Porcentagem de desaturação (0-100). 100 = cinza puro
+ * @returns {string} Cor desaturada em formato hex
+ *
+ * @example
+ * desaturate('#FF5733', 50)  // Laranja mais acinzentado/terroso
+ * desaturate('#FF5733', 100) // Cinza puro (sem saturação)
+ * desaturate('#0088FF', 30)  // Azul mais neutro
+ */
+export const desaturate = (color: string, percent: number = 50): string => {
+  if (!color.startsWith('#')) return color;
+
+  const rgb = hexToRgb(color);
+
+  // Calcula o cinza médio (grayscale) da cor
+  const gray = Math.round(0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b);
+
+  // Interpola entre a cor original e o cinza
+  const factor = percent / 100;
+  const r = Math.round(rgb.r + (gray - rgb.r) * factor);
+  const g = Math.round(rgb.g + (gray - rgb.g) * factor);
+  const b = Math.round(rgb.b + (gray - rgb.b) * factor);
+
+  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+};
+
 // ============== COLOR RESOLUTION ==============
 
 /**

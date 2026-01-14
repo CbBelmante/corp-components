@@ -23,11 +23,11 @@ import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
 import {
   resolveColor,
   darken,
-  lighten,
   getComputedColor,
   hexToHslWithWrapper,
   toRgba,
 } from '@/utils/CorpColorUtils';
+import { getDisabledColors } from '@/components/ui/commonStyles';
 import {
   checkboxVariants,
   iconSizeMap,
@@ -211,39 +211,24 @@ const isDisabled = computed(() => {
 // resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
 // NOTA: Unchecked usa theme.ts, só checked usa runtime (por isso "checked" no nome)
 const customColorStyle = computed(() => {
-  if (!props.color) return {};
-
-  const resolved = resolveColor(props.color);
-  // getComputedColor resolve CSS vars em runtime pra poder usar com darken/lighten
+  const finalColor = props.color || 'primary';
+  const resolved = resolveColor(finalColor);
   const hexColor = getComputedColor(resolved);
 
-  // ENABLED: cor normal + borda escurecida
-  const darkenedHex = darken(hexColor); // HEX 20% mais escuro
-  const darkenedHsl = hexToHslWithWrapper(darkenedHex);
-
-  // DISABLED CHECKED: light-dark() automático (lighten no light, darken no dark)
-  // Light mode: lighten (bem claro/lavado)
-  const lightenedDisabledBgHsl = hexToHslWithWrapper(lighten(hexColor, 70));
-  const lightenedDisabledBorderHsl = hexToHslWithWrapper(lighten(hexColor, 50));
-
-  // Dark mode: darken (menos apagado para testar)
-  const darkenedDisabledBgHsl = hexToHslWithWrapper(darken(hexColor, 25));
-  const darkenedDisabledBorderHsl = hexToHslWithWrapper(darken(hexColor, 40));
+  const darkenedHsl = hexToHslWithWrapper(darken(hexColor));
+  const disabled = getDisabledColors(hexColor);
 
   return {
-    // Enabled checked
     '--corp-runtime-checkbox-checked-color': resolved,
     '--corp-runtime-checkbox-checked-border': darkenedHsl,
-    '--corp-runtime-checkbox-color-light': toRgba(hexColor, 0.1), // Para ghost variant
-    // Focus ring (usa cor base)
+    '--corp-runtime-checkbox-color-light': toRgba(hexColor, 0.1),
     '--corp-runtime-checkbox-focus-ring': resolved,
-    // Disabled checked (2 variáveis: light e dark)
-    '--corp-runtime-checkbox-checked-disabled-bg-light': lightenedDisabledBgHsl,
-    '--corp-runtime-checkbox-checked-disabled-bg-dark': darkenedDisabledBgHsl,
+    '--corp-runtime-checkbox-checked-disabled-bg-light': disabled.light.bg,
+    '--corp-runtime-checkbox-checked-disabled-bg-dark': disabled.dark.bg,
     '--corp-runtime-checkbox-checked-disabled-border-light':
-      lightenedDisabledBorderHsl,
+      disabled.light.border,
     '--corp-runtime-checkbox-checked-disabled-border-dark':
-      darkenedDisabledBorderHsl,
+      disabled.dark.border,
   };
 });
 
@@ -282,12 +267,8 @@ const colorClasses = computed(() => {
   return classes;
 });
 
-// Classes de focus - runtime override ou padrão do tema
+// Classes de focus - SEMPRE usa runtime
 const focusClasses = computed(() => {
-  // Se não tem cor customizada, usa padrão do tema (checkbox-ring = primary)
-  if (!props.color) return 'focus-visible:ring-[var(--checkbox-ring)]';
-
-  // Cor customizada: usa variável runtime
   return 'focus-visible:ring-[var(--corp-runtime-checkbox-focus-ring)]';
 });
 

@@ -84,17 +84,17 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
 
 :::corp-code
 <!-- HEX -->
-<CorpBadge color="#8b5cf6">Roxo (HEX)</CorpBadge>
-<CorpBadge color="#ec4899" variant="outline">Rosa (HEX)</CorpBadge>
+<CorpBadge color="#8B4513">Marrom (HEX)</CorpBadge>
+<CorpBadge color="#B87333" variant="outline">Cobre (HEX)</CorpBadge>
 
 <!-- RGB -->
-<CorpBadge color="rgb(139, 92, 246)">RGB</CorpBadge>
+<CorpBadge color="rgb(139, 69, 19)">RGB</CorpBadge>
 
 <!-- HSL -->
-<CorpBadge color="hsl(280, 87%, 65%)" variant="outline">HSL</CorpBadge>
+<CorpBadge color="hsl(25, 76%, 31%)" variant="outline">HSL</CorpBadge>
 
 <!-- Nomes CSS -->
-<CorpBadge color="cyan">Cyan (CSS)</CorpBadge>
+<CorpBadge color="#6B8E23">Olive (CSS)</CorpBadge>
 <CorpBadge color="orange">Orange (CSS)</CorpBadge>
 :::
 

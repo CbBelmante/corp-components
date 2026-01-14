@@ -1,6 +1,6 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
-import type { ButtonVariant, RoundedPreset } from '../_shared';
+import type { ButtonVariant, RoundedPreset } from '../commonStyles';
 
 export { default as CorpButton } from './CorpButton.vue';
 export { default as Button } from './CorpButton.vue'; // alias

@@ -60,6 +60,9 @@
           "@corp/*": [
                 "./src/components/corp/*"
           ],
+          "@commonStyles/*": [
+                "./src/components/ui/commonStyles/*"
+          ],
           "@composables/*": [
                 "./src/composables/*"
           ],
@@ -69,8 +72,8 @@
           "@types/*": [
                 "./src/types/*"
           ],
-          "@locales": [
-                "./src/locales/index"
+          "@locales/*": [
+                "./src/locales/index/*"
           ]
     },
 

@@ -107,12 +107,12 @@ const simulateLoading = () => {
         <div
           class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
         >
-          <Button color="#8b5cf6" variant="solid">HEX Solid</Button>
-          <Button color="#8b5cf6" variant="outline">
+          <Button color="#8B4513" variant="solid">HEX Solid</Button>
+          <Button color="#8B4513" variant="outline">
             HEX Outline (hover!)
           </Button>
-          <Button color="#8b5cf6" variant="ghost">HEX Ghost (hover!)</Button>
-          <Button color="#ec4899" variant="ghost">Rosa Ghost</Button>
+          <Button color="#8B4513" variant="ghost">HEX Ghost (hover!)</Button>
+          <Button color="#B87333" variant="ghost">Cobre Ghost</Button>
         </div>
       </div>
 
@@ -122,11 +122,11 @@ const simulateLoading = () => {
         <div
           class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
         >
-          <Button color="rgb(139, 92, 246)" variant="solid">RGB Solid</Button>
-          <Button color="rgb(139, 92, 246)" variant="outline">
+          <Button color="rgb(139, 69, 19)" variant="solid">RGB Solid</Button>
+          <Button color="rgb(139, 69, 19)" variant="outline">
             RGB Outline (hover!)
           </Button>
-          <Button color="rgb(139, 92, 246)" variant="ghost">
+          <Button color="rgb(139, 69, 19)" variant="ghost">
             RGB Ghost (hover!)
           </Button>
         </div>
@@ -159,9 +159,11 @@ const simulateLoading = () => {
         <div
           class="flex flex-wrap gap-4 p-4 bg-card border border-border rounded-lg"
         >
-          <Button color="cyan" variant="solid">Cyan Solid</Button>
-          <Button color="cyan" variant="outline">Cyan Outline (hover!)</Button>
-          <Button color="cyan" variant="ghost">Cyan Ghost (hover!)</Button>
+          <Button color="#6B8E23" variant="solid">Olive Solid</Button>
+          <Button color="#6B8E23" variant="outline">
+            Olive Outline (hover!)
+          </Button>
+          <Button color="#6B8E23" variant="ghost">Olive Ghost (hover!)</Button>
           <Button color="pink" variant="ghost">Pink Ghost</Button>
           <Button color="orange" variant="ghost">Orange Ghost</Button>
           <Button color="teal" variant="outline">Teal Outline</Button>
@@ -180,13 +182,13 @@ const simulateLoading = () => {
               ✅ color gera hover | ❌ bgColor bloqueia hover
             </p>
             <div class="flex flex-wrap gap-4">
-              <Button color="#8b5cf6" variant="solid">
+              <Button color="#8B4513" variant="solid">
                 Color com hover ✅
               </Button>
-              <Button color="#8b5cf6" bgColor="#8b5cf6" variant="solid">
+              <Button color="#8B4513" bgColor="#8B4513" variant="solid">
                 bgColor bloqueia ❌
               </Button>
-              <Button bgColor="#8b5cf6" textColor="white" variant="solid">
+              <Button bgColor="#8B4513" textColor="white" variant="solid">
                 bgColor manual
               </Button>
             </div>
