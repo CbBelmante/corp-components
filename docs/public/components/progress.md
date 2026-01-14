@@ -283,7 +283,7 @@ Use ambos os slots juntos para ter texto na parte preenchida E centralizado na b
 | `track-opacity` | `number` | `undefined` | Opacidade do track/fundo (0-1) |
 | `buffer-opacity` | `number` | `undefined` | Opacidade do buffer (0-1) |
 | `height` | `'compact'` \| `'regular'` \| `'comfortable'` \| `number` | `'regular'` | Altura da barra |
-| `rounded` | `'none'` \| `'xs'` \| `'sm'` \| `'md'` \| `'lg'` \| `'xl'` \| `'full'` \| `'pill'` \| `'circle'` \| `'shaped'` \| `number` \| `boolean` | `'full'` | Arredondamento |
+| `rounded` | `RoundedValue` | `'full'` | **13 presets**: default, none, xs, sm, md, lg, xl, 2xl, 3xl, full, pill, circle, shaped **OU** Tailwind class **OU** CSS value **OU** number (px) **OU** boolean (true=full, false=none) |
 | `rounded-bar` | `boolean` | `false` | Arredonda a barra interna (não o container) |
 | `indeterminate` | `boolean` | `false` | Loading infinito |
 | `striped` | `boolean` | `false` | Padrão listrado animado |

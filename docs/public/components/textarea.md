@@ -188,6 +188,73 @@ A prop `density` controla o tamanho (altura mínima) do textarea.
 
 ---
 
+## Rounded
+
+Use a prop `rounded` para controlar o border-radius. Aceita **8 presets** (otimizados para formulários), classes Tailwind custom, valores CSS, números ou booleanos:
+
+:::corp-code
+<div class="space-y-4 max-w-md">
+  <!-- Presets -->
+  <CorpTextarea v-model="textareaForm.roundedNone" name="roundedNone" label="None (0)" rounded="none" />
+  <CorpTextarea v-model="textareaForm.roundedSm" name="roundedSm" label="Small (2px)" rounded="sm" />
+  <CorpTextarea v-model="textareaForm.roundedDefault" name="roundedDefault" label="Default (6px)" rounded="default" />
+  <CorpTextarea v-model="textareaForm.roundedLg" name="roundedLg" label="Large (8px)" rounded="lg" />
+  <CorpTextarea v-model="textareaForm.roundedFull" name="roundedFull" label="Full (9999px)" rounded="full" />
+</div>
+
+<!-- @disp-code -->
+```vue
+<template>
+  <CorpTextarea name="none" rounded="none" />
+  <CorpTextarea name="sm" rounded="sm" />
+  <CorpTextarea name="default" rounded="default" />
+  <CorpTextarea name="lg" rounded="lg" />
+  <CorpTextarea name="full" rounded="full" />
+</template>
+```
+:::
+
+### Rounded Custom
+
+Além dos presets, aceita classes Tailwind, valores CSS, números (px) ou booleanos:
+
+:::corp-code
+<div class="space-y-4 max-w-md">
+  <!-- Tailwind custom -->
+  <CorpTextarea v-model="textareaForm.roundedTailwind" name="roundedTailwind" label="Tailwind custom" rounded="rounded-2xl" />
+
+  <!-- Número (convertido para px) -->
+  <CorpTextarea v-model="textareaForm.roundedNumber" name="roundedNumber" label="16px" :rounded="16" />
+
+  <!-- Booleano (true → full, false → none) -->
+  <CorpTextarea v-model="textareaForm.roundedBool" name="roundedBool" label="Boolean false" :rounded="false" />
+
+  <!-- CSS value -->
+  <CorpTextarea v-model="textareaForm.roundedCss" name="roundedCss" label="CSS 8px 0 0 8px" rounded="8px 0 0 8px" />
+</div>
+
+<!-- @disp-code -->
+```vue
+<template>
+  <!-- Tailwind -->
+  <CorpTextarea rounded="rounded-2xl" />
+
+  <!-- Number -->
+  <CorpTextarea :rounded="16" />
+
+  <!-- Boolean -->
+  <CorpTextarea :rounded="false" />
+
+  <!-- CSS -->
+  <CorpTextarea rounded="8px 0 0 8px" />
+</template>
+```
+:::
+
+**Presets disponíveis:** `default`, `none`, `xs`, `sm`, `md`, `lg`, `xl`, `full`
+
+---
+
 ## BorderColor
 
 A prop `borderColor` define a **cor da borda e focus ring** do textarea. Aceita cores semânticas ou customizadas.
@@ -932,6 +999,7 @@ const handleSubmit = () => {
 | `hideDetails` | `boolean` | `false` | Oculta hints e erros |
 | `variant` | `'solo' \| 'filled'` | `'solo'` | Estilo visual (fundo + borda ou só fundo) |
 | `density` | `'compact' \| 'regular' \| 'comfortable'` | `'regular'` | Tamanho do campo |
+| `rounded` | `RoundedValue` | `'default'` | **8 presets** (forms): default, none, xs, sm, md, lg, xl, full **OU** Tailwind class **OU** CSS value **OU** number (px) **OU** boolean (true=full, false=none) |
 | `rows` | `number` | `4` | Número de linhas visíveis |
 | `autoGrow` | `boolean` | `false` | Cresce automaticamente |
 | `noResize` | `boolean` | `false` | Desabilita redimensionamento |

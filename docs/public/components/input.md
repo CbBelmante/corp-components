@@ -188,6 +188,73 @@ A prop `density` controla o tamanho (altura) do input.
 
 ---
 
+## Rounded
+
+Use a prop `rounded` para controlar o border-radius. Aceita **8 presets** (otimizados para formulários), classes Tailwind custom, valores CSS, números ou booleanos:
+
+:::corp-code
+<div class="space-y-4 max-w-md">
+  <!-- Presets -->
+  <CorpInput v-model="form.roundedNone" name="roundedNone" label="None (0)" rounded="none" />
+  <CorpInput v-model="form.roundedSm" name="roundedSm" label="Small (2px)" rounded="sm" />
+  <CorpInput v-model="form.roundedDefault" name="roundedDefault" label="Default (6px)" rounded="default" />
+  <CorpInput v-model="form.roundedLg" name="roundedLg" label="Large (8px)" rounded="lg" />
+  <CorpInput v-model="form.roundedFull" name="roundedFull" label="Full (9999px)" rounded="full" />
+</div>
+
+<!-- @disp-code -->
+```vue
+<template>
+  <CorpInput name="none" rounded="none" />
+  <CorpInput name="sm" rounded="sm" />
+  <CorpInput name="default" rounded="default" />
+  <CorpInput name="lg" rounded="lg" />
+  <CorpInput name="full" rounded="full" />
+</template>
+```
+:::
+
+### Rounded Custom
+
+Além dos presets, aceita classes Tailwind, valores CSS, números (px) ou booleanos:
+
+:::corp-code
+<div class="space-y-4 max-w-md">
+  <!-- Tailwind custom -->
+  <CorpInput v-model="form.roundedTailwind" name="roundedTailwind" label="Tailwind custom" rounded="rounded-2xl" />
+
+  <!-- Número (convertido para px) -->
+  <CorpInput v-model="form.roundedNumber" name="roundedNumber" label="16px" :rounded="16" />
+
+  <!-- Booleano (true → full, false → none) -->
+  <CorpInput v-model="form.roundedBool" name="roundedBool" label="Boolean false" :rounded="false" />
+
+  <!-- CSS value -->
+  <CorpInput v-model="form.roundedCss" name="roundedCss" label="CSS 8px 0 0 8px" rounded="8px 0 0 8px" />
+</div>
+
+<!-- @disp-code -->
+```vue
+<template>
+  <!-- Tailwind -->
+  <CorpInput rounded="rounded-2xl" />
+
+  <!-- Number -->
+  <CorpInput :rounded="16" />
+
+  <!-- Boolean -->
+  <CorpInput :rounded="false" />
+
+  <!-- CSS -->
+  <CorpInput rounded="8px 0 0 8px" />
+</template>
+```
+:::
+
+**Presets disponíveis:** `default`, `none`, `xs`, `sm`, `md`, `lg`, `xl`, `full`
+
+---
+
 ## BorderColor
 
 A prop `borderColor` define a **cor da borda e focus ring** do input. Aceita cores semânticas ou customizadas.
@@ -1601,6 +1668,7 @@ const handleClear = () => {
 | `modelValue` | `string \| number` | `undefined` | Valor do input (v-model) |
 | `variant` | `'solo' \| 'filled'` | `'solo'` | Estilo visual (solo = fundo + borda, filled = só fundo) |
 | `density` | `'compact' \| 'regular' \| 'comfortable'` | `'regular'` | Tamanho/altura do input |
+| `rounded` | `RoundedValue` | `'default'` | **8 presets** (forms): default, none, xs, sm, md, lg, xl, full **OU** Tailwind class **OU** CSS value **OU** number (px) **OU** boolean (true=full, false=none) |
 | `type` | `string` | `'text'` | Tipo HTML do input (text, password, email, etc) |
 | `placeholder` | `string` | `''` | Texto de placeholder |
 | `hint` | `string` | `''` | Mensagem de ajuda abaixo do input |

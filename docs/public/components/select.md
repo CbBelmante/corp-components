@@ -419,6 +419,73 @@ const countries = [
 
 ---
 
+## Rounded
+
+Use a prop `rounded` para controlar o border-radius. Aceita **8 presets** (otimizados para formulários), classes Tailwind custom, valores CSS, números ou booleanos:
+
+:::corp-code
+<div class="space-y-4 max-w-md">
+  <!-- Presets -->
+  <CorpSelect v-model="selectForm.roundedNone" name="roundedNone" :items="['Vue', 'React', 'Angular']" label="None (0)" rounded="none" />
+  <CorpSelect v-model="selectForm.roundedSm" name="roundedSm" :items="['Vue', 'React', 'Angular']" label="Small (2px)" rounded="sm" />
+  <CorpSelect v-model="selectForm.roundedDefault" name="roundedDefault" :items="['Vue', 'React', 'Angular']" label="Default (6px)" rounded="default" />
+  <CorpSelect v-model="selectForm.roundedLg" name="roundedLg" :items="['Vue', 'React', 'Angular']" label="Large (8px)" rounded="lg" />
+  <CorpSelect v-model="selectForm.roundedFull" name="roundedFull" :items="['Vue', 'React', 'Angular']" label="Full (9999px)" rounded="full" />
+</div>
+
+<!-- @disp-code -->
+```vue
+<template>
+  <CorpSelect :items="items" name="none" rounded="none" />
+  <CorpSelect :items="items" name="sm" rounded="sm" />
+  <CorpSelect :items="items" name="default" rounded="default" />
+  <CorpSelect :items="items" name="lg" rounded="lg" />
+  <CorpSelect :items="items" name="full" rounded="full" />
+</template>
+```
+:::
+
+### Rounded Custom
+
+Além dos presets, aceita classes Tailwind, valores CSS, números (px) ou booleanos:
+
+:::corp-code
+<div class="space-y-4 max-w-md">
+  <!-- Tailwind custom -->
+  <CorpSelect v-model="selectForm.roundedTailwind" name="roundedTailwind" :items="['Vue', 'React']" label="Tailwind custom" rounded="rounded-2xl" />
+
+  <!-- Número (convertido para px) -->
+  <CorpSelect v-model="selectForm.roundedNumber" name="roundedNumber" :items="['Vue', 'React']" label="16px" :rounded="16" />
+
+  <!-- Booleano (true → full, false → none) -->
+  <CorpSelect v-model="selectForm.roundedBool" name="roundedBool" :items="['Vue', 'React']" label="Boolean false" :rounded="false" />
+
+  <!-- CSS value -->
+  <CorpSelect v-model="selectForm.roundedCss" name="roundedCss" :items="['Vue', 'React']" label="CSS 8px 0 0 8px" rounded="8px 0 0 8px" />
+</div>
+
+<!-- @disp-code -->
+```vue
+<template>
+  <!-- Tailwind -->
+  <CorpSelect :items="items" rounded="rounded-2xl" />
+
+  <!-- Number -->
+  <CorpSelect :items="items" :rounded="16" />
+
+  <!-- Boolean -->
+  <CorpSelect :items="items" :rounded="false" />
+
+  <!-- CSS -->
+  <CorpSelect :items="items" rounded="8px 0 0 8px" />
+</template>
+```
+:::
+
+**Presets disponíveis:** `default`, `none`, `xs`, `sm`, `md`, `lg`, `xl`, `full`
+
+---
+
 ## BorderColor
 
 A prop `borderColor` define a cor da borda do select. Aceita cores semânticas ou customizadas.
@@ -516,6 +583,7 @@ O `CorpSelect` usa os primitivos do **reka-ui** que seguem as especificações *
 | `modelValue` | `string \| number \| array` | `undefined` | Valor selecionado (v-model) |
 | `variant` | `'solo' \| 'filled'` | `'solo'` | Estilo visual (solo = fundo + borda, filled = só fundo) |
 | `density` | `'compact' \| 'regular' \| 'comfortable'` | `'regular'` | Tamanho/altura do select |
+| `rounded` | `RoundedValue` | `'default'` | **8 presets** (forms): default, none, xs, sm, md, lg, xl, full **OU** Tailwind class **OU** CSS value **OU** number (px) **OU** boolean (true=full, false=none) |
 | `placeholder` | `string` | `'Selecione...'` | Texto de placeholder |
 | `hint` | `string` | `''` | Mensagem de ajuda abaixo do select |
 | `rules` | `ValidationRule[]` | `[]` | Array de regras de validação |
