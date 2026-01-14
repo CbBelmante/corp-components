@@ -103,18 +103,12 @@ const sizePresets: Record<string, string> = {
 };
 
 // ============== COMPUTED ==============
-
-/**
- * Resolve o nome do ícone (suporta prop legacy `name`)
- */
-const resolvedIcon = computed(() => props.icon || props.name || '');
-
 /**
  * Detecta qual biblioteca usar baseado no prefixo
  * Suporta: fa: ou fa- para FontAwesome, luc: ou luc- para Lucide
  */
 const iconLibrary = computed((): IIconLibrary => {
-  const iconName = resolvedIcon.value;
+  const iconName = props.icon;
 
   // Prefixo FontAwesome: fa: ou fa-
   if (iconName.startsWith('fa:') || iconName.startsWith('fa-')) {
@@ -129,7 +123,7 @@ const iconLibrary = computed((): IIconLibrary => {
  * Suporta: fa: fa- luc: luc-
  */
 const iconNameClean = computed(() => {
-  const iconName = resolvedIcon.value;
+  const iconName = props.icon;
 
   // FontAwesome: fa: ou fa-
   if (iconName.startsWith('fa:')) {
@@ -179,7 +173,7 @@ const isSpinner = computed(() => {
     'fa:fas fa-spinner',
     'fa:fas fa-circle-notch',
   ];
-  return spinnerIcons.includes(resolvedIcon.value);
+  return spinnerIcons.includes(props.icon);
 });
 
 /**

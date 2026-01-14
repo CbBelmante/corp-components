@@ -81,11 +81,11 @@ const ALIAS_DEFINITIONS = {
   '@base': './src/components/base',
   '@shadcn': './src/components/base/shadcn',
   '@corp': './src/components/corp',
-  '@commonStyles': './src/components/ui/commonStyles',
+  '@commonStyles': './src/components/ui/commonStyles/index.ts',
   '@composables': './src/composables',
   '@utils': './src/utils',
   '@types': './src/types',
-  '@locales': './src/locales/index',
+  '@locales': './src/locales/index.ts',
 } as const;
 
 // ============== CONSTANTES COMPARTILHADAS ==============

@@ -303,8 +303,8 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 | CbSwitch.vue | CorpSwitch.vue | 1.0 | ✅ Completo |
 | N/A | CorpRadioGroup.vue | 1.0 | ✅ Completo |
 | N/A | CorpTextarea.vue | 1.0 | ✅ Completo |
-| N/A | **CorpProgress.vue** | 1.0 | ⬜ Pendente (🟢 Fácil) |
-| N/A | **CorpBreadcrumb.vue** | 1.0 | ⬜ Pendente (🟢 Fácil) |
+| N/A | CorpProgress.vue | 1.0 | ✅ Completo |
+| N/A | CorpBreadcrumb.vue | 1.0 | ✅ Completo |
 | N/A | **CorpCard.vue** | 1.0 | ⬜ Pendente (🟢 Fácil) |
 | CbButtonGroup.vue | **CorpButtonGroup.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
 | N/A | **CorpTooltip.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
@@ -317,7 +317,7 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 | N/A | **CorpSidebar.vue** | 1.0 | ⬜ Pendente (🔴 Difícil) |
 | N/A | **CorpNavigationBar.vue** | 1.0 | ⬜ Pendente (🔴 Difícil) |
 
-**v1.0 Status:** 9/22 completos (41%)
+**v1.0 Status:** 11/22 completos (50%)
 
 #### 🔧 Componentes Internos (não exportados)
 
@@ -1008,8 +1008,8 @@ Checkbox, Radio e Switch seguem **EXATAMENTE** a mesma estrutura:
 - [x] CorpTextarea ✅
 
 **🟢 Fácil (próximos 3):**
-- [ ] **CorpProgress** - barra de progresso
-- [ ] **CorpBreadcrumb** - navegação de caminho
+- [x] **CorpProgress** - barra de progresso ✅
+- [x] **CorpBreadcrumb** - navegação de caminho ✅
 - [ ] **CorpCard** - container com slots
 
 **🟡 Médio-Fácil (4):**

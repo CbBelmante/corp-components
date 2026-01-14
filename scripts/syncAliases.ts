@@ -13,10 +13,23 @@ import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { ALIAS_DEFINITIONS, config } from '../src/config.js';
 
+/**
+ * Extensões de arquivos que não devem ter /* adicionado
+ * (aliases que apontam para arquivos específicos)
+ */
+const FILE_EXTENSIONS = ['.ts', '.js', '.vue', '.json', '.mjs', '.cjs'];
+
 // Converte para formato tsconfig paths
 const tsconfigPaths: Record<string, string[]> = {};
 for (const [alias, path] of Object.entries(ALIAS_DEFINITIONS)) {
-  tsconfigPaths[`${alias}/*`] = [`${path}/*`];
+  // Se o path aponta para arquivo específico, não adiciona /*
+  const isFile = FILE_EXTENSIONS.some(ext => path.endsWith(ext));
+
+  if (isFile) {
+    tsconfigPaths[alias] = [path];
+  } else {
+    tsconfigPaths[`${alias}/*`] = [`${path}/*`];
+  }
 }
 
 // Lê tsconfig.json usando regex para substituir apenas a seção paths

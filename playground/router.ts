@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from './pages/Home.vue';
 import BadgeTest from './pages/BadgeTest.vue';
+import BreadcrumbTest from './pages/BreadcrumbTest.vue';
 import ButtonTest from './pages/ButtonTest.vue';
 import CheckboxTest from './pages/CheckboxTest.vue';
 import InputTest from './pages/InputTest.vue';
@@ -21,6 +22,7 @@ const router = createRouter({
     },
     ...getPlaygroundRoutes({
       Badge: BadgeTest,
+      Breadcrumb: BreadcrumbTest,
       Button: ButtonTest,
       Checkbox: CheckboxTest,
       Input: InputTest,

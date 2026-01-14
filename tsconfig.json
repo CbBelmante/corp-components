@@ -60,8 +60,8 @@
           "@corp/*": [
                 "./src/components/corp/*"
           ],
-          "@commonStyles/*": [
-                "./src/components/ui/commonStyles/*"
+          "@commonStyles": [
+                "./src/components/ui/commonStyles/index.ts"
           ],
           "@composables/*": [
                 "./src/composables/*"
@@ -72,8 +72,8 @@
           "@types/*": [
                 "./src/types/*"
           ],
-          "@locales/*": [
-                "./src/locales/index/*"
+          "@locales": [
+                "./src/locales/index.ts"
           ]
     },
 

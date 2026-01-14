@@ -10,6 +10,7 @@ import DocsLayout from '../core/DocsLayout.vue';
 // Componentes globais para docs
 import { CorpCode } from '@components/layout';
 import { CorpBadge } from '@components/ui/badge';
+import { CorpBreadcrumb } from '@components/ui/breadcrumb';
 import { CorpButton } from '@components/ui/button';
 import { CorpCheckbox } from '@components/ui/checkbox';
 import { CorpIcon } from '@components/ui/icon';
@@ -33,6 +34,7 @@ export default {
     app.component('CorpCode', CorpCode);
     app.component('CodePreview', CorpCode); // Alias para compatibilidade
     app.component('CorpBadge', CorpBadge);
+    app.component('CorpBreadcrumb', CorpBreadcrumb);
     app.component('CorpButton', CorpButton);
     app.component('CorpCheckbox', CorpCheckbox);
     app.component('CorpIcon', CorpIcon);
