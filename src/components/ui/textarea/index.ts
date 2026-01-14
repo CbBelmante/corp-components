@@ -1,17 +1,17 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
-import type { Density, InputVariant } from '../_shared';
+import type { Density, InputVariant, FormRoundedPreset } from '../_shared';
 
 export { default as CorpTextarea } from './CorpTextarea.vue';
 
-export type { Density as TextareaDensity, InputVariant as TextareaVariant };
+export type { Density as TextareaDensity, InputVariant as TextareaVariant, FormRoundedPreset };
 
 // ============== TEXTAREA VARIANTS (CVA) ==============
 
 export const textareaVariants = cva(
   [
     // Base
-    'flex w-full rounded-md text-sm shadow-sm transition-colors',
+    'flex w-full text-sm shadow-sm transition-colors',
     'bg-[hsl(var(--corp-def-textarea-bg))]',
     'placeholder:text-[hsl(var(--corp-def-textarea-placeholder))]',
     'focus-visible:outline-none focus-visible:ring-1',
@@ -28,10 +28,21 @@ export const textareaVariants = cva(
         regular: 'min-h-24 px-3 py-2.5 text-base',
         comfortable: 'min-h-28 px-4 py-3.5 text-base',
       },
+      rounded: {
+        default: 'rounded-md',
+        none: 'rounded-none',
+        xs: 'rounded-[2px]',
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        xl: 'rounded-xl',
+        full: 'rounded-full',
+      },
     },
     defaultVariants: {
       variant: 'solo',
       density: 'regular',
+      rounded: 'default',
     },
   }
 );

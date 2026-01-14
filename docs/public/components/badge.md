@@ -161,26 +161,46 @@ A prop `dot` transforma o badge em um **mini badge** (9x9px ponto colorido) - id
 
 ### Rounded
 
-Use a prop `rounded` para controlar o border radius. Aceita presets ou valores custom:
+Use a prop `rounded` para controlar o border radius. Aceita **13 presets**, classes Tailwind custom, valores CSS, números ou booleanos:
 
 :::corp-code
-<CorpBadge rounded="none">None</CorpBadge>
-<CorpBadge rounded="sm">Small</CorpBadge>
-<CorpBadge rounded="default">Default</CorpBadge>
-<CorpBadge rounded="lg">Large</CorpBadge>
-<CorpBadge rounded="xl">XL</CorpBadge>
-<CorpBadge rounded="full">Full (Pill)</CorpBadge>
+<!-- Presets básicos -->
+<CorpBadge rounded="none">None (0)</CorpBadge>
+<CorpBadge rounded="xs">XS (2px)</CorpBadge>
+<CorpBadge rounded="sm">Small (2px)</CorpBadge>
+<CorpBadge rounded="default">Default (6px)</CorpBadge>
+<CorpBadge rounded="md">Medium (6px)</CorpBadge>
+<CorpBadge rounded="lg">Large (8px)</CorpBadge>
+<CorpBadge rounded="xl">XL (12px)</CorpBadge>
+
+<!-- Presets grandes -->
+<CorpBadge rounded="2xl">2XL (16px)</CorpBadge>
+<CorpBadge rounded="3xl">3XL (24px)</CorpBadge>
+
+<!-- Presets especiais -->
+<CorpBadge rounded="full">Full (9999px)</CorpBadge>
+<CorpBadge rounded="pill">Pill (9999px)</CorpBadge>
+<CorpBadge rounded="circle">Circle (9999px)</CorpBadge>
+<CorpBadge rounded="shaped">Shaped (8px)</CorpBadge>
 :::
 
-#### Rounded Custom
+#### Rounded Custom (Classes Tailwind e CSS)
 
-Também aceita classes Tailwind ou valores CSS:
+Além dos presets, aceita classes Tailwind, valores CSS, números (px) ou booleanos:
 
 :::corp-code
-<!-- Classes Tailwind -->
+<!-- Classes Tailwind custom -->
 <CorpBadge rounded="rounded-3xl" color="primary">Ultra Rounded</CorpBadge>
 <CorpBadge rounded="rounded-tl-3xl rounded-br-3xl" color="success">Diagonal Cut</CorpBadge>
 <CorpBadge rounded="rounded-l-full rounded-r-sm" color="info">Asymmetric</CorpBadge>
+
+<!-- Número (convertido para px) -->
+<CorpBadge :rounded="16" color="warning">16px</CorpBadge>
+<CorpBadge :rounded="0" color="destructive">0px (none)</CorpBadge>
+
+<!-- Booleano (true → full, false → none) -->
+<CorpBadge :rounded="true" color="success">Boolean true (full)</CorpBadge>
+<CorpBadge :rounded="false" color="secondary">Boolean false (none)</CorpBadge>
 
 <!-- Valores CSS -->
 <CorpBadge rounded="4px 16px" color="warning">Mixed Radius</CorpBadge>
@@ -350,7 +370,7 @@ Use `animationSpeed` para controlar a velocidade (`slow`, `normal`, `fast`):
 | `content` | `string \| number` | `undefined` | Conteúdo do badge (alternativa ao slot) |
 | `max` | `string \| number` | `undefined` | Máximo para números (ex: 99+ quando content > max) |
 | `dot` | `boolean` | `false` | Mini badge (9x9px ponto colorido) - esconde conteúdo e ícones |
-| `rounded` | `string` | `'default'` | Border-radius (presets: default, none, sm, lg, xl, full OU custom: rounded-3xl, 10px) |
+| `rounded` | `RoundedValue` | `'default'` | **13 presets**: default, none, xs, sm, md, lg, xl, 2xl, 3xl, full, pill, circle, shaped **OU** Tailwind class **OU** CSS value **OU** number (px) **OU** boolean (true=full, false=none) |
 | `icon` | `string` | `''` | Nome do ícone Lucide (sem prefixo `luc-`) |
 | `iconPosition` | `'left' \| 'right'` | `'left'` | Posição do ícone |
 | `iconSize` | `number` | `14` | Tamanho do ícone em pixels |

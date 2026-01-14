@@ -1,24 +1,9 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
+import type { RoundedPreset } from '../_shared';
 
-export { default as CorpProgress } from './CorpProgress.vue';
-
-// ============== TYPES ==============
-
-// Vuetify-like: aceita string, number, boolean
-export type ProgressRounded =
-  | 'none'
-  | 'xs'
-  | 'sm'
-  | 'md'
-  | 'lg'
-  | 'xl'
-  | 'full'
-  | 'pill'
-  | 'circle'
-  | 'shaped'
-  | number
-  | boolean;
+export { default as CorpProgressBar } from './CorpProgressBar.vue';
+export type { RoundedPreset };
 
 export type ProgressHeight = 'compact' | 'regular' | 'comfortable' | number;
 
@@ -28,17 +13,20 @@ export const progressVariants = cva(
   [
     // Base
     'relative w-full overflow-hidden transition-all',
-    'bg-[hsl(var(--corp-def-progress-bg))]',
+    'bg-[hsl(var(--corp-def-progress-bar-track))]',
   ],
   {
     variants: {
       rounded: {
+        default: 'rounded-full',
         none: 'rounded-none',
         xs: 'rounded-[2px]',
         sm: 'rounded-sm',
         md: 'rounded-md',
         lg: 'rounded-lg',
         xl: 'rounded-xl',
+        '2xl': 'rounded-2xl',
+        '3xl': 'rounded-3xl',
         full: 'rounded-full',
         pill: 'rounded-full',
         circle: 'rounded-full',

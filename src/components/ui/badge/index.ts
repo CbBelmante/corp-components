@@ -1,7 +1,9 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
+import type { RoundedPreset } from '../_shared';
 
 export { default as CorpBadge } from './CorpBadge.vue';
+export type { RoundedPreset };
 
 // ============== BADGE VARIANTS (CVA) ==============
 
@@ -30,10 +32,17 @@ export const badgeVariants = cva(
       rounded: {
         default: 'rounded-md',
         none: 'rounded-none',
+        xs: 'rounded-[2px]',
         sm: 'rounded-sm',
+        md: 'rounded-md',
         lg: 'rounded-lg',
         xl: 'rounded-xl',
+        '2xl': 'rounded-2xl',
+        '3xl': 'rounded-3xl',
         full: 'rounded-full',
+        pill: 'rounded-full',
+        circle: 'rounded-full',
+        shaped: 'rounded-lg',
       },
     },
     defaultVariants: {
@@ -45,4 +54,3 @@ export const badgeVariants = cva(
 
 export type BadgeVariants = VariantProps<typeof badgeVariants>;
 export type BadgeVariant = 'solid' | 'outline' | 'ghost';
-export type BadgeRounded = 'default' | 'none' | 'sm' | 'lg' | 'xl' | 'full';

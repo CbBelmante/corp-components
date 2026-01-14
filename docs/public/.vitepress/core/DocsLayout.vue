@@ -268,6 +268,14 @@ const { form: radioForm, validateForm: validateRadioForm } = useForm({
   formName: 'RadioForm',
 });
 
+// ============== PROGRESS.MD - Estados ==============
+const progress1 = ref(50);
+const progress2 = ref(60);
+const progress3 = ref(75);
+const clickableProgress = ref(50);
+const downloadProgress = ref(55);
+const bufferProgress = ref(80);
+
 // ============== TEXTAREA.MD - Estados ==============
 const { form: textareaForm, validateForm: validateTextareaForm } = useForm({
   initialValues: {
@@ -398,6 +406,14 @@ injectDocsContext({
   validateTextareaForm,
   handleSubmitTextarea,
   handleClearTextarea,
+
+  // Progress.md
+  progress1,
+  progress2,
+  progress3,
+  clickableProgress,
+  downloadProgress,
+  bufferProgress,
 });
 </script>
 

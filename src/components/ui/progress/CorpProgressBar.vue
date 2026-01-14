@@ -1,18 +1,23 @@
 <script setup lang="ts">
 /**
- * 🎨 CorpProgress - Barra de progresso inspirada no Vuetify
+ * 🧩 CorpProgressBar - Barra de progresso com cores customizáveis
  *
- * Features:
- * - Cores customizáveis (semantic ou custom hex/rgb/hsl)
- * - Indeterminate (loading infinito)
- * - Striped (padrão listrado)
- * - Stream (animação contínua)
- * - Chunks (barra dividida em pedaços)
- * - Buffer (barra secundária)
- * - Clickable (clicar seta valor)
- * - Rounded Vuetify-like (none, xs, sm, md, lg, xl, full, pill, circle, shaped, number, boolean)
- * - Height customizável (preset ou number)
+ * Suporta cores customizadas (semantic ou hex/rgb).
+ * Disabled state derivado da cor escolhida (seguindo padrão Checkbox/Button).
+ *
+ * FEATURES:
+ * - Hierarquia de cores: color (semântico) → barColor/trackColor (overrides)
+ * - Animações: indeterminate, striped, stream
+ * - Chunks (barra dividida) e buffer (barra secundária)
+ * - Clickable para interação
+ * - Disabled com cor derivada (light mode: lighten, dark mode: darken)
+ *
+ * 🔗 DEPENDÊNCIAS ESPECIAIS:
+ * - CorpColorUtils (resolveColor, lighten, darken)
  */
+
+// ============== DEPENDÊNCIAS EXTERNAS ==============
+// Nenhuma
 
 // ============== DEPENDÊNCIAS INTERNAS ==============
 import type { HTMLAttributes } from 'vue';
@@ -20,11 +25,18 @@ import { computed, ref, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import {
   progressVariants,
-  type ProgressRounded,
   type ProgressHeight,
   type ProgressVariants,
 } from '.';
-import { resolveColor, getComputedColor } from '@/utils/CorpColorUtils';
+import {
+  resolveColor,
+  getComputedColor,
+  lighten,
+  darken,
+  hexToHslWithWrapper,
+} from '@/utils/CorpColorUtils';
+import { resolveRounded } from '@/utils/CorpStyleUtils';
+import type { RoundedValue } from '@/components/ui/_shared';
 
 // ============== PROPS ==============
 
@@ -44,6 +56,14 @@ const props = defineProps({
     type: String,
     default: 'primary',
   },
+  barColor: {
+    type: String,
+    default: undefined,
+  },
+  trackColor: {
+    type: String,
+    default: undefined,
+  },
   bufferColor: {
     type: String,
     default: undefined,
@@ -54,7 +74,7 @@ const props = defineProps({
     type: Number,
     default: undefined,
   },
-  bgOpacity: {
+  trackOpacity: {
     type: Number,
     default: undefined,
   },
@@ -69,7 +89,7 @@ const props = defineProps({
     default: 'regular',
   },
   rounded: {
-    type: [String, Number, Boolean] as PropType<ProgressRounded>,
+    type: [String, Number, Boolean] as PropType<RoundedValue>,
     default: 'full',
   },
   roundedBar: {
@@ -140,22 +160,23 @@ const emit = defineEmits<{
   'update:modelValue': [value: number];
 }>();
 
+// ============== CONSTANTES DE ANIMAÇÃO ==============
+const ANIMATION_DURATIONS = {
+  STRIPED: '2s',
+  INDETERMINATE: '2.2s',
+  STREAM: '1.5s',
+} as const;
+
+const STRIPED_PATTERN_SIZE = '20px';
+
 // ============== REFS ==============
 
 const progressRoot = ref<HTMLDivElement | null>(null);
 
 // ============== COMPUTED PROPERTIES ==============
 
-// Normalized rounded (boolean → string, number → px)
-const normalizedRounded = computed<string>(() => {
-  if (typeof props.rounded === 'boolean') {
-    return props.rounded ? 'full' : 'none';
-  }
-  if (typeof props.rounded === 'number') {
-    return props.rounded === 0 ? 'none' : 'custom';
-  }
-  return props.rounded;
-});
+// Resolve rounded (preset/class/style)
+const rounded = computed(() => resolveRounded(props.rounded));
 
 // Normalized height (number → px)
 const normalizedHeight = computed<string>(() => {
@@ -175,14 +196,45 @@ const bufferPercentage = computed<number>(() => {
 });
 
 // Style inline - SEMPRE injeta cor (sem branching semantic/custom)
+// resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
 const customColorStyle = computed(() => {
-  const resolved = resolveColor(props.color);
+  const styles: Record<string, string> = {};
+
+  // Hierarquia da barra: barColor (override) → color (semântico)
+  const finalBarColor = props.barColor || props.color;
+  const resolved = resolveColor(finalBarColor);
   const hexColor = getComputedColor(resolved);
 
-  const styles: Record<string, string> = {
-    '--corp-runtime-progress-bar': resolved,
-    '--corp-runtime-progress-bar-hex': hexColor,
-  };
+  // ENABLED: cor normal
+  styles['--corp-runtime-progress-bar'] = resolved;
+  styles['--corp-runtime-progress-bar-hex'] = hexColor;
+
+  // DISABLED: light-dark() automático (seguindo padrão Checkbox)
+  // Light mode: lighten (bem claro/lavado)
+  const lightenedDisabledBarHsl = hexToHslWithWrapper(lighten(hexColor, 70));
+  const lightenedDisabledTrackHsl = hexToHslWithWrapper(lighten(hexColor, 80));
+
+  // Dark mode: darken (menos apagado)
+  const darkenedDisabledBarHsl = hexToHslWithWrapper(darken(hexColor, 25));
+  const darkenedDisabledTrackHsl = hexToHslWithWrapper(darken(hexColor, 40));
+
+  styles['--corp-runtime-progress-bar-disabled-light'] =
+    lightenedDisabledBarHsl;
+  styles['--corp-runtime-progress-bar-disabled-dark'] = darkenedDisabledBarHsl;
+  styles['--corp-runtime-progress-track-disabled-light'] =
+    lightenedDisabledTrackHsl;
+  styles['--corp-runtime-progress-track-disabled-dark'] =
+    darkenedDisabledTrackHsl;
+
+  // Track color: trackColor (override) → darken(barColor, 40%)
+  if (props.trackColor) {
+    const resolvedTrack = resolveColor(props.trackColor);
+    styles['--corp-runtime-progress-bar-track'] = resolvedTrack;
+  } else {
+    // Deriva da cor da barra (darken 40%)
+    const derivedTrack = darken(hexColor, 40);
+    styles['--corp-runtime-progress-bar-track'] = derivedTrack;
+  }
 
   // Buffer color
   if (props.bufferColor) {
@@ -194,8 +246,10 @@ const customColorStyle = computed(() => {
   if (props.opacity !== undefined) {
     styles['--corp-runtime-progress-opacity'] = String(props.opacity);
   }
-  if (props.bgOpacity !== undefined) {
-    styles['--corp-runtime-progress-bg-opacity'] = String(props.bgOpacity);
+  if (props.trackOpacity !== undefined) {
+    styles['--corp-runtime-progress-bar-track-opacity'] = String(
+      props.trackOpacity
+    );
   }
   if (props.bufferOpacity !== undefined) {
     styles['--corp-runtime-progress-buffer-opacity'] = String(
@@ -208,29 +262,49 @@ const customColorStyle = computed(() => {
     styles['--corp-runtime-progress-height'] = `${props.height}px`;
   }
 
-  // Custom rounded (number)
-  if (typeof props.rounded === 'number' && props.rounded > 0) {
-    styles['--corp-runtime-progress-rounded'] = `${props.rounded}px`;
-  }
-
   return styles;
+});
+
+// Classes de cor - SEMPRE usa CSS variables (funciona pra qualquer cor)
+const colorClasses = computed(() => {
+  if (!props.color) return [];
+
+  const classes: string[] = [];
+
+  // Track sempre usa runtime (derivada ou override)
+  classes.push('bg-[var(--corp-runtime-progress-bar-track)]');
+
+  return classes;
+});
+
+// Combina custom rounded + custom color + custom height styles
+const progressStyle = computed(() => {
+  return {
+    ...rounded.value.style,
+    ...customColorStyle.value,
+  };
 });
 
 // Classes do container (CVA)
 const progressClasses = computed(() => {
   return cn(
     progressVariants({
-      rounded: normalizedRounded.value as ProgressVariants['rounded'],
+      rounded: rounded.value.preset,
       height: normalizedHeight.value as ProgressVariants['height'],
     }),
+    rounded.value.class,
+    colorClasses.value,
     {
-      // Custom height/rounded via CSS var
+      // Track opacity override
+      'opacity-[var(--corp-runtime-progress-bar-track-opacity)]':
+        props.trackOpacity !== undefined,
+      // Custom height via CSS var
       'h-[var(--corp-runtime-progress-height)]':
         typeof props.height === 'number',
-      'rounded-[var(--corp-runtime-progress-rounded)]':
-        typeof props.rounded === 'number' && props.rounded > 0,
       // Active (hide)
       'h-0': !props.active,
+      // Disabled state (seguindo padrão Checkbox)
+      'corp-progress-disabled': !props.active,
       // Clickable
       'cursor-pointer': props.clickable,
     },
@@ -302,7 +376,7 @@ const handleClick = (event: MouseEvent): void => {
   <div
     ref="progressRoot"
     :class="progressClasses"
-    :style="{ ...customColorStyle, ...chunkStyle }"
+    :style="{ ...progressStyle, ...chunkStyle }"
     @click="handleClick"
   >
     <!-- Buffer bar (se bufferValue > 0) -->
@@ -341,6 +415,18 @@ const handleClick = (event: MouseEvent): void => {
         }"
       />
     </div>
+
+    <!-- Slot overlay: conteúdo sobre toda a barra (centralizado em 100% da largura) -->
+    <div
+      v-if="$slots.overlay"
+      class="absolute inset-0 flex items-center justify-center pointer-events-none"
+    >
+      <slot
+        name="overlay"
+        :value="props.modelValue"
+        :buffer="props.bufferValue"
+      />
+    </div>
   </div>
 </template>
 
@@ -357,7 +443,7 @@ const handleClick = (event: MouseEvent): void => {
     transparent 0,
     transparent
   );
-  background-size: 40px 40px;
+  background-size: v-bind(STRIPED_PATTERN_SIZE) v-bind(STRIPED_PATTERN_SIZE);
 }
 
 @keyframes striped {
@@ -365,12 +451,13 @@ const handleClick = (event: MouseEvent): void => {
     background-position: 0 0;
   }
   100% {
-    background-position: 40px 40px;
+    background-position: v-bind(STRIPED_PATTERN_SIZE)
+      v-bind(STRIPED_PATTERN_SIZE);
   }
 }
 
 .animateStriped {
-  animation: striped 1s linear infinite;
+  animation: striped v-bind('ANIMATION_DURATIONS.STRIPED') linear infinite;
 }
 
 /* Indeterminate animation */
@@ -385,7 +472,8 @@ const handleClick = (event: MouseEvent): void => {
 
 .animateIndeterminate {
   width: 25% !important;
-  animation: indeterminate 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: indeterminate v-bind('ANIMATION_DURATIONS.INDETERMINATE')
+    cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 /* Stream animation */
@@ -399,6 +487,35 @@ const handleClick = (event: MouseEvent): void => {
 }
 
 .animateStream {
-  animation: stream 0.25s linear infinite;
+  animation: stream v-bind('ANIMATION_DURATIONS.STREAM') linear infinite;
+}
+</style>
+
+<style>
+/*
+ * FORÇA cores disabled com !important (seguindo padrão Checkbox)
+ * Usa classes customizadas para aplicar cores derivadas da prop color
+ */
+
+/* Disabled track: light mode (default) */
+.corp-progress-disabled {
+  background-color: var(
+    --corp-runtime-progress-track-disabled-light
+  ) !important;
+}
+
+/* Disabled track: dark mode */
+.dark .corp-progress-disabled {
+  background-color: var(--corp-runtime-progress-track-disabled-dark) !important;
+}
+
+/* Disabled bar: light mode */
+.corp-progress-disabled .bg-\[var\(--corp-runtime-progress-bar\)\] {
+  background-color: var(--corp-runtime-progress-bar-disabled-light) !important;
+}
+
+/* Disabled bar: dark mode */
+.dark .corp-progress-disabled .bg-\[var\(--corp-runtime-progress-bar\)\] {
+  background-color: var(--corp-runtime-progress-bar-disabled-dark) !important;
 }
 </style>

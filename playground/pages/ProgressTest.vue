@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { CorpProgress } from '@/components/ui/progress';
+import { CorpProgressBar } from '@/components/ui/progress';
 
 // ============== STATE ==============
 const progress1 = ref(50);
@@ -32,21 +32,21 @@ const bufferProgress = ref(80);
               class="ml-4 flex-1"
             />
           </div>
-          <CorpProgress :model-value="progress1" />
+          <CorpProgressBar :model-value="progress1" />
         </div>
 
         <div class="space-y-2">
           <p class="text-sm text-muted-foreground">Valores diferentes</p>
-          <CorpProgress :model-value="30" />
-          <CorpProgress :model-value="60" />
-          <CorpProgress :model-value="100" />
+          <CorpProgressBar :model-value="30" />
+          <CorpProgressBar :model-value="60" />
+          <CorpProgressBar :model-value="100" />
         </div>
 
         <div class="space-y-2">
           <p class="text-sm text-muted-foreground">
             Com max customizado (75/150 = 50%)
           </p>
-          <CorpProgress :model-value="75" :max="150" />
+          <CorpProgressBar :model-value="75" :max="150" />
         </div>
       </div>
     </section>
@@ -57,23 +57,23 @@ const bufferProgress = ref(80);
       <div class="p-4 bg-card border border-border rounded-lg space-y-4">
         <div class="space-y-2">
           <p class="text-sm">Primary</p>
-          <CorpProgress :model-value="60" color="primary" />
+          <CorpProgressBar :model-value="60" color="primary" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Success</p>
-          <CorpProgress :model-value="60" color="success" />
+          <CorpProgressBar :model-value="60" color="success" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Warning</p>
-          <CorpProgress :model-value="60" color="warning" />
+          <CorpProgressBar :model-value="60" color="warning" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Destructive</p>
-          <CorpProgress :model-value="60" color="destructive" />
+          <CorpProgressBar :model-value="60" color="destructive" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Info</p>
-          <CorpProgress :model-value="60" color="info" />
+          <CorpProgressBar :model-value="60" color="info" />
         </div>
       </div>
     </section>
@@ -84,19 +84,19 @@ const bufferProgress = ref(80);
       <div class="p-4 bg-card border border-border rounded-lg space-y-4">
         <div class="space-y-2">
           <p class="text-sm">Roxo (#8b5cf6)</p>
-          <CorpProgress :model-value="60" color="#8b5cf6" />
+          <CorpProgressBar :model-value="60" color="#8b5cf6" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Rosa (#ec4899)</p>
-          <CorpProgress :model-value="60" color="#ec4899" />
+          <CorpProgressBar :model-value="60" color="#ec4899" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Cyan (#06b6d4)</p>
-          <CorpProgress :model-value="60" color="#06b6d4" />
+          <CorpProgressBar :model-value="60" color="#06b6d4" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Orange (#f97316)</p>
-          <CorpProgress :model-value="60" color="#f97316" />
+          <CorpProgressBar :model-value="60" color="#f97316" />
         </div>
       </div>
     </section>
@@ -107,23 +107,23 @@ const bufferProgress = ref(80);
       <div class="p-4 bg-card border border-border rounded-lg space-y-4">
         <div class="space-y-2">
           <p class="text-sm">Compact (h-1)</p>
-          <CorpProgress :model-value="60" height="compact" />
+          <CorpProgressBar :model-value="60" height="compact" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Regular (h-2) - padrão</p>
-          <CorpProgress :model-value="60" height="regular" />
+          <CorpProgressBar :model-value="60" height="regular" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Comfortable (h-3)</p>
-          <CorpProgress :model-value="60" height="comfortable" />
+          <CorpProgressBar :model-value="60" height="comfortable" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Custom (8px)</p>
-          <CorpProgress :model-value="60" :height="8" />
+          <CorpProgressBar :model-value="60" :height="8" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Custom (16px)</p>
-          <CorpProgress :model-value="60" :height="16" />
+          <CorpProgressBar :model-value="60" :height="16" />
         </div>
       </div>
     </section>
@@ -134,31 +134,31 @@ const bufferProgress = ref(80);
       <div class="p-4 bg-card border border-border rounded-lg space-y-4">
         <div class="space-y-2">
           <p class="text-sm">None</p>
-          <CorpProgress :model-value="60" rounded="none" />
+          <CorpProgressBar :model-value="60" rounded="none" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Small</p>
-          <CorpProgress :model-value="60" rounded="sm" />
+          <CorpProgressBar :model-value="60" rounded="sm" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Medium</p>
-          <CorpProgress :model-value="60" rounded="md" />
+          <CorpProgressBar :model-value="60" rounded="md" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Large</p>
-          <CorpProgress :model-value="60" rounded="lg" />
+          <CorpProgressBar :model-value="60" rounded="lg" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Full (padrão)</p>
-          <CorpProgress :model-value="60" rounded="full" />
+          <CorpProgressBar :model-value="60" rounded="full" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Custom (8px)</p>
-          <CorpProgress :model-value="60" :rounded="8" />
+          <CorpProgressBar :model-value="60" :rounded="8" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Boolean (false = none)</p>
-          <CorpProgress :model-value="60" :rounded="false" />
+          <CorpProgressBar :model-value="60" :rounded="false" />
         </div>
       </div>
     </section>
@@ -171,15 +171,15 @@ const bufferProgress = ref(80);
       <div class="p-4 bg-card border border-border rounded-lg space-y-4">
         <div class="space-y-2">
           <p class="text-sm">Indeterminate (loading infinito)</p>
-          <CorpProgress indeterminate />
+          <CorpProgressBar indeterminate />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Indeterminate - Success</p>
-          <CorpProgress indeterminate color="success" />
+          <CorpProgressBar indeterminate color="success" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Indeterminate - Roxo</p>
-          <CorpProgress indeterminate color="#8b5cf6" />
+          <CorpProgressBar indeterminate color="#8b5cf6" />
         </div>
       </div>
     </section>
@@ -190,15 +190,15 @@ const bufferProgress = ref(80);
       <div class="p-4 bg-card border border-border rounded-lg space-y-4">
         <div class="space-y-2">
           <p class="text-sm">Striped - Primary</p>
-          <CorpProgress :model-value="60" striped />
+          <CorpProgressBar :model-value="60" striped />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Striped - Success</p>
-          <CorpProgress :model-value="60" striped color="success" />
+          <CorpProgressBar :model-value="60" striped color="success" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Striped - Warning</p>
-          <CorpProgress :model-value="60" striped color="warning" />
+          <CorpProgressBar :model-value="60" striped color="warning" />
         </div>
       </div>
     </section>
@@ -209,11 +209,11 @@ const bufferProgress = ref(80);
       <div class="p-4 bg-card border border-border rounded-lg space-y-4">
         <div class="space-y-2">
           <p class="text-sm">Stream - Primary</p>
-          <CorpProgress :model-value="60" stream />
+          <CorpProgressBar :model-value="60" stream />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Stream - Info</p>
-          <CorpProgress :model-value="60" stream color="info" />
+          <CorpProgressBar :model-value="60" stream color="info" />
         </div>
       </div>
     </section>
@@ -243,7 +243,7 @@ const bufferProgress = ref(80);
               class="w-full"
             />
           </div>
-          <CorpProgress
+          <CorpProgressBar
             :model-value="downloadProgress"
             :buffer-value="bufferProgress"
             stream
@@ -253,7 +253,7 @@ const bufferProgress = ref(80);
 
         <div class="space-y-2">
           <p class="text-sm">Buffer com cor customizada</p>
-          <CorpProgress
+          <CorpProgressBar
             :model-value="30"
             :buffer-value="60"
             buffer-color="#8b5cf6"
@@ -268,19 +268,27 @@ const bufferProgress = ref(80);
       <div class="p-4 bg-card border border-border rounded-lg space-y-4">
         <div class="space-y-2">
           <p class="text-sm">5 chunks</p>
-          <CorpProgress :model-value="60" :chunk-count="5" />
+          <CorpProgressBar :model-value="60" :chunk-count="5" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">10 chunks - Success</p>
-          <CorpProgress :model-value="75" :chunk-count="10" color="success" />
+          <CorpProgressBar
+            :model-value="75"
+            :chunk-count="10"
+            color="success"
+          />
         </div>
         <div class="space-y-2">
           <p class="text-sm">8 chunks com gap customizado (8px)</p>
-          <CorpProgress :model-value="40" :chunk-count="8" :chunk-gap="8" />
+          <CorpProgressBar :model-value="40" :chunk-count="8" :chunk-gap="8" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">6 chunks com largura customizada (40px)</p>
-          <CorpProgress :model-value="50" :chunk-count="6" :chunk-width="40" />
+          <CorpProgressBar
+            :model-value="50"
+            :chunk-count="6"
+            :chunk-width="40"
+          />
         </div>
       </div>
     </section>
@@ -293,11 +301,11 @@ const bufferProgress = ref(80);
           <p class="text-sm mb-2">
             Clique na barra para mudar o valor: {{ clickableProgress }}%
           </p>
-          <CorpProgress v-model="clickableProgress" clickable />
+          <CorpProgressBar v-model="clickableProgress" clickable />
         </div>
         <div class="space-y-2">
           <p class="text-sm mb-2">Clickable com chunks</p>
-          <CorpProgress
+          <CorpProgressBar
             :model-value="progress2"
             clickable
             :chunk-count="10"
@@ -314,15 +322,15 @@ const bufferProgress = ref(80);
       <div class="p-4 bg-card border border-border rounded-lg space-y-4">
         <div class="space-y-2">
           <p class="text-sm">Bar opacity (0.5)</p>
-          <CorpProgress :model-value="60" :opacity="0.5" />
+          <CorpProgressBar :model-value="60" :opacity="0.5" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Background opacity (0.1)</p>
-          <CorpProgress :model-value="60" :bg-opacity="0.1" />
+          <CorpProgressBar :model-value="60" :bg-opacity="0.1" />
         </div>
         <div class="space-y-2">
           <p class="text-sm">Buffer opacity (0.3)</p>
-          <CorpProgress
+          <CorpProgressBar
             :model-value="40"
             :buffer-value="70"
             :buffer-opacity="0.3"
@@ -337,7 +345,7 @@ const bufferProgress = ref(80);
       <div class="p-4 bg-card border border-border rounded-lg space-y-4">
         <div class="space-y-2">
           <p class="text-sm">Com porcentagem dentro</p>
-          <CorpProgress :model-value="60" :height="24">
+          <CorpProgressBar :model-value="60" :height="24">
             <template #default="{ value }">
               <div
                 class="flex items-center justify-center h-full text-xs font-medium text-white"
@@ -345,11 +353,11 @@ const bufferProgress = ref(80);
                 {{ value }}%
               </div>
             </template>
-          </CorpProgress>
+          </CorpProgressBar>
         </div>
         <div class="space-y-2">
           <p class="text-sm">Com texto customizado</p>
-          <CorpProgress :model-value="75" :height="32" color="success">
+          <CorpProgressBar :model-value="75" :height="32" color="success">
             <template #default="{ value }">
               <div
                 class="flex items-center justify-center h-full text-sm font-bold text-white"
@@ -357,7 +365,7 @@ const bufferProgress = ref(80);
                 Progresso: {{ value }}%
               </div>
             </template>
-          </CorpProgress>
+          </CorpProgressBar>
         </div>
       </div>
     </section>
@@ -368,7 +376,7 @@ const bufferProgress = ref(80);
       <div class="p-4 bg-card border border-border rounded-lg space-y-6">
         <div class="space-y-2">
           <p class="text-sm font-medium mb-2">Upload com porcentagem</p>
-          <CorpProgress :model-value="45" :height="28" color="success">
+          <CorpProgressBar :model-value="45" :height="28" color="success">
             <template #default="{ value }">
               <div
                 class="flex items-center justify-center h-full text-xs font-bold text-white"
@@ -376,22 +384,34 @@ const bufferProgress = ref(80);
                 {{ value }}% completo
               </div>
             </template>
-          </CorpProgress>
+          </CorpProgressBar>
         </div>
 
         <div class="space-y-3">
           <p class="text-sm font-medium mb-2">Skill Bars</p>
           <div>
             <p class="text-sm mb-2">Vue.js</p>
-            <CorpProgress :model-value="90" :chunk-count="10" color="success" />
+            <CorpProgressBar
+              :model-value="90"
+              :chunk-count="10"
+              color="success"
+            />
           </div>
           <div>
             <p class="text-sm mb-2">TypeScript</p>
-            <CorpProgress :model-value="80" :chunk-count="10" color="#3178c6" />
+            <CorpProgressBar
+              :model-value="80"
+              :chunk-count="10"
+              color="#3178c6"
+            />
           </div>
           <div>
             <p class="text-sm mb-2">Tailwind CSS</p>
-            <CorpProgress :model-value="95" :chunk-count="10" color="#06b6d4" />
+            <CorpProgressBar
+              :model-value="95"
+              :chunk-count="10"
+              color="#06b6d4"
+            />
           </div>
         </div>
       </div>

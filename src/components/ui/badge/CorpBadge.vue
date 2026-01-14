@@ -15,7 +15,9 @@ import { computed, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
 import { resolveColor, toRgba, getComputedColor } from '@/utils/CorpColorUtils';
-import { badgeVariants, type BadgeVariant, type BadgeRounded } from '.';
+import { resolveRounded } from '@/utils/CorpStyleUtils';
+import { badgeVariants, type BadgeVariant } from '.';
+import type { RoundedValue } from '@/components/ui/_shared';
 
 // ============== PROPS ==============
 
@@ -53,9 +55,9 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  // Border-radius (presets OU custom: rounded-3xl, 10px)
+  // Border-radius (presets, Tailwind custom, CSS values, number, boolean)
   rounded: {
-    type: String as PropType<BadgeRounded | string>,
+    type: [String, Number, Boolean] as PropType<RoundedValue>,
     default: 'default',
   },
   icon: {
@@ -205,47 +207,15 @@ const displayContent = computed(() => {
   return `${maxNum}+`;
 });
 
-// Verifica se rounded é preset ou custom
-const roundedPresets: RoundedPreset[] = [
-  'default',
-  'none',
-  'sm',
-  'lg',
-  'xl',
-  'full',
-];
-const isRoundedPreset = computed(() =>
-  roundedPresets.includes(props.rounded as RoundedPreset)
-);
-
-// Classes custom de rounded (quando não é preset)
-const customRoundedClass = computed(() => {
-  if (isRoundedPreset.value) return '';
-  // Se começa com "rounded", é classe Tailwind
-  if (props.rounded.startsWith('rounded')) return props.rounded;
-  // Senão, assume que é valor CSS (será aplicado via style)
-  return '';
-});
-
-// Style custom de rounded (quando é valor CSS tipo "10px", "1rem")
-const customRoundedStyle = computed(() => {
-  if (isRoundedPreset.value) return {};
-  if (props.rounded.startsWith('rounded')) return {};
-  return { borderRadius: props.rounded };
-});
+// Resolve rounded (preset/class/style)
+const rounded = computed(() => resolveRounded(props.rounded));
 
 // Combina custom rounded + custom color styles
 const badgeStyle = computed(() => {
   return {
-    ...customRoundedStyle.value,
+    ...rounded.value.style,
     ...customColorStyle.value,
   };
-});
-
-// Rounded para CVA (só quando é preset)
-const roundedForCVA = computed(() => {
-  if (!isRoundedPreset.value) return undefined;
-  return props.rounded as RoundedPreset;
 });
 
 const computedClasses = computed(() => {
@@ -262,8 +232,8 @@ const computedClasses = computed(() => {
   }
 
   // Rounded (custom class OU preset via CVA)
-  if (customRoundedClass.value) {
-    classes.push(customRoundedClass.value);
+  if (rounded.value.class) {
+    classes.push(rounded.value.class);
   }
 
   // Adiciona animação com velocidade
@@ -285,7 +255,7 @@ const computedClasses = computed(() => {
       cn(
         badgeVariants({
           variant,
-          rounded: roundedForCVA,
+          rounded: rounded.preset,
         }),
         colorClasses,
         computedClasses

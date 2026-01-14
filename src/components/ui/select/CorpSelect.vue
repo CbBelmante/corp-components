@@ -30,7 +30,9 @@ import {
   getComputedColor,
   hexToHslWithWrapper,
 } from '@/utils/CorpColorUtils';
+import { resolveRounded } from '@/utils/CorpStyleUtils';
 import { selectVariants, type SelectVariant, type SelectDensity } from '.';
+import type { RoundedValue } from '@/components/ui/_shared';
 import type { ValidationRule } from '@/validations/rules';
 import type { CorpValidationContext } from '@/composables/useForm';
 
@@ -138,6 +140,12 @@ const props = defineProps({
   density: {
     type: String as PropType<SelectDensity>,
     default: 'regular',
+  },
+
+  // Rounded (border-radius)
+  rounded: {
+    type: [String, Number, Boolean] as PropType<RoundedValue>,
+    default: 'default',
   },
 });
 
@@ -253,13 +261,26 @@ const focusClasses = computed(() => {
   return 'focus-visible:ring-[var(--corp-runtime-select-focus-ring)]';
 });
 
+// Resolve rounded (preset/class/style)
+const rounded = computed(() => resolveRounded(props.rounded));
+
+// Combina custom rounded + custom color styles
+const selectStyle = computed(() => {
+  return {
+    ...rounded.value.style,
+    ...customColorStyle.value,
+  };
+});
+
 // Classes finais do select trigger (usa CVA)
 const selectClasses = computed(() => {
   return cn(
     selectVariants({
       variant: props.variant,
       density: props.density,
+      rounded: rounded.value.preset,
     }),
+    rounded.value.class,
     colorClasses.value,
     focusClasses.value,
     {
@@ -374,7 +395,7 @@ const removeChip = (value: string | number): void => {
         <SelectTrigger
           class="corpSelectTrigger"
           :class="selectClasses"
-          :style="customColorStyle"
+          :style="selectStyle"
           @focus="handleFocus"
           @blur="handleBlur"
         >

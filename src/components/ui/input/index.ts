@@ -1,10 +1,10 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
-import type { Density, InputVariant } from '../_shared';
+import type { Density, InputVariant, FormRoundedPreset } from '../_shared';
 
 export { default as CorpInput } from './CorpInput.vue';
 
-export type { Density as InputDensity, InputVariant };
+export type { Density as InputDensity, InputVariant, FormRoundedPreset };
 
 // ============== INPUT VARIANTS (CVA) ==============
 
@@ -17,7 +17,7 @@ export type { Density as InputDensity, InputVariant };
 export const inputVariants = cva(
   [
     // Base
-    'flex w-full rounded-md px-3 text-sm shadow-sm transition-colors',
+    'flex w-full px-3 text-sm shadow-sm transition-colors',
     'bg-[hsl(var(--corp-def-input-bg))]',
     // Placeholder
     'placeholder:text-[var(--corp-def-input-placeholder)]',
@@ -39,10 +39,21 @@ export const inputVariants = cva(
         regular: 'h-9 py-1',
         comfortable: 'h-10 py-2',
       },
+      rounded: {
+        default: 'rounded-md',
+        none: 'rounded-none',
+        xs: 'rounded-[2px]',
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        xl: 'rounded-xl',
+        full: 'rounded-full',
+      },
     },
     defaultVariants: {
       variant: 'solo',
       density: 'regular',
+      rounded: 'default',
     },
   }
 );

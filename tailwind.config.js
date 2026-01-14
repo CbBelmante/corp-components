@@ -124,8 +124,10 @@ export default {
     // Textarea - Base classes agora no CVA (bg, border, placeholder)
 
     // ==================== PROGRESS ====================
-    // Progress - Background (theme.ts corp-def-progress-*)
-    'bg-[hsl(var(--corp-def-progress-bg))]',
+    // Progress - Track/Background (theme.ts default + runtime override)
+    'bg-[hsl(var(--corp-def-progress-bar-track))]',
+    'bg-[var(--corp-runtime-progress-bar-track)]',
+    'opacity-[var(--corp-runtime-progress-bar-track-opacity)]',
     // Progress - Bar color (runtime custom color)
     'bg-[var(--corp-runtime-progress-bar)]',
     // Progress - Bar opacity (runtime custom opacity)
@@ -139,6 +141,11 @@ export default {
     'h-[var(--corp-runtime-progress-height)]',
     // Progress - Custom rounded (runtime number → px)
     'rounded-[var(--corp-runtime-progress-rounded)]',
+    // Progress - Disabled colors (light/dark mode) - Seguindo padrão Checkbox
+    'bg-[var(--corp-runtime-progress-bar-disabled-light)]',
+    'bg-[var(--corp-runtime-progress-bar-disabled-dark)]',
+    'bg-[var(--corp-runtime-progress-track-disabled-light)]',
+    'bg-[var(--corp-runtime-progress-track-disabled-dark)]',
   ],
   theme: {
     extend: {

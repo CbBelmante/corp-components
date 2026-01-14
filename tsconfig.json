@@ -77,6 +77,6 @@
     /* Build info */
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo"
   },
-  "include": ["src/**/*.ts", "src/**/*.vue", "playground/**/*.ts", "playground/**/*.vue", "docs/**/*.ts", "docs/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.vue", "playground/**/*.ts", "playground/**/*.vue"],
   "exclude": ["node_modules", "dist", ".history"]
 }

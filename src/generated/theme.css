@@ -65,7 +65,7 @@
   --corp-def-textarea-placeholder: #737373;
   --corp-def-textarea-label-color: #050914;
   --corp-def-textarea-label-size: 0.875rem;
-  --corp-def-progress-bg: #ffc6ad;
+  --corp-def-progress-bar-track: #ffc6ad;
   --corp-def-progress-bar: #FF7133;
   --corp-def-progress-buffer: #ffaa85;
   --corp-def-badge-bg: #334155;
@@ -231,7 +231,7 @@
   --corp-def-textarea-placeholder: #7d8590;
   --corp-def-textarea-label-color: #e6edf3;
   --corp-def-textarea-label-size: 0.875rem;
-  --corp-def-progress-bg: #662d14;
+  --corp-def-progress-bar-track: #662d14;
   --corp-def-progress-bar: #FF7133;
   --corp-def-progress-buffer: #99441f;
   --corp-def-badge-bg: #1e3a5f;

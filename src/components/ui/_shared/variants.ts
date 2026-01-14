@@ -24,6 +24,88 @@ export type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'link';
 /** Input, Select */
 export type InputVariant = 'solo' | 'filled';
 
+// ============== ROUNDED ==============
+
+/**
+ * Presets de border-radius compartilhados
+ *
+ * - default: Padrão do componente (geralmente md)
+ * - none: Sem border-radius (0px)
+ * - xs: Extra pequeno (2px)
+ * - sm: Pequeno (0.125rem / 2px)
+ * - md: Médio (0.375rem / 6px)
+ * - lg: Grande (0.5rem / 8px)
+ * - xl: Extra grande (0.75rem / 12px)
+ * - 2xl: 2x extra grande (1rem / 16px)
+ * - 3xl: 3x extra grande (1.5rem / 24px)
+ * - full: Totalmente arredondado (9999px)
+ * - pill: Formato de pílula (full)
+ * - circle: Formato de círculo (full)
+ * - shaped: Com forma (lg)
+ */
+export type RoundedPreset =
+  | 'default'
+  | 'none'
+  | 'xs'
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | '2xl'
+  | '3xl'
+  | 'full'
+  | 'pill'
+  | 'circle'
+  | 'shaped';
+
+/**
+ * Valor universal de rounded (Button, Badge, ProgressBar, etc)
+ *
+ * Aceita:
+ * - Presets (RoundedPreset)
+ * - Tailwind custom: 'rounded-3xl', 'rounded-[32px]'
+ * - CSS values: '10px', '1rem', '50%'
+ * - Number: 10 → vira '10px'
+ * - Boolean: true → 'full', false → 'none'
+ */
+export type RoundedValue = RoundedPreset | string | number | boolean;
+
+/**
+ * Presets de border-radius específicos para formulários (Input, Select, Textarea)
+ *
+ * Subconjunto filtrado do RoundedPreset com apenas os valores sensatos para forms.
+ * Exclui: 2xl, 3xl, pill, circle, shaped (não fazem sentido em campos de formulário)
+ */
+export type FormRoundedPreset =
+  | 'default'
+  | 'none'
+  | 'xs'
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | 'full';
+
+/**
+ * Array com todos os presets válidos de border-radius
+ * Sincronizado com RoundedPreset
+ */
+export const ROUNDED_PRESETS: RoundedPreset[] = [
+  'default',
+  'none',
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  '2xl',
+  '3xl',
+  'full',
+  'pill',
+  'circle',
+  'shaped',
+];
+
 // ============== MAPS ==============
 
 /** Tamanhos de box/icon/indicator por density (Checkbox, Radio, Switch) */

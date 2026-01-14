@@ -30,7 +30,9 @@ import {
   getComputedColor,
   hexToHslWithWrapper,
 } from '@/utils/CorpColorUtils';
+import { resolveRounded } from '@/utils/CorpStyleUtils';
 import { inputVariants, type InputVariant, type InputDensity } from '.';
+import type { RoundedValue } from '@/components/ui/_shared';
 import type { ValidationRule } from '@/validations/rules';
 import type { CorpValidationContext } from '@/composables/useForm';
 
@@ -204,6 +206,12 @@ const props = defineProps({
     type: String as PropType<InputDensity>,
     default: 'regular',
   },
+
+  // Rounded (border-radius)
+  rounded: {
+    type: [String, Number, Boolean] as PropType<RoundedValue>,
+    default: 'default',
+  },
 });
 
 // ============== EMITS ==============
@@ -253,6 +261,9 @@ const hasRequiredRule = computed(() => {
 const isDisabled = computed(() => {
   return props.disabled || props.readonly;
 });
+
+// Resolve rounded (preset/class/style)
+const rounded = computed(() => resolveRounded(props.rounded));
 
 // Style inline - SEMPRE injeta cor (sem branching semantic/custom)
 // resolveColor() trata: 'primary' → hsl(var(--primary)), '#FF0000' → #FF0000, 'red' → red
@@ -309,13 +320,23 @@ const focusClasses = computed(() => {
   return 'focus-visible:ring-[var(--corp-runtime-input-focus-ring)]';
 });
 
+// Combina custom rounded + custom color styles
+const inputStyle = computed(() => {
+  return {
+    ...rounded.value.style,
+    ...customColorStyle.value,
+  };
+});
+
 // Classes finais do input (usa CVA)
 const inputClasses = computed(() => {
   return cn(
     inputVariants({
       variant: props.variant,
       density: props.density,
+      rounded: rounded.value.preset,
     }),
+    rounded.value.class,
     colorClasses.value,
     focusClasses.value,
     {
@@ -610,7 +631,7 @@ const inputDynamicPadding = computed(() => {
             'background-color': 'hsl(var(--corp-def-input-bg))',
             color: 'hsl(var(--corp-def-input-text))',
             ...inputDynamicPadding,
-            ...customColorStyle,
+            ...inputStyle,
           }"
           @input="handleInput"
           @focus="handleFocus"

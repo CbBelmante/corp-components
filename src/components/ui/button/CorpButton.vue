@@ -18,10 +18,11 @@ import { cn } from '@/lib/utils';
 import { buttonVariants, type ButtonVariants } from '.';
 import CorpIcon from '@components/ui/icon/CorpIcon.vue';
 import { resolveColor, toRgba, getComputedColor } from '@/utils/CorpColorUtils';
+import { resolveRounded } from '@/utils/CorpStyleUtils';
+import type { RoundedValue } from '@/components/ui/_shared';
 
 // ============== TIPOS ==============
 
-type RoundedPreset = 'default' | 'none' | 'sm' | 'lg' | 'xl' | 'full';
 type ElevatedPreset = 0 | 1 | 2 | 3 | 4 | 6;
 
 // ============== PROPS ==============
@@ -51,8 +52,8 @@ const props = defineProps({
     default: undefined,
   },
   rounded: {
-    // Aceita presets (default, none, sm, lg, xl, full) OU valores custom (rounded-3xl, 10px, etc)
-    type: String,
+    // Aceita presets, Tailwind custom, CSS values, number, boolean
+    type: [String, Number, Boolean] as PropType<RoundedValue>,
     default: 'default',
   },
   elevated: {
@@ -130,15 +131,6 @@ const props = defineProps({
   },
 });
 
-const roundedPresets: RoundedPreset[] = [
-  'default',
-  'none',
-  'sm',
-  'lg',
-  'xl',
-  'full',
-];
-
 const elevatedPresets: ElevatedPreset[] = [0, 1, 2, 3, 4, 6];
 
 // ============== SLOTS ==============
@@ -167,26 +159,8 @@ const currentPrependIcon = computed(() => {
   return props.prependIcon;
 });
 
-// Verifica se rounded é preset ou custom
-const isRoundedPreset = computed(() =>
-  roundedPresets.includes(props.rounded as RoundedPreset)
-);
-
-// Classes custom de rounded (quando não é preset)
-const customRoundedClass = computed(() => {
-  if (isRoundedPreset.value) return '';
-  // Se começa com "rounded", é classe Tailwind
-  if (props.rounded.startsWith('rounded')) return props.rounded;
-  // Senão, assume que é valor CSS (será aplicado via style)
-  return '';
-});
-
-// Style custom de rounded (quando é valor CSS tipo "10px", "1rem")
-const customRoundedStyle = computed(() => {
-  if (isRoundedPreset.value) return {};
-  if (props.rounded.startsWith('rounded')) return {};
-  return { borderRadius: props.rounded };
-});
+// Resolve rounded (preset/class/style)
+const rounded = computed(() => resolveRounded(props.rounded));
 
 // Verifica se elevated é preset ou custom
 const isElevatedPreset = computed(() => {
@@ -287,7 +261,7 @@ const focusClasses = computed(() => {
 // Combina custom rounded + custom color styles
 const buttonStyle = computed(() => {
   return {
-    ...customRoundedStyle.value,
+    ...rounded.value.style,
     ...customColorStyle.value,
   };
 });
@@ -297,16 +271,14 @@ const buttonClasses = computed(() => {
     buttonVariants({
       variant: props.variant,
       size: props.size,
-      rounded: isRoundedPreset.value
-        ? (props.rounded as RoundedPreset)
-        : undefined,
+      rounded: rounded.value.preset,
       elevated: isElevatedPreset.value
         ? (props.elevated as ElevatedPreset)
         : undefined,
       block: props.block,
       stacked: props.stacked,
     }),
-    customRoundedClass.value,
+    rounded.value.class,
     customElevatedClass.value,
     colorClasses.value,
     focusClasses.value,

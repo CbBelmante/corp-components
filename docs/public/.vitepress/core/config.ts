@@ -10,7 +10,7 @@ import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 import { getAliases } from '../../../../src/config';
 import { corpCodePlugin } from './corpCodePlugin';
-import { getDocsSidebarItems } from '@docs/config/components';
+import { getDocsSidebarItems } from '../../../config/components';
 
 export default defineConfig(async () => {
   const aliases = await getAliases(new URL('../../../../', import.meta.url));

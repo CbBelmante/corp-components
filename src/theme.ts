@@ -360,7 +360,7 @@ export const themeDefinition = {
   },
 
   // ============== CORP PROGRESS ==============
-  'corp-def-progress-bg': {
+  'corp-def-progress-bar-track': {
     light: lighten(BASE_STYLES.primary.light, 60),
     dark: darken(BASE_STYLES.primary.dark, 60),
     type: THEME_COLOR_TYPES.BOTH,

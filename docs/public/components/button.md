@@ -195,26 +195,46 @@ Botões block estendem toda a largura disponível do seu container. Útil para c
 
 ### Rounded
 
-Use a prop `rounded` para controlar o border radius. Aceita presets ou valores custom:
+Use a prop `rounded` para controlar o border radius. Aceita **13 presets**, classes Tailwind custom, valores CSS, números ou booleanos:
 
 :::corp-code
-<CorpButton rounded="none">None</CorpButton>
-<CorpButton rounded="sm">Small</CorpButton>
-<CorpButton rounded="default">Default</CorpButton>
-<CorpButton rounded="lg">Large</CorpButton>
-<CorpButton rounded="xl">XL</CorpButton>
-<CorpButton rounded="full">Full (Pill)</CorpButton>
+<!-- Presets básicos -->
+<CorpButton rounded="none">None (0)</CorpButton>
+<CorpButton rounded="xs">XS (2px)</CorpButton>
+<CorpButton rounded="sm">Small (2px)</CorpButton>
+<CorpButton rounded="default">Default (6px)</CorpButton>
+<CorpButton rounded="md">Medium (6px)</CorpButton>
+<CorpButton rounded="lg">Large (8px)</CorpButton>
+<CorpButton rounded="xl">XL (12px)</CorpButton>
+
+<!-- Presets grandes -->
+<CorpButton rounded="2xl">2XL (16px)</CorpButton>
+<CorpButton rounded="3xl">3XL (24px)</CorpButton>
+
+<!-- Presets especiais -->
+<CorpButton rounded="full">Full (9999px)</CorpButton>
+<CorpButton rounded="pill">Pill (9999px)</CorpButton>
+<CorpButton rounded="circle">Circle (9999px)</CorpButton>
+<CorpButton rounded="shaped">Shaped (8px)</CorpButton>
 :::
 
-#### Rounded Custom
+#### Rounded Custom (Classes Tailwind e CSS)
 
-Também aceita classes Tailwind ou valores CSS:
+Além dos presets, aceita classes Tailwind, valores CSS, números (px) ou booleanos:
 
 :::corp-code
-<!-- Classes Tailwind -->
+<!-- Classes Tailwind custom -->
 <CorpButton rounded="rounded-3xl" color="primary">Ultra Rounded</CorpButton>
 <CorpButton rounded="rounded-tl-3xl rounded-br-3xl" color="success">Diagonal Cut</CorpButton>
 <CorpButton rounded="rounded-l-full rounded-r-sm" color="info">Asymmetric</CorpButton>
+
+<!-- Número (convertido para px) -->
+<CorpButton :rounded="20" color="warning">20px</CorpButton>
+<CorpButton :rounded="0" color="destructive">0px (none)</CorpButton>
+
+<!-- Booleano (true → full, false → none) -->
+<CorpButton :rounded="true" color="success">Boolean true (full)</CorpButton>
+<CorpButton :rounded="false" color="secondary">Boolean false (none)</CorpButton>
 
 <!-- Valores CSS -->
 <CorpButton rounded="8px 24px" color="warning">Mixed Radius</CorpButton>
@@ -635,7 +655,7 @@ Icon buttons em uma toolbar:
 | `bgColor` | `string` | `undefined` | **Override total** do background - sobrescreve `color` **e bloqueia hover automático** |
 | `textColor` | `string` | `undefined` | **Override total** do texto - sobrescreve `color` **e bloqueia classes de texto** |
 | `size` | `'default' \| 'sm' \| 'lg' \| 'xs' \| 'icon' \| 'icon-sm' \| 'icon-lg'` | `'default'` | Tamanho do botão |
-| `rounded` | `'default' \| 'none' \| 'sm' \| 'lg' \| 'xl' \| 'full' \| string` | `'default'` | Preset ou valor custom (Tailwind class ou CSS) |
+| `rounded` | `RoundedValue` | `'default'` | **13 presets**: default, none, xs, sm, md, lg, xl, 2xl, 3xl, full, pill, circle, shaped **OU** Tailwind class **OU** CSS value **OU** number (px) **OU** boolean (true=full, false=none) |
 | `block` | `boolean` | `false` | Largura total (100%) |
 | `stacked` | `boolean` | `false` | Layout vertical (ícone acima do texto) |
 | `disabled` | `boolean` | `false` | Desabilita o botão |

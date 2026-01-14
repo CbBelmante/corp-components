@@ -22,11 +22,13 @@ import {
   getComputedColor,
   hexToHslWithWrapper,
 } from '@/utils/CorpColorUtils';
+import { resolveRounded } from '@/utils/CorpStyleUtils';
 import {
   textareaVariants,
   type TextareaVariant,
   type TextareaDensity,
 } from '.';
+import type { RoundedValue } from '@/components/ui/_shared';
 import type { ValidationRule } from '@/validations/rules';
 import type { CorpValidationContext } from '@/composables/useForm';
 
@@ -172,6 +174,12 @@ const props = defineProps({
     type: Number,
     default: undefined,
   },
+
+  // Rounded (border-radius)
+  rounded: {
+    type: [String, Number, Boolean] as PropType<RoundedValue>,
+    default: 'default',
+  },
 });
 
 // ============== EMITS ==============
@@ -260,13 +268,26 @@ const focusClasses = computed(() => {
   return 'focus-visible:ring-[var(--corp-runtime-textarea-focus-ring)]';
 });
 
+// Resolve rounded (preset/class/style)
+const rounded = computed(() => resolveRounded(props.rounded));
+
+// Combina custom rounded + custom color styles
+const textareaStyle = computed(() => {
+  return {
+    ...rounded.value.style,
+    ...customColorStyle.value,
+  };
+});
+
 // Classes finais do textarea (usa CVA)
 const textareaClasses = computed(() => {
   return cn(
     textareaVariants({
       variant: props.variant,
       density: props.density,
+      rounded: rounded.value.preset,
     }),
+    rounded.value.class,
     colorClasses.value,
     focusClasses.value,
     {
@@ -369,7 +390,7 @@ const handleAppendOuterClick = (): void => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-0 w-full" :style="customColorStyle">
+  <div class="flex flex-col gap-0 w-full" :style="textareaStyle">
     <!-- Label -->
     <Label
       v-if="props.label"

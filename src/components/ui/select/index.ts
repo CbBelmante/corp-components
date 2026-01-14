@@ -1,10 +1,10 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
-import type { Density, InputVariant } from '../_shared';
+import type { Density, InputVariant, FormRoundedPreset } from '../_shared';
 
 export { default as CorpSelect } from './CorpSelect.vue';
 
-export type { Density as SelectDensity, InputVariant as SelectVariant };
+export type { Density as SelectDensity, InputVariant as SelectVariant, FormRoundedPreset };
 export { default as Select } from './Select.vue';
 export { default as SelectContent } from './SelectContent.vue';
 export { default as SelectGroup } from './SelectGroup.vue';
@@ -28,7 +28,7 @@ export { default as SelectValue } from './SelectValue.vue';
 export const selectVariants = cva(
   [
     // Base
-    'flex w-full items-center justify-between rounded-md px-3 text-sm shadow-sm transition-colors',
+    'flex w-full items-center justify-between px-3 text-sm shadow-sm transition-colors',
     'bg-[hsl(var(--corp-def-select-bg))]',
     // Focus
     'focus:outline-none focus:ring-1 focus:ring-[length:var(--ring-width)]',
@@ -48,10 +48,21 @@ export const selectVariants = cva(
         regular: 'h-9',
         comfortable: 'h-10',
       },
+      rounded: {
+        default: 'rounded-md',
+        none: 'rounded-none',
+        xs: 'rounded-[2px]',
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        xl: 'rounded-xl',
+        full: 'rounded-full',
+      },
     },
     defaultVariants: {
       variant: 'solo',
       density: 'regular',
+      rounded: 'default',
     },
   }
 );

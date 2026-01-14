@@ -1,11 +1,11 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
-import type { ButtonVariant } from '../_shared';
+import type { ButtonVariant, RoundedPreset } from '../_shared';
 
 export { default as CorpButton } from './CorpButton.vue';
 export { default as Button } from './CorpButton.vue'; // alias
 
-export type { ButtonVariant };
+export type { ButtonVariant, RoundedPreset };
 
 // ============== BUTTON VARIANTS (CVA) ==============
 
@@ -53,10 +53,17 @@ export const buttonVariants = cva(
       rounded: {
         default: 'rounded-md',
         none: 'rounded-none',
+        xs: 'rounded-[2px]',
         sm: 'rounded-sm',
+        md: 'rounded-md',
         lg: 'rounded-lg',
         xl: 'rounded-xl',
+        '2xl': 'rounded-2xl',
+        '3xl': 'rounded-3xl',
         full: 'rounded-full',
+        pill: 'rounded-full',
+        circle: 'rounded-full',
+        shaped: 'rounded-lg',
       },
       block: {
         true: 'w-full',
@@ -96,4 +103,3 @@ export type ButtonSize =
   | 'icon'
   | 'icon-sm'
   | 'icon-lg';
-export type ButtonRounded = 'default' | 'none' | 'sm' | 'lg' | 'xl' | 'full';

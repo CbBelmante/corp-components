@@ -14,7 +14,7 @@ import { CorpButton } from '@components/ui/button';
 import { CorpCheckbox } from '@components/ui/checkbox';
 import { CorpIcon } from '@components/ui/icon';
 import { CorpInput } from '@components/ui/input';
-import { CorpProgress } from '@components/ui/progress';
+import { CorpProgressBar } from '@components/ui/progress';
 import { CorpRadioGroup, CorpRadioGroupItem } from '@components/ui/radio-group';
 import { CorpSelect } from '@components/ui/select';
 import { CorpSwitch } from '@components/ui/switch';
@@ -37,7 +37,8 @@ export default {
     app.component('CorpCheckbox', CorpCheckbox);
     app.component('CorpIcon', CorpIcon);
     app.component('CorpInput', CorpInput);
-    app.component('CorpProgress', CorpProgress);
+    app.component('CorpProgressBar', CorpProgressBar);
+    app.component('CorpProgress', CorpProgressBar); // Alias para retrocompatibilidade
     app.component('CorpRadioGroup', CorpRadioGroup);
     app.component('CorpRadioGroupItem', CorpRadioGroupItem);
     app.component('CorpSelect', CorpSelect);
