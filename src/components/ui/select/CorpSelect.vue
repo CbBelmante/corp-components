@@ -33,6 +33,7 @@ import {
   resolveRounded,
   getDisabledColors,
   type RoundedValue,
+  type FormRoundedPreset,
 } from '@commonStyles';
 import { selectVariants, type SelectVariant, type SelectDensity } from '.';
 import type { ValidationRule } from '@/validations/rules';
@@ -135,7 +136,7 @@ const props = defineProps({
   // Variant (estilo visual)
   variant: {
     type: String as PropType<SelectVariant>,
-    default: 'solo',
+    default: 'elevated',
   },
 
   // Density (tamanho)
@@ -271,7 +272,7 @@ const selectClasses = computed(() => {
     selectVariants({
       variant: props.variant,
       density: props.density,
-      rounded: rounded.value.preset,
+      rounded: rounded.value.preset as FormRoundedPreset,
     }),
     rounded.value.class,
     colorClasses.value,

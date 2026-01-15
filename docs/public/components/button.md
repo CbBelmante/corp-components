@@ -101,6 +101,26 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
 
 > **Hover funciona!** Cores customizadas (HEX, RGB, HSL, var(), nomes CSS) suportam hover/focus. Nomes CSS são convertidos automaticamente usando Canvas API.
 
+#### Contraste Automático
+
+O texto do botão (variant `solid`) é calculado **automaticamente** baseado na luminosidade da cor de fundo. Cores claras recebem texto preto, cores escuras recebem texto branco.
+
+:::corp-code
+<!-- Cores claras → texto PRETO automático -->
+<CorpButton color="yellow">Yellow</CorpButton>
+<CorpButton color="cyan">Cyan</CorpButton>
+<CorpButton color="pink">Pink</CorpButton>
+<CorpButton color="#B2FF59">Lime</CorpButton>
+
+<!-- Cores escuras → texto BRANCO automático -->
+<CorpButton color="navy">Navy</CorpButton>
+<CorpButton color="maroon">Maroon</CorpButton>
+<CorpButton color="#4A148C">Deep Purple</CorpButton>
+<CorpButton color="black">Black</CorpButton>
+:::
+
+> **Como funciona:** Usa a fórmula YIQ de luminância percebida (WCAG 2.0) para determinar o contraste ideal. O cálculo acontece em runtime via `getContrastColor()`.
+
 #### bgColor e textColor (Overrides)
 
 Para controle total e granular, use `bgColor` e `textColor` que **sobrescrevem** a prop `color`:

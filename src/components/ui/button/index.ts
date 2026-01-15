@@ -36,7 +36,8 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        solid: 'shadow',
+        solid:
+          'bg-[hsl(var(--corp-def-button-bg))] hover:bg-[var(--corp-def-button-bg-hover)] text-[var(--corp-def-button-text)] shadow',
         outline: 'bg-transparent shadow-sm',
         ghost: '',
         link: 'underline-offset-4 hover:underline',

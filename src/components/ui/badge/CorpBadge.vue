@@ -14,7 +14,12 @@ import type { HTMLAttributes } from 'vue';
 import { computed, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
-import { resolveColor, toRgba, getComputedColor } from '@/utils/CorpColorUtils';
+import {
+  resolveColor,
+  toRgba,
+  getComputedColor,
+  getContrastColor,
+} from '@/utils/CorpColorUtils';
 import { resolveRounded } from '@/components/ui/commonStyles';
 import { badgeVariants, type BadgeVariant } from '.';
 import type { RoundedValue } from '@/components/ui/commonStyles';
@@ -107,7 +112,10 @@ const customColorStyle = computed(() => {
 
   // bgColor tem prioridade sobre color
   if (props.bgColor) {
-    styles.backgroundColor = resolveColor(props.bgColor);
+    const resolved = resolveColor(props.bgColor);
+    styles.backgroundColor = resolved;
+    // Calcula contraste para bgColor
+    styles['--corp-runtime-badge-contrast'] = getContrastColor(resolved);
   } else if (props.color) {
     const resolved = resolveColor(props.color);
     const hex = getComputedColor(resolved);
@@ -115,6 +123,8 @@ const customColorStyle = computed(() => {
     styles['--corp-runtime-badge-color'] = resolved;
     styles['--corp-runtime-badge-color-hover'] = toRgba(hex, 0.9);
     styles['--corp-runtime-badge-color-light'] = toRgba(hex, 0.1);
+    // Calcula contraste automático para variant solid
+    styles['--corp-runtime-badge-contrast'] = getContrastColor(hex);
   }
 
   // contentColor tem prioridade final
@@ -168,7 +178,9 @@ const colorClasses = computed(() => {
     const classes: string[] = [];
     if (!hasBgOverride)
       classes.push(`bg-[${color}]`, `hover:bg-[${colorHover}]`);
-    if (!hasContentOverride) classes.push('text-white');
+    // Usa contraste calculado automaticamente
+    if (!hasContentOverride)
+      classes.push('text-[var(--corp-runtime-badge-contrast)]');
     classes.push(`border-[${color}]`);
     return classes;
   } else if (props.variant === 'outline') {

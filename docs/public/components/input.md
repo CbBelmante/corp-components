@@ -92,22 +92,22 @@ const email = ref('')
 
 ## Variant
 
-A prop `variant` define o estilo visual do input. Por padrão usa `solo` (fundo + borda).
+A prop `variant` define o estilo visual do input. Por padrão usa `elevated` (fundo + borda).
 
 :::corp-code
 <div class="space-y-4 max-w-md">
   <CorpInput
-    v-model="form.variantSolo"
-    name="variantSolo"
-    label="Solo (padrão)"
-    variant="solo"
+    v-model="form.variantElevated"
+    name="variantElevated"
+    label="Elevated (padrão)"
+    variant="elevated"
     placeholder="Fundo + borda"
   />
   <CorpInput
-    v-model="form.variantFilled"
-    name="variantFilled"
-    label="Filled"
-    variant="filled"
+    v-model="form.variantFlat"
+    name="variantFlat"
+    label="Flat"
+    variant="flat"
     placeholder="Só fundo, sem borda"
   />
 </div>
@@ -115,20 +115,20 @@ A prop `variant` define o estilo visual do input. Por padrão usa `solo` (fundo 
 <!-- @disp-code -->
 ```vue
 <template>
-  <!-- Solo: fundo + borda (padrão) -->
+  <!-- Elevated: fundo + borda (padrão) -->
   <CorpInput
     v-model="name"
     name="name"
-    label="Solo (padrão)"
-    variant="solo"
+    label="Elevated (padrão)"
+    variant="elevated"
   />
 
-  <!-- Filled: só fundo, sem borda -->
+  <!-- Flat: só fundo, sem borda -->
   <CorpInput
     v-model="email"
     name="email"
-    label="Filled"
-    variant="filled"
+    label="Flat"
+    variant="flat"
   />
 </template>
 ```
@@ -136,8 +136,8 @@ A prop `variant` define o estilo visual do input. Por padrão usa `solo` (fundo 
 
 | Variant | Descrição |
 |---------|-----------|
-| `solo` | Fundo + borda (padrão) |
-| `filled` | Só fundo, sem borda visível |
+| `elevated` | Fundo + borda (padrão) |
+| `flat` | Só fundo, sem borda visível |
 
 ---
 
@@ -1666,7 +1666,7 @@ const handleClear = () => {
 | `name` | `string` | **required** | Nome do campo (identificador único) |
 | `label` | `string` | `''` | Label acima do input |
 | `modelValue` | `string \| number` | `undefined` | Valor do input (v-model) |
-| `variant` | `'solo' \| 'filled'` | `'solo'` | Estilo visual (solo = fundo + borda, filled = só fundo) |
+| `variant` | `'elevated' \| 'flat'` | `'elevated'` | Estilo visual (elevated = fundo + borda, flat = só fundo) |
 | `density` | `'compact' \| 'regular' \| 'comfortable'` | `'regular'` | Tamanho/altura do input |
 | `rounded` | `RoundedValue` | `'default'` | **8 presets** (forms): default, none, xs, sm, md, lg, xl, full **OU** Tailwind class **OU** CSS value **OU** number (px) **OU** boolean (true=full, false=none) |
 | `type` | `string` | `'text'` | Tipo HTML do input (text, password, email, etc) |

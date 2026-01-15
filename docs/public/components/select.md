@@ -254,24 +254,24 @@ Estados de desabilitado e somente leitura.
 
 ## Variant
 
-A prop `variant` define o estilo visual do select. Por padrão usa `solo` (fundo + borda).
+A prop `variant` define o estilo visual do select. Por padrão usa `elevated` (fundo + borda).
 
 :::corp-code
 <div class="space-y-4 max-w-md">
   <CorpSelect
-    v-model="selectForm.variantSolo"
-    name="variantSolo"
+    v-model="selectForm.variantElevated"
+    name="variantElevated"
     :items="['Vue', 'React', 'Angular']"
-    label="Solo (padrão)"
-    variant="solo"
+    label="Elevated (padrão)"
+    variant="elevated"
     placeholder="Fundo + borda"
   />
   <CorpSelect
-    v-model="selectForm.variantFilled"
-    name="variantFilled"
+    v-model="selectForm.variantFlat"
+    name="variantFlat"
     :items="['Vue', 'React', 'Angular']"
-    label="Filled"
-    variant="filled"
+    label="Flat"
+    variant="flat"
     placeholder="Só fundo, sem borda"
   />
 </div>
@@ -279,22 +279,22 @@ A prop `variant` define o estilo visual do select. Por padrão usa `solo` (fundo
 <!-- @disp-code -->
 ```vue
 <template>
-  <!-- Solo: fundo + borda (padrão) -->
+  <!-- Elevated: fundo + borda (padrão) -->
   <CorpSelect
     v-model="framework"
     name="framework"
     :items="['Vue', 'React', 'Angular']"
-    label="Solo (padrão)"
-    variant="solo"
+    label="Elevated (padrão)"
+    variant="elevated"
   />
 
-  <!-- Filled: só fundo, sem borda -->
+  <!-- Flat: só fundo, sem borda -->
   <CorpSelect
     v-model="framework"
     name="framework"
     :items="['Vue', 'React', 'Angular']"
-    label="Filled"
-    variant="filled"
+    label="Flat"
+    variant="flat"
   />
 </template>
 ```
@@ -302,8 +302,8 @@ A prop `variant` define o estilo visual do select. Por padrão usa `solo` (fundo
 
 | Variant | Descrição |
 |---------|-----------|
-| `solo` | Fundo + borda (padrão) |
-| `filled` | Só fundo, sem borda visível |
+| `elevated` | Fundo + borda (padrão) |
+| `flat` | Só fundo, sem borda visível |
 
 ---
 
@@ -581,7 +581,7 @@ O `CorpSelect` usa os primitivos do **reka-ui** que seguem as especificações *
 | `items` | `string[] \| {value, label}[]` | **required** | Opções do select |
 | `label` | `string` | `''` | Label acima do select |
 | `modelValue` | `string \| number \| array` | `undefined` | Valor selecionado (v-model) |
-| `variant` | `'solo' \| 'filled'` | `'solo'` | Estilo visual (solo = fundo + borda, filled = só fundo) |
+| `variant` | `'elevated' \| 'flat'` | `'elevated'` | Estilo visual (elevated = fundo + borda, flat = só fundo) |
 | `density` | `'compact' \| 'regular' \| 'comfortable'` | `'regular'` | Tamanho/altura do select |
 | `rounded` | `RoundedValue` | `'default'` | **8 presets** (forms): default, none, xs, sm, md, lg, xl, full **OU** Tailwind class **OU** CSS value **OU** number (px) **OU** boolean (true=full, false=none) |
 | `placeholder` | `string` | `'Selecione...'` | Texto de placeholder |

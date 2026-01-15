@@ -216,6 +216,65 @@ const maxValue = ref(99);
       </div>
     </section>
 
+    <!-- Contraste Automático -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        🎯 Contraste Automático
+      </h2>
+      <p class="text-sm text-muted-foreground">
+        O texto é calculado automaticamente (branco/preto) baseado na
+        luminosidade do fundo usando a fórmula YIQ.
+      </p>
+
+      <!-- Cores Claras (texto preto) -->
+      <div class="space-y-2">
+        <h3 class="text-sm font-medium text-muted-foreground">
+          Cores Claras → Texto Preto
+        </h3>
+        <div
+          class="flex flex-wrap gap-2 p-4 bg-card border border-border rounded-lg"
+        >
+          <Badge color="yellow">Yellow</Badge>
+          <Badge color="#FFEB3B">Amber</Badge>
+          <Badge color="#E0E0E0">Gray Light</Badge>
+          <Badge color="cyan">Cyan</Badge>
+          <Badge color="#B2FF59">Lime</Badge>
+          <Badge color="pink">Pink</Badge>
+        </div>
+      </div>
+
+      <!-- Cores Escuras (texto branco) -->
+      <div class="space-y-2">
+        <h3 class="text-sm font-medium text-muted-foreground">
+          Cores Escuras → Texto Branco
+        </h3>
+        <div
+          class="flex flex-wrap gap-2 p-4 bg-card border border-border rounded-lg"
+        >
+          <Badge color="navy">Navy</Badge>
+          <Badge color="#1E3A5F">Dark Blue</Badge>
+          <Badge color="#2E7D32">Dark Green</Badge>
+          <Badge color="maroon">Maroon</Badge>
+          <Badge color="#4A148C">Deep Purple</Badge>
+          <Badge color="black">Black</Badge>
+        </div>
+      </div>
+
+      <!-- Sem color (usa defaults do tema) -->
+      <div class="space-y-2">
+        <h3 class="text-sm font-medium text-muted-foreground">
+          Sem color prop → Usa corp-def-badge-* do tema
+        </h3>
+        <div
+          class="flex flex-wrap gap-2 p-4 bg-card border border-border rounded-lg"
+        >
+          <Badge>Default (tema)</Badge>
+          <Badge variant="outline">Outline Default</Badge>
+          <Badge variant="ghost">Ghost Default</Badge>
+        </div>
+      </div>
+    </section>
+
     <!-- Rounded (Border Radius) -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">

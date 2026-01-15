@@ -105,22 +105,22 @@ const handleSubmit = () => {
       </div>
     </section>
 
-    <!-- Variant (solo/filled) -->
+    <!-- Variant (elevated/flat) -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">
-        Variant (solo/filled)
+        Variant (elevated/flat)
       </h2>
       <div class="p-4 bg-card border border-border rounded-lg space-y-4">
         <CorpInput
-          name="variantSolo"
-          label="Solo (padrão)"
-          variant="solo"
+          name="variantElevated"
+          label="Elevated (padrão)"
+          variant="elevated"
           placeholder="Fundo + borda"
         />
         <CorpInput
-          name="variantFilled"
-          label="Filled"
-          variant="filled"
+          name="variantFlat"
+          label="Flat"
+          variant="flat"
           placeholder="Só fundo, sem borda"
         />
       </div>

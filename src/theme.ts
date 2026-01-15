@@ -345,6 +345,21 @@ export const themeDefinition = {
   },
 
   // ============== CORP BUTTON ==============
+  'corp-def-button-bg': {
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-button-bg-hover': {
+    light: '#E5622B', // primary darkened
+    dark: '#E5622B',
+    type: THEME_COLOR_TYPES.ONLY_THEME,
+  },
+  'corp-def-button-text': {
+    light: '#ffffff',
+    dark: '#ffffff',
+    type: THEME_COLOR_TYPES.ONLY_THEME,
+  },
   'corp-def-button-border-width': {
     light: BASE_STYLES.borderWidthNormal,
     dark: BASE_STYLES.borderWidthNormal,
@@ -353,6 +368,43 @@ export const themeDefinition = {
   'corp-def-button-border-color': {
     light: 'transparent',
     dark: 'transparent',
+    type: THEME_COLOR_TYPES.ONLY_THEME,
+  },
+
+  // ============== CORP CARD ==============
+  'corp-def-card-bg': {
+    light: '#ffffff',
+    dark: '#161b22',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-card-border': {
+    light: BASE_STYLES.borderInput.light,
+    dark: BASE_STYLES.borderInput.dark,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-card-border-width': {
+    light: BASE_STYLES.borderWidthNormal,
+    dark: BASE_STYLES.borderWidthNormal,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-card-text': {
+    light: '#050914',
+    dark: '#e6edf3',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-card-title-color': {
+    light: '#050914',
+    dark: '#e6edf3',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-card-subtitle-color': {
+    light: '#64748b',
+    dark: '#7d8590',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-card-shadow': {
+    light: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+    dark: '0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3)',
     type: THEME_COLOR_TYPES.ONLY_THEME,
   },
 

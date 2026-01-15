@@ -25,6 +25,7 @@ import {
   resolveRounded,
   getDisabledColors,
   type RoundedValue,
+  type FormRoundedPreset,
 } from '@commonStyles';
 import {
   textareaVariants,
@@ -150,7 +151,7 @@ const props = defineProps({
   // Variant (estilo visual)
   variant: {
     type: String as PropType<TextareaVariant>,
-    default: 'solo',
+    default: 'elevated',
   },
 
   // Density (tamanho)
@@ -249,7 +250,7 @@ const customColorStyle = computed(() => {
 // Classes de cor - usa runtime só quando borderColor é passado
 const colorClasses = computed(() => {
   if (isDisabled.value) return '';
-  if (props.variant === 'filled') return '';
+  if (props.variant === 'flat') return '';
 
   if (props.borderColor) {
     return 'border-[var(--corp-runtime-textarea-border)] focus:border-[var(--corp-runtime-textarea-border-focus)]';
@@ -279,7 +280,7 @@ const textareaClasses = computed(() => {
     textareaVariants({
       variant: props.variant,
       density: props.density,
-      rounded: rounded.value.preset,
+      rounded: rounded.value.preset as FormRoundedPreset,
     }),
     rounded.value.class,
     colorClasses.value,

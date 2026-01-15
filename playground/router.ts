@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from './pages/Home.vue';
 import BadgeTest from './pages/BadgeTest.vue';
 import BreadcrumbTest from './pages/BreadcrumbTest.vue';
+import CardTest from './pages/CardTest.vue';
 import ButtonTest from './pages/ButtonTest.vue';
 import CheckboxTest from './pages/CheckboxTest.vue';
 import InputTest from './pages/InputTest.vue';
@@ -24,6 +25,7 @@ const router = createRouter({
       Badge: BadgeTest,
       Breadcrumb: BreadcrumbTest,
       Button: ButtonTest,
+      Card: CardTest,
       Checkbox: CheckboxTest,
       Input: InputTest,
       Progress: ProgressTest,

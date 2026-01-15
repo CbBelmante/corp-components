@@ -225,6 +225,65 @@ const simulateLoading = () => {
       </div>
     </section>
 
+    <!-- Contraste Automático -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-semibold text-foreground">
+        🎯 Contraste Automático
+      </h2>
+      <p class="text-sm text-muted-foreground">
+        O texto é calculado automaticamente (branco/preto) baseado na
+        luminosidade do fundo usando a fórmula YIQ.
+      </p>
+
+      <!-- Cores Claras (texto preto) -->
+      <div class="space-y-2">
+        <h3 class="text-sm font-medium text-muted-foreground">
+          Cores Claras → Texto Preto
+        </h3>
+        <div
+          class="flex flex-wrap gap-2 p-4 bg-card border border-border rounded-lg"
+        >
+          <Button color="yellow">Yellow</Button>
+          <Button color="#FFEB3B">Amber</Button>
+          <Button color="#E0E0E0">Gray Light</Button>
+          <Button color="cyan">Cyan</Button>
+          <Button color="#B2FF59">Lime</Button>
+          <Button color="pink">Pink</Button>
+        </div>
+      </div>
+
+      <!-- Cores Escuras (texto branco) -->
+      <div class="space-y-2">
+        <h3 class="text-sm font-medium text-muted-foreground">
+          Cores Escuras → Texto Branco
+        </h3>
+        <div
+          class="flex flex-wrap gap-2 p-4 bg-card border border-border rounded-lg"
+        >
+          <Button color="navy">Navy</Button>
+          <Button color="#1E3A5F">Dark Blue</Button>
+          <Button color="#2E7D32">Dark Green</Button>
+          <Button color="maroon">Maroon</Button>
+          <Button color="#4A148C">Deep Purple</Button>
+          <Button color="black">Black</Button>
+        </div>
+      </div>
+
+      <!-- Sem color (usa defaults do tema) -->
+      <div class="space-y-2">
+        <h3 class="text-sm font-medium text-muted-foreground">
+          Sem color prop → Usa corp-def-button-* do tema
+        </h3>
+        <div
+          class="flex flex-wrap gap-2 p-4 bg-card border border-border rounded-lg"
+        >
+          <Button>Default (tema)</Button>
+          <Button variant="outline">Outline Default</Button>
+          <Button variant="ghost">Ghost Default</Button>
+        </div>
+      </div>
+    </section>
+
     <!-- Rounded (Border Radius) -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">

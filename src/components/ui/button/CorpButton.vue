@@ -17,7 +17,12 @@ import { computed, useSlots, type PropType } from 'vue';
 import { cn } from '@/lib/utils';
 import { buttonVariants, type ButtonVariants } from '.';
 import CorpIcon from '@components/ui/icon/CorpIcon.vue';
-import { resolveColor, toRgba, getComputedColor } from '@/utils/CorpColorUtils';
+import {
+  resolveColor,
+  toRgba,
+  getComputedColor,
+  getContrastColor,
+} from '@/utils/CorpColorUtils';
 import { resolveRounded } from '@/components/ui/commonStyles';
 import type { RoundedValue } from '@/components/ui/commonStyles';
 
@@ -35,7 +40,7 @@ const props = defineProps({
   },
   color: {
     type: String,
-    default: 'primary',
+    default: undefined,
   },
   size: {
     type: String as PropType<ButtonVariants['size']>,
@@ -188,7 +193,10 @@ const customColorStyle = computed(() => {
 
   // bgColor tem prioridade sobre color
   if (props.bgColor) {
-    styles.backgroundColor = resolveColor(props.bgColor);
+    const resolved = resolveColor(props.bgColor);
+    styles.backgroundColor = resolved;
+    // Calcula contraste para bgColor
+    styles['--corp-runtime-btn-contrast'] = getContrastColor(resolved);
   } else if (props.color) {
     const resolved = resolveColor(props.color);
     // getComputedColor resolve CSS vars em runtime pra poder usar com toRgba
@@ -198,6 +206,8 @@ const customColorStyle = computed(() => {
     styles['--corp-runtime-btn-color-hover'] = toRgba(hex, 0.9);
     styles['--corp-runtime-btn-color-light'] = toRgba(hex, 0.1);
     styles['--corp-runtime-btn-focus-ring'] = resolved;
+    // Calcula contraste automático para variant solid
+    styles['--corp-runtime-btn-contrast'] = getContrastColor(hex);
   }
 
   // textColor tem prioridade final
@@ -226,7 +236,9 @@ const colorClasses = computed(() => {
     const classes: string[] = [];
     if (!hasBgOverride)
       classes.push(`bg-[${color}]`, `hover:bg-[${colorHover}]`);
-    if (!hasTextOverride) classes.push('text-white');
+    // Usa contraste calculado automaticamente
+    if (!hasTextOverride)
+      classes.push('text-[var(--corp-runtime-btn-contrast)]');
     return classes;
   } else if (props.variant === 'outline') {
     const classes: string[] = [];

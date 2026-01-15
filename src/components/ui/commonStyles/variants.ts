@@ -21,8 +21,8 @@ export type SwitchVariant = 'solid' | 'ghost';
 /** Button (4 opções - com link) */
 export type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'link';
 
-/** Input, Select */
-export type InputVariant = 'solo' | 'filled';
+/** Input, Select, Textarea */
+export type InputVariant = 'elevated' | 'flat';
 
 // ============== ROUNDED ==============
 

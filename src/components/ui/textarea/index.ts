@@ -24,8 +24,8 @@ export const textareaVariants = cva(
   {
     variants: {
       variant: {
-        solo: 'border border-[hsl(var(--corp-def-textarea-border))]',
-        filled: 'border-0',
+        elevated: 'border border-[hsl(var(--corp-def-textarea-border))]',
+        flat: 'border-0',
       },
       density: {
         compact: 'min-h-20 px-2 py-1.5 text-sm',
@@ -44,7 +44,7 @@ export const textareaVariants = cva(
       },
     },
     defaultVariants: {
-      variant: 'solo',
+      variant: 'elevated',
       density: 'regular',
       rounded: 'default',
     },

@@ -100,6 +100,26 @@ Você pode usar **qualquer cor** (HEX, RGB, HSL, variável CSS, nomes CSS):
 
 > **Hover funciona!** Cores customizadas (HEX, RGB, HSL, var(), nomes CSS) suportam hover automático.
 
+#### Contraste Automático
+
+O texto do badge (variant `solid`) é calculado **automaticamente** baseado na luminosidade da cor de fundo. Cores claras recebem texto preto, cores escuras recebem texto branco.
+
+:::corp-code
+<!-- Cores claras → texto PRETO automático -->
+<CorpBadge color="yellow">Yellow</CorpBadge>
+<CorpBadge color="cyan">Cyan</CorpBadge>
+<CorpBadge color="pink">Pink</CorpBadge>
+<CorpBadge color="#B2FF59">Lime</CorpBadge>
+
+<!-- Cores escuras → texto BRANCO automático -->
+<CorpBadge color="navy">Navy</CorpBadge>
+<CorpBadge color="maroon">Maroon</CorpBadge>
+<CorpBadge color="#4A148C">Deep Purple</CorpBadge>
+<CorpBadge color="black">Black</CorpBadge>
+:::
+
+> **Como funciona:** Usa a fórmula YIQ de luminância percebida (WCAG 2.0) para determinar o contraste ideal. O cálculo acontece em runtime via `getContrastColor()`.
+
 #### bgColor e contentColor (Overrides)
 
 Para controle total e granular, use `bgColor` e `contentColor` que **sobrescrevem** a prop `color`:

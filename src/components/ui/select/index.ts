@@ -26,8 +26,8 @@ export { default as SelectValue } from './SelectValue.vue';
 /**
  * CVA define estrutura, cores tratadas no componente via CSS variables
  *
- * - solo: Fundo + borda (padrão)
- * - filled: Só fundo, sem borda visível
+ * - elevated: Fundo + borda (padrão)
+ * - flat: Só fundo, sem borda visível
  */
 export const selectVariants = cva(
   [
@@ -44,8 +44,8 @@ export const selectVariants = cva(
   {
     variants: {
       variant: {
-        solo: 'border border-[hsl(var(--corp-def-select-border))]',
-        filled: 'border-0',
+        elevated: 'border border-[hsl(var(--corp-def-select-border))]',
+        flat: 'border-0',
       },
       density: {
         compact: 'h-8',
@@ -64,7 +64,7 @@ export const selectVariants = cva(
       },
     },
     defaultVariants: {
-      variant: 'solo',
+      variant: 'elevated',
       density: 'regular',
       rounded: 'default',
     },

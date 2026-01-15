@@ -92,22 +92,22 @@ const description = ref('')
 
 ## Variant
 
-A prop `variant` define o estilo visual do textarea. Por padrão usa `solo` (fundo + borda).
+A prop `variant` define o estilo visual do textarea. Por padrão usa `elevated` (fundo + borda).
 
 :::corp-code
 <div class="space-y-4 max-w-md">
   <CorpTextarea
-    v-model="textareaForm.variantSolo"
-    name="variantSolo"
-    label="Solo (padrão)"
-    variant="solo"
+    v-model="textareaForm.variantElevated"
+    name="variantElevated"
+    label="Elevated (padrão)"
+    variant="elevated"
     placeholder="Fundo + borda"
   />
   <CorpTextarea
-    v-model="textareaForm.variantFilled"
-    name="variantFilled"
-    label="Filled"
-    variant="filled"
+    v-model="textareaForm.variantFlat"
+    name="variantFlat"
+    label="Flat"
+    variant="flat"
     placeholder="Só fundo, sem borda"
   />
 </div>
@@ -115,20 +115,20 @@ A prop `variant` define o estilo visual do textarea. Por padrão usa `solo` (fun
 <!-- @disp-code -->
 ```vue
 <template>
-  <!-- Solo: fundo + borda (padrão) -->
+  <!-- Elevated: fundo + borda (padrão) -->
   <CorpTextarea
     v-model="bio"
     name="bio"
-    label="Solo (padrão)"
-    variant="solo"
+    label="Elevated (padrão)"
+    variant="elevated"
   />
 
-  <!-- Filled: só fundo, sem borda -->
+  <!-- Flat: só fundo, sem borda -->
   <CorpTextarea
     v-model="description"
     name="description"
-    label="Filled"
-    variant="filled"
+    label="Flat"
+    variant="flat"
   />
 </template>
 ```
@@ -136,8 +136,8 @@ A prop `variant` define o estilo visual do textarea. Por padrão usa `solo` (fun
 
 | Variant | Descrição |
 |---------|-----------|
-| `solo` | Fundo + borda (padrão) |
-| `filled` | Só fundo, sem borda visível |
+| `elevated` | Fundo + borda (padrão) |
+| `flat` | Só fundo, sem borda visível |
 
 ---
 
@@ -997,7 +997,7 @@ const handleSubmit = () => {
 | `disabled` | `boolean` | `false` | Desabilita o campo |
 | `readonly` | `boolean` | `false` | Somente leitura |
 | `hideDetails` | `boolean` | `false` | Oculta hints e erros |
-| `variant` | `'solo' \| 'filled'` | `'solo'` | Estilo visual (fundo + borda ou só fundo) |
+| `variant` | `'elevated' \| 'flat'` | `'elevated'` | Estilo visual (fundo + borda ou só fundo) |
 | `density` | `'compact' \| 'regular' \| 'comfortable'` | `'regular'` | Tamanho do campo |
 | `rounded` | `RoundedValue` | `'default'` | **8 presets** (forms): default, none, xs, sm, md, lg, xl, full **OU** Tailwind class **OU** CSS value **OU** number (px) **OU** boolean (true=full, false=none) |
 | `rows` | `number` | `4` | Número de linhas visíveis |
@@ -1027,7 +1027,7 @@ const handleSubmit = () => {
 
 | Feature | CorpInput | CorpTextarea |
 |---------|-----------|--------------|
-| **Variant** (solo/filled) | ✅ | ❌ |
+| **Variant** (elevated/flat) | ✅ | ✅ |
 | **Masks** (CPF, telefone) | ✅ | ❌ |
 | **Inner Icons** | ✅ | ❌ |
 | **Outer Icons** | ✅ | ✅ |

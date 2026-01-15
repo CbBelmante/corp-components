@@ -52,13 +52,22 @@ export const PLAYGROUND_COMPONENTS: IPlaygroundComponent[] = [
     order: 3,
   },
   {
+    name: 'Card',
+    path: '/cards',
+    routeName: 'cards',
+    fileName: 'CardTest',
+    title: 'Cards',
+    description: 'Testar cards com variantes, cores e slots',
+    order: 4,
+  },
+  {
     name: 'Checkbox',
     path: '/checkboxes',
     routeName: 'checkboxes',
     fileName: 'CheckboxTest',
     title: 'Checkboxes',
     description: 'Testar checkboxes com cores, estados e validacao',
-    order: 4,
+    order: 5,
   },
   {
     name: 'Input',
@@ -67,7 +76,7 @@ export const PLAYGROUND_COMPONENTS: IPlaygroundComponent[] = [
     fileName: 'InputTest',
     title: 'Inputs',
     description: 'Testar inputs com validacao e mascaras',
-    order: 5,
+    order: 6,
   },
   {
     name: 'Progress',
@@ -76,7 +85,7 @@ export const PLAYGROUND_COMPONENTS: IPlaygroundComponent[] = [
     fileName: 'ProgressTest',
     title: 'Progress',
     description: 'Testar progress bars com cores, animacoes e chunks',
-    order: 6,
+    order: 7,
   },
   {
     name: 'RadioGroup',
@@ -85,7 +94,7 @@ export const PLAYGROUND_COMPONENTS: IPlaygroundComponent[] = [
     fileName: 'RadioGroupTest',
     title: 'RadioGroups',
     description: 'Testar radio groups com cores, orientacao e validacao',
-    order: 7,
+    order: 8,
   },
   {
     name: 'Select',
@@ -94,7 +103,7 @@ export const PLAYGROUND_COMPONENTS: IPlaygroundComponent[] = [
     fileName: 'SelectTest',
     title: 'Selects',
     description: 'Testar selects com multiple, chips e validacao',
-    order: 8,
+    order: 9,
   },
   {
     name: 'Switch',
@@ -103,7 +112,7 @@ export const PLAYGROUND_COMPONENTS: IPlaygroundComponent[] = [
     fileName: 'SwitchTest',
     title: 'Switches',
     description: 'Testar switches com cores, estados e validacao',
-    order: 9,
+    order: 10,
   },
   {
     name: 'Textarea',
@@ -112,7 +121,7 @@ export const PLAYGROUND_COMPONENTS: IPlaygroundComponent[] = [
     fileName: 'TextareaTest',
     title: 'Textareas',
     description: 'Testar textareas com auto-grow, counter e validacao',
-    order: 10,
+    order: 11,
   },
 ];
 

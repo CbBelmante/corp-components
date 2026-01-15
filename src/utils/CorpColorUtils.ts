@@ -669,3 +669,76 @@ export const getLighterColor = (
 ): string => {
   return toRgba(color, opacity);
 };
+
+/**
+ * 🎯 Calcula cor de contraste ideal (branco ou preto) para uma cor de fundo
+ *
+ * Usa fórmula de luminância percebida (YIQ) para determinar se
+ * o texto deve ser claro ou escuro para máxima legibilidade.
+ *
+ * Baseado em WCAG 2.0 guidelines para contraste de cores.
+ *
+ * @param {string} bgColor - Cor de fundo em qualquer formato (hex, rgb, hsl, var())
+ * @param {string} [lightColor='#ffffff'] - Cor clara retornada para fundos escuros
+ * @param {string} [darkColor='#000000'] - Cor escura retornada para fundos claros
+ * @returns {string} Cor de contraste ideal (lightColor ou darkColor)
+ *
+ * @example
+ * getContrastColor('#FF0000')              // '#ffffff' (vermelho = fundo escuro)
+ * getContrastColor('#FFFF00')              // '#000000' (amarelo = fundo claro)
+ * getContrastColor('var(--primary)')       // Resolve e calcula contraste
+ * getContrastColor('#000', '#fff', '#333') // Customiza cores de retorno
+ */
+export const getContrastColor = (
+  bgColor: string,
+  lightColor: string = '#ffffff',
+  darkColor: string = '#000000'
+): string => {
+  // Resolve a cor para HEX (funciona com var(), hsl(), nomes, etc)
+  const hex = getComputedColor(bgColor);
+
+  // Se não conseguiu resolver, retorna cor escura como fallback seguro
+  if (!hex || !hex.startsWith('#')) {
+    return darkColor;
+  }
+
+  // Converte para RGB
+  const rgb = hexToRgb(hex);
+
+  // Calcula luminância percebida (fórmula YIQ)
+  // Pesos baseados na sensibilidade do olho humano
+  const yiq = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
+
+  // Threshold: 128 é o meio (0-255)
+  // Valores maiores = fundo claro = precisa texto escuro
+  // Valores menores = fundo escuro = precisa texto claro
+  return yiq >= 128 ? darkColor : lightColor;
+};
+
+/**
+ * 🎯 Versão com cores HSL do tema (para uso com Tailwind)
+ *
+ * Retorna as cores de contraste em formato compatível com CSS variables do tema.
+ * Útil para componentes que usam o sistema de cores do Corp.
+ *
+ * @param {string} bgColor - Cor de fundo em qualquer formato
+ * @returns {string} 'hsl(var(--foreground))' ou 'hsl(var(--background))'
+ *
+ * @example
+ * getContrastColorTheme('#FF0000')  // 'hsl(var(--background))' (texto claro)
+ * getContrastColorTheme('#FFFF00')  // 'hsl(var(--foreground))' (texto escuro)
+ */
+export const getContrastColorTheme = (bgColor: string): string => {
+  const hex = getComputedColor(bgColor);
+
+  if (!hex || !hex.startsWith('#')) {
+    return 'hsl(var(--foreground))';
+  }
+
+  const rgb = hexToRgb(hex);
+  const yiq = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
+
+  // foreground = texto padrão (escuro no light, claro no dark)
+  // background = inverso
+  return yiq >= 128 ? 'hsl(var(--foreground))' : 'hsl(var(--background))';
+};
