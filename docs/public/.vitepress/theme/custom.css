@@ -286,3 +286,42 @@
   background-color: #3d444d !important;
   color: #e6edf3 !important;
 }
+
+/* ============================================= */
+/* Breadcrumb - Reset VitePress list styles */
+/* ============================================= */
+
+/* Fix: VitePress aplica list-style em <ol> que adiciona numeração no breadcrumb */
+.componentPreview nav[aria-label="breadcrumb"] ol,
+.codePreview nav[aria-label="breadcrumb"] ol,
+.vp-doc nav[aria-label="breadcrumb"] ol {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0 !important;
+}
+
+/* Fix: Remove estilos de lista dos itens do breadcrumb */
+.componentPreview nav[aria-label="breadcrumb"] li,
+.codePreview nav[aria-label="breadcrumb"] li,
+.vp-doc nav[aria-label="breadcrumb"] li {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0 !important;
+}
+
+/* Fix: Remove underline e estilos de link do breadcrumb */
+.componentPreview nav[aria-label="breadcrumb"] a,
+.codePreview nav[aria-label="breadcrumb"] a,
+.vp-doc nav[aria-label="breadcrumb"] a {
+  text-decoration: none !important;
+  color: inherit !important;
+  font-weight: inherit !important;
+}
+
+/* Fix: Remove hover styles do VitePress nos links do breadcrumb */
+.componentPreview nav[aria-label="breadcrumb"] a:hover,
+.codePreview nav[aria-label="breadcrumb"] a:hover,
+.vp-doc nav[aria-label="breadcrumb"] a:hover {
+  text-decoration: none !important;
+  color: inherit !important;
+}
