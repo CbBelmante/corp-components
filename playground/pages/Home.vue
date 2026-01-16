@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
-import { getSortedComponents } from '../config/components';
+import { PLAYGROUND_COMPONENTS } from '../config/autoComponents';
 
-const components = getSortedComponents();
+const components = PLAYGROUND_COMPONENTS;
 </script>
 
 <template>
@@ -12,7 +12,7 @@ const components = getSortedComponents();
       Playground de desenvolvimento - teste seus componentes aqui
     </p>
 
-    <!-- ✅ Cards gerados automaticamente de config/components.ts -->
+    <!-- ✅ Cards gerados automaticamente via auto-discovery -->
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
       <RouterLink
         v-for="component in components"
