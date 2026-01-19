@@ -16,7 +16,7 @@
 
 /**
  * Mapeamento de cores principais para variáveis CSS
- * Total: 59 variáveis
+ * Total: 60 variáveis
  */
 export const CSS_VARIABLES: Record<string, string> = {
   primary: 'var(--primary)',
@@ -35,6 +35,7 @@ export const CSS_VARIABLES: Record<string, string> = {
   destructive: 'var(--destructive)',
   'corp-def-input-placeholder': 'var(--corp-def-input-placeholder)',
   'corp-def-input-label-color': 'var(--corp-def-input-label-color)',
+  'corp-def-command-divider': 'var(--corp-def-command-divider)',
   'corp-def-select-label-color': 'var(--corp-def-select-label-color)',
   'corp-def-card-title-color': 'var(--corp-def-card-title-color)',
   'corp-def-card-subtitle-color': 'var(--corp-def-card-subtitle-color)',
@@ -82,7 +83,7 @@ export const CSS_VARIABLES: Record<string, string> = {
 
 /**
  * Cores tipo 'tailwind' que precisam de hsl() wrapper
- * Total: 82 variáveis
+ * Total: 84 variáveis
  */
 export const HSL_VARIABLES = new Set([
   'primary',
@@ -119,6 +120,8 @@ export const HSL_VARIABLES = new Set([
   'corp-def-input-placeholder',
   'corp-def-input-label-color',
   'corp-def-input-label-size',
+  'corp-def-command-border',
+  'corp-def-command-divider',
   'corp-def-select-bg',
   'corp-def-select-border',
   'corp-def-select-label-color',

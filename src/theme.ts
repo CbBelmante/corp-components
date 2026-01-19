@@ -268,6 +268,18 @@ export const themeDefinition = {
     type: THEME_COLOR_TYPES.BOTH,
   },
 
+  // ============== CORP COMMAND ==============
+  'corp-def-command-border': {
+    light: BASE_STYLES.borderInput.light,
+    dark: BASE_STYLES.borderInput.dark,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-command-divider': {
+    light: '#c9d2db', // Cinza mais claro (border-muted)
+    dark: '#3d444d', // Meio termo - mais claro que borda mas não tanto
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+
   // ============== CORP SELECT ==============
   'corp-def-select-bg': {
     light: '#D1DCE5',

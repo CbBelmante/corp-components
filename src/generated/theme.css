@@ -48,6 +48,8 @@
   --corp-def-input-placeholder: #737373;
   --corp-def-input-label-color: #050914;
   --corp-def-input-label-size: 0.875rem;
+  --corp-def-command-border: #aec0d2ff;
+  --corp-def-command-divider: #c9d2db;
   --corp-def-select-bg: #D1DCE5;
   --corp-def-select-border: #aec0d2ff;
   --corp-def-select-label-color: #050914;
@@ -206,6 +208,8 @@
   --corp-def-input-placeholder: #7d8590;
   --corp-def-input-label-color: #e6edf3;
   --corp-def-input-label-size: 0.875rem;
+  --corp-def-command-border: #2e333eff;
+  --corp-def-command-divider: #3d444d;
   --corp-def-select-bg: #1c2128;
   --corp-def-select-border: #2e333eff;
   --corp-def-select-label-color: #e6edf3;

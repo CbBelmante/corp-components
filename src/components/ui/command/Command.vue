@@ -114,7 +114,10 @@ const props = defineProps({
     default: false,
   },
 
-  // Dimensionamento (especialmente para modo floating)
+  // Dimensionamento (APENAS para modo 'floating')
+  // NOTA: No modo 'inline', controle a altura via class no container pai
+  // Exemplo inline: <Command mode="inline" class="h-[400px]" />
+  // Exemplo floating: <Command mode="floating" :max-height="200" />
   maxHeight: {
     type: [String, Number],
     default: 300,
@@ -330,7 +333,7 @@ const handleSelect = (item: ICommand): void => {
     v-bind="forwarded"
     :class="
       cn(
-        'flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
+        'flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground border border-[hsl(var(--corp-def-command-border))]',
         props.class
       )
     "
@@ -338,7 +341,7 @@ const handleSelect = (item: ICommand): void => {
     <!-- Input integrado (condicional via showSearchField) -->
     <div
       v-if="showSearchField"
-      class="flex items-center border-b px-3"
+      class="flex items-center border-b border-b-[hsl(var(--corp-def-command-divider))] px-3"
       cmdk-input-wrapper
     >
       <Search class="mr-2 h-4 w-4 shrink-0 opacity-50" />
@@ -352,7 +355,9 @@ const handleSelect = (item: ICommand): void => {
     </div>
 
     <!-- Lista integrada -->
-    <ListboxContent class="max-h-[300px] overflow-y-auto overflow-x-hidden">
+    <ListboxContent
+      class="commandScrollbar h-full overflow-y-auto overflow-x-hidden"
+    >
       <div role="presentation">
         <!-- Loading State -->
         <div
@@ -474,7 +479,7 @@ const handleSelect = (item: ICommand): void => {
       v-bind="forwarded"
       :class="
         cn(
-          'flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
+          'flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground border border-[hsl(var(--corp-def-command-border))]',
           props.class
         )
       "
@@ -482,7 +487,7 @@ const handleSelect = (item: ICommand): void => {
       <!-- Input integrado (condicional via showSearchField) -->
       <div
         v-if="showSearchField"
-        class="flex items-center border-b px-3"
+        class="flex items-center border-b border-b-[hsl(var(--corp-def-command-divider))] px-3"
         cmdk-input-wrapper
       >
         <Search class="mr-2 h-4 w-4 shrink-0 opacity-50" />
@@ -496,7 +501,9 @@ const handleSelect = (item: ICommand): void => {
       </div>
 
       <!-- Lista integrada -->
-      <ListboxContent class="max-h-[300px] overflow-y-auto overflow-x-hidden">
+      <ListboxContent
+        class="commandScrollbar max-h-[300px] overflow-y-auto overflow-x-hidden"
+      >
         <div role="presentation">
           <!-- Loading State -->
           <div
@@ -610,6 +617,36 @@ const handleSelect = (item: ICommand): void => {
 </template>
 
 <style scoped>
+/* === TESTE: Variável temporária VERDE === */
+:root {
+  --corp-command-border-test: #00ff00; /* Verde neon - TESTE */
+}
+
+/* === SCROLLBAR CUSTOMIZADA (Classe Utilitária) === */
+.commandScrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--primary) / 0.3) transparent;
+  padding: 8px 4px 8px 0; /* Afasta conteúdo das bordas */
+}
+
+.commandScrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.commandScrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.commandScrollbar::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.3);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.commandScrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.5);
+}
+
 /* === MODO FLOATING === */
 .commandFloating {
   position: absolute;
@@ -618,43 +655,24 @@ const handleSelect = (item: ICommand): void => {
   right: 0;
   width: 100%;
   z-index: 50;
-  background-color: hsl(var(--popover));
-  border: 1px solid hsl(var(--border));
   border-radius: 0.75rem;
   box-shadow:
     0 10px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  overflow-y: auto;
   transform-origin: top center;
 
   /* max-height, max-width, min-width controlados via :style */
-
-  /* Scrollbar customizada */
-  scrollbar-width: thin;
-  scrollbar-color: hsl(var(--primary) / 0.3) transparent;
-}
-
-.commandFloating::-webkit-scrollbar {
-  width: 6px;
-}
-
-.commandFloating::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.commandFloating::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary) / 0.3);
-  border-radius: 3px;
-  transition: background-color 0.2s ease;
-}
-
-.commandFloating::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.5);
 }
 
 /* === GRUPOS DE COMANDOS === */
 .commandGroup {
   margin-bottom: 0.75rem;
+}
+
+/* Linha divisória ANTES do grupo (exceto primeiro) */
+.commandGroup:not(:first-child) {
+  padding-top: 0.75rem;
+  border-top: 1px solid hsl(var(--corp-def-command-divider));
 }
 
 .commandGroup:last-child {
@@ -665,9 +683,9 @@ const handleSelect = (item: ICommand): void => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.75rem;
   margin-bottom: 0.25rem;
-  border-bottom: 1px solid hsl(var(--border));
+  /* border-bottom removido - separação agora é antes do grupo */
 }
 
 .groupIcon {
@@ -678,8 +696,8 @@ const handleSelect = (item: ICommand): void => {
 }
 
 .groupTitle {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.8125rem;
+  font-weight: 700;
   color: hsl(var(--muted-foreground));
   text-transform: uppercase;
   letter-spacing: 0.025em;
@@ -700,7 +718,7 @@ const handleSelect = (item: ICommand): void => {
 
 /* Items dentro de grupo com indent */
 .commandGroup .commandItem {
-  padding-left: 1.5rem;
+  padding-left: 1.75rem;
 }
 
 .commandItem:hover {
