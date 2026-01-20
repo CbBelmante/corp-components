@@ -187,6 +187,22 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+
+  // Alinhamento do footer (left, center, right)
+  footerAlign: {
+    type: String as PropType<'left' | 'center' | 'right'>,
+    default: 'center',
+  },
+
+  // Comandos customizados para o footer (se não passar, usa os defaults)
+  footerCommands: {
+    type: Array as PropType<{ keys: string; label: string }[]>,
+    default: () => [
+      { keys: '↑↓', label: 'Navegar' },
+      { keys: '↵', label: 'Selecionar' },
+      { keys: 'Esc', label: 'Fechar' },
+    ],
+  },
 });
 
 const emits = defineEmits<
@@ -367,6 +383,17 @@ const showEmpty = computed(() => {
   return (
     !props.loading && filteredItems.value.length === 0 && internalQuery.value
   );
+});
+
+/**
+ * Comandos do footer filtrados por modo
+ * No modo inline, não mostra "Esc Fechar"
+ */
+const filteredFooterCommands = computed(() => {
+  if (props.mode === 'inline') {
+    return props.footerCommands.filter(cmd => cmd.keys !== 'Esc');
+  }
+  return props.footerCommands;
 });
 
 // ============== WATCHERS ==============
@@ -570,24 +597,24 @@ const handleSelect = (item: ICommand): void => {
     <!-- Footer (dicas de navegação) - FORA do scroll -->
     <div
       v-if="showFooter"
-      class="commandFooter border-t border-t-[hsl(var(--corp-def-command-divider))] p-2"
+      :class="[
+        'commandFooter border-t border-t-[hsl(var(--corp-def-command-divider))] p-2',
+        {
+          'justify-start': footerAlign === 'left',
+          'justify-center': footerAlign === 'center',
+          'justify-end': footerAlign === 'right',
+        },
+      ]"
     >
       <slot name="footer">
         <div class="flex items-center gap-4 text-xs text-muted-foreground">
-          <div class="flex items-center gap-1.5">
-            <kbd class="commandKbd">↑↓</kbd>
-            <span>Navegar</span>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <kbd class="commandKbd">↵</kbd>
-            <span>Selecionar</span>
-          </div>
           <div
-            v-if="mode === 'floating' || mode === 'modal'"
+            v-for="(cmd, index) in filteredFooterCommands"
+            :key="index"
             class="flex items-center gap-1.5"
           >
-            <kbd class="commandKbd">Esc</kbd>
-            <span>Fechar</span>
+            <kbd class="commandKbd">{{ cmd.keys }}</kbd>
+            <span>{{ cmd.label }}</span>
           </div>
         </div>
       </slot>
@@ -738,24 +765,24 @@ const handleSelect = (item: ICommand): void => {
       <!-- Footer (dicas de navegação) - FORA do scroll -->
       <div
         v-if="showFooter"
-        class="commandFooter border-t border-t-[hsl(var(--corp-def-command-divider))] p-2"
+        :class="[
+          'commandFooter border-t border-t-[hsl(var(--corp-def-command-divider))] p-2',
+          {
+            'justify-start': footerAlign === 'left',
+            'justify-center': footerAlign === 'center',
+            'justify-end': footerAlign === 'right',
+          },
+        ]"
       >
         <slot name="footer">
           <div class="flex items-center gap-4 text-xs text-muted-foreground">
-            <div class="flex items-center gap-1.5">
-              <kbd class="commandKbd">↑↓</kbd>
-              <span>Navegar</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <kbd class="commandKbd">↵</kbd>
-              <span>Selecionar</span>
-            </div>
             <div
-              v-if="mode === 'floating' || mode === 'modal'"
+              v-for="(cmd, index) in filteredFooterCommands"
+              :key="index"
               class="flex items-center gap-1.5"
             >
-              <kbd class="commandKbd">Esc</kbd>
-              <span>Fechar</span>
+              <kbd class="commandKbd">{{ cmd.keys }}</kbd>
+              <span>{{ cmd.label }}</span>
             </div>
           </div>
         </slot>
@@ -929,6 +956,7 @@ const handleSelect = (item: ICommand): void => {
 
 /* === FOOTER === */
 .commandFooter {
+  display: flex;
   flex-shrink: 0;
   background: hsl(var(--muted) / 0.3);
 }
