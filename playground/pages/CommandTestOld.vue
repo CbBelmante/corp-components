@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import {
-  Command,
+  CorpCommand,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -127,12 +127,12 @@ onUnmounted(() => {
       </div>
 
       <div class="p-4 bg-card border border-border rounded-lg">
-        <Command class="rounded-lg border shadow-md">
-          <CommandInput placeholder="Digite para buscar..." />
-          <CommandList>
-            <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
-            <CommandGroup heading="Páginas">
-              <CommandItem
+        <CorpCommand class="rounded-lg border shadow-md">
+          <CorpCommandInput placeholder="Digite para buscar..." />
+          <CorpCommandList>
+            <CorpCommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
+            <CorpCommandGroup heading="Páginas">
+              <CorpCommandItem
                 v-for="page in pages"
                 :key="page.value"
                 :value="page.value"
@@ -143,7 +143,7 @@ onUnmounted(() => {
               </CommandItem>
             </CommandGroup>
           </CommandList>
-        </Command>
+        </CorpCommand>
       </div>
     </section>
 
@@ -159,13 +159,13 @@ onUnmounted(() => {
       </div>
 
       <div class="p-4 bg-card border border-border rounded-lg">
-        <Command class="rounded-lg border shadow-md">
-          <CommandInput placeholder="Buscar páginas ou ações..." />
-          <CommandList>
-            <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
+        <CorpCommand class="rounded-lg border shadow-md">
+          <CorpCommandInput placeholder="Buscar páginas ou ações..." />
+          <CorpCommandList>
+            <CorpCommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
 
-            <CommandGroup heading="Páginas">
-              <CommandItem
+            <CorpCommandGroup heading="Páginas">
+              <CorpCommandItem
                 v-for="page in pages"
                 :key="page.value"
                 :value="page.value"
@@ -176,10 +176,10 @@ onUnmounted(() => {
               </CommandItem>
             </CommandGroup>
 
-            <CommandSeparator />
+            <CorpCommandSeparator />
 
-            <CommandGroup heading="Ações">
-              <CommandItem
+            <CorpCommandGroup heading="Ações">
+              <CorpCommandItem
                 v-for="action in actions"
                 :key="action.value"
                 :value="action.value"
@@ -190,7 +190,7 @@ onUnmounted(() => {
               </CommandItem>
             </CommandGroup>
           </CommandList>
-        </Command>
+        </CorpCommand>
       </div>
     </section>
 
@@ -206,12 +206,12 @@ onUnmounted(() => {
       </div>
 
       <div class="p-4 bg-card border border-border rounded-lg">
-        <Command class="rounded-lg border shadow-md">
-          <CommandInput placeholder="Buscar ações..." />
-          <CommandList>
-            <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
-            <CommandGroup heading="Ações">
-              <CommandItem
+        <CorpCommand class="rounded-lg border shadow-md">
+          <CorpCommandInput placeholder="Buscar ações..." />
+          <CorpCommandList>
+            <CorpCommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
+            <CorpCommandGroup heading="Ações">
+              <CorpCommandItem
                 v-for="action in actions"
                 :key="action.value"
                 :value="action.value"
@@ -219,11 +219,11 @@ onUnmounted(() => {
               >
                 <span class="mr-2">{{ action.icon }}</span>
                 <span class="flex-1">{{ action.label }}</span>
-                <CommandShortcut>{{ action.shortcut }}</CommandShortcut>
+                <CorpCommandShortcut>{{ action.shortcut }}</CommandShortcut>
               </CommandItem>
             </CommandGroup>
           </CommandList>
-        </Command>
+        </CorpCommand>
       </div>
     </section>
 
@@ -255,12 +255,12 @@ onUnmounted(() => {
             v-if="dropdownOpen"
             class="absolute top-full left-0 right-0 mt-2 z-50"
           >
-            <Command class="rounded-lg border shadow-lg bg-popover">
-              <CommandList>
-                <CommandEmpty>Digite para buscar...</CommandEmpty>
+            <CorpCommand class="rounded-lg border shadow-lg bg-popover">
+              <CorpCommandList>
+                <CorpCommandEmpty>Digite para buscar...</CommandEmpty>
 
-                <CommandGroup heading="Navegação">
-                  <CommandItem
+                <CorpCommandGroup heading="Navegação">
+                  <CorpCommandItem
                     v-for="page in pages"
                     :key="page.value"
                     :value="page.value"
@@ -271,10 +271,10 @@ onUnmounted(() => {
                   </CommandItem>
                 </CommandGroup>
 
-                <CommandSeparator />
+                <CorpCommandSeparator />
 
-                <CommandGroup heading="Ações">
-                  <CommandItem
+                <CorpCommandGroup heading="Ações">
+                  <CorpCommandItem
                     v-for="action in actions.slice(0, 3)"
                     :key="action.value"
                     :value="action.value"
@@ -285,7 +285,7 @@ onUnmounted(() => {
                   </CommandItem>
                 </CommandGroup>
               </CommandList>
-            </Command>
+            </CorpCommand>
           </div>
         </div>
 
@@ -318,12 +318,12 @@ onUnmounted(() => {
         </button>
 
         <CommandDialog :open="openDialog" @update:open="openDialog = $event">
-          <CommandInput placeholder="Digite um comando ou busca..." />
-          <CommandList>
-            <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
+          <CorpCommandInput placeholder="Digite um comando ou busca..." />
+          <CorpCommandList>
+            <CorpCommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
 
-            <CommandGroup heading="Navegação">
-              <CommandItem
+            <CorpCommandGroup heading="Navegação">
+              <CorpCommandItem
                 v-for="page in pages"
                 :key="page.value"
                 :value="page.value"
@@ -334,10 +334,10 @@ onUnmounted(() => {
               </CommandItem>
             </CommandGroup>
 
-            <CommandSeparator />
+            <CorpCommandSeparator />
 
-            <CommandGroup heading="Ações">
-              <CommandItem
+            <CorpCommandGroup heading="Ações">
+              <CorpCommandItem
                 v-for="action in actions"
                 :key="action.value"
                 :value="action.value"
@@ -345,7 +345,7 @@ onUnmounted(() => {
               >
                 <span class="mr-2">{{ action.icon }}</span>
                 <span class="flex-1">{{ action.label }}</span>
-                <CommandShortcut>{{ action.shortcut }}</CommandShortcut>
+                <CorpCommandShortcut>{{ action.shortcut }}</CommandShortcut>
               </CommandItem>
             </CommandGroup>
           </CommandList>
@@ -365,12 +365,12 @@ onUnmounted(() => {
       </div>
 
       <div class="p-4 bg-card border border-border rounded-lg">
-        <Command class="rounded-lg border shadow-md">
-          <CommandInput placeholder="Buscar membros do time..." />
-          <CommandList>
-            <CommandEmpty>Nenhum membro encontrado.</CommandEmpty>
-            <CommandGroup heading="Time">
-              <CommandItem
+        <CorpCommand class="rounded-lg border shadow-md">
+          <CorpCommandInput placeholder="Buscar membros do time..." />
+          <CorpCommandList>
+            <CorpCommandEmpty>Nenhum membro encontrado.</CommandEmpty>
+            <CorpCommandGroup heading="Time">
+              <CorpCommandItem
                 v-for="member in team"
                 :key="member.value"
                 :value="member.value"
@@ -385,7 +385,7 @@ onUnmounted(() => {
               </CommandItem>
             </CommandGroup>
           </CommandList>
-        </Command>
+        </CorpCommand>
       </div>
     </section>
 

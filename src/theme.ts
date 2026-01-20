@@ -279,6 +279,16 @@ export const themeDefinition = {
     dark: '#3d444d', // Meio termo - mais claro que borda mas não tanto
     type: THEME_COLOR_TYPES.BOTH,
   },
+  'corp-def-command-icon-group': {
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-command-icon-item': {
+    light: BASE_STYLES.primary.light,
+    dark: BASE_STYLES.primary.dark,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
 
   // ============== CORP SELECT ==============
   'corp-def-select-bg': {

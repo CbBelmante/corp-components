@@ -51,6 +51,8 @@
   --corp-def-input-label-size: 0.875rem;
   --corp-def-command-border: 210 29% 75%;
   --corp-def-command-divider: 210 20% 82%;
+  --corp-def-command-icon-group: 18 100% 60%;
+  --corp-def-command-icon-item: 18 100% 60%;
   --corp-def-select-bg: 207 28% 86%;
   --corp-def-select-border: 210 29% 75%;
   --corp-def-select-label-color: 224 60% 5%;
@@ -139,6 +141,8 @@
   --corp-def-input-label-size: 0.875rem;
   --corp-def-command-border: 221 15% 21%;
   --corp-def-command-divider: 214 12% 27%;
+  --corp-def-command-icon-group: 18 100% 60%;
+  --corp-def-command-icon-item: 18 100% 60%;
   --corp-def-select-bg: 215 18% 13%;
   --corp-def-select-border: 221 15% 21%;
   --corp-def-select-label-color: 208 35% 93%;

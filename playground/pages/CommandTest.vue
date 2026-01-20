@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import {
-  Command,
+  CorpCommand,
   CommandDialog,
   type ICommand,
   type ICommandGroup,
@@ -248,7 +248,7 @@ onUnmounted(() => {
         </div>
 
         <div class="p-4 bg-card border border-border rounded-lg">
-          <Command
+          <CorpCommand
             mode="inline"
             :items="commands"
             :query="queryInline"
@@ -283,7 +283,7 @@ onUnmounted(() => {
           />
 
           <!-- Command sem search interno -->
-          <Command
+          <CorpCommand
             mode="inline"
             :show-search-field="false"
             :items="commands"
@@ -322,7 +322,7 @@ onUnmounted(() => {
             />
 
             <!-- Command Floating (gerencia click outside automaticamente) -->
-            <Command
+            <CorpCommand
               mode="floating"
               :is-open="floatingOpen"
               :items="commands"
@@ -372,7 +372,7 @@ onUnmounted(() => {
             />
 
             <!-- Command Floating (gerencia click outside automaticamente) -->
-            <Command
+            <CorpCommand
               mode="floating"
               :is-open="floatingClickOpen"
               :items="commands"
@@ -420,7 +420,7 @@ onUnmounted(() => {
             />
 
             <!-- Command Floating Persistent -->
-            <Command
+            <CorpCommand
               mode="floating"
               persistent
               :is-open="persistentOpen"
@@ -477,7 +477,7 @@ onUnmounted(() => {
 
           <!-- CommandDialog gerencia overlay + ESC + click outside automaticamente -->
           <CommandDialog :open="modalOpen" @update:open="modalOpen = $event">
-            <Command
+            <CorpCommand
               mode="inline"
               :items="commands"
               :query="queryModal"
@@ -520,7 +520,7 @@ onUnmounted(() => {
         <!-- Lista Simples (sem grupos) -->
         <div class="space-y-2">
           <h3 class="font-medium text-sm">Lista Simples</h3>
-          <Command
+          <CorpCommand
             :items="userCommands"
             :query="queryCaseUse"
             placeholder="Buscar usuário..."
@@ -536,7 +536,7 @@ onUnmounted(() => {
         <!-- Loading State -->
         <div class="space-y-2">
           <h3 class="font-medium text-sm">Loading State</h3>
-          <Command
+          <CorpCommand
             :items="[]"
             loading
             loading-text="Buscando comandos..."
@@ -547,10 +547,421 @@ onUnmounted(() => {
         <!-- Com Grupos Completo -->
         <div class="space-y-2">
           <h3 class="font-medium text-sm">Grupos + Ícones + Descrição</h3>
-          <Command
+          <CorpCommand
             :items="commands"
             placeholder="Buscar..."
             class="rounded-lg border shadow-md h-[300px]"
+            @select="handleSelect"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Density (compact/regular/comfortable) -->
+    <section class="space-y-4">
+      <div>
+        <h2 class="text-lg font-semibold text-foreground">
+          Density (compact/regular/comfortable)
+        </h2>
+        <p class="text-sm text-muted-foreground">
+          Controla o espaçamento e tamanho dos itens
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Compact -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Compact</h3>
+          <CorpCommand
+            :items="commands"
+            density="compact"
+            placeholder="Buscar..."
+            class="rounded-lg border shadow-md h-[300px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Regular (padrão) -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Regular (padrão)</h3>
+          <CorpCommand
+            :items="commands"
+            density="regular"
+            placeholder="Buscar..."
+            class="rounded-lg border shadow-md h-[300px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Comfortable -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Comfortable</h3>
+          <CorpCommand
+            :items="commands"
+            density="comfortable"
+            placeholder="Buscar..."
+            class="rounded-lg border shadow-md h-[300px]"
+            @select="handleSelect"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Rounded (border-radius presets) -->
+    <section class="space-y-4">
+      <div>
+        <h2 class="text-lg font-semibold text-foreground">
+          Rounded (border-radius presets)
+        </h2>
+        <p class="text-sm text-muted-foreground">
+          Diferentes presets de arredondamento
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
+        <!-- None -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">None</h3>
+          <CorpCommand
+            :items="commands"
+            rounded="none"
+            placeholder="Buscar..."
+            class="border shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- SM -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">SM</h3>
+          <CorpCommand
+            :items="commands"
+            rounded="sm"
+            placeholder="Buscar..."
+            class="border shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Default -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Default (md)</h3>
+          <CorpCommand
+            :items="commands"
+            rounded="default"
+            placeholder="Buscar..."
+            class="border shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- LG -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">LG</h3>
+          <CorpCommand
+            :items="commands"
+            rounded="lg"
+            placeholder="Buscar..."
+            class="border shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- XL -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">XL</h3>
+          <CorpCommand
+            :items="commands"
+            rounded="xl"
+            placeholder="Buscar..."
+            class="border shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Border Color - Cores Semânticas -->
+    <section class="space-y-4">
+      <div>
+        <h2 class="text-lg font-semibold text-foreground">
+          Border Color - Cores Semânticas
+        </h2>
+        <p class="text-sm text-muted-foreground">
+          Usando cores do design system
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Primary -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Primary</h3>
+          <CorpCommand
+            :items="commands"
+            border-color="primary"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Secondary -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Secondary</h3>
+          <CorpCommand
+            :items="commands"
+            border-color="secondary"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Success -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Success</h3>
+          <CorpCommand
+            :items="commands"
+            border-color="success"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Warning -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Warning</h3>
+          <CorpCommand
+            :items="commands"
+            border-color="warning"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Info -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Info</h3>
+          <CorpCommand
+            :items="commands"
+            border-color="info"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Destructive -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Destructive</h3>
+          <CorpCommand
+            :items="commands"
+            border-color="destructive"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Border Color - Cores Customizadas -->
+    <section class="space-y-4">
+      <div>
+        <h2 class="text-lg font-semibold text-foreground">
+          Border Color - Cores Customizadas
+        </h2>
+        <p class="text-sm text-muted-foreground">
+          Usando cores HEX e nomes CSS
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Marrom (#8B4513) -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Marrom (#8B4513)</h3>
+          <CorpCommand
+            :items="commands"
+            border-color="#8B4513"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Cobre (#B87333) -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Cobre (#B87333)</h3>
+          <CorpCommand
+            :items="commands"
+            border-color="#B87333"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Olive (#6B8E23) -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Olive (#6B8E23)</h3>
+          <CorpCommand
+            :items="commands"
+            border-color="#6B8E23"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Orange (nome CSS) -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Orange (nome CSS)</h3>
+          <CorpCommand
+            :items="commands"
+            border-color="orange"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Icon Color - Cores Semânticas -->
+    <section class="space-y-4">
+      <div>
+        <h2 class="text-lg font-semibold text-foreground">
+          Icon Color - Cores Semânticas
+        </h2>
+        <p class="text-sm text-muted-foreground">
+          Customizando a cor dos ícones (grupos e itens)
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Success -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Success</h3>
+          <CorpCommand
+            :items="commands"
+            icon-color="success"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px] rounded-lg border"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Warning -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Warning</h3>
+          <CorpCommand
+            :items="commands"
+            icon-color="warning"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px] rounded-lg border"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Info -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Info</h3>
+          <CorpCommand
+            :items="commands"
+            icon-color="info"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px] rounded-lg border"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Destructive -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Destructive</h3>
+          <CorpCommand
+            :items="commands"
+            icon-color="destructive"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px] rounded-lg border"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Secondary -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Secondary</h3>
+          <CorpCommand
+            :items="commands"
+            icon-color="secondary"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px] rounded-lg border"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Purple (HEX) -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Purple (#9333ea)</h3>
+          <CorpCommand
+            :items="commands"
+            icon-color="#9333ea"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px] rounded-lg border"
+            @select="handleSelect"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Combinações (Border + Icon Color) -->
+    <section class="space-y-4">
+      <div>
+        <h2 class="text-lg font-semibold text-foreground">
+          Combinações (Border + Icon Color)
+        </h2>
+        <p class="text-sm text-muted-foreground">
+          Personalizando borda e ícones simultaneamente
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Success -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Success</h3>
+          <CorpCommand
+            :items="commands"
+            border-color="success"
+            icon-color="success"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Warning -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Warning</h3>
+          <CorpCommand
+            :items="commands"
+            border-color="warning"
+            icon-color="warning"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px]"
+            @select="handleSelect"
+          />
+        </div>
+
+        <!-- Destructive -->
+        <div class="space-y-2">
+          <h3 class="font-medium text-sm">Destructive</h3>
+          <CorpCommand
+            :items="commands"
+            border-color="destructive"
+            icon-color="destructive"
+            placeholder="Buscar..."
+            class="shadow-md h-[250px]"
             @select="handleSelect"
           />
         </div>

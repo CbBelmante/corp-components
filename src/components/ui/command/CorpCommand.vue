@@ -46,8 +46,17 @@ import {
 import { Search } from 'lucide-vue-next';
 import { cn } from '@/lib/utils';
 import { deburr } from '@/utils/stringUtils';
-import { provideCommandContext, type ICommand, type ICommandGroup } from '.';
+import {
+  provideCommandContext,
+  commandVariants,
+  type ICommand,
+  type ICommandGroup,
+  type CommandDensity,
+  type CommandRoundedPreset,
+} from '.';
 import CorpIcon from '@/components/ui/icon/CorpIcon.vue';
+import { resolveColor } from '@/utils/CorpColorUtils';
+import { resolveRounded, type RoundedValue } from '@commonStyles';
 
 // ============== PROPS ==============
 
@@ -143,10 +152,40 @@ const props = defineProps({
     default: 'luc-search',
   },
 
+  // BorderColor - cor da borda (semantic OU custom: hex, rgb, var(), etc)
+  borderColor: {
+    type: String,
+    default: undefined,
+  },
+
+  // IconColor - cor dos ícones (grupos e itens)
+  iconColor: {
+    type: String,
+    default: undefined,
+  },
+
   // Class override
   class: {
     type: [String, Object, Array] as PropType<HTMLAttributes['class']>,
     default: undefined,
+  },
+
+  // Density (tamanho dos itens)
+  density: {
+    type: String as PropType<CommandDensity>,
+    default: 'regular',
+  },
+
+  // Rounded (border-radius)
+  rounded: {
+    type: [String, Number, Boolean] as PropType<RoundedValue>,
+    default: 'default',
+  },
+
+  // Footer com dicas de navegação
+  showFooter: {
+    type: Boolean,
+    default: true,
   },
 });
 
@@ -212,6 +251,71 @@ const floatingStyles = computed(() => ({
   maxWidth: formatCssValue(props.maxWidth),
   minWidth: formatCssValue(props.minWidth),
 }));
+
+/**
+ * Resolve rounded (preset/class/style)
+ */
+const rounded = computed(() => resolveRounded(props.rounded));
+
+/**
+ * Style inline - só injeta cor quando borderColor ou iconColor é passado
+ */
+const customColorStyle = computed(() => {
+  const styles: Record<string, string> = {};
+
+  // Border color runtime
+  if (props.borderColor) {
+    const resolved = resolveColor(props.borderColor);
+    styles['--corp-runtime-command-border'] = resolved;
+  }
+
+  // Icon color runtime (aplica para ícones de grupo e item)
+  if (props.iconColor) {
+    const resolved = resolveColor(props.iconColor);
+    styles['--corp-runtime-command-icon-group'] = resolved;
+    styles['--corp-runtime-command-icon-item'] = resolved;
+  }
+
+  return styles;
+});
+
+/**
+ * Classes de cor - usa runtime só quando borderColor é passado
+ */
+const colorClasses = computed(() => {
+  // Se tem borderColor custom, usa runtime
+  if (props.borderColor) {
+    return 'border-[var(--corp-runtime-command-border)]';
+  }
+
+  // Senão, usa padrão do tema (já está no CVA)
+  return '';
+});
+
+/**
+ * Combina custom rounded + custom color styles
+ */
+const commandStyle = computed(() => {
+  return {
+    ...rounded.value.style,
+    ...customColorStyle.value,
+  };
+});
+
+/**
+ * Classes finais do command (usa CVA)
+ */
+const commandClasses = computed(() => {
+  return cn(
+    commandVariants({
+      density: props.density,
+      rounded: rounded.value.preset as CommandRoundedPreset,
+    }),
+    rounded.value.class,
+    colorClasses.value,
+    props.class
+  );
+});
 
 /**
  * Filtra items baseado na query (com deburr para acentos)
@@ -331,12 +435,8 @@ const handleSelect = (item: ICommand): void => {
   <ListboxRoot
     v-if="mode === 'inline'"
     v-bind="forwarded"
-    :class="
-      cn(
-        'flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground border border-[hsl(var(--corp-def-command-border))]',
-        props.class
-      )
-    "
+    :class="commandClasses"
+    :style="commandStyle"
   >
     <!-- Input integrado (condicional via showSearchField) -->
     <div
@@ -466,6 +566,32 @@ const handleSelect = (item: ICommand): void => {
         </template>
       </div>
     </ListboxContent>
+
+    <!-- Footer (dicas de navegação) - FORA do scroll -->
+    <div
+      v-if="showFooter"
+      class="commandFooter border-t border-t-[hsl(var(--corp-def-command-divider))] p-2"
+    >
+      <slot name="footer">
+        <div class="flex items-center gap-4 text-xs text-muted-foreground">
+          <div class="flex items-center gap-1.5">
+            <kbd class="commandKbd">↑↓</kbd>
+            <span>Navegar</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <kbd class="commandKbd">↵</kbd>
+            <span>Selecionar</span>
+          </div>
+          <div
+            v-if="mode === 'floating' || mode === 'modal'"
+            class="flex items-center gap-1.5"
+          >
+            <kbd class="commandKbd">Esc</kbd>
+            <span>Fechar</span>
+          </div>
+        </div>
+      </slot>
+    </div>
   </ListboxRoot>
 
   <!-- MODO FLOATING: popover flutuante (position absolute) -->
@@ -477,12 +603,8 @@ const handleSelect = (item: ICommand): void => {
   >
     <ListboxRoot
       v-bind="forwarded"
-      :class="
-        cn(
-          'flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground border border-[hsl(var(--corp-def-command-border))]',
-          props.class
-        )
-      "
+      :class="commandClasses"
+      :style="commandStyle"
     >
       <!-- Input integrado (condicional via showSearchField) -->
       <div
@@ -612,6 +734,32 @@ const handleSelect = (item: ICommand): void => {
           </template>
         </div>
       </ListboxContent>
+
+      <!-- Footer (dicas de navegação) - FORA do scroll -->
+      <div
+        v-if="showFooter"
+        class="commandFooter border-t border-t-[hsl(var(--corp-def-command-divider))] p-2"
+      >
+        <slot name="footer">
+          <div class="flex items-center gap-4 text-xs text-muted-foreground">
+            <div class="flex items-center gap-1.5">
+              <kbd class="commandKbd">↑↓</kbd>
+              <span>Navegar</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <kbd class="commandKbd">↵</kbd>
+              <span>Selecionar</span>
+            </div>
+            <div
+              v-if="mode === 'floating' || mode === 'modal'"
+              class="flex items-center gap-1.5"
+            >
+              <kbd class="commandKbd">Esc</kbd>
+              <span>Fechar</span>
+            </div>
+          </div>
+        </slot>
+      </div>
     </ListboxRoot>
   </div>
 </template>
@@ -691,7 +839,10 @@ const handleSelect = (item: ICommand): void => {
 .groupIcon {
   width: 1.125rem;
   height: 1.125rem;
-  color: hsl(var(--primary));
+  color: var(
+    --corp-runtime-command-icon-group,
+    hsl(var(--corp-def-command-icon-group))
+  );
   flex-shrink: 0;
 }
 
@@ -738,7 +889,10 @@ const handleSelect = (item: ICommand): void => {
 .commandIcon {
   width: 1rem;
   height: 1rem;
-  color: hsl(var(--primary));
+  color: var(
+    --corp-runtime-command-icon-item,
+    hsl(var(--corp-def-command-icon-item))
+  );
   flex-shrink: 0;
 }
 
@@ -773,6 +927,30 @@ const handleSelect = (item: ICommand): void => {
   opacity: 0.8;
 }
 
+/* === FOOTER === */
+.commandFooter {
+  flex-shrink: 0;
+  background: hsl(var(--muted) / 0.3);
+}
+
+.commandKbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.25rem;
+  padding: 0 0.25rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1;
+  font-family: ui-monospace, monospace;
+  color: hsl(var(--foreground));
+  background: hsl(var(--muted));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
 /* === RESPONSIVIDADE === */
 @media (max-width: 640px) {
   .commandFloating {
@@ -791,6 +969,17 @@ const handleSelect = (item: ICommand): void => {
   .commandDescription {
     font-size: 0.625rem;
     line-height: 1.1;
+  }
+
+  .commandFooter {
+    font-size: 0.625rem;
+    padding: 0.375rem;
+  }
+
+  .commandKbd {
+    min-width: 1.25rem;
+    height: 1rem;
+    font-size: 0.5625rem;
   }
 }
 </style>

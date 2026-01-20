@@ -74,12 +74,6 @@ export default {
     'focus-visible:ring-[var(--corp-runtime-input-focus-ring)]',
 
     // ==================== BADGE ====================
-    // Badge - Default colors (theme.ts corp-def-badge-* - HSL com wrapper)
-    'bg-[hsl(var(--corp-def-badge-bg))]',
-    'text-[hsl(var(--corp-def-badge-text))]',
-    'border-[hsl(var(--corp-def-badge-border))]',
-    // Badge - Border color (theme.ts corp-def-badge-*)
-    'border-[var(--corp-def-badge-border-color)]',
     // Badge - Runtime custom color (via prop color)
     'bg-[var(--corp-runtime-badge-color)]',
     'hover:bg-[var(--corp-runtime-badge-color-hover)]',
@@ -112,6 +106,13 @@ export default {
     'focus:border-[var(--corp-runtime-textarea-border-focus)]',
     // Textarea - Focus ring (runtime - sempre derivada da cor)
     'focus-visible:ring-[var(--corp-runtime-textarea-focus-ring)]',
+
+    // ==================== COMMAND ====================
+    // Command - Border color (runtime custom color)
+    'border-[var(--corp-runtime-command-border)]',
+    // Command - Icon colors (runtime custom color para grupos e itens)
+    'text-[var(--corp-runtime-command-icon-group)]',
+    'text-[var(--corp-runtime-command-icon-item)]',
 
     // ==================== PROGRESS ====================
     // Progress - Track/Background (runtime - sempre derivada da cor)
