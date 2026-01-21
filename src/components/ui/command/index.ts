@@ -5,7 +5,8 @@ import { cva } from 'class-variance-authority';
 import type { Density, RoundedPreset } from '../commonStyles';
 
 export { default as CorpCommand } from './CorpCommand.vue';
-export { default as CommandDialog } from './CommandDialog.vue';
+export { default as CorpCommandInternal } from './CorpCommandInternal.vue';
+export { default as CommandDialog } from './CommandDialog.old.vue';
 export { default as CommandEmpty } from './CommandEmpty.vue';
 export { default as CommandGroup } from './CommandGroup.vue';
 export { default as CommandInput } from './CommandInput.vue';

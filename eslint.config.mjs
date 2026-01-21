@@ -36,6 +36,8 @@ export default [
       parserOptions: {
         parser: '@typescript-eslint/parser',
         sourceType: 'module',
+        ecmaVersion: 'latest',
+        extraFileExtensions: ['.vue'],
       },
     },
     rules: {
@@ -61,7 +63,8 @@ export default [
           order: ['script', 'template', 'style'],
         },
       ],
-      // Vue 3: Permitir v-model com argumentos (v-model:argName)
+      // Vue 3: Permitir v-model com argumentos customizados (v-model:open, v-model:modelValue, etc)
+      // Vue 3 suporta nativamente v-model com argumentos: https://vuejs.org/guide/components/v-model.html
       'vue/valid-v-model': 'off',
       // Composition API
       'vue/prefer-define-options': 'error',

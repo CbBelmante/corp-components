@@ -13,6 +13,7 @@ import { CorpBadge } from '@components/ui/badge';
 import { CorpBreadcrumb } from '@components/ui/breadcrumb';
 import { CorpButton } from '@components/ui/button';
 import { CorpCheckbox } from '@components/ui/checkbox';
+import { CorpCommand } from '@components/ui/command';
 import { CorpIcon } from '@components/ui/icon';
 import { CorpInput } from '@components/ui/input';
 import { CorpProgressBar } from '@components/ui/progress';
@@ -37,6 +38,7 @@ export default {
     app.component('CorpBreadcrumb', CorpBreadcrumb);
     app.component('CorpButton', CorpButton);
     app.component('CorpCheckbox', CorpCheckbox);
+    app.component('CorpCommand', CorpCommand);
     app.component('CorpIcon', CorpIcon);
     app.component('CorpInput', CorpInput);
     app.component('CorpProgressBar', CorpProgressBar);

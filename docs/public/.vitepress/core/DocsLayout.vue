@@ -365,6 +365,128 @@ const handleClearTextarea = () => {
   textareaForm.feedbackForm = '';
 };
 
+// ============== COMMAND.MD - Estados ==============
+const queryCommandInline = ref('');
+const queryCommandExternal = ref('');
+const queryCommandFloating = ref('');
+const queryCommandModal = ref('');
+const selectedCommand = ref(null);
+
+// Floating states
+const inputCommandFloating = ref('');
+const floatingCommandOpen = ref(false);
+const modalCommandOpen = ref(false);
+
+// Comandos de exemplo
+const commandItems = [
+  {
+    id: 'pages',
+    title: 'Páginas',
+    icon: 'luc-layout-dashboard',
+    items: [
+      {
+        id: 'home',
+        value: 'home',
+        label: 'Home',
+        description: 'Página inicial',
+        icon: 'luc-home',
+      },
+      {
+        id: 'dashboard',
+        value: 'dashboard',
+        label: 'Dashboard',
+        description: 'Painel de controle',
+        icon: 'luc-chart-bar',
+      },
+      {
+        id: 'settings',
+        value: 'settings',
+        label: 'Configurações',
+        description: 'Ajustes do sistema',
+        icon: 'luc-settings',
+      },
+    ],
+  },
+  {
+    id: 'actions',
+    title: 'Ações',
+    icon: 'luc-zap',
+    items: [
+      {
+        id: 'new-file',
+        value: 'new-file',
+        label: 'Novo Arquivo',
+        description: 'Criar novo arquivo',
+        icon: 'luc-file-plus',
+      },
+      {
+        id: 'save',
+        value: 'save',
+        label: 'Salvar',
+        description: 'Salvar alterações',
+        icon: 'luc-save',
+      },
+      {
+        id: 'export',
+        value: 'export',
+        label: 'Exportar',
+        description: 'Exportar dados',
+        icon: 'luc-download',
+      },
+    ],
+  },
+];
+
+// Comandos simples (sem grupos)
+const simpleCommandItems = [
+  {
+    id: 'copy',
+    value: 'copy',
+    label: 'Copiar',
+    description: 'Copiar para área de transferência',
+    icon: 'luc-copy',
+  },
+  {
+    id: 'paste',
+    value: 'paste',
+    label: 'Colar',
+    description: 'Colar da área de transferência',
+    icon: 'luc-clipboard',
+  },
+  {
+    id: 'cut',
+    value: 'cut',
+    label: 'Recortar',
+    description: 'Recortar seleção',
+    icon: 'luc-scissors',
+  },
+];
+
+// ============== COMMAND.MD - Handlers ==============
+const handleCommandSelect = item => {
+  selectedCommand.value = item;
+  console.log('Comando selecionado:', item);
+};
+
+const handleCommandFloatingInput = event => {
+  const target = event.target;
+  const value = target.value;
+
+  if (value.startsWith('/')) {
+    const query = value.substring(1);
+    queryCommandFloating.value = query;
+
+    if (!floatingCommandOpen.value) {
+      floatingCommandOpen.value = true;
+    }
+  } else {
+    if (floatingCommandOpen.value) {
+      floatingCommandOpen.value = false;
+      queryCommandFloating.value = '';
+    }
+  }
+};
+
 // ============== INJETAR EM GLOBALPROPERTIES ==============
 // Torna estados acessíveis nos .md SEM script setup!
 // Arquivos .md podem usar: {{ loadingButton }}, v-model="form.name", :rules="[rules.required]"
@@ -414,6 +536,20 @@ injectDocsContext({
   clickableProgress,
   downloadProgress,
   bufferProgress,
+
+  // Command.md
+  queryCommandInline,
+  queryCommandExternal,
+  queryCommandFloating,
+  queryCommandModal,
+  selectedCommand,
+  inputCommandFloating,
+  floatingCommandOpen,
+  modalCommandOpen,
+  commandItems,
+  simpleCommandItems,
+  handleCommandSelect,
+  handleCommandFloatingInput,
 });
 </script>
 

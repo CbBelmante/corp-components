@@ -2,7 +2,6 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import {
   CorpCommand,
-  CommandDialog,
   type ICommand,
   type ICommandGroup,
 } from '@/components/ui/command';
@@ -324,10 +323,10 @@ onUnmounted(() => {
             <!-- Command Floating (gerencia click outside automaticamente) -->
             <CorpCommand
               mode="floating"
-              :is-open="floatingOpen"
+              v-model:open="floatingOpen"
+              :show-search-field="false"
               :items="commands"
               :query="queryFloating"
-              placeholder="Buscar comando..."
               @select="
                 item => {
                   handleSelect(item);
@@ -337,7 +336,6 @@ onUnmounted(() => {
                 }
               "
               @update:query="queryFloating = $event"
-              @update:isOpen="floatingOpen = $event"
             />
           </div>
 
@@ -374,7 +372,7 @@ onUnmounted(() => {
             <!-- Command Floating (gerencia click outside automaticamente) -->
             <CorpCommand
               mode="floating"
-              :is-open="floatingClickOpen"
+              v-model:open="floatingClickOpen"
               :items="commands"
               :query="queryFloatingClick"
               placeholder="Buscar..."
@@ -386,7 +384,6 @@ onUnmounted(() => {
                 }
               "
               @update:query="queryFloatingClick = $event"
-              @update:isOpen="floatingClickOpen = $event"
             />
           </div>
 
@@ -423,10 +420,10 @@ onUnmounted(() => {
             <CorpCommand
               mode="floating"
               persistent
-              :is-open="persistentOpen"
+              v-model:open="persistentOpen"
+              :show-search-field="false"
               :items="commands"
               :query="queryPersistent"
-              placeholder="Buscar comando..."
               empty-text="Nenhum slash command encontrado"
               empty-hint="Tente digitar '/home' ou '/settings'"
               empty-icon="luc-slash"
@@ -441,7 +438,6 @@ onUnmounted(() => {
                 }
               "
               @update:query="queryPersistent = $event"
-              @update:isOpen="persistentOpen = $event"
             />
           </div>
 
@@ -458,12 +454,14 @@ onUnmounted(() => {
         </div>
       </section>
 
-      <!-- MODO 6: MODAL -->
+      <!-- MODO 6: DIALOG (Modal) -->
       <section class="space-y-4">
         <div>
-          <h2 class="text-lg font-semibold text-foreground">6. Modal</h2>
+          <h2 class="text-lg font-semibold text-foreground">
+            6. Dialog (Modal)
+          </h2>
           <p class="text-sm text-muted-foreground">
-            Dialog mode, fecha com ESC/click fora ou botão X
+            Mode dialog integrado, fecha com ESC/click fora ou botão X
           </p>
         </div>
 
@@ -475,24 +473,22 @@ onUnmounted(() => {
             Abrir Command Palette
           </button>
 
-          <!-- CommandDialog gerencia overlay + ESC + click outside automaticamente -->
-          <CommandDialog :open="modalOpen" @update:open="modalOpen = $event">
-            <CorpCommand
-              mode="inline"
-              :items="commands"
-              :query="queryModal"
-              placeholder="Digite um comando..."
-              class="border-0"
-              @select="
-                item => {
-                  handleSelect(item);
-                  modalOpen = false;
-                  queryModal = '';
-                }
-              "
-              @update:query="queryModal = $event"
-            />
-          </CommandDialog>
+          <!-- CorpCommand com mode="dialog" + v-model:open (Vuetify-like) -->
+          <CorpCommand
+            mode="dialog"
+            v-model:open="modalOpen"
+            :items="commands"
+            :query="queryModal"
+            placeholder="Digite um comando..."
+            @select="
+              item => {
+                handleSelect(item);
+                modalOpen = false;
+                queryModal = '';
+              }
+            "
+            @update:query="queryModal = $event"
+          />
 
           <p class="text-xs text-muted-foreground">
             💡 Pressione
