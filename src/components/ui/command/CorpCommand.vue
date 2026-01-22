@@ -28,7 +28,7 @@
  */
 
 // ============== DEPENDÊNCIAS EXTERNAS ==============
-import { onClickOutside, useElementBounding } from '@vueuse/core';
+import { onClickOutside } from '@vueuse/core';
 
 // ============== DEPENDÊNCIAS INTERNAS ==============
 import type { ListboxRootEmits } from 'reka-ui';
@@ -122,6 +122,13 @@ const props = defineProps({
   closeOnScroll: {
     type: Boolean,
     default: false,
+  },
+
+  // Controla animação de entrada/saída (apenas modo floating)
+  // true = animação padrão dropdown, false = sem animação, string = nome customizado
+  transition: {
+    type: [Boolean, String] as PropType<boolean | string>,
+    default: true,
   },
 
   // Dimensionamento (APENAS para modo 'floating')
@@ -229,11 +236,11 @@ const delegatedProps = reactiveOmit(
 );
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
-// Refs para elementos
-const floatingContainerRef = ref<HTMLElement | null>(null);
-
 // Estado de busca interno
 const internalQuery = ref<string>(props.query);
+
+// Ref para o floating wrapper (usado no onClickOutside)
+const floatingWrapperRef = ref<HTMLElement | null>(null);
 
 // Reka UI filter context (manter compatibilidade)
 const allItems = ref<Map<string, string>>(new Map());
@@ -261,30 +268,14 @@ const formatCssValue = (value: string | number): string => {
 // ============== COMPUTED PROPERTIES ==============
 
 /**
- * Posicionamento do floating (position: fixed precisa de top/left calculados)
+ * Estilos dinâmicos do floating dropdown (simplificado)
+ * Position/top/left definidos no CSS, só controlamos dimensões
  */
-const parentElement = computed(() => floatingContainerRef.value?.parentElement);
-const parentBounding = useElementBounding(parentElement);
-
-/**
- * Estilos dinâmicos do floating dropdown
- */
-const floatingStyles = computed(() => {
-  const styles: Record<string, string> = {
-    maxHeight: formatCssValue(props.maxHeight),
-    maxWidth: formatCssValue(props.maxWidth),
-    minWidth: formatCssValue(props.minWidth),
-  };
-
-  // Se modo floating, calcula posição baseada no elemento pai
-  if (props.mode === 'floating' && parentElement.value) {
-    styles.top = `${parentBounding.bottom.value + 8}px`; // 8px = 0.5rem gap
-    styles.left = `${parentBounding.left.value}px`;
-    styles.width = `${parentBounding.width.value}px`;
-  }
-
-  return styles;
-});
+const floatingStyles = computed(() => ({
+  maxHeight: formatCssValue(props.maxHeight),
+  maxWidth: formatCssValue(props.maxWidth),
+  minWidth: formatCssValue(props.minWidth),
+}));
 
 /**
  * Resolve rounded (preset/class/style)
@@ -463,19 +454,30 @@ provideCommandContext({
  * Fecha floating ao scrollar (evita efeito "perseguindo" com position: fixed)
  * Só ativa se closeOnScroll=true
  */
-watch(() => props.open, (isOpen) => {
-  if (props.mode === 'floating' && isOpen && props.closeOnScroll && !props.persistent) {
-    const handleScroll = () => {
-      emits('update:open', false);
-      emits('close');
-    };
+watch(
+  () => props.open,
+  isOpen => {
+    if (
+      props.mode === 'floating' &&
+      isOpen &&
+      props.closeOnScroll &&
+      !props.persistent
+    ) {
+      const handleScroll = () => {
+        emits('update:open', false);
+        emits('close');
+      };
 
-    window.addEventListener('scroll', handleScroll, { once: true, passive: true });
+      window.addEventListener('scroll', handleScroll, {
+        once: true,
+        passive: true,
+      });
 
-    // Cleanup ao fechar
-    return () => window.removeEventListener('scroll', handleScroll);
+      // Cleanup ao fechar
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
   }
-});
+);
 
 // ============== CLICK OUTSIDE (modo floating) ==============
 
@@ -491,7 +493,7 @@ watch(() => props.open, (isOpen) => {
  * Se persistent=true, NÃO fecha ao clicar fora.
  * Útil para slash commands que só fecham ao apagar "/".
  */
-onClickOutside(floatingContainerRef, () => {
+onClickOutside(floatingWrapperRef, () => {
   // Não fecha se for persistent
   if (props.persistent) return;
 
@@ -537,32 +539,38 @@ const handleSelect = (item: ICommand): void => {
     </CorpCommandInternal>
   </ListboxRoot>
 
-  <!-- MODO FLOATING: popover flutuante (position fixed para escapar overflow) -->
-  <div
-    v-else-if="mode === 'floating' && open"
-    ref="floatingContainerRef"
-    class="commandFloating"
-    :style="floatingStyles"
+  <!-- MODO FLOATING: popover flutuante (position absolute, relativo ao pai) -->
+  <Transition
+    v-else-if="mode === 'floating'"
+    :name="transition === false ? '' : (typeof transition === 'string' ? transition : 'dropdown')"
+    appear
   >
-    <ListboxRoot
-      v-bind="forwarded"
-      :class="commandClasses"
-      :style="commandStyle"
+    <div
+      v-if="open"
+      ref="floatingWrapperRef"
+      class="commandFloating"
+      :style="floatingStyles"
     >
-      <CorpCommandInternal
-        v-bind="internalProps"
-        @update:internal-query="internalQuery = $event"
-        @select="handleSelect"
+      <ListboxRoot
+        v-bind="forwarded"
+        :class="commandClasses"
+        :style="commandStyle"
       >
-        <template #item="{ item }">
-          <slot name="item" :item="item" />
-        </template>
-        <template #footer>
-          <slot name="footer" />
-        </template>
-      </CorpCommandInternal>
-    </ListboxRoot>
-  </div>
+        <CorpCommandInternal
+          v-bind="internalProps"
+          @update:internal-query="internalQuery = $event"
+          @select="handleSelect"
+        >
+          <template #item="{ item }">
+            <slot name="item" :item="item" />
+          </template>
+          <template #footer>
+            <slot name="footer" />
+          </template>
+        </CorpCommandInternal>
+      </ListboxRoot>
+    </div>
+  </Transition>
 
   <!-- MODO DIALOG: modal com overlay -->
   <Dialog
@@ -599,9 +607,11 @@ const handleSelect = (item: ICommand): void => {
 <style scoped>
 /* === MODO FLOATING === */
 .commandFloating {
-  position: fixed;
-  /* top, left, width calculados dinamicamente via useElementBounding */
-  z-index: 50;
+  position: absolute;
+  top: calc(100% + 8px); /* 8px gap abaixo do elemento pai */
+  left: 0;
+  width: 100%;
+  z-index: 20;
   border-radius: 0.75rem;
   box-shadow:
     0 10px 25px -5px rgba(0, 0, 0, 0.1),
@@ -609,6 +619,36 @@ const handleSelect = (item: ICommand): void => {
   transform-origin: top center;
 
   /* max-height, max-width, min-width controlados via :style */
+}
+
+/* === ANIMAÇÕES DROPDOWN (Floating) === */
+
+/* Transição de entrada (aparece) */
+.dropdown-enter-active {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estado inicial antes de aparecer */
+.dropdown-enter-from {
+  opacity: 0;
+  transform: translateY(-10px) scaleY(0.8);
+}
+
+/* Estado final após aparecer */
+.dropdown-enter-to {
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+}
+
+/* Transição de saída (desaparece) */
+.dropdown-leave-active {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estado final ao desaparecer */
+.dropdown-leave-to {
+  opacity: 0;
+  transform: translateY(-10px) scaleY(0.8);
 }
 
 /* === RESPONSIVIDADE === */
