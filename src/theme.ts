@@ -271,7 +271,7 @@ export const themeDefinition = {
   // ============== CORP COMMAND ==============
   'corp-def-command-border': {
     light: BASE_STYLES.borderInput.light,
-    dark: BASE_STYLES.borderInput.dark,
+    dark: '#3e444d', // Levemente mais claro que o padrão (#2e333eff)
     type: THEME_COLOR_TYPES.BOTH,
   },
   'corp-def-command-divider': {

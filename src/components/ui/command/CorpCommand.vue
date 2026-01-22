@@ -28,7 +28,7 @@
  */
 
 // ============== DEPENDÊNCIAS EXTERNAS ==============
-import { onClickOutside } from '@vueuse/core';
+import { onClickOutside, useElementBounding } from '@vueuse/core';
 
 // ============== DEPENDÊNCIAS INTERNAS ==============
 import type { ListboxRootEmits } from 'reka-ui';
@@ -114,6 +114,12 @@ const props = defineProps({
 
   // Modo persistente: não fecha ao clicar fora (floating) ou ESC (modal via Dialog)
   persistent: {
+    type: Boolean,
+    default: false,
+  },
+
+  // Fecha floating ao scrollar (evita efeito "perseguindo" com position: fixed)
+  closeOnScroll: {
     type: Boolean,
     default: false,
   },
@@ -255,13 +261,30 @@ const formatCssValue = (value: string | number): string => {
 // ============== COMPUTED PROPERTIES ==============
 
 /**
+ * Posicionamento do floating (position: fixed precisa de top/left calculados)
+ */
+const parentElement = computed(() => floatingContainerRef.value?.parentElement);
+const parentBounding = useElementBounding(parentElement);
+
+/**
  * Estilos dinâmicos do floating dropdown
  */
-const floatingStyles = computed(() => ({
-  maxHeight: formatCssValue(props.maxHeight),
-  maxWidth: formatCssValue(props.maxWidth),
-  minWidth: formatCssValue(props.minWidth),
-}));
+const floatingStyles = computed(() => {
+  const styles: Record<string, string> = {
+    maxHeight: formatCssValue(props.maxHeight),
+    maxWidth: formatCssValue(props.maxWidth),
+    minWidth: formatCssValue(props.minWidth),
+  };
+
+  // Se modo floating, calcula posição baseada no elemento pai
+  if (props.mode === 'floating' && parentElement.value) {
+    styles.top = `${parentBounding.bottom.value + 8}px`; // 8px = 0.5rem gap
+    styles.left = `${parentBounding.left.value}px`;
+    styles.width = `${parentBounding.width.value}px`;
+  }
+
+  return styles;
+});
 
 /**
  * Resolve rounded (preset/class/style)
@@ -434,6 +457,26 @@ provideCommandContext({
   filterState,
 });
 
+// ============== SCROLL HANDLING (modo floating) ==============
+
+/**
+ * Fecha floating ao scrollar (evita efeito "perseguindo" com position: fixed)
+ * Só ativa se closeOnScroll=true
+ */
+watch(() => props.open, (isOpen) => {
+  if (props.mode === 'floating' && isOpen && props.closeOnScroll && !props.persistent) {
+    const handleScroll = () => {
+      emits('update:open', false);
+      emits('close');
+    };
+
+    window.addEventListener('scroll', handleScroll, { once: true, passive: true });
+
+    // Cleanup ao fechar
+    return () => window.removeEventListener('scroll', handleScroll);
+  }
+});
+
 // ============== CLICK OUTSIDE (modo floating) ==============
 
 /**
@@ -494,7 +537,7 @@ const handleSelect = (item: ICommand): void => {
     </CorpCommandInternal>
   </ListboxRoot>
 
-  <!-- MODO FLOATING: popover flutuante (position absolute) -->
+  <!-- MODO FLOATING: popover flutuante (position fixed para escapar overflow) -->
   <div
     v-else-if="mode === 'floating' && open"
     ref="floatingContainerRef"
@@ -556,11 +599,8 @@ const handleSelect = (item: ICommand): void => {
 <style scoped>
 /* === MODO FLOATING === */
 .commandFloating {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  left: 0;
-  right: 0;
-  width: 100%;
+  position: fixed;
+  /* top, left, width calculados dinamicamente via useElementBounding */
   z-index: 50;
   border-radius: 0.75rem;
   box-shadow:
