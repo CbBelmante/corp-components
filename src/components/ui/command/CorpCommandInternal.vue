@@ -93,7 +93,7 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits<{
+const emit = defineEmits<{
   'update:internalQuery': [value: string];
   select: [item: ICommand];
 }>();
@@ -102,13 +102,13 @@ const emits = defineEmits<{
 
 const queryModel = computed({
   get: () => props.internalQuery,
-  set: (value: string) => emits('update:internalQuery', value),
+  set: (value: string) => emit('update:internalQuery', value),
 });
 
 // ============== MÉTODOS ==============
 
 const handleSelect = (item: ICommand): void => {
-  emits('select', item);
+  emit('select', item);
 };
 </script>
 

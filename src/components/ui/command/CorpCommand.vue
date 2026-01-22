@@ -23,17 +23,14 @@
  *
  * 🔗 DEPENDÊNCIAS ESPECIAIS:
  * - reka-ui (ListboxRoot, ListboxFilter, etc)
- * - @vueuse/core (onClickOutside para modo floating)
+ * - CorpPopover (modo floating delegado para popover genérico)
  * - deburr (normalização de acentos)
  */
 
-// ============== DEPENDÊNCIAS EXTERNAS ==============
-import { onClickOutside } from '@vueuse/core';
-
 // ============== DEPENDÊNCIAS INTERNAS ==============
-import type { ListboxRootEmits } from 'reka-ui';
 import type { HTMLAttributes, PropType } from 'vue';
-import { computed, nextTick, reactive, ref, watch } from 'vue';
+import type { ListboxRootEmits } from 'reka-ui';
+import { computed, reactive, ref, watch } from 'vue';
 import { reactiveOmit } from '@vueuse/core';
 import { ListboxRoot, useForwardPropsEmits } from 'reka-ui';
 import { cn } from '@/lib/utils';
@@ -50,6 +47,8 @@ import { resolveColor } from '@/utils/CorpColorUtils';
 import { resolveRounded, type RoundedValue } from '@commonStyles';
 import CorpCommandInternal from './CorpCommandInternal.vue';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { CorpPopover } from '@/components/ui/popover';
+import type { PopoverTransition } from '@/components/ui/popover';
 
 // ============== PROPS ==============
 
@@ -125,10 +124,9 @@ const props = defineProps({
   },
 
   // Controla animação de entrada/saída (apenas modo floating)
-  // true = animação padrão dropdown, false = sem animação, string = nome customizado
   transition: {
-    type: [Boolean, String] as PropType<boolean | string>,
-    default: true,
+    type: String as PropType<PopoverTransition>,
+    default: 'dropdown',
   },
 
   // Define qual elemento usar como âncora para posicionamento (apenas floating)
@@ -222,7 +220,7 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits<
+const emit = defineEmits<
   ListboxRootEmits & {
     'update:query': [value: string];
     'update:open': [value: boolean];
@@ -243,16 +241,10 @@ const delegatedProps = reactiveOmit(
   'loadingText',
   'loading'
 );
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const forwarded = useForwardPropsEmits(delegatedProps, emit);
 
 // Estado de busca interno
 const internalQuery = ref<string>(props.query);
-
-// Ref para o floating wrapper (usado no onClickOutside e posicionamento)
-const floatingWrapperRef = ref<HTMLElement | null>(null);
-
-// Trigger para forçar recálculo de posição
-const positionTrigger = ref(0);
 
 // Reka UI filter context (manter compatibilidade)
 const allItems = ref<Map<string, string>>(new Map());
@@ -267,60 +259,7 @@ const filterState = reactive({
   },
 });
 
-// ============== UTILS ==============
-
-/**
- * Formata valor para CSS (adiciona 'px' se for número)
- */
-const formatCssValue = (value: string | number): string => {
-  if (typeof value === 'number') return `${value}px`;
-  return value;
-};
-
 // ============== COMPUTED PROPERTIES ==============
-
-/**
- * Estilos dinâmicos do floating dropdown
- * Para position: fixed, calcula posição baseada no elemento âncora
- */
-const floatingStyles = computed(() => {
-  // Força recálculo quando positionTrigger muda
-  positionTrigger.value;
-
-  const styles: Record<string, string> = {
-    maxHeight: formatCssValue(props.maxHeight),
-    maxWidth: formatCssValue(props.maxWidth),
-    minWidth: formatCssValue(props.minWidth),
-  };
-
-  // Calcula posição para position: fixed (escapa overflow containers)
-  if (props.mode === 'floating' && floatingWrapperRef.value) {
-    // Define elemento âncora baseado na prop anchorTo
-    let anchorElement: Element | null = null;
-
-    if (props.anchorTo === 'sibling') {
-      // Usa elemento irmão anterior (ex: input)
-      anchorElement = floatingWrapperRef.value.previousElementSibling;
-    } else if (props.anchorTo === 'parent') {
-      // Usa elemento pai (container)
-      anchorElement = floatingWrapperRef.value.parentElement;
-    } else {
-      // Auto: tenta sibling, se não existir usa parent
-      anchorElement = floatingWrapperRef.value.previousElementSibling
-        || floatingWrapperRef.value.parentElement;
-    }
-
-    if (anchorElement) {
-      const rect = anchorElement.getBoundingClientRect();
-
-      styles.top = `${rect.bottom + 8}px`; // 8px gap
-      styles.left = `${rect.left}px`;
-      styles.width = `${rect.width}px`;
-    }
-  }
-
-  return styles;
-});
 
 /**
  * Resolve rounded (preset/class/style)
@@ -482,7 +421,7 @@ watch(
 );
 
 watch(internalQuery, newVal => {
-  emits('update:query', newVal);
+  emit('update:query', newVal);
   filterState.search = newVal;
 });
 
@@ -493,103 +432,16 @@ provideCommandContext({
   filterState,
 });
 
-// ============== FLOATING POSITIONING ==============
-
-/**
- * Recalcula posição do floating quando abre
- * Usa nextTick para garantir que o DOM foi atualizado
- */
-watch(
-  () => props.open,
-  (isOpen) => {
-    if (isOpen && props.mode === 'floating') {
-      // Aguarda próximo tick para o DOM estar pronto
-      nextTick(() => {
-        positionTrigger.value++;
-      });
-
-      // Adiciona listener de scroll para atualizar posição
-      const handleScroll = () => {
-        positionTrigger.value++;
-      };
-
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      document.addEventListener('scroll', handleScroll, { passive: true, capture: true });
-
-      // Cleanup ao fechar
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-        document.removeEventListener('scroll', handleScroll, { capture: true });
-      };
-    }
-  }
-);
-
-// ============== SCROLL HANDLING (modo floating) ==============
-
-/**
- * Fecha floating ao scrollar (evita efeito "perseguindo" com position: fixed)
- * Só ativa se closeOnScroll=true
- */
-watch(
-  () => props.open,
-  isOpen => {
-    if (
-      props.mode === 'floating' &&
-      isOpen &&
-      props.closeOnScroll &&
-      !props.persistent
-    ) {
-      const handleScroll = () => {
-        emits('update:open', false);
-        emits('close');
-      };
-
-      window.addEventListener('scroll', handleScroll, {
-        once: true,
-        passive: true,
-      });
-
-      // Cleanup ao fechar
-      return () => window.removeEventListener('scroll', handleScroll);
-    }
-  }
-);
-
-// ============== CLICK OUTSIDE (modo floating) ==============
-
-/**
- * Fecha automaticamente o floating ao clicar fora
- *
- * O componente pai não precisa gerenciar isso!
- * Apenas escute @update:isOpen ou @close para sincronizar estado se necessário.
- *
- * Modo modal: CommandDialog já gerencia via Dialog overlay
- *
- * 🔒 MODO PERSISTENT:
- * Se persistent=true, NÃO fecha ao clicar fora.
- * Útil para slash commands que só fecham ao apagar "/".
- */
-onClickOutside(floatingWrapperRef, () => {
-  // Não fecha se for persistent
-  if (props.persistent) return;
-
-  if (props.mode === 'floating' && props.open) {
-    emits('update:open', false);
-    emits('close');
-  }
-});
-
 // ============== MÉTODOS ==============
 
 const handleSelect = (item: ICommand): void => {
-  emits('select', item);
+  emit('select', item);
   // Limpa query após seleção
   internalQuery.value = '';
   // Fecha floating/dialog após seleção
   if (props.mode === 'floating' || props.mode === 'dialog') {
-    emits('update:open', false);
-    emits('close');
+    emit('update:open', false);
+    emit('close');
   }
 };
 </script>
@@ -616,45 +468,53 @@ const handleSelect = (item: ICommand): void => {
     </CorpCommandInternal>
   </ListboxRoot>
 
-  <!-- MODO FLOATING: popover flutuante (position absolute, relativo ao pai) -->
-  <Transition
+  <!-- MODO FLOATING: popover flutuante via CorpPopover -->
+  <CorpPopover
     v-else-if="mode === 'floating'"
-    :name="transition === false ? '' : (typeof transition === 'string' ? transition : 'dropdown')"
-    appear
+    :model-value="open"
+    trigger="manual"
+    side="bottom"
+    align="start"
+    :offset="8"
+    :anchor-to="anchorTo"
+    :persistent="persistent"
+    :transition="transition"
+    :min-width="minWidth"
+    :max-width="maxWidth"
+    :max-height="maxHeight"
+    :z-index="20"
+    @update:model-value="emit('update:open', $event)"
   >
-    <div
-      v-if="open"
-      ref="floatingWrapperRef"
-      class="commandFloating"
-      :style="floatingStyles"
+    <!-- Activator slot: vazio, posição controlada pelo pai via anchorTo -->
+    <template #activator />
+
+    <!-- Popover content: o command palette -->
+    <ListboxRoot
+      v-bind="forwarded"
+      :class="commandClasses"
+      :style="commandStyle"
     >
-      <ListboxRoot
-        v-bind="forwarded"
-        :class="commandClasses"
-        :style="commandStyle"
+      <CorpCommandInternal
+        v-bind="internalProps"
+        @update:internal-query="internalQuery = $event"
+        @select="handleSelect"
       >
-        <CorpCommandInternal
-          v-bind="internalProps"
-          @update:internal-query="internalQuery = $event"
-          @select="handleSelect"
-        >
-          <template #item="{ item }">
-            <slot name="item" :item="item" />
-          </template>
-          <template #footer>
-            <slot name="footer" />
-          </template>
-        </CorpCommandInternal>
-      </ListboxRoot>
-    </div>
-  </Transition>
+        <template #item="{ item }">
+          <slot name="item" :item="item" />
+        </template>
+        <template #footer>
+          <slot name="footer" />
+        </template>
+      </CorpCommandInternal>
+    </ListboxRoot>
+  </CorpPopover>
 
   <!-- MODO DIALOG: modal com overlay -->
   <Dialog
     v-else-if="mode === 'dialog'"
     :open="open"
     :modal="!persistent"
-    @update:open="emits('update:open', $event)"
+    @update:open="emit('update:open', $event)"
   >
     <DialogContent
       class="overflow-hidden p-0 shadow-lg border-[hsl(var(--corp-def-command-border))]"
@@ -680,57 +540,3 @@ const handleSelect = (item: ICommand): void => {
     </DialogContent>
   </Dialog>
 </template>
-
-<style scoped>
-/* === MODO FLOATING === */
-.commandFloating {
-  position: fixed;
-  /* top, left, width calculados via JS (floatingStyles) */
-  z-index: 20;
-  border-radius: 0.75rem;
-  box-shadow:
-    0 10px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  transform-origin: top center;
-
-  /* max-height, max-width, min-width controlados via :style */
-}
-
-/* === ANIMAÇÕES DROPDOWN (Floating) === */
-
-/* Transição de entrada (aparece) */
-.dropdown-enter-active {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Estado inicial antes de aparecer */
-.dropdown-enter-from {
-  opacity: 0;
-  transform: translateY(-10px) scaleY(0.8);
-}
-
-/* Estado final após aparecer */
-.dropdown-enter-to {
-  opacity: 1;
-  transform: translateY(0) scaleY(1);
-}
-
-/* Transição de saída (desaparece) */
-.dropdown-leave-active {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Estado final ao desaparecer */
-.dropdown-leave-to {
-  opacity: 0;
-  transform: translateY(-10px) scaleY(0.8);
-}
-
-/* === RESPONSIVIDADE === */
-@media (max-width: 640px) {
-  .commandFloating {
-    max-width: 100vw !important;
-    min-width: auto !important;
-  }
-}
-</style>

@@ -8,6 +8,7 @@ export * from './checkbox';
 export * from './command';
 export * from './icon';
 export * from './input';
+export * from './popover';
 export * from './progress';
 export * from './radio-group';
 export * from './select';

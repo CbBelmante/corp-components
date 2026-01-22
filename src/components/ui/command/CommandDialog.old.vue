@@ -16,9 +16,9 @@ const props = withDefaults(defineProps<CommandDialogProps>(), {
   persistent: false,
   modal: true,
 });
-const emits = defineEmits<DialogRootEmits>();
+const emit = defineEmits<DialogRootEmits>();
 
-const forwarded = useForwardPropsEmits(props, emits);
+const forwarded = useForwardPropsEmits(props, emit);
 </script>
 
 <template>

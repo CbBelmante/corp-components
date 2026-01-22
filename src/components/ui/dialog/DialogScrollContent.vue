@@ -15,11 +15,11 @@ import { cn } from '@/lib/utils';
 const props = defineProps<
   DialogContentProps & { class?: HTMLAttributes['class'] }
 >();
-const emits = defineEmits<DialogContentEmits>();
+const emit = defineEmits<DialogContentEmits>();
 
 const delegatedProps = reactiveOmit(props, 'class');
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const forwarded = useForwardPropsEmits(delegatedProps, emit);
 </script>
 
 <template>
