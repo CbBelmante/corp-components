@@ -368,13 +368,20 @@ const handleClearTextarea = () => {
 // ============== COMMAND.MD - Estados ==============
 const queryCommandInline = ref('');
 const queryCommandExternal = ref('');
-const queryCommandFloating = ref('');
 const queryCommandModal = ref('');
 const selectedCommand = ref(null);
 
-// Floating states
-const inputCommandFloating = ref('');
-const floatingCommandOpen = ref(false);
+// Floating example 1 (primeiro exemplo)
+const inputCommandFloating1 = ref('');
+const queryCommandFloating1 = ref('');
+const floatingCommandOpen1 = ref(false);
+
+// Floating example 2 (persistent mode)
+const inputCommandFloating2 = ref('');
+const queryCommandFloating2 = ref('');
+const floatingCommandOpen2 = ref(false);
+
+// Modal state
 const modalCommandOpen = ref(false);
 
 // Comandos de exemplo
@@ -468,22 +475,31 @@ const handleCommandSelect = item => {
   console.log('Comando selecionado:', item);
 };
 
-const handleCommandFloatingInput = event => {
-  const target = event.target;
-  const value = target.value;
+// Handler para floating 1 (não persistent)
+const handleCommandFloating1Input = event => {
+  const value = event.target.value;
 
   if (value.startsWith('/')) {
-    const query = value.substring(1);
-    queryCommandFloating.value = query;
-
-    if (!floatingCommandOpen.value) {
-      floatingCommandOpen.value = true;
-    }
+    queryCommandFloating1.value = value.substring(1);
+    floatingCommandOpen1.value = true;
   } else {
-    if (floatingCommandOpen.value) {
-      floatingCommandOpen.value = false;
-      queryCommandFloating.value = '';
-    }
+    // Reseta ao apagar o "/"
+    floatingCommandOpen1.value = false;
+    queryCommandFloating1.value = '';
+  }
+};
+
+// Handler para floating 2 (persistent)
+const handleCommandFloating2Input = event => {
+  const value = event.target.value;
+
+  if (value.startsWith('/')) {
+    queryCommandFloating2.value = value.substring(1);
+    floatingCommandOpen2.value = true;
+  } else {
+    // Reseta ao apagar o "/"
+    floatingCommandOpen2.value = false;
+    queryCommandFloating2.value = '';
   }
 };
 
@@ -540,16 +556,24 @@ injectDocsContext({
   // Command.md
   queryCommandInline,
   queryCommandExternal,
-  queryCommandFloating,
   queryCommandModal,
   selectedCommand,
-  inputCommandFloating,
-  floatingCommandOpen,
+  // Floating 1
+  inputCommandFloating1,
+  queryCommandFloating1,
+  floatingCommandOpen1,
+  handleCommandFloating1Input,
+  // Floating 2
+  inputCommandFloating2,
+  queryCommandFloating2,
+  floatingCommandOpen2,
+  handleCommandFloating2Input,
+  // Modal
   modalCommandOpen,
+  // Data
   commandItems,
   simpleCommandItems,
   handleCommandSelect,
-  handleCommandFloatingInput,
 });
 </script>
 

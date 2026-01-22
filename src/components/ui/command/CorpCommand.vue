@@ -33,7 +33,7 @@ import { onClickOutside } from '@vueuse/core';
 // ============== DEPENDÊNCIAS INTERNAS ==============
 import type { ListboxRootEmits } from 'reka-ui';
 import type { HTMLAttributes, PropType } from 'vue';
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, nextTick, reactive, ref, watch } from 'vue';
 import { reactiveOmit } from '@vueuse/core';
 import { ListboxRoot, useForwardPropsEmits } from 'reka-ui';
 import { cn } from '@/lib/utils';
@@ -118,7 +118,7 @@ const props = defineProps({
     default: false,
   },
 
-  // Fecha floating ao scrollar (evita efeito "perseguindo" com position: fixed)
+  // Fecha floating ao scrollar (opcional)
   closeOnScroll: {
     type: Boolean,
     default: false,
@@ -129,6 +129,15 @@ const props = defineProps({
   transition: {
     type: [Boolean, String] as PropType<boolean | string>,
     default: true,
+  },
+
+  // Define qual elemento usar como âncora para posicionamento (apenas floating)
+  // 'sibling': Elemento irmão anterior (ex: input antes do command)
+  // 'parent': Elemento pai (container)
+  // 'auto': Tenta sibling, se não existir usa parent (padrão)
+  anchorTo: {
+    type: String as PropType<'sibling' | 'parent' | 'auto'>,
+    default: 'auto',
   },
 
   // Dimensionamento (APENAS para modo 'floating')
@@ -239,8 +248,11 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 // Estado de busca interno
 const internalQuery = ref<string>(props.query);
 
-// Ref para o floating wrapper (usado no onClickOutside)
+// Ref para o floating wrapper (usado no onClickOutside e posicionamento)
 const floatingWrapperRef = ref<HTMLElement | null>(null);
+
+// Trigger para forçar recálculo de posição
+const positionTrigger = ref(0);
 
 // Reka UI filter context (manter compatibilidade)
 const allItems = ref<Map<string, string>>(new Map());
@@ -268,14 +280,47 @@ const formatCssValue = (value: string | number): string => {
 // ============== COMPUTED PROPERTIES ==============
 
 /**
- * Estilos dinâmicos do floating dropdown (simplificado)
- * Position/top/left definidos no CSS, só controlamos dimensões
+ * Estilos dinâmicos do floating dropdown
+ * Para position: fixed, calcula posição baseada no elemento âncora
  */
-const floatingStyles = computed(() => ({
-  maxHeight: formatCssValue(props.maxHeight),
-  maxWidth: formatCssValue(props.maxWidth),
-  minWidth: formatCssValue(props.minWidth),
-}));
+const floatingStyles = computed(() => {
+  // Força recálculo quando positionTrigger muda
+  positionTrigger.value;
+
+  const styles: Record<string, string> = {
+    maxHeight: formatCssValue(props.maxHeight),
+    maxWidth: formatCssValue(props.maxWidth),
+    minWidth: formatCssValue(props.minWidth),
+  };
+
+  // Calcula posição para position: fixed (escapa overflow containers)
+  if (props.mode === 'floating' && floatingWrapperRef.value) {
+    // Define elemento âncora baseado na prop anchorTo
+    let anchorElement: Element | null = null;
+
+    if (props.anchorTo === 'sibling') {
+      // Usa elemento irmão anterior (ex: input)
+      anchorElement = floatingWrapperRef.value.previousElementSibling;
+    } else if (props.anchorTo === 'parent') {
+      // Usa elemento pai (container)
+      anchorElement = floatingWrapperRef.value.parentElement;
+    } else {
+      // Auto: tenta sibling, se não existir usa parent
+      anchorElement = floatingWrapperRef.value.previousElementSibling
+        || floatingWrapperRef.value.parentElement;
+    }
+
+    if (anchorElement) {
+      const rect = anchorElement.getBoundingClientRect();
+
+      styles.top = `${rect.bottom + 8}px`; // 8px gap
+      styles.left = `${rect.left}px`;
+      styles.width = `${rect.width}px`;
+    }
+  }
+
+  return styles;
+});
 
 /**
  * Resolve rounded (preset/class/style)
@@ -448,6 +493,38 @@ provideCommandContext({
   filterState,
 });
 
+// ============== FLOATING POSITIONING ==============
+
+/**
+ * Recalcula posição do floating quando abre
+ * Usa nextTick para garantir que o DOM foi atualizado
+ */
+watch(
+  () => props.open,
+  (isOpen) => {
+    if (isOpen && props.mode === 'floating') {
+      // Aguarda próximo tick para o DOM estar pronto
+      nextTick(() => {
+        positionTrigger.value++;
+      });
+
+      // Adiciona listener de scroll para atualizar posição
+      const handleScroll = () => {
+        positionTrigger.value++;
+      };
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      document.addEventListener('scroll', handleScroll, { passive: true, capture: true });
+
+      // Cleanup ao fechar
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        document.removeEventListener('scroll', handleScroll, { capture: true });
+      };
+    }
+  }
+);
+
 // ============== SCROLL HANDLING (modo floating) ==============
 
 /**
@@ -607,10 +684,8 @@ const handleSelect = (item: ICommand): void => {
 <style scoped>
 /* === MODO FLOATING === */
 .commandFloating {
-  position: absolute;
-  top: calc(100% + 8px); /* 8px gap abaixo do elemento pai */
-  left: 0;
-  width: 100%;
+  position: fixed;
+  /* top, left, width calculados via JS (floatingStyles) */
   z-index: 20;
   border-radius: 0.75rem;
   box-shadow:

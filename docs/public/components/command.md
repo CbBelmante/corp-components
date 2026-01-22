@@ -101,31 +101,31 @@ Componente fixo, sempre renderizado. Ideal para sidebars, painéis laterais.
 Popover flutuante com `position: absolute`. Ideal para autocomplete, slash commands.
 
 :::corp-code
-<div class="p-4 bg-card border border-border rounded-lg">
-  <div class="relative">
+<div class="p-4 bg-card border border-border rounded-lg overflow-visible">
+  <div class="relative overflow-visible">
     <!-- Input trigger -->
     <input
-      v-model="inputCommandFloating"
+      v-model="inputCommandFloating1"
       type="text"
       placeholder="Digite / para abrir comandos..."
       class="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-      @input="handleCommandFloatingInput"
+      @input="handleCommandFloating1Input"
     />
 
     <!-- Command Floating (fecha ao clicar fora automaticamente) -->
     <CorpCommand
       mode="floating"
-      v-model:open="floatingCommandOpen"
+      v-model:open="floatingCommandOpen1"
       :show-search-field="false"
       :items="commandItems"
-      :query="queryCommandFloating"
+      :query="queryCommandFloating1"
       @select="item => {
         handleCommandSelect(item);
-        inputCommandFloating = '';
-        queryCommandFloating = '';
-        floatingCommandOpen = false;
+        inputCommandFloating1 = '';
+        queryCommandFloating1 = '';
+        floatingCommandOpen1 = false;
       }"
-      @update:query="queryCommandFloating = $event"
+      @update:query="queryCommandFloating1 = $event"
     />
   </div>
 
@@ -411,30 +411,30 @@ Customize o estado vazio com `empty-text`, `empty-hint` e `empty-icon`.
 Use `persistent` para desabilitar auto-close ao clicar fora (floating) ou ESC (dialog).
 
 :::corp-code
-<div class="p-4 bg-card border border-border rounded-lg">
-  <div class="relative">
+<div class="p-4 bg-card border border-border rounded-lg overflow-visible">
+  <div class="relative overflow-visible">
     <input
-      v-model="inputCommandFloating"
+      v-model="inputCommandFloating2"
       type="text"
       placeholder="Digite / - só fecha ao apagar o /"
       class="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-      @input="handleCommandFloatingInput"
+      @input="handleCommandFloating2Input"
     />
 
     <CorpCommand
       mode="floating"
       persistent
-      v-model:open="floatingCommandOpen"
+      v-model:open="floatingCommandOpen2"
       :show-search-field="false"
       :items="commandItems"
-      :query="queryCommandFloating"
+      :query="queryCommandFloating2"
       @select="item => {
         handleCommandSelect(item);
-        inputCommandFloating = '';
-        queryCommandFloating = '';
-        floatingCommandOpen = false;
+        inputCommandFloating2 = '';
+        queryCommandFloating2 = '';
+        floatingCommandOpen2 = false;
       }"
-      @update:query="queryCommandFloating = $event"
+      @update:query="queryCommandFloating2 = $event"
     />
   </div>
 
