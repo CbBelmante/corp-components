@@ -39,6 +39,13 @@ import { CorpThemeToggle } from '@/components/ui';
             >
               Inputs
             </RouterLink>
+            <RouterLink
+              to="/sidebar"
+              class="text-muted-foreground hover:text-foreground transition-colors"
+              active-class="text-primary font-medium"
+            >
+              Sidebar
+            </RouterLink>
           </nav>
         </div>
         <div class="flex items-center gap-3">
