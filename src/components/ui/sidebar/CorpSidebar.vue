@@ -24,7 +24,7 @@
 
 // ============== DEPENDÊNCIAS EXTERNAS ==============
 import type { PropType } from 'vue';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import {
   Sidebar,
@@ -45,42 +45,13 @@ import {
 
 // ============== DEPENDÊNCIAS INTERNAS ==============
 import { CorpIcon } from '@/components/ui/icon';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 import { getColorType } from '@/utils/CorpColorUtils';
-
-// ============== UTILS ==============
-
-/**
- * Helper para ícone (simplificado)
- */
-const getIconName = (icon?: string) => icon || 'luc-circle';
-
-/**
- * Formata valor CSS (adiciona 'px' se for número)
- */
-const formatCssValue = (value: string | number): string => {
-  if (typeof value === 'number') return `${value}px`;
-  return value;
-};
-
-// ============== TYPES ==============
-
-/**
- * Interface de item de menu (Vuetify-like)
- * Suporta submenus via `items` ou `children` (aliases)
- */
-export interface IMenuItem {
-  title: string;
-  icon?: string;
-  iconColor?: string; // 🎨 NEW: Tailwind class, CSS var, hex, rgb, rgba
-  to?: string;
-  routeName?: string;
-  action?: string;
-  tooltip?: string;
-  items?: IMenuItem[]; // Suporte a submenus
-  children?: IMenuItem[]; // Alias para items
-  defaultOpen?: boolean; // Controle de expansão (true = aberto por padrão)
-}
+import { SIDEBAR_WIDTH_ICON } from './constants';
 
 // ============== PROPS ==============
 
@@ -118,11 +89,11 @@ const props = defineProps({
   },
 
   /**
-   * Largura no modo rail (default: 64px)
+   * Largura no modo rail (default: 3.5rem = 56px)
    */
   railWidth: {
     type: [Number, String],
-    default: 64,
+    default: SIDEBAR_WIDTH_ICON,
   },
 
   /**
@@ -217,6 +188,35 @@ const props = defineProps({
   },
 });
 
+// ============== UTILS ==============
+
+/**
+ * Formata valor CSS (adiciona 'px' se for número)
+ */
+const formatCssValue = (value: string | number): string => {
+  if (typeof value === 'number') return `${value}px`;
+  return value;
+};
+
+// ============== TYPES ==============
+
+/**
+ * Interface de item de menu (Vuetify-like)
+ * Suporta submenus via `items` ou `children` (aliases)
+ */
+export interface IMenuItem {
+  title: string;
+  icon?: string;
+  iconColor?: string; // 🎨 NEW: Tailwind class, CSS var, hex, rgb, rgba
+  to?: string;
+  routeName?: string;
+  action?: string;
+  tooltip?: string;
+  items?: IMenuItem[]; // Suporte a submenus
+  children?: IMenuItem[]; // Alias para items
+  defaultOpen?: boolean; // Controle de expansão (true = aberto por padrão)
+}
+
 // ============== COMPOSABLES ==============
 
 /**
@@ -225,13 +225,6 @@ const props = defineProps({
  * Escuta quando sidebar colapsa/expande para ajustar altura do header.
  */
 const { state: sidebarState } = useSidebar();
-
-// ============== STATE ==============
-
-/**
- * 🎯 Estado de hover para expand-on-hover
- */
-const isHovering = ref(false);
 
 // ============== COMPUTED ==============
 
@@ -246,7 +239,9 @@ const isHovering = ref(false);
 const headerHeightPx = computed(() => {
   // Escolher altura baseada no estado do sidebar
   const height =
-    sidebarState.value === 'collapsed' ? props.headerHeightCollapsed : props.headerHeight;
+    sidebarState.value === 'collapsed'
+      ? props.headerHeightCollapsed
+      : props.headerHeight;
 
   if (typeof height === 'number') {
     return `${height}px`;
@@ -258,51 +253,11 @@ const headerHeightPx = computed(() => {
  * 🎯 Classes de background (opacity + blur)
  */
 const bgClasses = computed(() => [
-  props.opacity < 1 ? `${props.background}/${Math.round(props.opacity * 100)}` : props.background,
+  props.opacity < 1
+    ? `${props.background}/${Math.round(props.opacity * 100)}`
+    : props.background,
   props.blur > 0 ? `backdrop-blur-[${props.blur}px]` : '',
 ]);
-
-/**
- * 🎯 Largura do sidebar (dinâmica)
- *
- * Calcula largura baseado em rail mode e hover state.
- *
- * @returns {string} Largura em pixels
- */
-const _sidebarWidth = computed(() => {
-  // Se rail mode e expand-on-hover ativo
-  if (props.rail && props.expandOnHover && isHovering.value) {
-    return formatCssValue(props.width);
-  }
-
-  // Se rail mode (colapsado)
-  if (props.rail) {
-    return formatCssValue(props.railWidth);
-  }
-
-  // Expandido normal
-  return formatCssValue(props.width);
-});
-
-// ============== METHODS ==============
-
-/**
- * 🎯 Handler para mouseenter
- */
-const _handleMouseEnter = () => {
-  if (props.expandOnHover && props.rail) {
-    isHovering.value = true;
-  }
-};
-
-/**
- * 🎯 Handler para mouseleave
- */
-const _handleMouseLeave = () => {
-  if (props.expandOnHover && props.rail) {
-    isHovering.value = false;
-  }
-};
 
 // ============== ROUTER ==============
 const router = useRouter();
@@ -388,7 +343,13 @@ const handleMenuAction = (item: IMenuItem) => {
 </script>
 
 <template>
-  <Sidebar variant="sidebar" collapsible="icon" :contained="contained" :class="bgClasses">
+  <Sidebar
+    variant="sidebar"
+    collapsible="icon"
+    :contained="contained"
+    :class="bgClasses"
+    :style="{ '--sidebar-width-icon': formatCssValue(railWidth) }"
+  >
     <!-- Header da Sidebar -->
     <div
       class="flex items-center gap-3 px-3 border-b border-sidebar-border"
@@ -405,9 +366,13 @@ const handleMenuAction = (item: IMenuItem) => {
       </slot>
 
       <!-- App name e subtitle -->
-      <div class="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
+      <div
+        class="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden"
+      >
         <span class="truncate font-semibold">{{ appName }}</span>
-        <span class="truncate text-xs text-sidebar-foreground/70">{{ appSubtitle }}</span>
+        <span class="truncate text-xs text-sidebar-foreground/70">
+          {{ appSubtitle }}
+        </span>
       </div>
     </div>
 
@@ -436,7 +401,12 @@ const handleMenuAction = (item: IMenuItem) => {
               </SidebarMenuItem>
 
               <!-- Item COM children: collapsible -->
-              <Collapsible v-else v-slot="{ open }" :key="item.title" :default-open="item.defaultOpen !== false">
+              <Collapsible
+                v-else
+                v-slot="{ open }"
+                :key="item.title"
+                :default-open="item.defaultOpen !== false"
+              >
                 <SidebarMenuItem>
                   <CollapsibleTrigger as-child>
                     <SidebarMenuButton>
@@ -457,7 +427,10 @@ const handleMenuAction = (item: IMenuItem) => {
 
                   <CollapsibleContent class="collapsibleContent">
                     <SidebarMenuSub>
-                      <SidebarMenuSubItem v-for="child in getItemChildren(item)" :key="child.title">
+                      <SidebarMenuSubItem
+                        v-for="child in getItemChildren(item)"
+                        :key="child.title"
+                      >
                         <SidebarMenuSubButton @click="handleMenuAction(child)">
                           <CorpIcon
                             v-if="child.icon"

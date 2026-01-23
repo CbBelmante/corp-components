@@ -190,7 +190,9 @@ const coloredMenuItems: IMenuItem[] = [
         </p>
       </div>
 
-      <div class="h-[500px] border border-border rounded-lg overflow-hidden relative">
+      <div
+        class="h-[500px] border border-border rounded-lg overflow-hidden relative"
+      >
         <SidebarProvider>
           <div class="flex h-full w-full absolute inset-0">
             <CorpSidebar
@@ -208,8 +210,8 @@ const coloredMenuItems: IMenuItem[] = [
                   <h3 class="text-lg font-semibold">Conteúdo Principal</h3>
                 </div>
                 <p class="text-muted-foreground">
-                  Clique no ícone para colapsar/expandir o sidebar.
-                  Clique nos itens do menu para navegar.
+                  Clique no ícone para colapsar/expandir o sidebar. Clique nos
+                  itens do menu para navegar.
                 </p>
               </div>
             </SidebarInset>
@@ -229,7 +231,9 @@ const coloredMenuItems: IMenuItem[] = [
         </p>
       </div>
 
-      <div class="h-[600px] border border-border rounded-lg overflow-hidden relative">
+      <div
+        class="h-[600px] border border-border rounded-lg overflow-hidden relative"
+      >
         <SidebarProvider>
           <div class="flex h-full w-full absolute inset-0">
             <CorpSidebar
@@ -248,7 +252,11 @@ const coloredMenuItems: IMenuItem[] = [
                 </div>
                 <div class="space-y-2 text-sm text-muted-foreground">
                   <p>✅ Clique nos itens com seta para expandir/colapsar</p>
-                  <p>✅ Use <code class="px-1 bg-muted rounded">defaultOpen: true</code> para abrir por padrão</p>
+                  <p>
+                    ✅ Use
+                    <code class="px-1 bg-muted rounded">defaultOpen: true</code>
+                    para abrir por padrão
+                  </p>
                   <p>✅ Animação suave com @keyframes</p>
                 </div>
               </div>
@@ -269,7 +277,9 @@ const coloredMenuItems: IMenuItem[] = [
         </p>
       </div>
 
-      <div class="h-[500px] border border-border rounded-lg overflow-hidden relative">
+      <div
+        class="h-[500px] border border-border rounded-lg overflow-hidden relative"
+      >
         <SidebarProvider>
           <div class="flex h-full w-full absolute inset-0">
             <CorpSidebar
@@ -289,10 +299,26 @@ const coloredMenuItems: IMenuItem[] = [
                 <div class="space-y-2 text-sm text-muted-foreground">
                   <p>🎨 Suporta múltiplos formatos:</p>
                   <ul class="list-disc list-inside space-y-1 ml-4">
-                    <li><code class="px-1 bg-muted rounded">#ef4444</code> - HEX</li>
-                    <li><code class="px-1 bg-muted rounded">rgb(139, 69, 19)</code> - RGB</li>
-                    <li><code class="px-1 bg-muted rounded">var(--destructive)</code> - CSS var</li>
-                    <li><code class="px-1 bg-muted rounded">text-blue-500</code> - Tailwind</li>
+                    <li>
+                      <code class="px-1 bg-muted rounded">#ef4444</code>
+                      - HEX
+                    </li>
+                    <li>
+                      <code class="px-1 bg-muted rounded">
+                        rgb(139, 69, 19)
+                      </code>
+                      - RGB
+                    </li>
+                    <li>
+                      <code class="px-1 bg-muted rounded">
+                        var(--destructive)
+                      </code>
+                      - CSS var
+                    </li>
+                    <li>
+                      <code class="px-1 bg-muted rounded">text-blue-500</code>
+                      - Tailwind
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -313,17 +339,31 @@ const coloredMenuItems: IMenuItem[] = [
         </p>
       </div>
 
-      <div class="h-[500px] border border-border rounded-lg overflow-hidden relative">
+      <div
+        class="h-[500px] border border-border rounded-lg overflow-hidden relative"
+      >
         <SidebarProvider>
           <div class="flex h-full w-full absolute inset-0">
-            <CorpSidebar :items="basicMenuItems" background="bg-primary/5" contained>
+            <CorpSidebar
+              :items="basicMenuItems"
+              background="bg-primary/5"
+              contained
+            >
               <!-- Custom Logo -->
               <template #logo>
                 <div class="flex items-center gap-2">
-                  <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                    <CorpIcon icon="luc-heart-pulse" :size="20" class="text-white" />
+                  <div
+                    class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"
+                  >
+                    <CorpIcon
+                      icon="luc-heart-pulse"
+                      :size="20"
+                      class="text-white"
+                    />
                   </div>
-                  <div class="flex flex-col group-data-[collapsible=icon]:hidden">
+                  <div
+                    class="flex flex-col group-data-[collapsible=icon]:hidden"
+                  >
                     <span class="font-bold text-sm">MedTech</span>
                     <span class="text-xs text-muted-foreground">v2.0</span>
                   </div>
@@ -332,15 +372,25 @@ const coloredMenuItems: IMenuItem[] = [
 
               <!-- Custom Footer -->
               <template #footer>
-                <div class="flex items-center gap-3 p-3 hover:bg-sidebar-accent rounded-lg cursor-pointer transition-colors">
-                  <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
+                <div
+                  class="flex items-center gap-3 p-3 hover:bg-sidebar-accent rounded-lg cursor-pointer transition-colors"
+                >
+                  <div
+                    class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center"
+                  >
                     <span class="text-xs font-bold text-white">DS</span>
                   </div>
                   <div class="flex-1 group-data-[collapsible=icon]:hidden">
                     <p class="text-sm font-medium">Dr. Silva</p>
-                    <p class="text-xs text-muted-foreground">silva@medtech.com</p>
+                    <p class="text-xs text-muted-foreground">
+                      silva@medtech.com
+                    </p>
                   </div>
-                  <CorpIcon icon="luc-log-out" :size="16" class="group-data-[collapsible=icon]:hidden" />
+                  <CorpIcon
+                    icon="luc-log-out"
+                    :size="16"
+                    class="group-data-[collapsible=icon]:hidden"
+                  />
                 </div>
               </template>
             </CorpSidebar>
@@ -351,9 +401,21 @@ const coloredMenuItems: IMenuItem[] = [
                   <h3 class="text-lg font-semibold">Slots Customizados</h3>
                 </div>
                 <div class="space-y-2 text-sm text-muted-foreground">
-                  <p>✅ <code class="px-1 bg-muted rounded">#logo</code> - Logo customizado</p>
-                  <p>✅ <code class="px-1 bg-muted rounded">#footer</code> - Footer customizado</p>
-                  <p>✅ <code class="px-1 bg-muted rounded">#prepend</code> - Conteúdo antes do menu</p>
+                  <p>
+                    ✅
+                    <code class="px-1 bg-muted rounded">#logo</code>
+                    - Logo customizado
+                  </p>
+                  <p>
+                    ✅
+                    <code class="px-1 bg-muted rounded">#footer</code>
+                    - Footer customizado
+                  </p>
+                  <p>
+                    ✅
+                    <code class="px-1 bg-muted rounded">#prepend</code>
+                    - Conteúdo antes do menu
+                  </p>
                 </div>
               </div>
             </SidebarInset>
@@ -367,25 +429,55 @@ const coloredMenuItems: IMenuItem[] = [
       <h3 class="font-semibold text-foreground mb-2">🔰 Bizu do Soldado</h3>
       <div class="space-y-1 text-sm text-muted-foreground">
         <p>
-          ✅ <strong>SidebarProvider obrigatório</strong>: Sempre envolva CorpSidebar + SidebarInset
+          ✅
+          <strong>SidebarProvider obrigatório</strong>
+          : Sempre envolva CorpSidebar + SidebarInset
         </p>
         <p>
-          ✅ <strong>contained prop</strong>: Use <code class="px-1 bg-muted rounded">contained</code> quando sidebar estiver em container limitado (usa absolute)
+          ✅
+          <strong>contained prop</strong>
+          : Use
+          <code class="px-1 bg-muted rounded">contained</code>
+          quando sidebar estiver em container limitado (usa absolute)
         </p>
         <p>
-          ✅ <strong>background prop</strong>: Use <code class="px-1 bg-muted rounded">bg-card</code>, <code class="px-1 bg-muted rounded">bg-muted</code>, <code class="px-1 bg-muted rounded">bg-primary/10</code> etc
+          ✅
+          <strong>background prop</strong>
+          : Use
+          <code class="px-1 bg-muted rounded">bg-card</code>
+          ,
+          <code class="px-1 bg-muted rounded">bg-muted</code>
+          ,
+          <code class="px-1 bg-muted rounded">bg-primary/10</code>
+          etc
         </p>
         <p>
-          ✅ <strong>IMenuItem interface</strong>: Use <code class="px-1 bg-muted rounded">children</code> ou <code class="px-1 bg-muted rounded">items</code> para submenus
+          ✅
+          <strong>IMenuItem interface</strong>
+          : Use
+          <code class="px-1 bg-muted rounded">children</code>
+          ou
+          <code class="px-1 bg-muted rounded">items</code>
+          para submenus
         </p>
         <p>
-          ✅ <strong>defaultOpen</strong>: Controla se submenu abre por padrão (<code class="px-1 bg-muted rounded">true</code>/<code class="px-1 bg-muted rounded">false</code>)
+          ✅
+          <strong>defaultOpen</strong>
+          : Controla se submenu abre por padrão (
+          <code class="px-1 bg-muted rounded">true</code>
+          /
+          <code class="px-1 bg-muted rounded">false</code>
+          )
         </p>
         <p>
-          🎨 <strong>iconColor</strong>: Suporta HEX, RGB, CSS var, Tailwind classes
+          🎨
+          <strong>iconColor</strong>
+          : Suporta HEX, RGB, CSS var, Tailwind classes
         </p>
         <p>
-          🎭 <strong>Slots customizáveis</strong>: logo, footer, prepend
+          🎭
+          <strong>Slots customizáveis</strong>
+          : logo, footer, prepend
         </p>
       </div>
     </section>
@@ -396,7 +488,9 @@ const coloredMenuItems: IMenuItem[] = [
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="p-4 bg-card border border-border rounded-lg">
           <h3 class="font-medium mb-2 text-sm">1. Estrutura Básica</h3>
-          <pre class="text-xs bg-muted p-2 rounded overflow-x-auto"><code>&lt;SidebarProvider&gt;
+          <pre
+            class="text-xs bg-muted p-2 rounded overflow-x-auto"
+          ><code>&lt;SidebarProvider&gt;
   &lt;CorpSidebar
     :items="menu"
     background="bg-card"
@@ -426,7 +520,9 @@ const coloredMenuItems: IMenuItem[] = [
 
         <div class="p-4 bg-card border border-border rounded-lg">
           <h3 class="font-medium mb-2 text-sm">3. Slots</h3>
-          <pre class="text-xs bg-muted p-2 rounded overflow-x-auto"><code>&lt;CorpSidebar&gt;
+          <pre
+            class="text-xs bg-muted p-2 rounded overflow-x-auto"
+          ><code>&lt;CorpSidebar&gt;
   &lt;template #logo&gt;
     &lt;!-- Custom logo --&gt;
   &lt;/template&gt;

@@ -5,7 +5,7 @@
  * Scripts geram automaticamente:
  * - src/generated/theme.css (formato HEX legível)
  * - src/generated/tailwind.css (formato HSL para Tailwind)
- * - src/generated/themeMetadata.ts (mapeamento para CorpColorUtils)
+ * - src/generated/themeMetadata.ts (metadados do tema)
  *
  * Para adicionar uma nova cor:
  * 1. Adicione aqui com light, dark e type

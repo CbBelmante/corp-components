@@ -5,7 +5,7 @@
  * Lê src/theme.ts e gera automaticamente em src/generated/:
  * - theme.css (formato HEX legível)
  * - tailwind.css (formato HSL para Tailwind)
- * - themeMetadata.ts (metadados para CorpColorUtils)
+ * - themeMetadata.ts (metadados do tema)
  */
 
 import { writeFileSync, existsSync, mkdirSync } from 'fs';
