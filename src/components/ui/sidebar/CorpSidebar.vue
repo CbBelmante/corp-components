@@ -393,6 +393,7 @@ const handleMenuAction = (item: IMenuItem) => {
                   <CorpIcon
                     v-if="item.icon"
                     :icon="item.icon"
+                    :size="16"
                     :class="getIconColorProps(item.iconColor).class"
                     :style="getIconColorProps(item.iconColor).style"
                   />
@@ -413,19 +414,23 @@ const handleMenuAction = (item: IMenuItem) => {
                       <CorpIcon
                         v-if="item.icon"
                         :icon="item.icon"
+                        :size="16"
                         :class="getIconColorProps(item.iconColor).class"
                         :style="getIconColorProps(item.iconColor).style"
                       />
                       <span>{{ item.title }}</span>
                       <CorpIcon
                         icon="luc-chevron-down"
-                        class="ml-auto transition-transform duration-200"
+                        :size="16"
+                        class="ml-auto transition-transform duration-200 group-data-[collapsible=icon]:hidden"
                         :class="{ 'rotate-180': open }"
                       />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
 
-                  <CollapsibleContent class="collapsibleContent">
+                  <CollapsibleContent
+                    class="collapsibleContent group-data-[collapsible=icon]:hidden"
+                  >
                     <SidebarMenuSub>
                       <SidebarMenuSubItem
                         v-for="child in getItemChildren(item)"
@@ -435,6 +440,7 @@ const handleMenuAction = (item: IMenuItem) => {
                           <CorpIcon
                             v-if="child.icon"
                             :icon="child.icon"
+                            :size="16"
                             :class="getIconColorProps(child.iconColor).class"
                             :style="getIconColorProps(child.iconColor).style"
                           />
@@ -457,7 +463,7 @@ const handleMenuAction = (item: IMenuItem) => {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton>
-              <CorpIcon icon="luc-user" />
+              <CorpIcon icon="luc-user" :size="16" />
               <span>{{ userName }}</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
