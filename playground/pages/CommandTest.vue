@@ -19,15 +19,18 @@ const queryExternal = ref('');
 const inputFloating = ref(''); // Input completo com "/"
 const queryFloating = ref(''); // Query extraída (sem "/")
 const floatingOpen = ref(false);
+const floatingInputRef = ref<HTMLElement | null>(null);
 
 // Modo floating (click to open)
 const queryFloatingClick = ref('');
 const floatingClickOpen = ref(false);
+const floatingClickInputRef = ref<HTMLElement | null>(null);
 
 // Modo floating persistent (slash commands - só fecha ao apagar "/")
 const inputPersistent = ref('');
 const queryPersistent = ref('');
 const persistentOpen = ref(false);
+const persistentInputRef = ref<HTMLElement | null>(null);
 
 // Modo modal
 const queryModal = ref('');
@@ -313,6 +316,7 @@ onUnmounted(() => {
           <div class="relative">
             <!-- Input trigger -->
             <input
+              ref="floatingInputRef"
               v-model="inputFloating"
               type="text"
               placeholder="Digite / para abrir slash commands..."
@@ -324,6 +328,7 @@ onUnmounted(() => {
             <CorpCommand
               mode="floating"
               v-model:open="floatingOpen"
+              :anchor-el="floatingInputRef"
               :show-search-field="false"
               :items="commands"
               :query="queryFloating"
@@ -362,6 +367,7 @@ onUnmounted(() => {
           <div class="relative">
             <!-- Input trigger -->
             <input
+              ref="floatingClickInputRef"
               v-model="queryFloatingClick"
               type="text"
               placeholder="Clique para ver opções..."
@@ -373,6 +379,7 @@ onUnmounted(() => {
             <CorpCommand
               mode="floating"
               v-model:open="floatingClickOpen"
+              :anchor-el="floatingClickInputRef"
               :items="commands"
               :query="queryFloatingClick"
               placeholder="Buscar..."
@@ -409,6 +416,7 @@ onUnmounted(() => {
           <div class="relative">
             <!-- Input trigger -->
             <input
+              ref="persistentInputRef"
               v-model="inputPersistent"
               type="text"
               placeholder="Digite / - só fecha se apagar o /"
@@ -421,6 +429,7 @@ onUnmounted(() => {
               mode="floating"
               persistent
               v-model:open="persistentOpen"
+              :anchor-el="persistentInputRef"
               :show-search-field="false"
               :items="commands"
               :query="queryPersistent"

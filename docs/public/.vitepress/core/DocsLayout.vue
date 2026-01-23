@@ -375,11 +375,13 @@ const selectedCommand = ref(null);
 const inputCommandFloating1 = ref('');
 const queryCommandFloating1 = ref('');
 const floatingCommandOpen1 = ref(false);
+const floatingInputRef1 = ref<HTMLElement | null>(null);
 
 // Floating example 2 (persistent mode)
 const inputCommandFloating2 = ref('');
 const queryCommandFloating2 = ref('');
 const floatingCommandOpen2 = ref(false);
+const floatingInputRef2 = ref<HTMLElement | null>(null);
 
 // Modal state
 const modalCommandOpen = ref(false);
@@ -562,11 +564,13 @@ injectDocsContext({
   inputCommandFloating1,
   queryCommandFloating1,
   floatingCommandOpen1,
+  floatingInputRef1,
   handleCommandFloating1Input,
   // Floating 2
   inputCommandFloating2,
   queryCommandFloating2,
   floatingCommandOpen2,
+  floatingInputRef2,
   handleCommandFloating2Input,
   // Modal
   modalCommandOpen,

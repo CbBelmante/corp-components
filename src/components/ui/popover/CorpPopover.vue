@@ -1,78 +1,96 @@
 <script setup lang="ts">
 /**
- * 🎯 CorpPopover - Popover Genérico Flutuante
+ * 🎯 CorpPopover - Popover com Floating UI
  *
- * Componente base para floating elements (tooltips, dropdowns, menus, etc)
- * Inspirado no v-menu do Vuetify com melhorias modernas.
+ * Wrapper do Popover shadcn com API estilo Vuetify
+ * Usa floating-ui internamente (via reka-ui) para posicionamento otimizado
  *
  * 🎨 FEATURES:
  * - Triggers: click, hover, focus, manual
- * - Posicionamento inteligente: top, bottom, left, right, auto
- * - Alinhamento: start, center, end
- * - Delay configurável (hover)
- * - Click outside automático
- * - Scroll handling
- * - Transitions suaves
- * - Slots: activator + default
+ * - Posicionamento inteligente (floating-ui)
+ * - Portal/Teleport automático (escapa overflow)
+ * - BorderColor e Rounded customizados
+ * - v-model:open para controle externo
+ * - Slots: #trigger e default
+ *
+ * 🔗 DEPENDÊNCIAS:
+ * - reka-ui (PopoverRoot, PopoverContent, PopoverTrigger)
+ * - @floating-ui/vue (via reka-ui)
  */
 
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
-import type { PropType } from 'vue';
-import { onClickOutside } from '@vueuse/core';
+// ============== DEPENDÊNCIAS EXTERNAS ==============
+import type { HTMLAttributes, PropType } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { useElementBounding } from '@vueuse/core';
+
+// ============== DEPENDÊNCIAS INTERNAS ==============
+import Popover from './Popover.vue';
+import PopoverTrigger from './PopoverTrigger.vue';
+import PopoverContent from './PopoverContent.vue';
+import { cn } from '@/lib/utils';
+import { resolveColor } from '@/utils/CorpColorUtils';
+import { resolveRounded, type RoundedValue } from '@commonStyles';
 
 // ============== TYPES ==============
 
-export type PopoverTrigger = 'click' | 'hover' | 'focus' | 'manual';
-export type PopoverSide = 'top' | 'bottom' | 'left' | 'right' | 'auto';
+export type PopoverTriggerType = 'click' | 'hover' | 'focus' | 'manual';
+export type PopoverSide = 'top' | 'bottom' | 'left' | 'right';
 export type PopoverAlign = 'start' | 'center' | 'end';
-export type PopoverTransition =
-  | 'scale'
-  | 'dropdown'
-  | 'fade'
-  | 'slide'
-  | 'none';
 
 // ============== PROPS ==============
 
 const props = defineProps({
   // Trigger: como abre o popover
   trigger: {
-    type: String as PropType<PopoverTrigger>,
+    type: String as PropType<PopoverTriggerType>,
     default: 'click',
   },
 
-  // Posicionamento: lado do trigger
+  // Posicionamento
   side: {
     type: String as PropType<PopoverSide>,
     default: 'bottom',
   },
-
-  // Alinhamento: onde alinha no lado escolhido
   align: {
     type: String as PropType<PopoverAlign>,
     default: 'start',
   },
-
-  // Controle manual de abertura (v-model)
-  modelValue: {
-    type: Boolean,
-    default: false,
+  sideOffset: {
+    type: Number,
+    default: 8,
+  },
+  alignOffset: {
+    type: Number,
+    default: 0,
   },
 
-  // Delay para abrir/fechar (apenas hover)
+  // v-model:open (controle externo)
+  open: {
+    type: Boolean,
+    default: undefined,
+  },
+
+  // Anchor element - elemento HTML de referência para posicionamento
+  anchorEl: {
+    type: Object as PropType<HTMLElement | null>,
+    default: null,
+  },
+
+  // Delay para hover (ms)
   delay: {
     type: Number,
     default: 0,
   },
 
-  // Offset: distância do elemento trigger (em pixels)
-  offset: {
-    type: Number,
-    default: 8,
-  },
-
   // Persistent: não fecha ao clicar fora
   persistent: {
+    type: Boolean,
+    default: false,
+  },
+
+  // Modal: bloqueia interações fora do popover (scroll lock, backdrop)
+  // Default: false (não bloqueia scroll)
+  modal: {
     type: Boolean,
     default: false,
   },
@@ -83,70 +101,162 @@ const props = defineProps({
     default: false,
   },
 
-  // Transition: nome da transição ou 'none' para desabilitar
-  transition: {
-    type: String as PropType<PopoverTransition>,
-    default: 'scale',
+  // Collision detection
+  avoidCollisions: {
+    type: Boolean,
+    default: true,
+  },
+  collisionPadding: {
+    type: Number,
+    default: 8,
   },
 
   // Dimensionamento
   minWidth: {
     type: [String, Number],
-    default: 200,
+    default: undefined,
   },
   maxWidth: {
     type: [String, Number],
-    default: '100%',
+    default: undefined,
   },
   maxHeight: {
     type: [String, Number],
-    default: 400,
+    default: undefined,
+  },
+  width: {
+    type: [String, Number],
+    default: undefined,
+  },
+
+  // BorderColor - cor da borda (semantic OU custom: hex, rgb, var(), etc)
+  borderColor: {
+    type: String,
+    default: undefined,
+  },
+
+  // Rounded (border-radius)
+  rounded: {
+    type: [String, Number, Boolean] as PropType<RoundedValue>,
+    default: 'default',
+  },
+
+  // Content class (para estilizar o conteúdo)
+  contentClass: {
+    type: [String, Object, Array] as PropType<HTMLAttributes['class']>,
+    default: undefined,
   },
 
   // Z-index
   zIndex: {
     type: Number,
-    default: 20,
+    default: 50,
   },
 
-  // Define qual elemento usar como âncora para posicionamento (quando trigger='manual')
-  // 'sibling': Elemento irmão anterior (ex: input antes do popover)
-  // 'parent': Elemento pai (container)
-  // 'auto': Tenta sibling, se não existir usa parent (padrão)
-  anchorTo: {
-    type: String as PropType<'sibling' | 'parent' | 'auto'>,
-    default: 'auto',
+  // Unstyled: remove TODOS os estilos base (útil quando o conteúdo já tem seus próprios estilos)
+  unstyled: {
+    type: Boolean,
+    default: false,
+  },
+
+  // Debug: torna o anchor invisível visível (vermelho) para debug
+  debugAnchor: {
+    type: Boolean,
+    default: false,
+  },
+
+  // Block: popover fica com mesma largura do anchor (útil para dropdowns)
+  block: {
+    type: Boolean,
+    default: false,
+  },
+
+  // Animation: tipo de animação (scale, dropdown, fade, none)
+  animation: {
+    type: [String, Boolean] as PropType<
+      'scale' | 'dropdown' | 'fade' | 'none' | false
+    >,
+    default: 'scale',
   },
 });
 
 const emit = defineEmits<{
-  'update:modelValue': [value: boolean];
+  'update:open': [value: boolean];
   open: [];
   close: [];
 }>();
 
 // ============== STATE ==============
 
-const isOpen = ref(props.modelValue);
-const activatorRef = ref<HTMLElement | null>(null);
-const popoverRef = ref<HTMLElement | null>(null);
-const popoverWrapperRef = ref<HTMLElement | null>(null);
-const positionTrigger = ref(0);
-
+const internalOpen = ref(props.open ?? false);
 let hoverTimeout: ReturnType<typeof setTimeout> | null = null;
+
+// Rastreia posição do anchorEl automaticamente (reage a scroll/resize)
+const {
+  top: anchorTop,
+  left: anchorLeft,
+  width: anchorWidth,
+  height: anchorHeight,
+} = useElementBounding(() => props.anchorEl);
+
+// Estilo para posicionar trigger invisível na posição do anchorEl
+const anchorTriggerStyle = computed(() => {
+  if (!props.anchorEl) return {};
+
+  // Debug mode: torna anchor visível (vermelho)
+  if (props.debugAnchor) {
+    return {
+      position: 'fixed' as const,
+      top: `${anchorTop.value}px`,
+      left: `${anchorLeft.value}px`,
+      width: `${anchorWidth.value}px`,
+      height: `${anchorHeight.value}px`,
+      pointerEvents: 'none' as const,
+      opacity: 0.5,
+      zIndex: 9999,
+      backgroundColor: 'red',
+      border: '2px solid darkred',
+    };
+  }
+
+  // Normal: invisível
+  return {
+    position: 'fixed' as const,
+    top: `${anchorTop.value}px`,
+    left: `${anchorLeft.value}px`,
+    width: `${anchorWidth.value}px`,
+    height: `${anchorHeight.value}px`,
+    pointerEvents: 'none' as const,
+    opacity: 0,
+    zIndex: -1,
+  };
+});
 
 // ============== COMPUTED ==============
 
 /**
- * Nome da transição
+ * Sincroniza v-model:open
  */
-const transitionName = computed(() => {
-  if (props.transition === 'none') return '';
-  return props.transition;
+const isOpen = computed({
+  get: () => props.open ?? internalOpen.value,
+  set: val => {
+    internalOpen.value = val;
+    emit('update:open', val);
+    if (val) {
+      emit('open');
+    } else {
+      emit('close');
+    }
+  },
 });
 
 /**
- * Formata valores CSS
+ * Resolve rounded (preset/class/style)
+ */
+const rounded = computed(() => resolveRounded(props.rounded));
+
+/**
+ * Formata valor CSS
  */
 const formatCssValue = (value: string | number): string => {
   if (typeof value === 'number') return `${value}px`;
@@ -154,349 +264,288 @@ const formatCssValue = (value: string | number): string => {
 };
 
 /**
- * Calcula estilos do popover baseado na posição
+ * Se usa Vue Transition (animation prop customizada)
  */
-const popoverStyles = computed(() => {
-  // Força recálculo quando positionTrigger muda
-  void positionTrigger.value;
+const usesVueTransition = computed(() => {
+  return props.animation && props.animation !== 'none';
+});
 
-  const styles: Record<string, string> = {
-    minWidth: formatCssValue(props.minWidth),
-    maxWidth: formatCssValue(props.maxWidth),
-    maxHeight: formatCssValue(props.maxHeight),
-    zIndex: String(props.zIndex),
-  };
+/**
+ * Classes de animação customizada (Vue Transition CSS)
+ */
+const customAnimationClass = computed(() => {
+  if (!usesVueTransition.value) return '';
 
-  if (!isOpen.value) {
+  const animType = props.animation;
+  if (animType === 'scale') return 'corp-anim-scale';
+  if (animType === 'dropdown') return 'corp-anim-dropdown';
+  if (animType === 'fade') return 'corp-anim-fade';
+  return '';
+});
+
+/**
+ * Classes do PopoverContent
+ */
+const popoverContentClasses = computed(() => {
+  // Animações Tailwind (apenas se NÃO usa Vue Transition)
+  const tailwindAnimations = !usesVueTransition.value
+    ? [
+        'data-[state=open]:animate-in data-[state=closed]:animate-out',
+        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+        'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
+        'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2',
+        'data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+      ]
+    : [];
+
+  // Se unstyled, remove TODOS os estilos visuais (bg, border, padding, shadow)
+  if (props.unstyled) {
+    return cn(
+      // Remove estilos base do shadcn
+      'p-0 bg-transparent border-0 shadow-none w-auto',
+      // Animações (Tailwind ou custom)
+      ...tailwindAnimations,
+      customAnimationClass.value,
+      props.contentClass
+    );
+  }
+
+  // Com estilos base do shadcn
+  return cn(
+    // Base shadcn
+    'z-50 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none',
+    // Animações (Tailwind ou custom)
+    ...tailwindAnimations,
+    customAnimationClass.value,
+    // Rounded
+    rounded.value.class,
+    // User override
+    props.contentClass
+  );
+});
+
+/**
+ * Estilos inline do PopoverContent
+ */
+const popoverContentStyle = computed(() => {
+  const styles: Record<string, string> = {};
+
+  // Se unstyled, NÃO aplica dimensionamento no PopoverContent
+  // (deixa o conteúdo interno controlar suas próprias dimensões)
+  if (props.unstyled) {
+    // Block mode: aplica width do anchor mesmo quando unstyled
+    if (props.block && props.anchorEl) {
+      styles.width = `${anchorWidth.value}px`;
+    }
+
+    // Z-index
+    styles.zIndex = String(props.zIndex);
     return styles;
   }
 
-  // Determina elemento de referência para posicionamento
-  let anchorElement: HTMLElement | null = null;
+  // BorderColor customizado
+  if (props.borderColor) {
+    styles.borderColor = resolveColor(props.borderColor);
+  }
 
-  // Modo manual com anchorTo: busca sibling/parent
-  if (props.trigger === 'manual' && popoverWrapperRef.value) {
-    if (props.anchorTo === 'sibling') {
-      anchorElement = popoverWrapperRef.value
-        .previousElementSibling as HTMLElement;
-    } else if (props.anchorTo === 'parent') {
-      anchorElement = popoverWrapperRef.value.parentElement;
-    } else {
-      // auto: tenta sibling, fallback para parent
-      anchorElement =
-        (popoverWrapperRef.value.previousElementSibling as HTMLElement) ||
-        popoverWrapperRef.value.parentElement;
-    }
+  // Rounded inline
+  if (rounded.value.style) {
+    styles.borderRadius = rounded.value.style;
+  }
+
+  // Block mode: width do anchor (sobrescreve width/minWidth/maxWidth)
+  if (props.block && props.anchorEl) {
+    styles.width = `${anchorWidth.value}px`;
   } else {
-    // Modo normal: usa activatorRef
-    anchorElement = activatorRef.value;
-  }
-
-  if (!anchorElement) {
-    return styles;
-  }
-
-  const rect = anchorElement.getBoundingClientRect();
-  const { side, align, offset } = props;
-
-  // Calcula posição baseada no side
-  switch (side) {
-    case 'bottom':
-    case 'auto': // default = bottom
-      styles.top = `${rect.bottom + offset}px`;
-      break;
-    case 'top':
-      styles.bottom = `${window.innerHeight - rect.top + offset}px`;
-      break;
-    case 'left':
-      styles.right = `${window.innerWidth - rect.left + offset}px`;
-      break;
-    case 'right':
-      styles.left = `${rect.right + offset}px`;
-      break;
-  }
-
-  // Calcula alinhamento
-  if (side === 'bottom' || side === 'top' || side === 'auto') {
-    // Horizontal alignment
-    switch (align) {
-      case 'start':
-        styles.left = `${rect.left}px`;
-        break;
-      case 'center':
-        styles.left = `${rect.left + rect.width / 2}px`;
-        styles.transform = 'translateX(-50%)';
-        break;
-      case 'end':
-        styles.right = `${window.innerWidth - rect.right}px`;
-        break;
+    // Dimensionamento manual (apenas quando NÃO block)
+    if (props.minWidth) {
+      styles.minWidth = formatCssValue(props.minWidth);
     }
-  } else {
-    // Vertical alignment
-    switch (align) {
-      case 'start':
-        styles.top = `${rect.top}px`;
-        break;
-      case 'center':
-        styles.top = `${rect.top + rect.height / 2}px`;
-        styles.transform = 'translateY(-50%)';
-        break;
-      case 'end':
-        styles.bottom = `${window.innerHeight - rect.bottom}px`;
-        break;
+    if (props.maxWidth) {
+      styles.maxWidth = formatCssValue(props.maxWidth);
+    }
+    if (props.width) {
+      styles.width = formatCssValue(props.width);
     }
   }
+
+  // MaxHeight (independente de block)
+  if (props.maxHeight) {
+    styles.maxHeight = formatCssValue(props.maxHeight);
+  }
+
+  // Z-index
+  styles.zIndex = String(props.zIndex);
 
   return styles;
 });
 
 // ============== METHODS ==============
 
-/**
- * Abre o popover
- */
-const open = () => {
+const openPopover = () => {
   if (props.disabled) return;
 
   if (props.delay > 0 && props.trigger === 'hover') {
     hoverTimeout = setTimeout(() => {
       isOpen.value = true;
-      emit('update:modelValue', true);
-      emit('open');
     }, props.delay);
   } else {
     isOpen.value = true;
-    emit('update:modelValue', true);
-    emit('open');
-
-    // Recalcula posição no próximo tick
-    nextTick(() => {
-      positionTrigger.value++;
-    });
   }
 };
 
-/**
- * Fecha o popover
- */
-const close = () => {
+const closePopover = () => {
   if (hoverTimeout) {
     clearTimeout(hoverTimeout);
     hoverTimeout = null;
   }
-
   isOpen.value = false;
-  emit('update:modelValue', false);
-  emit('close');
 };
 
-/**
- * Toggle
- */
-const toggle = () => {
+const togglePopover = () => {
   if (isOpen.value) {
-    close();
+    closePopover();
   } else {
-    open();
+    openPopover();
   }
 };
+
+// ============== TRIGGER HANDLERS ==============
+
+/**
+ * Props para passar ao slot trigger baseado no tipo de trigger
+ */
+const triggerHandlers = computed(() => {
+  if (props.trigger === 'click') {
+    return {
+      onClick: togglePopover,
+    };
+  } else if (props.trigger === 'hover') {
+    return {
+      onMouseenter: openPopover,
+      onMouseleave: closePopover,
+    };
+  } else if (props.trigger === 'focus') {
+    return {
+      onFocus: openPopover,
+      onBlur: closePopover,
+    };
+  }
+  // manual: sem handlers
+  return {};
+});
 
 // ============== WATCHERS ==============
 
+// Sincroniza prop open com internal
 watch(
-  () => props.modelValue,
+  () => props.open,
   newVal => {
-    isOpen.value = newVal;
+    if (newVal !== undefined) {
+      internalOpen.value = newVal;
+    }
   }
 );
-
-// Recalcula posição durante scroll
-watch(isOpen, newIsOpen => {
-  if (newIsOpen) {
-    const handleScroll = () => {
-      positionTrigger.value++;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    document.addEventListener('scroll', handleScroll, {
-      passive: true,
-      capture: true,
-    });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      document.removeEventListener('scroll', handleScroll, { capture: true });
-    };
-  }
-});
-
-// ============== CLICK OUTSIDE ==============
-
-onClickOutside(popoverRef, () => {
-  if (!props.persistent && props.trigger !== 'hover') {
-    close();
-  }
-});
-
-// ============== ACTIVATOR PROPS ==============
-
-/**
- * Props para passar ao slot activator
- */
-const activatorProps = computed(() => {
-  const handlers: Record<string, unknown> = {
-    ref: activatorRef,
-  };
-
-  if (props.trigger === 'click') {
-    handlers.onClick = toggle;
-  } else if (props.trigger === 'hover') {
-    handlers.onMouseenter = open;
-    handlers.onMouseleave = close;
-  } else if (props.trigger === 'focus') {
-    handlers.onFocus = open;
-    handlers.onBlur = close;
-  }
-
-  return handlers;
-});
-
-// ============== LIFECYCLE ==============
-
-onMounted(() => {
-  // Se já está aberto, calcula posição
-  if (isOpen.value) {
-    nextTick(() => {
-      positionTrigger.value++;
-    });
-  }
-});
-
-onUnmounted(() => {
-  if (hoverTimeout) {
-    clearTimeout(hoverTimeout);
-  }
-});
 
 // ============== EXPOSE ==============
 
 defineExpose({
-  open,
-  close,
-  toggle,
+  open: openPopover,
+  close: closePopover,
+  toggle: togglePopover,
   isOpen,
 });
 </script>
 
 <template>
-  <div ref="popoverWrapperRef" class="corpPopover">
-    <!-- Slot Activator (Trigger) -->
-    <slot name="activator" :props="activatorProps" />
-
-    <!-- Popover Content -->
-    <Transition :name="transitionName" appear>
+  <Popover :open="isOpen" :modal="modal" @update:open="val => (isOpen = val)">
+    <!-- Trigger: usa anchorEl se fornecido, senão usa slot -->
+    <PopoverTrigger
+      v-if="props.anchorEl || $slots.trigger"
+      as-child
+      :disabled="disabled"
+    >
+      <!-- Se tem anchorEl, cria wrapper invisível na mesma posição do elemento externo -->
       <div
-        v-if="isOpen"
-        ref="popoverRef"
-        class="corpPopoverContent"
-        :style="popoverStyles"
-        @mouseenter="trigger === 'hover' ? open() : undefined"
-        @mouseleave="trigger === 'hover' ? close() : undefined"
-      >
-        <slot />
+        v-if="props.anchorEl"
+        :style="anchorTriggerStyle"
+        v-bind="triggerHandlers"
+      />
+      <!-- Senão, usa slot trigger -->
+      <div v-else v-bind="triggerHandlers">
+        <slot name="trigger" />
       </div>
-    </Transition>
-  </div>
+    </PopoverTrigger>
+
+    <!-- Content (usa Portal internamente) -->
+    <PopoverContent
+      :side="side"
+      :align="align"
+      :side-offset="sideOffset"
+      :align-offset="alignOffset"
+      :avoid-collisions="avoidCollisions"
+      :collision-padding="collisionPadding"
+      :class="popoverContentClasses"
+      :style="popoverContentStyle"
+      @mouseenter="trigger === 'hover' ? openPopover() : undefined"
+      @mouseleave="trigger === 'hover' ? closePopover() : undefined"
+      @interact-outside="
+        e => {
+          if (persistent) {
+            e.preventDefault();
+          }
+        }
+      "
+    >
+      <slot />
+    </PopoverContent>
+  </Popover>
 </template>
 
-<style scoped>
-/* === POPOVER WRAPPER === */
-.corpPopover {
-  display: inline-block;
-  position: relative;
-}
-
-/* === POPOVER CONTENT === */
-.corpPopoverContent {
-  position: fixed;
-  border-radius: 0.5rem;
-  background: hsl(var(--popover));
-  color: hsl(var(--popover-foreground));
-  border: 1px solid hsl(var(--border));
-  box-shadow:
-    0 10px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  transform-origin: top center;
-}
-
+<!-- Animações globais (sem scoped) para funcionar com Portal -->
+<style>
 /* === ANIMATIONS === */
 
-/* Transição scale (zoom) */
-.scale-enter-active {
+/* Animação scale (zoom) */
+.corp-anim-scale {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.scale-enter-from {
+.corp-anim-scale[data-state='closed'] {
   opacity: 0;
   transform: scale(0.95);
 }
 
-.scale-enter-to {
+.corp-anim-scale[data-state='open'] {
   opacity: 1;
   transform: scale(1);
 }
 
-.scale-leave-active {
-  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.scale-leave-to {
-  opacity: 0;
-  transform: scale(0.95);
-}
-
-/* Transição dropdown (mnesis-style) */
-.dropdown-enter-active {
+/* Animação dropdown (mnesis-style) */
+.corp-anim-dropdown {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.dropdown-enter-from {
+.corp-anim-dropdown[data-state='closed'] {
   opacity: 0;
   transform: translateY(-10px) scaleY(0.8);
 }
 
-.dropdown-enter-to {
+.corp-anim-dropdown[data-state='open'] {
   opacity: 1;
   transform: translateY(0) scaleY(1);
 }
 
-.dropdown-leave-active {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+/* Animação fade (apenas opacidade) */
+.corp-anim-fade {
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.dropdown-leave-to {
+.corp-anim-fade[data-state='closed'] {
   opacity: 0;
-  transform: translateY(-10px) scaleY(0.8);
 }
 
-/* Scrollbar customizada */
-.corpPopoverContent::-webkit-scrollbar {
-  width: 8px;
-}
-
-.corpPopoverContent::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.corpPopoverContent::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary) / 0.3);
-  border-radius: 4px;
-}
-
-.corpPopoverContent::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.5);
+.corp-anim-fade[data-state='open'] {
+  opacity: 1;
 }
 </style>

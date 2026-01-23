@@ -48,7 +48,6 @@ import { resolveRounded, type RoundedValue } from '@commonStyles';
 import CorpCommandInternal from './CorpCommandInternal.vue';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { CorpPopover } from '@/components/ui/popover';
-import type { PopoverTransition } from '@/components/ui/popover';
 
 // ============== PROPS ==============
 
@@ -105,6 +104,12 @@ const props = defineProps({
     default: true,
   },
 
+  // Anchor element (para modo floating) - elemento HTML de referência
+  anchorEl: {
+    type: Object as PropType<HTMLElement | null>,
+    default: null,
+  },
+
   // Controla se mostra o input de busca interno
   showSearchField: {
     type: Boolean,
@@ -115,27 +120,6 @@ const props = defineProps({
   persistent: {
     type: Boolean,
     default: false,
-  },
-
-  // Fecha floating ao scrollar (opcional)
-  closeOnScroll: {
-    type: Boolean,
-    default: false,
-  },
-
-  // Controla animação de entrada/saída (apenas modo floating)
-  transition: {
-    type: String as PropType<PopoverTransition>,
-    default: 'dropdown',
-  },
-
-  // Define qual elemento usar como âncora para posicionamento (apenas floating)
-  // 'sibling': Elemento irmão anterior (ex: input antes do command)
-  // 'parent': Elemento pai (container)
-  // 'auto': Tenta sibling, se não existir usa parent (padrão)
-  anchorTo: {
-    type: String as PropType<'sibling' | 'parent' | 'auto'>,
-    default: 'auto',
   },
 
   // Dimensionamento (APENAS para modo 'floating')
@@ -217,6 +201,32 @@ const props = defineProps({
       { keys: '↵', label: 'Selecionar' },
       { keys: 'Esc', label: 'Fechar' },
     ],
+  },
+
+  // Debug anchor (modo floating): torna anchor invisível visível (vermelho)
+  debugAnchor: {
+    type: Boolean,
+    default: false,
+  },
+
+  // Align (modo floating): alinhamento do popover em relação ao anchor
+  align: {
+    type: String as PropType<'start' | 'center' | 'end'>,
+    default: 'start',
+  },
+
+  // Block (modo floating): popover fica com mesma largura do anchor
+  block: {
+    type: Boolean,
+    default: false,
+  },
+
+  // Animation (modo floating): tipo de animação
+  animation: {
+    type: [String, Boolean] as PropType<
+      'scale' | 'dropdown' | 'fade' | 'none' | false
+    >,
+    default: 'dropdown',
   },
 });
 
@@ -302,13 +312,40 @@ const colorClasses = computed(() => {
 });
 
 /**
- * Combina custom rounded + custom color styles
+ * Formata valor CSS
+ */
+const formatCssValue = (value: string | number): string => {
+  if (typeof value === 'number') return `${value}px`;
+  return value;
+};
+
+/**
+ * Combina custom rounded + custom color styles + dimensionamento (floating mode)
  */
 const commandStyle = computed(() => {
-  return {
-    ...rounded.value.style,
+  const styles: Record<string, string | number> = {
     ...customColorStyle.value,
   };
+
+  // Rounded inline (se existir)
+  if (rounded.value.style && typeof rounded.value.style === 'string') {
+    styles.borderRadius = rounded.value.style;
+  }
+
+  // Aplica dimensionamento apenas no modo floating
+  if (props.mode === 'floating') {
+    if (props.minWidth) {
+      styles.minWidth = formatCssValue(props.minWidth);
+    }
+    if (props.maxWidth) {
+      styles.maxWidth = formatCssValue(props.maxWidth);
+    }
+    if (props.maxHeight) {
+      styles.maxHeight = formatCssValue(props.maxHeight);
+    }
+  }
+
+  return styles;
 });
 
 /**
@@ -471,22 +508,27 @@ const handleSelect = (item: ICommand): void => {
   <!-- MODO FLOATING: popover flutuante via CorpPopover -->
   <CorpPopover
     v-else-if="mode === 'floating'"
-    :model-value="open"
+    :open="open"
+    :anchor-el="anchorEl"
     trigger="manual"
     side="bottom"
-    align="start"
-    :offset="8"
-    :anchor-to="anchorTo"
+    :align="align"
+    :side-offset="12"
     :persistent="persistent"
-    :transition="transition"
+    :block="block"
+    :animation="animation"
     :min-width="minWidth"
     :max-width="maxWidth"
     :max-height="maxHeight"
     :z-index="20"
-    @update:model-value="emit('update:open', $event)"
+    :debug-anchor="debugAnchor"
+    unstyled
+    @update:open="emit('update:open', $event)"
   >
-    <!-- Activator slot: vazio, posição controlada pelo pai via anchorTo -->
-    <template #activator />
+    <!-- Trigger slot: usa anchorEl como referência -->
+    <template #trigger>
+      <div />
+    </template>
 
     <!-- Popover content: o command palette -->
     <ListboxRoot
