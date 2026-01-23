@@ -77,7 +77,7 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
     <div
       :class="
         cn(
-          'duration-200 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex',
+          'duration-200 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex flex-col',
           contained ? 'absolute inset-y-0' : 'fixed inset-y-0',
           side === 'left'
             ? 'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'

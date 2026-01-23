@@ -424,6 +424,71 @@ const coloredMenuItems: IMenuItem[] = [
       </div>
     </section>
 
+    <!-- EXEMPLO 5: Header e Footer Customizados (Props) -->
+    <section class="space-y-4">
+      <div>
+        <h2 class="text-lg font-semibold text-foreground">
+          5. Header e Footer com Cores Customizadas
+        </h2>
+        <p class="text-sm text-muted-foreground">
+          Use headerBackground e footerBackground para cores específicas
+        </p>
+      </div>
+
+      <div
+        class="h-[500px] border border-border rounded-lg overflow-hidden relative"
+      >
+        <SidebarProvider>
+          <div class="flex h-full w-full absolute inset-0">
+            <CorpSidebar
+              :items="basicMenuItems"
+              app-name="Corp System"
+              app-subtitle="Admin Panel"
+              user-name="Admin User"
+              background="bg-card"
+              header-background="bg-primary"
+              footer-background="bg-secondary"
+              contained
+            />
+            <SidebarInset class="flex-1 overflow-auto">
+              <div class="p-6">
+                <div class="flex items-center gap-3 mb-4">
+                  <SidebarTrigger />
+                  <h3 class="text-lg font-semibold">Cores Customizadas</h3>
+                </div>
+                <div class="space-y-2 text-sm text-muted-foreground">
+                  <p>
+                    ✅
+                    <code class="px-1 bg-muted rounded">
+                      headerBackground="bg-primary"
+                    </code>
+                    - Header com fundo primary
+                  </p>
+                  <p>
+                    ✅
+                    <code class="px-1 bg-muted rounded">
+                      footerBackground="bg-secondary"
+                    </code>
+                    - Footer com fundo secondary (destaque visual)
+                  </p>
+                  <p>
+                    ✅
+                    <code class="px-1 bg-muted rounded">
+                      background="bg-card"
+                    </code>
+                    - Conteúdo com fundo card
+                  </p>
+                  <p>
+                    💡 Combine com opacity e blur para efeitos glassmorphism
+                  </p>
+                </div>
+              </div>
+            </SidebarInset>
+          </div>
+        </SidebarProvider>
+      </div>
+    </section>
+
     <!-- Bizu do Soldado -->
     <section class="p-4 bg-primary/10 border border-primary rounded-lg">
       <h3 class="font-semibold text-foreground mb-2">🔰 Bizu do Soldado</h3>
@@ -442,14 +507,14 @@ const coloredMenuItems: IMenuItem[] = [
         </p>
         <p>
           ✅
-          <strong>background prop</strong>
+          <strong>background props</strong>
           : Use
-          <code class="px-1 bg-muted rounded">bg-card</code>
+          <code class="px-1 bg-muted rounded">background</code>
+          (global),
+          <code class="px-1 bg-muted rounded">headerBackground</code>
           ,
-          <code class="px-1 bg-muted rounded">bg-muted</code>
-          ,
-          <code class="px-1 bg-muted rounded">bg-primary/10</code>
-          etc
+          <code class="px-1 bg-muted rounded">footerBackground</code>
+          para cores específicas
         </p>
         <p>
           ✅

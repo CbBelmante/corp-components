@@ -29,7 +29,6 @@ import { useRouter } from 'vue-router';
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -179,6 +178,22 @@ const props = defineProps({
   },
 
   /**
+   * Background do header (sobrescreve background global)
+   */
+  headerBackground: {
+    type: String,
+    default: undefined,
+  },
+
+  /**
+   * Background do footer (sobrescreve background global)
+   */
+  footerBackground: {
+    type: String,
+    default: undefined,
+  },
+
+  /**
    * Modo contained (absolute ao invés de fixed)
    * Use quando sidebar estiver dentro de container limitado
    */
@@ -258,6 +273,34 @@ const bgClasses = computed(() => [
     : props.background,
   props.blur > 0 ? `backdrop-blur-[${props.blur}px]` : '',
 ]);
+
+/**
+ * 🎯 Classes de background do header (usa headerBackground ou fallback para bgClasses)
+ */
+const headerClasses = computed(() => {
+  if (!props.headerBackground) return bgClasses.value;
+
+  return [
+    props.opacity < 1
+      ? `${props.headerBackground}/${Math.round(props.opacity * 100)}`
+      : props.headerBackground,
+    props.blur > 0 ? `backdrop-blur-[${props.blur}px]` : '',
+  ];
+});
+
+/**
+ * 🎯 Classes de background do footer (usa footerBackground ou fallback para bgClasses)
+ */
+const footerClasses = computed(() => {
+  if (!props.footerBackground) return bgClasses.value;
+
+  return [
+    props.opacity < 1
+      ? `${props.footerBackground}/${Math.round(props.opacity * 100)}`
+      : props.footerBackground,
+    props.blur > 0 ? `backdrop-blur-[${props.blur}px]` : '',
+  ];
+});
 
 // ============== ROUTER ==============
 const router = useRouter();
@@ -352,8 +395,8 @@ const handleMenuAction = (item: IMenuItem) => {
   >
     <!-- Header da Sidebar -->
     <div
-      class="flex items-center gap-3 px-3 border-b border-sidebar-border"
-      :class="bgClasses"
+      class="flex items-center gap-3 px-3 border-b border-sidebar-border shrink-0"
+      :class="headerClasses"
       :style="{ height: headerHeightPx }"
     >
       <!-- Logo slot (customizável) -->
@@ -377,15 +420,16 @@ const handleMenuAction = (item: IMenuItem) => {
     </div>
 
     <!-- Conteúdo Principal -->
-    <SidebarContent :class="bgClasses">
+    <SidebarContent :class="bgClasses" class="!overflow-visible">
       <!-- Slot para conteúdo customizado (ex: seletor de pacientes) -->
       <slot name="prepend" />
 
-      <!-- Menu Groups -->
-      <SidebarGroup v-for="group in menuItems" :key="group.title">
-        <SidebarGroupLabel>{{ group.title }}</SidebarGroupLabel>
-        <SidebarGroupContent>
-          <SidebarMenu>
+      <!-- Menu Groups com scroll próprio -->
+      <div class="flex-1 overflow-auto">
+        <SidebarGroup v-for="group in menuItems" :key="group.title">
+          <SidebarGroupLabel>{{ group.title }}</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
             <template v-for="item in group.items">
               <!-- Item SEM children: botão simples -->
               <SidebarMenuItem v-if="!hasChildren(item)" :key="item.title">
@@ -455,10 +499,14 @@ const handleMenuAction = (item: IMenuItem) => {
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
+      </div>
     </SidebarContent>
 
     <!-- Footer da Sidebar -->
-    <SidebarFooter class="border-t border-sidebar-border" :class="bgClasses">
+    <div
+      class="shrink-0 border-t border-sidebar-border p-2"
+      :class="footerClasses"
+    >
       <slot name="footer">
         <SidebarMenu>
           <SidebarMenuItem>
@@ -469,7 +517,7 @@ const handleMenuAction = (item: IMenuItem) => {
           </SidebarMenuItem>
         </SidebarMenu>
       </slot>
-    </SidebarFooter>
+    </div>
 
     <!-- Rail para toggle lateral -->
     <SidebarRail />
