@@ -1,272 +1,127 @@
 <script setup lang="ts">
 /**
- * 🧩 CorpSidebar - Navegação Lateral Corp Components
+ * 🧩 CorpSidebarNative - Sidebar NATIVO sem dependências shadcn internas
  *
- * Sidebar responsiva e collapsible com header próprio e menu Shadcn.
- * Código funcional e escalável.
- *
- * 🔗 DEPENDÊNCIAS EXTERNAS:
- * - Vue 3 (ref, computed)
- * - Vue Router (useRouter)
- *
- * 🔗 DEPENDÊNCIAS INTERNAS:
- * - Shadcn Sidebar components (menu, collapsible)
- * - CorpIcon
- * - Collapsible (shadcn)
- *
- * @example
- * ```vue
- * <CorpSidebar :items="menuItems" />
- * <CorpSidebar :items="menuItems" :opacity="0.9" :blur="8" />
- * <CorpSidebar :items="menuItems" background="bg-card" />
- * ```
+ * API IDÊNTICA ao CorpSidebar original
  */
 
-// ============== DEPENDÊNCIAS EXTERNAS ==============
 import type { PropType } from 'vue';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubItem,
-  SidebarMenuSubButton,
-  SidebarRail,
-  useSidebar,
-} from './';
-
-// ============== DEPENDÊNCIAS INTERNAS ==============
 import { CorpIcon } from '@/components/ui/icon';
+import { getColorType } from '@/utils/CorpColorUtils';
+import { SIDEBAR_WIDTH_ICON } from './constants';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { getColorType } from '@/utils/CorpColorUtils';
-import { SIDEBAR_WIDTH_ICON } from './constants';
+
+// ============== TYPES ==============
+
+export interface IMenuItem {
+  title: string;
+  icon?: string;
+  iconColor?: string;
+  to?: string;
+  routeName?: string;
+  action?: string;
+  tooltip?: string;
+  items?: IMenuItem[];
+  children?: IMenuItem[];
+  defaultOpen?: boolean;
+}
 
 // ============== PROPS ==============
 
 const props = defineProps({
-  /**
-   * Altura do header quando sidebar expandida (default: 65px)
-   */
   headerHeight: {
     type: [Number, String],
     default: 65,
   },
-
-  /**
-   * Altura do header quando sidebar colapsada (default: 49px)
-   */
   headerHeightCollapsed: {
     type: [Number, String],
     default: 49,
   },
-
-  /**
-   * Largura quando expandido (default: 280px)
-   */
   width: {
     type: [Number, String],
     default: 280,
   },
-
-  /**
-   * Modo rail (colapsado com ícones)
-   */
   rail: {
     type: Boolean,
     default: false,
   },
-
-  /**
-   * Largura no modo rail (default: 3.5rem = 56px)
-   */
   railWidth: {
     type: [Number, String],
     default: SIDEBAR_WIDTH_ICON,
   },
-
-  /**
-   * Sempre visível (desktop)
-   */
-  permanent: {
-    type: Boolean,
-    default: true,
-  },
-
-  /**
-   * Modo overlay (mobile)
-   */
-  temporary: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
-   * Expande ao passar mouse (funciona com rail)
-   */
-  expandOnHover: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
-   * Menu items externos (estrutura Vuetify-like)
-   * OBRIGATÓRIO - componente genérico sem fallback
-   */
   items: {
     type: Array as PropType<IMenuItem[]>,
     required: true,
   },
-
-  /**
-   * Nome da aplicação (header)
-   */
   appName: {
     type: String,
     default: undefined,
   },
-
-  /**
-   * Subtítulo da aplicação (header)
-   */
   appSubtitle: {
     type: String,
     default: 'Prontuário Eletrônico',
   },
-
-  /**
-   * Nome do usuário logado (footer)
-   */
   userName: {
     type: String,
     default: 'Dr. Fábio',
   },
-
-  // ========== VISUAL EFFECTS ==========
-
-  /**
-   * Opacidade do background (0-1, default: 1 = totalmente opaco)
-   */
   opacity: {
     type: Number,
     default: 1,
     validator: (v: number) => v >= 0 && v <= 1,
   },
-
-  /**
-   * Blur do backdrop em pixels (0 = sem blur, default: 0)
-   */
   blur: {
     type: Number,
     default: 0,
   },
-
-  /** Classe de background (default: bg-sidebar) */
   background: {
     type: String,
     default: 'bg-sidebar',
   },
-
-  /**
-   * Background do header (sobrescreve background global)
-   */
   headerBackground: {
     type: String,
     default: undefined,
   },
-
-  /**
-   * Background do footer (sobrescreve background global)
-   */
   footerBackground: {
     type: String,
     default: undefined,
   },
-
-  /**
-   * Modo contained (absolute ao invés de fixed)
-   * Use quando sidebar estiver dentro de container limitado
-   */
-  contained: {
-    type: Boolean,
-    default: false,
+  placement: {
+    type: String as PropType<'in-flow' | 'fixed' | 'absolute'>,
+    default: 'in-flow',
+    validator: (v: string) => ['in-flow', 'fixed', 'absolute'].includes(v),
+  },
+  location: {
+    type: String as PropType<'left' | 'right'>,
+    default: 'left',
+    validator: (v: string) => ['left', 'right'].includes(v),
   },
 });
 
-// ============== UTILS ==============
+// ============== STATE ==============
 
-/**
- * Formata valor CSS (adiciona 'px' se for número)
- */
+const isCollapsed = ref(false);
+
+// ============== COMPUTED ==============
+
 const formatCssValue = (value: string | number): string => {
   if (typeof value === 'number') return `${value}px`;
   return value;
 };
 
-// ============== TYPES ==============
-
-/**
- * Interface de item de menu (Vuetify-like)
- * Suporta submenus via `items` ou `children` (aliases)
- */
-export interface IMenuItem {
-  title: string;
-  icon?: string;
-  iconColor?: string; // 🎨 NEW: Tailwind class, CSS var, hex, rgb, rgba
-  to?: string;
-  routeName?: string;
-  action?: string;
-  tooltip?: string;
-  items?: IMenuItem[]; // Suporte a submenus
-  children?: IMenuItem[]; // Alias para items
-  defaultOpen?: boolean; // Controle de expansão (true = aberto por padrão)
-}
-
-// ============== COMPOSABLES ==============
-
-/**
- * 🎯 Estado do sidebar para altura dinâmica
- *
- * Escuta quando sidebar colapsa/expande para ajustar altura do header.
- */
-const { state: sidebarState } = useSidebar();
-
-// ============== COMPUTED ==============
-
-/**
- * 🎯 Altura do header em pixels (dinâmica)
- *
- * Muda automaticamente entre altura expandida e colapsada
- * baseado no estado do sidebar.
- *
- * @returns {string} Altura em pixels (ex: "65px" ou "49px")
- */
 const headerHeightPx = computed(() => {
-  // Escolher altura baseada no estado do sidebar
-  const height =
-    sidebarState.value === 'collapsed'
-      ? props.headerHeightCollapsed
-      : props.headerHeight;
-
-  if (typeof height === 'number') {
-    return `${height}px`;
-  }
-  return height;
+  const height = isCollapsed.value
+    ? props.headerHeightCollapsed
+    : props.headerHeight;
+  return formatCssValue(height);
 });
 
-/**
- * 🎯 Classes de background (opacity + blur)
- */
 const bgClasses = computed(() => [
   props.opacity < 1
     ? `${props.background}/${Math.round(props.opacity * 100)}`
@@ -274,12 +129,8 @@ const bgClasses = computed(() => [
   props.blur > 0 ? `backdrop-blur-[${props.blur}px]` : '',
 ]);
 
-/**
- * 🎯 Classes de background do header (usa headerBackground ou fallback para bgClasses)
- */
 const headerClasses = computed(() => {
   if (!props.headerBackground) return bgClasses.value;
-
   return [
     props.opacity < 1
       ? `${props.headerBackground}/${Math.round(props.opacity * 100)}`
@@ -288,12 +139,8 @@ const headerClasses = computed(() => {
   ];
 });
 
-/**
- * 🎯 Classes de background do footer (usa footerBackground ou fallback para bgClasses)
- */
 const footerClasses = computed(() => {
   if (!props.footerBackground) return bgClasses.value;
-
   return [
     props.opacity < 1
       ? `${props.footerBackground}/${Math.round(props.opacity * 100)}`
@@ -302,47 +149,55 @@ const footerClasses = computed(() => {
   ];
 });
 
+const sidebarWidth = computed(() =>
+  isCollapsed.value ? formatCssValue(props.railWidth) : formatCssValue(props.width)
+);
+
+const positionClasses = computed(() => {
+  const classes: string[] = [];
+
+  if (props.placement === 'in-flow') {
+    classes.push('relative');
+  } else if (props.placement === 'fixed') {
+    classes.push('fixed', 'inset-y-0');
+    classes.push(props.location === 'left' ? 'left-0' : 'right-0');
+  } else if (props.placement === 'absolute') {
+    classes.push('absolute', 'inset-y-0');
+    classes.push(props.location === 'left' ? 'left-0' : 'right-0');
+  }
+
+  return classes;
+});
+
+const toggleIcon = computed(() => {
+  if (props.location === 'left') {
+    return isCollapsed.value ? 'luc-chevron-right' : 'luc-chevron-left';
+  } else {
+    return isCollapsed.value ? 'luc-chevron-left' : 'luc-chevron-right';
+  }
+});
+
 // ============== ROUTER ==============
 const router = useRouter();
 
-// ============== MENU DATA ==============
-/**
- * 🎯 Menu items (obrigatório via props)
- */
 const menuItems = computed(() => props.items);
 
 // ============== METHODS ==============
 
-/**
- * 🎯 Normaliza items/children (aliases)
- */
 const getItemChildren = (item: IMenuItem) => {
   return item.children ?? item.items ?? [];
 };
 
-/**
- * 🎯 Verifica se item tem filhos
- */
 const hasChildren = (item: IMenuItem) => {
   const children = getItemChildren(item);
   return children && children.length > 0;
 };
 
-/**
- * 🎨 Aplica cor ao ícone detectando formato automaticamente
- *
- * Suporta Tailwind classes, CSS variables, hex, rgb, rgba.
- * Usa CbColorUtils para detecção inteligente.
- *
- * @param {string} iconColor - Cor do ícone (opcional)
- * @returns {{ class: string, style: object }} Props de cor para aplicar
- */
 const getIconColorProps = (iconColor?: string) => {
   if (!iconColor) {
     return { class: '', style: {} };
   }
 
-  // Se é classe Tailwind (começa com text-, bg-, border-, etc)
   if (
     iconColor.startsWith('text-') ||
     iconColor.startsWith('bg-') ||
@@ -351,15 +206,12 @@ const getIconColorProps = (iconColor?: string) => {
     return { class: iconColor, style: {} };
   }
 
-  // Detectar tipo usando CbColorUtils
   const colorType = getColorType(iconColor);
 
-  // Se é CSS variable, hex, rgb, rgba → usar style inline
   if (['variable', 'hex', 'rgb', 'rgba'].includes(colorType)) {
     return { class: '', style: { color: iconColor } };
   }
 
-  // Fallback para named colors (blue, red, etc)
   if (colorType === 'named') {
     return { class: '', style: { color: iconColor } };
   }
@@ -367,40 +219,44 @@ const getIconColorProps = (iconColor?: string) => {
   return { class: '', style: {} };
 };
 
-/**
- * 🎯 Gerencia ações dos itens do menu (genérico)
- * Suporta navegação via `to` ou ação via `action`
- */
 const handleMenuAction = (item: IMenuItem) => {
-  // Navegação automática via `to`
   if (item.to) {
     router.push(item.to);
     return;
   }
 
-  // Ação customizada via `action` - componente pai deve tratar via emit
   if (item.action) {
     console.log('[CorpSidebar] Action triggered:', item.action);
   }
 };
+
+const toggleSidebar = () => {
+  isCollapsed.value = !isCollapsed.value;
+};
 </script>
 
 <template>
-  <Sidebar
-    variant="sidebar"
-    collapsible="icon"
-    :contained="contained"
-    :class="bgClasses"
-    :style="{ '--sidebar-width-icon': formatCssValue(railWidth) }"
+  <div
+    class="flex flex-col h-full transition-all duration-200 border-r border-border"
+    :class="[bgClasses, positionClasses]"
+    :style="{ width: sidebarWidth }"
   >
-    <!-- Header da Sidebar -->
+    <!-- Header -->
     <div
-      class="flex items-center gap-3 px-3 border-b border-sidebar-border shrink-0"
+      class="flex items-center gap-3 px-3 border-b border-sidebar-border flex-shrink-0"
       :class="headerClasses"
       :style="{ height: headerHeightPx }"
     >
-      <!-- Logo slot (customizável) -->
-      <slot name="logo">
+      <!-- Toggle button ESQUERDA (só quando location=right expandido) -->
+      <button
+        v-if="location === 'right' && !isCollapsed"
+        @click="toggleSidebar"
+        class="p-2 hover:bg-sidebar-accent rounded-md flex-shrink-0 order-first"
+      >
+        <CorpIcon :icon="toggleIcon" :size="16" />
+      </button>
+
+      <slot name="logo" :is-collapsed="isCollapsed">
         <div
           class="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground"
         >
@@ -408,32 +264,77 @@ const handleMenuAction = (item: IMenuItem) => {
         </div>
       </slot>
 
-      <!-- App name e subtitle -->
       <div
-        class="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden"
+        v-if="!isCollapsed"
+        class="grid flex-1 text-left text-sm leading-tight"
       >
         <span class="truncate font-semibold">{{ appName }}</span>
         <span class="truncate text-xs text-sidebar-foreground/70">
           {{ appSubtitle }}
         </span>
       </div>
+
+      <!-- Toggle button DIREITA (location=left sempre, OU collapsed sempre) -->
+      <button
+        v-if="location === 'left' || (location === 'right' && isCollapsed)"
+        @click="toggleSidebar"
+        class="p-2 hover:bg-sidebar-accent rounded-md flex-shrink-0"
+        :class="{ 'ml-auto': location === 'left' && !isCollapsed }"
+      >
+        <CorpIcon :icon="toggleIcon" :size="16" />
+      </button>
     </div>
 
-    <!-- Conteúdo Principal -->
-    <SidebarContent :class="bgClasses" class="!overflow-visible">
-      <!-- Slot para conteúdo customizado (ex: seletor de pacientes) -->
+    <!-- Content -->
+    <div
+      class="flex-1 overflow-y-auto min-h-0"
+      :class="bgClasses"
+    >
       <slot name="prepend" />
 
-      <!-- Menu Groups com scroll próprio -->
-      <div class="flex-1 overflow-auto">
-        <SidebarGroup v-for="group in menuItems" :key="group.title">
-          <SidebarGroupLabel>{{ group.title }}</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-            <template v-for="item in group.items">
-              <!-- Item SEM children: botão simples -->
-              <SidebarMenuItem v-if="!hasChildren(item)" :key="item.title">
-                <SidebarMenuButton @click="handleMenuAction(item)">
+      <!-- Menu Groups -->
+      <div
+        v-for="group in menuItems"
+        :key="group.title"
+        class="p-2"
+      >
+        <div
+          v-if="!isCollapsed"
+          class="px-2 py-1.5 text-xs font-semibold text-sidebar-foreground/70"
+        >
+          {{ group.title }}
+        </div>
+
+        <div class="space-y-1">
+          <div v-for="item in group.items" :key="item.title">
+            <!-- Item SEM children -->
+            <button
+              v-if="!hasChildren(item)"
+              @click="handleMenuAction(item)"
+              class="flex w-full items-center gap-2 rounded-md p-2 text-left text-sm hover:bg-sidebar-accent transition-colors"
+              :class="{ 'justify-center': isCollapsed }"
+            >
+              <CorpIcon
+                v-if="item.icon"
+                :icon="item.icon"
+                :size="16"
+                :class="getIconColorProps(item.iconColor).class"
+                :style="getIconColorProps(item.iconColor).style"
+              />
+              <span v-if="!isCollapsed" class="truncate">{{ item.title }}</span>
+            </button>
+
+            <!-- Item COM children -->
+            <Collapsible
+              v-else
+              v-slot="{ open }"
+              :default-open="item.defaultOpen !== false"
+            >
+              <CollapsibleTrigger as-child>
+                <button
+                  class="flex w-full items-center gap-2 rounded-md p-2 text-left text-sm hover:bg-sidebar-accent transition-colors"
+                  :class="{ 'justify-center': isCollapsed }"
+                >
                   <CorpIcon
                     v-if="item.icon"
                     :icon="item.icon"
@@ -441,141 +342,56 @@ const handleMenuAction = (item: IMenuItem) => {
                     :class="getIconColorProps(item.iconColor).class"
                     :style="getIconColorProps(item.iconColor).style"
                   />
-                  <span>{{ item.title }}</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+                  <span v-if="!isCollapsed" class="truncate flex-1">{{
+                    item.title
+                  }}</span>
+                  <CorpIcon
+                    v-if="!isCollapsed"
+                    icon="luc-chevron-down"
+                    :size="16"
+                    class="ml-auto transition-transform duration-200"
+                    :class="{ 'rotate-180': open }"
+                  />
+                </button>
+              </CollapsibleTrigger>
 
-              <!-- Item COM children: collapsible -->
-              <Collapsible
-                v-else
-                v-slot="{ open }"
-                :key="item.title"
-                :default-open="item.defaultOpen !== false"
-              >
-                <SidebarMenuItem>
-                  <CollapsibleTrigger as-child>
-                    <SidebarMenuButton>
-                      <CorpIcon
-                        v-if="item.icon"
-                        :icon="item.icon"
-                        :size="16"
-                        :class="getIconColorProps(item.iconColor).class"
-                        :style="getIconColorProps(item.iconColor).style"
-                      />
-                      <span>{{ item.title }}</span>
-                      <CorpIcon
-                        icon="luc-chevron-down"
-                        :size="16"
-                        class="ml-auto transition-transform duration-200 group-data-[collapsible=icon]:hidden"
-                        :class="{ 'rotate-180': open }"
-                      />
-                    </SidebarMenuButton>
-                  </CollapsibleTrigger>
-
-                  <CollapsibleContent
-                    class="collapsibleContent group-data-[collapsible=icon]:hidden"
-                  >
-                    <SidebarMenuSub>
-                      <SidebarMenuSubItem
-                        v-for="child in getItemChildren(item)"
-                        :key="child.title"
-                      >
-                        <SidebarMenuSubButton @click="handleMenuAction(child)">
-                          <CorpIcon
-                            v-if="child.icon"
-                            :icon="child.icon"
-                            :size="16"
-                            :class="getIconColorProps(child.iconColor).class"
-                            :style="getIconColorProps(child.iconColor).style"
-                          />
-                          <span>{{ child.title }}</span>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    </SidebarMenuSub>
-                  </CollapsibleContent>
-                </SidebarMenuItem>
-              </Collapsible>
-            </template>
-          </SidebarMenu>
-        </SidebarGroupContent>
-      </SidebarGroup>
+              <CollapsibleContent v-if="!isCollapsed" class="ml-4 mt-1 space-y-1">
+                <button
+                  v-for="child in getItemChildren(item)"
+                  :key="child.title"
+                  @click="handleMenuAction(child)"
+                  class="flex w-full items-center gap-2 rounded-md p-2 text-left text-sm hover:bg-sidebar-accent transition-colors"
+                >
+                  <CorpIcon
+                    v-if="child.icon"
+                    :icon="child.icon"
+                    :size="16"
+                    :class="getIconColorProps(child.iconColor).class"
+                    :style="getIconColorProps(child.iconColor).style"
+                  />
+                  <span class="truncate">{{ child.title }}</span>
+                </button>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
+        </div>
       </div>
-    </SidebarContent>
-
-    <!-- Footer da Sidebar -->
-    <div
-      class="shrink-0 border-t border-sidebar-border p-2"
-      :class="footerClasses"
-    >
-      <slot name="footer">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton>
-              <CorpIcon icon="luc-user" :size="16" />
-              <span>{{ userName }}</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </slot>
     </div>
 
-    <!-- Rail para toggle lateral -->
-    <SidebarRail />
-  </Sidebar>
+    <!-- Footer -->
+    <div
+      class="border-t border-sidebar-border p-2 flex-shrink-0"
+      :class="footerClasses"
+    >
+      <slot name="footer" :is-collapsed="isCollapsed">
+        <button
+          class="flex w-full items-center gap-2 rounded-md p-2 text-left text-sm hover:bg-sidebar-accent transition-colors"
+          :class="{ 'justify-center': isCollapsed }"
+        >
+          <CorpIcon icon="luc-user" :size="16" />
+          <span v-if="!isCollapsed">{{ userName }}</span>
+        </button>
+      </slot>
+    </div>
+  </div>
 </template>
-
-<style>
-/* 🔧 FORÇAR transparência no div interno do shadcn */
-[data-sidebar='sidebar'] {
-  background: transparent !important;
-}
-
-/* Submenu styles */
-[data-sidebar='menu-sub-button'] {
-  cursor: pointer !important;
-  color: var(--sidebar-menu-sub-foreground) !important;
-}
-
-[data-sidebar='menu-sub-button']:hover {
-  color: var(--sidebar-menu-sub-hover-foreground) !important;
-}
-
-/* 🎨 Animação suave para Collapsible (técnica CbPopover com @keyframes) */
-.collapsibleContent {
-  overflow: hidden;
-}
-
-/* Estado fechado: aplicar animação de saída */
-.collapsibleContent[data-state='closed'] {
-  animation: collapsibleExit 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
-}
-
-/* Estado aberto: aplicar animação de entrada */
-.collapsibleContent[data-state='open'] {
-  animation: collapsibleEnter 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
-}
-
-/* Keyframe de entrada (expandir + fade-in) */
-@keyframes collapsibleEnter {
-  from {
-    max-height: 0;
-    opacity: 0;
-  }
-  to {
-    max-height: 500px; /* Altura máxima para 10+ subitens */
-    opacity: 1;
-  }
-}
-
-/* Keyframe de saída (colapsar + fade-out) */
-@keyframes collapsibleExit {
-  from {
-    max-height: 500px;
-    opacity: 1;
-  }
-  to {
-    max-height: 0;
-    opacity: 0;
-  }
-}
-</style>
