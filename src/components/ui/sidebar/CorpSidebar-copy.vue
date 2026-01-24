@@ -427,9 +427,9 @@ const handleMenuAction = (item: IMenuItem) => {
 
       <!-- Menu Groups -->
       <SidebarGroup v-for="group in menuItems" :key="group.title">
-          <SidebarGroupLabel>{{ group.title }}</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
+        <SidebarGroupLabel>{{ group.title }}</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
             <template v-for="item in group.items">
               <!-- Item SEM children: botão simples -->
               <SidebarMenuItem v-if="!hasChildren(item)" :key="item.title">

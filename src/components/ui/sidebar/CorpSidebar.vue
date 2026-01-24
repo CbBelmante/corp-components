@@ -102,7 +102,17 @@ const props = defineProps({
     default: 'left',
     validator: (v: string) => ['left', 'right'].includes(v),
   },
+  currentPath: {
+    type: String,
+    default: undefined,
+  },
 });
+
+// ============== EMITS ==============
+
+const emit = defineEmits<{
+  navigate: [payload: { path: string; item: IMenuItem }];
+}>();
 
 // ============== STATE ==============
 
@@ -150,7 +160,9 @@ const footerClasses = computed(() => {
 });
 
 const sidebarWidth = computed(() =>
-  isCollapsed.value ? formatCssValue(props.railWidth) : formatCssValue(props.width)
+  isCollapsed.value
+    ? formatCssValue(props.railWidth)
+    : formatCssValue(props.width)
 );
 
 const positionClasses = computed(() => {
@@ -219,15 +231,37 @@ const getIconColorProps = (iconColor?: string) => {
   return { class: '', style: {} };
 };
 
+const isRouteActive = (path?: string): boolean => {
+  if (!path) return false;
+
+  // Se currentPath fornecido, usa ele (controlled component)
+  if (props.currentPath !== undefined) {
+    return props.currentPath === path;
+  }
+
+  // Senão, usa router (uncontrolled component)
+  try {
+    return router.currentRoute.value.path === path;
+  } catch {
+    return false;
+  }
+};
+
 const handleMenuAction = (item: IMenuItem) => {
-  if (item.to) {
-    router.push(item.to);
+  if (!item.to) {
+    if (item.action) {
+      console.log('[CorpSidebar] Action triggered:', item.action);
+    }
     return;
   }
 
-  if (item.action) {
-    console.log('[CorpSidebar] Action triggered:', item.action);
+  // Se currentPath fornecido (controlled), só emite evento
+  // Se não, navega com router (uncontrolled)
+  if (props.currentPath === undefined) {
+    router.push(item.to);
   }
+
+  emit('navigate', { path: item.to, item });
 };
 
 const toggleSidebar = () => {
@@ -286,18 +320,11 @@ const toggleSidebar = () => {
     </div>
 
     <!-- Content -->
-    <div
-      class="flex-1 overflow-y-auto min-h-0"
-      :class="bgClasses"
-    >
+    <div class="flex-1 overflow-y-auto min-h-0" :class="bgClasses">
       <slot name="prepend" />
 
       <!-- Menu Groups -->
-      <div
-        v-for="group in menuItems"
-        :key="group.title"
-        class="p-2"
-      >
+      <div v-for="group in menuItems" :key="group.title" class="p-2">
         <div
           v-if="!isCollapsed"
           class="px-2 py-1.5 text-xs font-semibold text-sidebar-foreground/70"
@@ -312,7 +339,10 @@ const toggleSidebar = () => {
               v-if="!hasChildren(item)"
               @click="handleMenuAction(item)"
               class="flex w-full items-center gap-2 rounded-md p-2 text-left text-sm hover:bg-sidebar-accent transition-colors"
-              :class="{ 'justify-center': isCollapsed }"
+              :class="{
+                'justify-center': isCollapsed,
+                'bg-sidebar-accent': isRouteActive(item.to),
+              }"
             >
               <CorpIcon
                 v-if="item.icon"
@@ -342,9 +372,9 @@ const toggleSidebar = () => {
                     :class="getIconColorProps(item.iconColor).class"
                     :style="getIconColorProps(item.iconColor).style"
                   />
-                  <span v-if="!isCollapsed" class="truncate flex-1">{{
-                    item.title
-                  }}</span>
+                  <span v-if="!isCollapsed" class="truncate flex-1">
+                    {{ item.title }}
+                  </span>
                   <CorpIcon
                     v-if="!isCollapsed"
                     icon="luc-chevron-down"
@@ -355,12 +385,16 @@ const toggleSidebar = () => {
                 </button>
               </CollapsibleTrigger>
 
-              <CollapsibleContent v-if="!isCollapsed" class="ml-4 mt-1 space-y-1">
+              <CollapsibleContent
+                v-if="!isCollapsed"
+                class="ml-4 mt-1 space-y-1"
+              >
                 <button
                   v-for="child in getItemChildren(item)"
                   :key="child.title"
                   @click="handleMenuAction(child)"
                   class="flex w-full items-center gap-2 rounded-md p-2 text-left text-sm hover:bg-sidebar-accent transition-colors"
+                  :class="{ 'bg-sidebar-accent': isRouteActive(child.to) }"
                 >
                   <CorpIcon
                     v-if="child.icon"

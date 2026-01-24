@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import {
-  CorpSidebar,
-  type IMenuItem,
-} from '@/components/ui/sidebar';
+import { ref } from 'vue';
+import { CorpSidebar, type IMenuItem } from '@/components/ui/sidebar';
 import { CorpIcon } from '@/components/ui/icon';
 
 // ============== MENU DATA ==============
@@ -164,6 +162,41 @@ const coloredMenuItems: IMenuItem[] = [
     ],
   },
 ];
+
+// ============== CONTROLLED COMPONENT STATE ==============
+
+// Estados separados para cada exemplo
+const currentPath1 = ref('/dashboard');
+const currentPath2 = ref('/patients/list');
+const currentPath3 = ref('/cardiology');
+const currentPath4 = ref('/dashboard');
+const currentPath5 = ref('/dashboard');
+const currentPath6 = ref('/dashboard');
+
+// Handlers para cada exemplo
+const handleNavigate1 = ({ path }: { path: string }) => {
+  currentPath1.value = path;
+};
+
+const handleNavigate2 = ({ path }: { path: string }) => {
+  currentPath2.value = path;
+};
+
+const handleNavigate3 = ({ path }: { path: string }) => {
+  currentPath3.value = path;
+};
+
+const handleNavigate4 = ({ path }: { path: string }) => {
+  currentPath4.value = path;
+};
+
+const handleNavigate5 = ({ path }: { path: string }) => {
+  currentPath5.value = path;
+};
+
+const handleNavigate6 = ({ path }: { path: string }) => {
+  currentPath6.value = path;
+};
 </script>
 
 <template>
@@ -193,17 +226,22 @@ const coloredMenuItems: IMenuItem[] = [
         <div class="flex h-full w-full">
           <CorpSidebar
             :items="basicMenuItems"
+            :current-path="currentPath1"
             app-name="Corp Health"
             app-subtitle="Sistema de Saúde"
             user-name="Dr. Silva"
             background="bg-card"
             placement="in-flow"
+            @navigate="handleNavigate1"
           />
           <div class="flex-1 overflow-auto p-6">
             <h3 class="text-lg font-semibold mb-4">Conteúdo Principal</h3>
-            <p class="text-muted-foreground">
-              Clique no ícone para colapsar/expandir o sidebar. Clique nos
-              itens do menu para navegar.
+            <p class="text-muted-foreground mb-2">
+              Clique no ícone para colapsar/expandir o sidebar. Clique nos itens
+              do menu para navegar.
+            </p>
+            <p class="text-sm text-primary font-medium">
+              Página atual: {{ currentPath1 }}
             </p>
           </div>
         </div>
@@ -227,11 +265,13 @@ const coloredMenuItems: IMenuItem[] = [
         <div class="flex h-full w-full">
           <CorpSidebar
             :items="submenuItems"
+            :current-path="currentPath2"
             app-name="Mnesis"
             app-subtitle="Prontuário Eletrônico"
             user-name="Dr. Fábio"
             background="bg-muted"
             placement="in-flow"
+            @navigate="handleNavigate2"
           />
           <div class="flex-1 overflow-auto p-6">
             <h3 class="text-lg font-semibold mb-4">Submenus Expansíveis</h3>
@@ -244,6 +284,9 @@ const coloredMenuItems: IMenuItem[] = [
               </p>
               <p>✅ Animação suave</p>
             </div>
+            <p class="text-sm text-primary font-medium mt-4">
+              Página atual: {{ currentPath2 }}
+            </p>
           </div>
         </div>
       </div>
@@ -266,11 +309,13 @@ const coloredMenuItems: IMenuItem[] = [
         <div class="flex h-full w-full">
           <CorpSidebar
             :items="coloredMenuItems"
+            :current-path="currentPath3"
             app-name="Clínica Multi"
             app-subtitle="Especialidades Médicas"
             user-name="Dr. Carlos"
             background="bg-secondary/10"
             placement="in-flow"
+            @navigate="handleNavigate3"
           />
           <div class="flex-1 overflow-auto p-6">
             <h3 class="text-lg font-semibold mb-4">Ícones Coloridos</h3>
@@ -282,15 +327,11 @@ const coloredMenuItems: IMenuItem[] = [
                   - HEX
                 </li>
                 <li>
-                  <code class="px-1 bg-muted rounded">
-                    rgb(139, 69, 19)
-                  </code>
+                  <code class="px-1 bg-muted rounded">rgb(139, 69, 19)</code>
                   - RGB
                 </li>
                 <li>
-                  <code class="px-1 bg-muted rounded">
-                    var(--destructive)
-                  </code>
+                  <code class="px-1 bg-muted rounded">var(--destructive)</code>
                   - CSS var
                 </li>
                 <li>
@@ -299,6 +340,9 @@ const coloredMenuItems: IMenuItem[] = [
                 </li>
               </ul>
             </div>
+            <p class="text-sm text-primary font-medium mt-4">
+              Página atual: {{ currentPath3 }}
+            </p>
           </div>
         </div>
       </div>
@@ -318,78 +362,75 @@ const coloredMenuItems: IMenuItem[] = [
       <div
         class="h-[500px] border border-border rounded-lg overflow-hidden relative"
       >
-        
-          <div class="flex h-full w-full">
-            <CorpSidebar
-              :items="basicMenuItems"
-              background="bg-primary/5"
-              placement="in-flow"
-            >
-              <!-- Custom Logo -->
-              <template #logo="{ isCollapsed }">
-                <div class="flex items-center gap-2">
-                  <div
-                    class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"
-                  >
-                    <CorpIcon
-                      icon="luc-heart-pulse"
-                      :size="20"
-                      class="text-white"
-                    />
-                  </div>
-                  <div v-if="!isCollapsed" class="flex flex-col">
-                    <span class="font-bold text-sm">MedTech</span>
-                    <span class="text-xs text-muted-foreground">v2.0</span>
-                  </div>
-                </div>
-              </template>
-
-              <!-- Custom Footer -->
-              <template #footer="{ isCollapsed }">
+        <div class="flex h-full w-full">
+          <CorpSidebar
+            :items="basicMenuItems"
+            :current-path="currentPath4"
+            background="bg-primary/5"
+            placement="in-flow"
+            @navigate="handleNavigate4"
+          >
+            <!-- Custom Logo -->
+            <template #logo="{ isCollapsed }">
+              <div class="flex items-center gap-2">
                 <div
-                  class="flex items-center gap-3 p-3 hover:bg-sidebar-accent rounded-lg cursor-pointer transition-colors"
+                  class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"
                 >
-                  <div
-                    class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center"
-                  >
-                    <span class="text-xs font-bold text-white">DS</span>
-                  </div>
-                  <div v-if="!isCollapsed" class="flex-1">
-                    <p class="text-sm font-medium">Dr. Silva</p>
-                    <p class="text-xs text-muted-foreground">
-                      silva@medtech.com
-                    </p>
-                  </div>
                   <CorpIcon
-                    v-if="!isCollapsed"
-                    icon="luc-log-out"
-                    :size="16"
+                    icon="luc-heart-pulse"
+                    :size="20"
+                    class="text-white"
                   />
                 </div>
-              </template>
-            </CorpSidebar>
-            <div class="flex-1 overflow-auto p-6">
-              <h3 class="text-lg font-semibold mb-4">Slots Customizados</h3>
-                <div class="space-y-2 text-sm text-muted-foreground">
-                  <p>
-                    ✅
-                    <code class="px-1 bg-muted rounded">#logo</code>
-                    - Logo customizado
-                  </p>
-                  <p>
-                    ✅
-                    <code class="px-1 bg-muted rounded">#footer</code>
-                    - Footer customizado
-                  </p>
-                  <p>
-                    ✅
-                    <code class="px-1 bg-muted rounded">#prepend</code>
-                    - Conteúdo antes do menu
-                  </p>
+                <div v-if="!isCollapsed" class="flex flex-col">
+                  <span class="font-bold text-sm">MedTech</span>
+                  <span class="text-xs text-muted-foreground">v2.0</span>
                 </div>
+              </div>
+            </template>
+
+            <!-- Custom Footer -->
+            <template #footer="{ isCollapsed }">
+              <div
+                class="flex items-center gap-3 p-3 hover:bg-sidebar-accent rounded-lg cursor-pointer transition-colors"
+              >
+                <div
+                  class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center"
+                >
+                  <span class="text-xs font-bold text-white">DS</span>
+                </div>
+                <div v-if="!isCollapsed" class="flex-1">
+                  <p class="text-sm font-medium">Dr. Silva</p>
+                  <p class="text-xs text-muted-foreground">silva@medtech.com</p>
+                </div>
+                <CorpIcon v-if="!isCollapsed" icon="luc-log-out" :size="16" />
+              </div>
+            </template>
+          </CorpSidebar>
+          <div class="flex-1 overflow-auto p-6">
+            <h3 class="text-lg font-semibold mb-4">Slots Customizados</h3>
+            <div class="space-y-2 text-sm text-muted-foreground">
+              <p>
+                ✅
+                <code class="px-1 bg-muted rounded">#logo</code>
+                - Logo customizado
+              </p>
+              <p>
+                ✅
+                <code class="px-1 bg-muted rounded">#footer</code>
+                - Footer customizado
+              </p>
+              <p>
+                ✅
+                <code class="px-1 bg-muted rounded">#prepend</code>
+                - Conteúdo antes do menu
+              </p>
             </div>
+            <p class="text-sm text-primary font-medium mt-4">
+              Página atual: {{ currentPath4 }}
+            </p>
           </div>
-        
+        </div>
       </div>
     </section>
 
@@ -407,49 +448,48 @@ const coloredMenuItems: IMenuItem[] = [
       <div
         class="h-[500px] border border-border rounded-lg overflow-hidden relative"
       >
-        
-          <div class="flex h-full w-full">
-            <CorpSidebar
-              :items="basicMenuItems"
-              app-name="Corp System"
-              app-subtitle="Admin Panel"
-              user-name="Admin User"
-              background="bg-card"
-              header-background="bg-primary"
-              footer-background="bg-secondary"
-              placement="in-flow"
-            />
-            <div class="flex-1 overflow-auto p-6">
-              <h3 class="text-lg font-semibold mb-4">Cores Customizadas</h3>
-                <div class="space-y-2 text-sm text-muted-foreground">
-                  <p>
-                    ✅
-                    <code class="px-1 bg-muted rounded">
-                      headerBackground="bg-primary"
-                    </code>
-                    - Header com fundo primary
-                  </p>
-                  <p>
-                    ✅
-                    <code class="px-1 bg-muted rounded">
-                      footerBackground="bg-secondary"
-                    </code>
-                    - Footer com fundo secondary (destaque visual)
-                  </p>
-                  <p>
-                    ✅
-                    <code class="px-1 bg-muted rounded">
-                      background="bg-card"
-                    </code>
-                    - Conteúdo com fundo card
-                  </p>
-                  <p>
-                    💡 Combine com opacity e blur para efeitos glassmorphism
-                  </p>
-                </div>
+        <div class="flex h-full w-full">
+          <CorpSidebar
+            :items="basicMenuItems"
+            :current-path="currentPath5"
+            app-name="Corp System"
+            app-subtitle="Admin Panel"
+            user-name="Admin User"
+            background="bg-card"
+            header-background="bg-primary"
+            footer-background="bg-secondary"
+            placement="in-flow"
+            @navigate="handleNavigate5"
+          />
+          <div class="flex-1 overflow-auto p-6">
+            <h3 class="text-lg font-semibold mb-4">Cores Customizadas</h3>
+            <div class="space-y-2 text-sm text-muted-foreground">
+              <p>
+                ✅
+                <code class="px-1 bg-muted rounded">
+                  headerBackground="bg-primary"
+                </code>
+                - Header com fundo primary
+              </p>
+              <p>
+                ✅
+                <code class="px-1 bg-muted rounded">
+                  footerBackground="bg-secondary"
+                </code>
+                - Footer com fundo secondary (destaque visual)
+              </p>
+              <p>
+                ✅
+                <code class="px-1 bg-muted rounded">background="bg-card"</code>
+                - Conteúdo com fundo card
+              </p>
+              <p>💡 Combine com opacity e blur para efeitos glassmorphism</p>
             </div>
+            <p class="text-sm text-primary font-medium mt-4">
+              Página atual: {{ currentPath5 }}
+            </p>
           </div>
-        
+        </div>
       </div>
     </section>
 
@@ -470,18 +510,24 @@ const coloredMenuItems: IMenuItem[] = [
         <div class="flex h-full w-full">
           <div class="flex-1 overflow-auto p-6">
             <h3 class="text-lg font-semibold mb-4">Conteúdo Principal</h3>
-            <p class="text-muted-foreground">
-              Sidebar à direita usando <code class="px-1 bg-muted rounded">location="right"</code>
+            <p class="text-muted-foreground mb-2">
+              Sidebar à direita usando
+              <code class="px-1 bg-muted rounded">location="right"</code>
+            </p>
+            <p class="text-sm text-primary font-medium mt-4">
+              Página atual: {{ currentPath6 }}
             </p>
           </div>
           <CorpSidebar
             :items="basicMenuItems"
+            :current-path="currentPath6"
             app-name="Right Panel"
             app-subtitle="Tools & Settings"
             user-name="Admin"
             background="bg-muted"
             placement="in-flow"
             location="right"
+            @navigate="handleNavigate6"
           />
         </div>
       </div>
@@ -495,6 +541,11 @@ const coloredMenuItems: IMenuItem[] = [
           ✅
           <strong>Sidebar Nativo</strong>
           : Componente standalone, sem dependências externas
+        </p>
+        <p>
+          ✅
+          <strong>currentPath prop</strong>
+          : Controlled component (passa estado de fora) - Perfeito para testes
         </p>
         <p>
           ✅
@@ -550,6 +601,16 @@ const coloredMenuItems: IMenuItem[] = [
           <strong>Slots customizáveis</strong>
           : logo, footer, prepend
         </p>
+        <p>
+          🔄
+          <strong>Modo Controlado</strong>
+          : Use currentPath + @navigate para testes (não navega de verdade)
+        </p>
+        <p>
+          🔄
+          <strong>Modo Não-Controlado</strong>
+          : Sem currentPath, usa vue-router automaticamente
+        </p>
       </div>
     </section>
 
@@ -558,15 +619,15 @@ const coloredMenuItems: IMenuItem[] = [
       <h2 class="text-lg font-semibold text-foreground">📘 Como Usar</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="p-4 bg-card border border-border rounded-lg">
-          <h3 class="font-medium mb-2 text-sm">1. Estrutura Básica</h3>
+          <h3 class="font-medium mb-2 text-sm">1. Modo Controlado</h3>
           <pre
             class="text-xs bg-muted p-2 rounded overflow-x-auto"
           ><code>&lt;CorpSidebar
   :items="menu"
+  :current-path="currentPath"
+  @navigate="handleNavigate"
   app-name="App"
-  background="bg-card"
   placement="in-flow"
-  location="left"
 /&gt;</code></pre>
         </div>
 
