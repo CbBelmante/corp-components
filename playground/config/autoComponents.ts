@@ -44,7 +44,9 @@ function extractComponentInfo(
 
   // Busca metadados do arquivo .meta.ts (se existir)
   const metaPath = filePath.replace('.vue', '.meta.ts');
-  const metaModule = metaModules[metaPath];
+  const metaModule = metaModules[metaPath] as
+    | { default?: IPlaygroundMeta }
+    | undefined;
   const customMeta = metaModule?.default;
 
   // Metadados (usa .meta.ts ou gera automaticamente)

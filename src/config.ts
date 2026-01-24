@@ -118,7 +118,7 @@ const developmentConfig: ICorpComponentsConfig = {
   isProduction: false,
 
   package: {
-    name: 'corp-components',
+    name: '@corp/components',
     version: PACKAGE_VERSION,
     description: 'Vue 3 Component Library - TypeScript First',
     author: 'CbBelmante',
@@ -147,7 +147,7 @@ const developmentConfig: ICorpComponentsConfig = {
 
   links: {
     github: 'https://github.com/CbBelmante/corp-components',
-    npm: 'https://www.npmjs.com/package/corp-components',
+    npm: 'https://www.npmjs.com/package/@corp/components',
     docs: 'http://localhost:2224',
     issues: 'https://github.com/CbBelmante/corp-components/issues',
   },
@@ -162,7 +162,7 @@ const productionConfig: ICorpComponentsConfig = {
   isProduction: true,
 
   package: {
-    name: 'corp-components',
+    name: '@corp/components',
     version: PACKAGE_VERSION,
     description: 'Vue 3 Component Library - TypeScript First',
     author: 'CbBelmante',
@@ -191,7 +191,7 @@ const productionConfig: ICorpComponentsConfig = {
 
   links: {
     github: 'https://github.com/CbBelmante/corp-components',
-    npm: 'https://www.npmjs.com/package/corp-components',
+    npm: 'https://www.npmjs.com/package/@corp/components',
     docs: 'https://corp-components.dev',
     issues: 'https://github.com/CbBelmante/corp-components/issues',
   },

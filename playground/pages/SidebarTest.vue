@@ -10,40 +10,40 @@ import { CorpIcon } from '@/components/ui/icon';
  */
 const basicMenuItems: IMenuItem[] = [
   {
-    title: 'Navegação',
+    label: 'Navegação',
     items: [
       {
-        title: 'Dashboard',
+        label: 'Dashboard',
         icon: 'luc-layout-dashboard',
         to: '/dashboard',
       },
       {
-        title: 'Pacientes',
+        label: 'Pacientes',
         icon: 'luc-users',
         to: '/patients',
       },
       {
-        title: 'Agenda',
+        label: 'Agenda',
         icon: 'luc-calendar',
         to: '/schedule',
       },
       {
-        title: 'Relatórios',
+        label: 'Relatórios',
         icon: 'luc-chart-bar',
         to: '/reports',
       },
     ],
   },
   {
-    title: 'Configurações',
+    label: 'Configurações',
     items: [
       {
-        title: 'Perfil',
+        label: 'Perfil',
         icon: 'luc-user',
         to: '/profile',
       },
       {
-        title: 'Sistema',
+        label: 'Sistema',
         icon: 'luc-settings',
         to: '/settings',
       },
@@ -56,46 +56,46 @@ const basicMenuItems: IMenuItem[] = [
  */
 const submenuItems: IMenuItem[] = [
   {
-    title: 'Atendimento',
+    label: 'Atendimento',
     items: [
       {
-        title: 'Pacientes',
+        label: 'Pacientes',
         icon: 'luc-users',
         defaultOpen: true,
         children: [
           {
-            title: 'Lista de Pacientes',
+            label: 'Lista de Pacientes',
             icon: 'luc-list',
             to: '/patients/list',
           },
           {
-            title: 'Novo Paciente',
+            label: 'Novo Paciente',
             icon: 'luc-user-plus',
             to: '/patients/new',
           },
           {
-            title: 'Prontuários',
+            label: 'Prontuários',
             icon: 'luc-file-text',
             to: '/patients/records',
           },
         ],
       },
       {
-        title: 'Consultas',
+        label: 'Consultas',
         icon: 'luc-stethoscope',
         children: [
           {
-            title: 'Agendadas',
+            label: 'Agendadas',
             icon: 'luc-calendar-check',
             to: '/appointments/scheduled',
           },
           {
-            title: 'Em Andamento',
+            label: 'Em Andamento',
             icon: 'luc-clock',
             to: '/appointments/ongoing',
           },
           {
-            title: 'Finalizadas',
+            label: 'Finalizadas',
             icon: 'luc-check-circle',
             to: '/appointments/completed',
           },
@@ -110,28 +110,28 @@ const submenuItems: IMenuItem[] = [
  */
 const coloredMenuItems: IMenuItem[] = [
   {
-    title: 'Áreas Clínicas',
+    label: 'Áreas Clínicas',
     items: [
       {
-        title: 'Cardiologia',
+        label: 'Cardiologia',
         icon: 'luc-heart-pulse',
         iconColor: '#ef4444', // Vermelho
         to: '/cardiology',
       },
       {
-        title: 'Neurologia',
+        label: 'Neurologia',
         icon: 'luc-brain',
         iconColor: '#8b5cf6', // Roxo
         to: '/neurology',
       },
       {
-        title: 'Ortopedia',
+        label: 'Ortopedia',
         icon: 'luc-bone',
         iconColor: '#f97316', // Laranja
         to: '/orthopedics',
       },
       {
-        title: 'Pediatria',
+        label: 'Pediatria',
         icon: 'luc-baby',
         iconColor: '#3b82f6', // Azul
         to: '/pediatrics',
@@ -139,22 +139,22 @@ const coloredMenuItems: IMenuItem[] = [
     ],
   },
   {
-    title: 'Status',
+    label: 'Status',
     items: [
       {
-        title: 'Emergências',
+        label: 'Emergências',
         icon: 'luc-siren',
         iconColor: 'var(--destructive)', // CSS variable
         to: '/emergency',
       },
       {
-        title: 'Urgências',
+        label: 'Urgências',
         icon: 'luc-alert-triangle',
         iconColor: 'var(--warning)', // CSS variable
         to: '/urgent',
       },
       {
-        title: 'Rotina',
+        label: 'Rotina',
         icon: 'luc-check-circle',
         iconColor: 'var(--success)', // CSS variable
         to: '/routine',
@@ -634,12 +634,12 @@ const handleNavigate6 = ({ path }: { path: string }) => {
         <div class="p-4 bg-card border border-border rounded-lg">
           <h3 class="font-medium mb-2 text-sm">2. Menu com Submenu</h3>
           <pre class="text-xs bg-muted p-2 rounded overflow-x-auto"><code>{
-  title: 'Grupo',
+  label: 'Grupo',
   items: [{
-    title: 'Item',
+    label: 'Item',
     icon: 'luc-users',
     children: [{
-      title: 'Subitem',
+      label: 'Subitem',
       to: '/path'
     }]
   }]

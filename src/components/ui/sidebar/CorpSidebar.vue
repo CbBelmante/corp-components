@@ -16,21 +16,11 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import type { IMenuItem } from '@/components/ui/types/menu';
 
 // ============== TYPES ==============
 
-export interface IMenuItem {
-  title: string;
-  icon?: string;
-  iconColor?: string;
-  to?: string;
-  routeName?: string;
-  action?: string;
-  tooltip?: string;
-  items?: IMenuItem[];
-  children?: IMenuItem[];
-  defaultOpen?: boolean;
-}
+export type { IMenuItem };
 
 // ============== PROPS ==============
 
@@ -324,16 +314,16 @@ const toggleSidebar = () => {
       <slot name="prepend" />
 
       <!-- Menu Groups -->
-      <div v-for="group in menuItems" :key="group.title" class="p-2">
+      <div v-for="group in menuItems" :key="group.label" class="p-2">
         <div
           v-if="!isCollapsed"
           class="px-2 py-1.5 text-xs font-semibold text-sidebar-foreground/70"
         >
-          {{ group.title }}
+          {{ group.label }}
         </div>
 
         <div class="space-y-1">
-          <div v-for="item in group.items" :key="item.title">
+          <div v-for="item in group.items" :key="item.label">
             <!-- Item SEM children -->
             <button
               v-if="!hasChildren(item)"
@@ -351,7 +341,7 @@ const toggleSidebar = () => {
                 :class="getIconColorProps(item.iconColor).class"
                 :style="getIconColorProps(item.iconColor).style"
               />
-              <span v-if="!isCollapsed" class="truncate">{{ item.title }}</span>
+              <span v-if="!isCollapsed" class="truncate">{{ item.label }}</span>
             </button>
 
             <!-- Item COM children -->
@@ -373,7 +363,7 @@ const toggleSidebar = () => {
                     :style="getIconColorProps(item.iconColor).style"
                   />
                   <span v-if="!isCollapsed" class="truncate flex-1">
-                    {{ item.title }}
+                    {{ item.label }}
                   </span>
                   <CorpIcon
                     v-if="!isCollapsed"
@@ -391,7 +381,7 @@ const toggleSidebar = () => {
               >
                 <button
                   v-for="child in getItemChildren(item)"
-                  :key="child.title"
+                  :key="child.label"
                   @click="handleMenuAction(child)"
                   class="flex w-full items-center gap-2 rounded-md p-2 text-left text-sm hover:bg-sidebar-accent transition-colors"
                   :class="{ 'bg-sidebar-accent': isRouteActive(child.to) }"
@@ -403,7 +393,7 @@ const toggleSidebar = () => {
                     :class="getIconColorProps(child.iconColor).class"
                     :style="getIconColorProps(child.iconColor).style"
                   />
-                  <span class="truncate">{{ child.title }}</span>
+                  <span class="truncate">{{ child.label }}</span>
                 </button>
               </CollapsibleContent>
             </Collapsible>

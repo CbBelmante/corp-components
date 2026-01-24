@@ -178,6 +178,12 @@ const props = defineProps({
     >,
     default: 'scale',
   },
+
+  // Remove apenas o padding padrão (mantém bg, border, shadow)
+  removeDefaultPadding: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits<{
@@ -312,8 +318,9 @@ const popoverContentClasses = computed(() => {
 
   // Com estilos base do shadcn
   return cn(
-    // Base shadcn
-    'z-50 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none',
+    // Base shadcn (p-4 ou p-0 se removeDefaultPadding)
+    'z-50 rounded-md border bg-popover text-popover-foreground shadow-md outline-none',
+    props.removeDefaultPadding ? 'p-0' : 'p-4',
     // Animações (Tailwind ou custom)
     ...tailwindAnimations,
     customAnimationClass.value,
@@ -349,7 +356,14 @@ const popoverContentStyle = computed(() => {
   }
 
   // Rounded inline
-  if (rounded.value.style) {
+  if (
+    rounded.value.style &&
+    typeof rounded.value.style === 'object' &&
+    'borderRadius' in rounded.value.style &&
+    rounded.value.style.borderRadius
+  ) {
+    styles.borderRadius = rounded.value.style.borderRadius;
+  } else if (rounded.value.style && typeof rounded.value.style === 'string') {
     styles.borderRadius = rounded.value.style;
   }
 

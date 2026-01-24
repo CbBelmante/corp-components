@@ -38,7 +38,7 @@ export { useSidebar } from './utils';
 
 // CorpSidebar (componente Corp completo)
 export { default as CorpSidebar } from './CorpSidebar.vue';
-export type { IMenuItem } from './CorpSidebar.vue';
+export type { IMenuItem } from '@/components/ui/types/menu';
 
 // Constantes públicas
 export {

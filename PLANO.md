@@ -290,7 +290,7 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 
 ### Mapeamento de Componentes
 
-#### 🎯 Escopo v1.0 (15 componentes públicos)
+#### 🎯 Escopo v1.0 (25 componentes públicos)
 
 | CbAdmin | corp-components | Release | Status |
 |---------|---------------|---------|--------|
@@ -305,19 +305,22 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 | N/A | CorpTextarea.vue | 1.0 | ✅ Completo |
 | N/A | CorpProgress.vue | 1.0 | ✅ Completo |
 | N/A | CorpBreadcrumb.vue | 1.0 | ✅ Completo |
+| N/A | **CorpPopover.vue** | 1.0 | ✅ Completo (Jan 2026) |
+| N/A | **CorpSidebar.vue** | 1.0 | ✅ Completo (Jan 2026) |
+| N/A | **CorpAppBar.vue** | 1.0 | ✅ Completo (Jan 2026) |
 | N/A | **CorpCard.vue** | 1.0 | ⬜ Pendente (🟢 Fácil) |
 | CbButtonGroup.vue | **CorpButtonGroup.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
 | N/A | **CorpTooltip.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
-| N/A | **CorpPopover.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
 | N/A | **CorpTabs.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
 | N/A | **CorpAccordion.vue** | 1.0 | ⬜ Pendente (🟠 Médio) |
 | N/A | **CorpDialog.vue** | 1.0 | ⬜ Pendente (🟠 Médio) |
 | N/A | **CorpSlider.vue** | 1.0 | ⬜ Pendente (🟠 Médio-Difícil) |
 | N/A | **CorpAutocomplete.vue** | 1.0 | ⬜ Pendente (🔴 Difícil) |
-| N/A | **CorpSidebar.vue** | 1.0 | ⬜ Pendente (🔴 Difícil) |
-| N/A | **CorpNavigationBar.vue** | 1.0 | ⬜ Pendente (🔴 Difícil) |
+| N/A | **CorpCollapsible.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
+| N/A | **CorpCommand.vue** | 1.0 | ⬜ Pendente (🟠 Médio) |
+| N/A | **CorpDropdownMenu.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
 
-**v1.0 Status:** 11/22 completos (50%)
+**v1.0 Status:** 14/25 completos (56%)
 
 #### 🔧 Componentes Internos (não exportados)
 

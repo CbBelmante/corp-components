@@ -1,77 +1,55 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import {
-  CorpAppBar,
-  type IAppBarMenuItem,
-  type IAppBarDropdownItem,
-} from '@/components/ui/appbar';
+import { CorpAppBar, type IAppBarMenuItem } from '@/components/ui/appbar';
 import { CorpIcon } from '@/components/ui/icon';
 
+// Menu Items simples (sem dropdown)
 const menuItems: IAppBarMenuItem[] = [
   {
-    title: 'Dashboard',
+    label: 'Dashboard',
     icon: 'luc-layout-dashboard',
     to: '/dashboard',
   },
   {
-    title: 'Patients',
+    label: 'Patients',
     icon: 'luc-users',
     to: '/patients',
   },
   {
-    title: 'Reports',
+    label: 'Reports',
     icon: 'luc-chart-bar',
     to: '/reports',
   },
   {
-    title: 'Settings',
+    label: 'Settings',
     icon: 'luc-settings',
     to: '/settings',
-  },
-];
-
-const dropdownItems: IAppBarDropdownItem[] = [
-  {
-    title: 'Profile',
-    icon: 'luc-user',
-    action: () => console.log('Profile clicked'),
-  },
-  {
-    title: 'Settings',
-    icon: 'luc-settings',
-    action: () => console.log('Settings clicked'),
-  },
-  {
-    title: 'Logout',
-    icon: 'luc-log-out',
-    variant: 'danger',
-    action: () => console.log('Logout clicked'),
   },
 ];
 
 // Menu Items com Dropdown Vertical
 const menuItemsWithVerticalDropdown: IAppBarMenuItem[] = [
   {
-    title: 'Home',
+    label: 'Home',
     icon: 'luc-home',
     to: '/dashboard',
   },
   {
-    title: 'Products',
+    label: 'Products',
     icon: 'luc-package',
     dropdown: {
       mode: 'vertical',
       hoverMode: true,
       arrow: true,
-      items: [
-        { title: 'All Products', icon: 'luc-grid', to: '/products' },
-        { title: 'New Product', icon: 'luc-plus', to: '/products/new' },
-        { title: 'Categories', icon: 'luc-folder', to: '/products/categories' },
-      ],
     },
+    children: [
+      { label: 'All Products', icon: 'luc-grid', to: '/products' },
+      { label: 'New Product', icon: 'luc-plus', to: '/products/new' },
+      { label: 'Categories', icon: 'luc-folder', to: '/products/categories' },
+    ],
   },
   {
-    title: 'Reports',
+    label: 'Reports',
     icon: 'luc-chart-bar',
     to: '/reports',
   },
@@ -80,34 +58,34 @@ const menuItemsWithVerticalDropdown: IAppBarMenuItem[] = [
 // Menu Items com Dropdown Horizontal
 const menuItemsWithHorizontalDropdown: IAppBarMenuItem[] = [
   {
-    title: 'Home',
+    label: 'Home',
     icon: 'luc-home',
     to: '/dashboard',
   },
   {
-    title: 'Categories',
+    label: 'Categories',
     icon: 'luc-grid',
     dropdown: {
       mode: 'horizontal',
       fullWidth: true,
       alignment: 'center',
-      itemsAlignment: 'left',
+      itemsAlignment: 'center',
       hoverMode: true,
-      items: [
-        {
-          title: 'Electronics',
-          icon: 'luc-laptop',
-          to: '/categories/electronics',
-        },
-        { title: 'Fashion', icon: 'luc-shirt', to: '/categories/fashion' },
-        { title: 'Home', icon: 'luc-home', to: '/categories/home' },
-        { title: 'Sports', icon: 'luc-dumbbell', to: '/categories/sports' },
-        { title: 'Books', icon: 'luc-book', to: '/categories/books' },
-      ],
     },
+    children: [
+      {
+        label: 'Electronics',
+        icon: 'luc-laptop',
+        to: '/categories/electronics',
+      },
+      { label: 'Fashion', icon: 'luc-shirt', to: '/categories/fashion' },
+      { label: 'Home', icon: 'luc-home', to: '/categories/home' },
+      { label: 'Sports', icon: 'luc-dumbbell', to: '/categories/sports' },
+      { label: 'Books', icon: 'luc-book', to: '/categories/books' },
+    ],
   },
   {
-    title: 'Contact',
+    label: 'Contact',
     icon: 'luc-mail',
     to: '/contact',
   },
@@ -188,7 +166,6 @@ const handleNavigate8 = ({ path }: { path: string }) => {
           :current-path="currentPath1"
           user-name="Dr. Silva"
           user-initials="DS"
-          :dropdown-items="dropdownItems"
           placement="in-flow"
           @navigate="handleNavigate1"
         >
@@ -275,7 +252,6 @@ const handleNavigate8 = ({ path }: { path: string }) => {
           :current-path="currentPath3"
           user-name="Dra. Maria"
           user-initials="MS"
-          :dropdown-items="dropdownItems"
           placement="in-flow"
           color="bg-card"
           @navigate="handleNavigate3"
@@ -363,7 +339,6 @@ const handleNavigate8 = ({ path }: { path: string }) => {
           menu-style="underline"
           :current-path="currentPath5"
           user-name="Admin"
-          :dropdown-items="dropdownItems"
           placement="in-flow"
           color="bg-secondary/10"
           @navigate="handleNavigate5"
@@ -475,7 +450,6 @@ const handleNavigate8 = ({ path }: { path: string }) => {
           :current-path="currentPath7"
           user-name="Dr. Silva"
           user-initials="DS"
-          :dropdown-items="dropdownItems"
           placement="in-flow"
           :elevation="2"
           @navigate="handleNavigate7"
@@ -643,6 +617,240 @@ const handleNavigate8 = ({ path }: { path: string }) => {
       </div>
     </section>
 
+    <!-- MOBILE MODE 1: Popover -->
+    <section class="space-y-4">
+      <div>
+        <h2 class="text-lg font-semibold text-foreground">
+          9. Mobile Mode: Popover (Dropdown Absoluto 280px)
+        </h2>
+        <p class="text-sm text-muted-foreground">
+          Popover absoluto que desce do header, estilo VLComponents
+        </p>
+      </div>
+
+      <div class="border border-border rounded-lg overflow-hidden">
+        <CorpAppBar
+          :menu-items="menuItemsWithVerticalDropdown"
+          menu-style="pill"
+          :current-path="currentPath1"
+          user-name="Ana Costa"
+          user-initials="AC"
+          placement="in-flow"
+          mobile-mode="popover"
+          mobile-position="right"
+          mobile-animation="slide"
+          :mobile-backdrop="false"
+          @navigate="handleNavigate1"
+        >
+          <template #logo>
+            <div class="flex items-center gap-2">
+              <CorpIcon icon="luc-smartphone" :size="24" class="text-primary" />
+              <span class="font-bold text-lg">MobileApp</span>
+            </div>
+          </template>
+        </CorpAppBar>
+        <div class="p-6 bg-muted/30 min-h-[300px]">
+          <h3 class="text-lg font-semibold mb-2">📱 Popover Mode</h3>
+          <p class="text-muted-foreground mb-2">
+            Reduza o browser para &lt; 768px e clique no ☰ hamburger
+          </p>
+          <ul class="list-disc list-inside space-y-1 text-sm">
+            <li>280px de largura fixa</li>
+            <li>Desce do header (position: absolute)</li>
+            <li>Popover compacto estilo VLComponents</li>
+            <li>SEM backdrop (clique fora para fechar)</li>
+            <li>Mais leve que drawer</li>
+          </ul>
+          <p class="text-sm text-primary font-medium mt-4">
+            Página: {{ currentPath1 }}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOBILE MODE 2: Drawer Full -->
+    <section class="space-y-4">
+      <div>
+        <h2 class="text-lg font-semibold text-foreground">
+          10. Mobile Mode: Drawer Full (100% width)
+        </h2>
+        <p class="text-sm text-muted-foreground">
+          Drawer que ocupa toda a largura da tela
+        </p>
+      </div>
+
+      <div class="border border-border rounded-lg overflow-hidden">
+        <CorpAppBar
+          :menu-items="menuItemsWithVerticalDropdown"
+          menu-style="folder"
+          :current-path="currentPath2"
+          user-name="Bruno Silva"
+          user-initials="BS"
+          placement="in-flow"
+          mobile-mode="drawer-full"
+          mobile-position="right"
+          mobile-animation="slide"
+          mobile-backdrop
+          @navigate="handleNavigate2"
+        >
+          <template #logo>
+            <div class="flex items-center gap-2">
+              <CorpIcon icon="luc-maximize" :size="24" class="text-primary" />
+              <span class="font-bold text-lg">FullApp</span>
+            </div>
+          </template>
+        </CorpAppBar>
+        <div class="p-6 bg-muted/30 min-h-[300px]">
+          <h3 class="text-lg font-semibold mb-2">📱 Drawer Full</h3>
+          <p class="text-muted-foreground mb-2">
+            Reduza o browser e veja o drawer fullscreen
+          </p>
+          <ul class="list-disc list-inside space-y-1 text-sm">
+            <li>100% de largura</li>
+            <li>Slide da direita</li>
+            <li>Ideal para navegação completa</li>
+            <li>Esconde tudo atrás</li>
+          </ul>
+          <p class="text-sm text-primary font-medium mt-4">
+            Página: {{ currentPath2 }}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOBILE MODE 3: Drawer Half -->
+    <section class="space-y-4">
+      <div>
+        <h2 class="text-lg font-semibold text-foreground">
+          11. Mobile Mode: Drawer Half (50% width) + Left Position
+        </h2>
+        <p class="text-sm text-muted-foreground">
+          Drawer que ocupa metade da tela, vindo da ESQUERDA
+        </p>
+      </div>
+
+      <div class="border border-border rounded-lg overflow-hidden">
+        <CorpAppBar
+          :menu-items="menuItemsWithVerticalDropdown"
+          menu-style="underline"
+          :current-path="currentPath3"
+          user-name="Carla Lima"
+          user-initials="CL"
+          placement="in-flow"
+          mobile-mode="drawer-half"
+          mobile-position="left"
+          mobile-animation="slide"
+          mobile-backdrop
+          @navigate="handleNavigate3"
+        >
+          <template #logo>
+            <div class="flex items-center gap-2">
+              <CorpIcon icon="luc-panel-left" :size="24" class="text-primary" />
+              <span class="font-bold text-lg">HalfApp</span>
+            </div>
+          </template>
+        </CorpAppBar>
+        <div class="p-6 bg-muted/30 min-h-[300px]">
+          <h3 class="text-lg font-semibold mb-2">📱 Drawer Half + Left</h3>
+          <p class="text-muted-foreground mb-2">
+            Drawer vindo da ESQUERDA ocupando 50%
+          </p>
+          <ul class="list-disc list-inside space-y-1 text-sm">
+            <li>50% de largura</li>
+            <li>Position: LEFT (slide da esquerda)</li>
+            <li>Vê conteúdo atrás</li>
+            <li>Ótimo para tablets</li>
+          </ul>
+          <p class="text-sm text-primary font-medium mt-4">
+            Página: {{ currentPath3 }}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOBILE MODE 4: Drawer Min + Fade -->
+    <section class="space-y-4">
+      <div>
+        <h2 class="text-lg font-semibold text-foreground">
+          12. Mobile Mode: Drawer Min (300px) + Fade Animation
+        </h2>
+        <p class="text-sm text-muted-foreground">
+          Mini sidebar com animação fade (sem slide)
+        </p>
+      </div>
+
+      <div class="border border-border rounded-lg overflow-hidden">
+        <CorpAppBar
+          :menu-items="menuItemsWithVerticalDropdown"
+          menu-style="segmented"
+          :current-path="currentPath4"
+          user-name="Diego Alves"
+          user-initials="DA"
+          placement="in-flow"
+          mobile-mode="drawer-min"
+          mobile-position="right"
+          mobile-animation="fade"
+          mobile-backdrop
+          @navigate="handleNavigate4"
+        >
+          <template #logo>
+            <div class="flex items-center gap-2">
+              <CorpIcon icon="luc-sidebar" :size="24" class="text-primary" />
+              <span class="font-bold text-lg">MiniApp</span>
+            </div>
+          </template>
+        </CorpAppBar>
+        <div class="p-6 bg-muted/30 min-h-[300px]">
+          <h3 class="text-lg font-semibold mb-2">📱 Drawer Min + Fade</h3>
+          <p class="text-muted-foreground mb-2">
+            Mini sidebar com fade suave (sem slide)
+          </p>
+          <ul class="list-disc list-inside space-y-1 text-sm">
+            <li>300px de largura</li>
+            <li>Animation: FADE (opacity only)</li>
+            <li>Aparece suavemente</li>
+            <li>Elegante e discreto</li>
+          </ul>
+          <p class="text-sm text-primary font-medium mt-4">
+            Página: {{ currentPath4 }}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dica de Teste Mobile -->
+    <section class="space-y-4">
+      <div
+        class="p-6 bg-gradient-to-r from-primary/10 to-primary/5 border-2 border-primary/20 rounded-lg"
+      >
+        <h3 class="text-lg font-semibold text-foreground mb-3">
+          💡 Como Testar Mobile
+        </h3>
+        <div class="space-y-2 text-sm">
+          <p>
+            <strong>1. Redimensionar Browser:</strong>
+            Arraste a janela para &lt; 768px de largura
+          </p>
+          <p>
+            <strong>2. DevTools (Recomendado):</strong>
+            Pressione F12 → Clique no ícone 📱 "Toggle Device Toolbar"
+          </p>
+          <p>
+            <strong>3. Selecione um device:</strong>
+            iPhone 12, Pixel 5, iPad, etc
+          </p>
+          <p>
+            <strong>4. Clique no ☰:</strong>
+            Hamburger menu no canto direito
+          </p>
+          <p class="text-primary font-medium mt-4">
+            ✨ Cada exemplo acima usa um modo mobile diferente para você
+            comparar!
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- Guia de Uso -->
     <section class="space-y-4">
       <h2 class="text-lg font-semibold text-foreground">📘 Como Usar</h2>
@@ -675,7 +883,7 @@ const handleNavigate8 = ({ path }: { path: string }) => {
         <div class="p-4 bg-card border border-border rounded-lg">
           <h3 class="font-medium mb-2 text-sm">3. Menu Item</h3>
           <pre class="text-xs bg-muted p-2 rounded overflow-x-auto"><code>{
-  title: 'Dashboard',
+  label: 'Dashboard',
   icon: 'luc-home',
   to: '/dashboard'
 }</code></pre>

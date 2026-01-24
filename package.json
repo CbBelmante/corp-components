@@ -1,5 +1,5 @@
 {
-  "name": "corp-components",
+  "name": "@corp/components",
   "version": "0.1.0",
   "description": "Vue 3 Component Library - TypeScript First",
   "type": "module",

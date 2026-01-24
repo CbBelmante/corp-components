@@ -1,6 +1,6 @@
 export { default as CorpAppBar } from './CorpAppBar.vue';
 export type {
+  IMenuItem,
   IAppBarMenuItem,
-  IAppBarDropdownItem,
   IAppBarDropdownConfig,
-} from './CorpAppBar.vue';
+} from '@/components/ui/types/menu';

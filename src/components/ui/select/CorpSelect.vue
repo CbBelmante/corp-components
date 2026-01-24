@@ -307,11 +307,13 @@ watch(internalValue, newVal => {
 
 // ============== METHODS ==============
 
-const handleChange = (
-  value: string | number | (string | number)[] | undefined
-): void => {
-  internalValue.value = value;
-  emit('update:modelValue', value);
+const handleChange = (value: any): void => {
+  const safeValue =
+    value === null
+      ? undefined
+      : (value as string | number | (string | number)[] | undefined);
+  internalValue.value = safeValue;
+  emit('update:modelValue', safeValue);
 };
 
 const handleFocus = (): void => {
