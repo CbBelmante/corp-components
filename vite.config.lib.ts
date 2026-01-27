@@ -18,6 +18,7 @@ export default defineConfig(async () => {
     // Build em library mode
     build: {
       outDir: config.build.outDir,
+      minify: false, // Desabilitar minificação - evita bugs de símbolos duplicados
       emptyOutDir: true,
       lib: {
         entry: resolve(__dirname, 'src/index.ts'),

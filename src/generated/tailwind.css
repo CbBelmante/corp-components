@@ -14,7 +14,8 @@
  */
 
 /* Light Mode */
-:root {
+/* Use :where() for zero specificity - user :root always wins regardless of import order */
+:where(:root) {
   --primary: 18 100% 60%;
   --primary-foreground: 0 0% 100%;
   --primary-soft: 16 100% 97%;
@@ -107,7 +108,7 @@
 }
 
 /* Dark Mode */
-.dark {
+:where(.dark) {
   --primary: 18 100% 60%;
   --primary-foreground: 0 0% 100%;
   --primary-soft: 16 54% 19%;

@@ -12,6 +12,29 @@ export default {
     './docs/.vitepress/**/*.{js,ts,vue}',
   ],
   safelist: [
+    // ==================== CORP-DEF (Theme System) ====================
+    // Classes que usam --corp-def-* precisam ser geradas no build
+    'bg-[hsl(var(--corp-def-button-bg))]',
+    'hover:bg-[var(--corp-def-button-bg-hover)]',
+    'text-[var(--corp-def-button-text)]',
+    'bg-[hsl(var(--corp-def-card-bg))]',
+    'border-[hsl(var(--corp-def-card-border))]',
+    'text-[hsl(var(--corp-def-card-text))]',
+    'bg-[hsl(var(--corp-def-badge-bg))]',
+    'text-[hsl(var(--corp-def-badge-text))]',
+    'border-[hsl(var(--corp-def-badge-border))]',
+    'bg-[hsl(var(--corp-def-input-bg))]',
+    'border-[hsl(var(--corp-def-input-border))]',
+    'text-[var(--corp-def-input-placeholder)]',
+    'bg-[hsl(var(--corp-def-select-bg))]',
+    'border-[hsl(var(--corp-def-select-border))]',
+    'bg-[hsl(var(--corp-def-textarea-bg))]',
+    'border-[hsl(var(--corp-def-textarea-border))]',
+    'text-[hsl(var(--corp-def-textarea-placeholder))]',
+    'bg-[hsl(var(--corp-def-appbar-bg))]',
+    'bg-[hsl(var(--corp-def-sidebar-bg))]',
+    'border-[hsl(var(--corp-def-command-border))]',
+
     // ==================== ARQUITETURA UNIFICADA ====================
     // Todos os componentes (Button, Switch, Checkbox) usam CSS variables
     // em runtime. Não precisamos mais de patterns para SEMANTIC_COLORS

@@ -48,7 +48,8 @@ function generateThemeCss(): string {
  * LIGHT THEME
  * =================================================================== */
 
-:root {\n`;
+/* Use :where() for zero specificity - user :root always wins regardless of import order */
+:where(:root) {\n`;
 
   // Light mode - apenas theme colors
   for (const name of themeColors) {
@@ -60,7 +61,7 @@ function generateThemeCss(): string {
  * DARK THEME
  * =================================================================== */
 
-.dark {\n`;
+:where(.dark) {\n`;
 
   // Dark mode - apenas theme colors
   for (const name of themeColors) {
@@ -129,7 +130,8 @@ function generateTailwindCss(): string {
  */
 
 /* Light Mode */
-:root {\n`;
+/* Use :where() for zero specificity - user :root always wins regardless of import order */
+:where(:root) {\n`;
 
   // Light mode - apenas tailwind colors
   for (const name of tailwindColors) {
@@ -146,7 +148,7 @@ function generateTailwindCss(): string {
   }
 
   css += `}\n\n/* Dark Mode */
-.dark {\n`;
+:where(.dark) {\n`;
 
   // Dark mode - apenas tailwind colors
   for (const name of tailwindColors) {

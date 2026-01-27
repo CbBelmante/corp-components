@@ -15,7 +15,8 @@
  * LIGHT THEME
  * =================================================================== */
 
-:root {
+/* Use :where() for zero specificity - user :root always wins regardless of import order */
+:where(:root) {
   --primary: #FF7133;
   --primary-foreground: #ffffff;
   --primary-soft: #FFF4F0;
@@ -181,7 +182,7 @@
  * DARK THEME
  * =================================================================== */
 
-.dark {
+:where(.dark) {
   --primary: #FF7133;
   --primary-foreground: #ffffff;
   --primary-soft: #4A2416;

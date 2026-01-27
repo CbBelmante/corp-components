@@ -4,8 +4,8 @@
  * @packageDocumentation
  */
 
-// Import generated theme CSS
-import './generated/theme.css';
+// Import main CSS (includes theme + tailwind + Tailwind processing)
+import './assets/main.css';
 
 // Components
 export * from './components';

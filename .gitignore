@@ -6,16 +6,24 @@ package-lock.json
 package-lock.json.backup
 yarn.lock
 pnpm-lock.yaml
+bun.lock
 
 # Build
 dist/
 dist-ssr/
 *.tsbuildinfo
+*.local
+
+# Cache
+.vite
+node_modules/.vite
+node_modules/.cache
 
 # IDE
 .vscode/*
 !.vscode/extensions.json
 .idea/
+.fleet
 *.swp
 *.swo
 .history/
@@ -37,8 +45,9 @@ coverage/
 
 # Env
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+settings.json
 
 # Editor directories and files
 *.suo
@@ -56,11 +65,19 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
+tmp/
 
 # FlowForge
 .flowforge/
 *.flowforge.tmp
 .task-times.json
+TASK_REPORT_*.md
+Claude.md
+CLAUDE.md
+commands/
+documentation/ffdocs
+documentation/development/
+run_ff_command.sh
 
 # Claude
 .claude/
