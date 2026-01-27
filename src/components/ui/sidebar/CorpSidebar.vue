@@ -9,7 +9,7 @@ import type { PropType } from 'vue';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { CorpIcon } from '@/components/ui/icon';
-import { getColorType } from '@/utils/CorpColorUtils';
+import { getColorType, resolveColor } from '@/utils/CorpColorUtils';
 import { SIDEBAR_WIDTH_ICON } from './constants';
 import {
   Collapsible,
@@ -17,6 +17,7 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import type { IMenuItem } from '@/components/ui/types/menu';
+import { corpSidebarVariants } from '.';
 
 // ============== TYPES ==============
 
@@ -70,10 +71,17 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
-  background: {
+
+  // Custom color overrides
+  bgColor: {
     type: String,
-    default: 'bg-sidebar',
+    default: undefined,
   },
+  textColor: {
+    type: String,
+    default: undefined,
+  },
+
   headerBackground: {
     type: String,
     default: undefined,
@@ -95,6 +103,18 @@ const props = defineProps({
   currentPath: {
     type: String,
     default: undefined,
+  },
+  expandOnBorderClick: {
+    type: Boolean,
+    default: true,
+  },
+  showHeader: {
+    type: Boolean,
+    default: true,
+  },
+  offsetTop: {
+    type: [Number, String],
+    default: 0,
   },
 });
 
@@ -122,31 +142,61 @@ const headerHeightPx = computed(() => {
   return formatCssValue(height);
 });
 
-const bgClasses = computed(() => [
-  props.opacity < 1
-    ? `${props.background}/${Math.round(props.opacity * 100)}`
-    : props.background,
-  props.blur > 0 ? `backdrop-blur-[${props.blur}px]` : '',
-]);
+// Custom color styles
+const customColorStyle = computed(() => {
+  const styles: Record<string, string> = {};
+
+  // bgColor sobrescreve background
+  if (props.bgColor) {
+    styles.backgroundColor = resolveColor(props.bgColor);
+  }
+
+  // textColor sobrescreve cor do texto
+  if (props.textColor) {
+    styles.color = resolveColor(props.textColor);
+  }
+
+  // Opacity (aplicado via CSS)
+  if (props.opacity < 1) {
+    styles.opacity = String(props.opacity);
+  }
+
+  // Blur (aplicado via backdrop-filter)
+  if (props.blur > 0) {
+    styles.backdropFilter = `blur(${props.blur}px)`;
+  }
+
+  return styles;
+});
 
 const headerClasses = computed(() => {
-  if (!props.headerBackground) return bgClasses.value;
-  return [
-    props.opacity < 1
-      ? `${props.headerBackground}/${Math.round(props.opacity * 100)}`
-      : props.headerBackground,
-    props.blur > 0 ? `backdrop-blur-[${props.blur}px]` : '',
-  ];
+  const classes: string[] = [];
+  if (props.headerBackground) {
+    classes.push(
+      props.opacity < 1
+        ? `${props.headerBackground}/${Math.round(props.opacity * 100)}`
+        : props.headerBackground
+    );
+  }
+  if (props.blur > 0) {
+    classes.push(`backdrop-blur-[${props.blur}px]`);
+  }
+  return classes;
 });
 
 const footerClasses = computed(() => {
-  if (!props.footerBackground) return bgClasses.value;
-  return [
-    props.opacity < 1
-      ? `${props.footerBackground}/${Math.round(props.opacity * 100)}`
-      : props.footerBackground,
-    props.blur > 0 ? `backdrop-blur-[${props.blur}px]` : '',
-  ];
+  const classes: string[] = [];
+  if (props.footerBackground) {
+    classes.push(
+      props.opacity < 1
+        ? `${props.footerBackground}/${Math.round(props.opacity * 100)}`
+        : props.footerBackground
+    );
+  }
+  if (props.blur > 0) {
+    classes.push(`backdrop-blur-[${props.blur}px]`);
+  }
+  return classes;
 });
 
 const sidebarWidth = computed(() =>
@@ -161,14 +211,42 @@ const positionClasses = computed(() => {
   if (props.placement === 'in-flow') {
     classes.push('relative');
   } else if (props.placement === 'fixed') {
-    classes.push('fixed', 'inset-y-0');
+    classes.push('fixed');
+    // Se tem offsetTop, não usa inset-y-0 (será aplicado via style)
+    if (!props.offsetTop) {
+      classes.push('inset-y-0');
+    } else {
+      classes.push('bottom-0');
+    }
     classes.push(props.location === 'left' ? 'left-0' : 'right-0');
   } else if (props.placement === 'absolute') {
-    classes.push('absolute', 'inset-y-0');
+    classes.push('absolute');
+    // Se tem offsetTop, não usa inset-y-0 (será aplicado via style)
+    if (!props.offsetTop) {
+      classes.push('inset-y-0');
+    } else {
+      classes.push('bottom-0');
+    }
     classes.push(props.location === 'left' ? 'left-0' : 'right-0');
   }
 
   return classes;
+});
+
+const sidebarStyle = computed(() => {
+  const styles: Record<string, string> = {
+    width: sidebarWidth.value,
+  };
+
+  // Aplica offsetTop quando placement é fixed/absolute
+  if (
+    (props.placement === 'fixed' || props.placement === 'absolute') &&
+    props.offsetTop
+  ) {
+    styles.top = formatCssValue(props.offsetTop);
+  }
+
+  return styles;
 });
 
 const toggleIcon = computed(() => {
@@ -261,12 +339,12 @@ const toggleSidebar = () => {
 
 <template>
   <div
-    class="flex flex-col h-full transition-all duration-200 border-r border-border"
-    :class="[bgClasses, positionClasses]"
-    :style="{ width: sidebarWidth }"
+    :class="[corpSidebarVariants(), positionClasses]"
+    :style="{ ...sidebarStyle, ...customColorStyle }"
   >
     <!-- Header -->
     <div
+      v-if="showHeader"
       class="flex items-center gap-3 px-3 border-b border-sidebar-border flex-shrink-0"
       :class="headerClasses"
       :style="{ height: headerHeightPx }"
@@ -310,11 +388,15 @@ const toggleSidebar = () => {
     </div>
 
     <!-- Content -->
-    <div class="flex-1 overflow-y-auto min-h-0" :class="bgClasses">
+    <div class="flex-1 overflow-y-auto min-h-0">
       <slot name="prepend" />
 
       <!-- Menu Groups -->
-      <div v-for="group in menuItems" :key="group.label" class="p-2">
+      <div
+        v-for="group in menuItems"
+        :key="group.label"
+        :class="isCollapsed ? 'p-1' : 'p-2'"
+      >
         <div
           v-if="!isCollapsed"
           class="px-2 py-1.5 text-xs font-semibold text-sidebar-foreground/70"
@@ -417,5 +499,19 @@ const toggleSidebar = () => {
         </button>
       </slot>
     </div>
+
+    <!-- Borda clicável para expandir/colapsar -->
+    <div
+      v-if="expandOnBorderClick"
+      @click="toggleSidebar"
+      class="absolute top-0 right-0 h-full w-[2px] cursor-ew-resize bg-border hover:bg-primary/20 transition-colors group z-10"
+      title="Clique para expandir/colapsar"
+    >
+      <div
+        class="absolute top-1/2 -translate-y-1/2 -right-[1px] w-[3px] h-10 bg-primary/60 rounded-l-full opacity-0 group-hover:opacity-100 transition-opacity"
+      />
+    </div>
+    <!-- Borda normal (quando expandOnBorderClick=false) -->
+    <div v-else class="absolute top-0 right-0 h-full w-[2px] bg-border" />
   </div>
 </template>

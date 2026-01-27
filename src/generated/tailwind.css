@@ -74,6 +74,9 @@
   --corp-def-card-text: 224 60% 5%;
   --corp-def-card-title-color: 224 60% 5%;
   --corp-def-card-subtitle-color: 215 16% 47%;
+  --corp-def-image-border-width: 1.5px;
+  --corp-def-appbar-bg: rgba(0, 0, 0, 0.2);
+  --corp-def-sidebar-bg: rgba(0, 0, 0, 0.2);
   --ring-width: 2px;
   --text: 224 60% 5%;
   --text-muted: 215 16% 47%;
@@ -164,6 +167,9 @@
   --corp-def-card-text: 208 35% 93%;
   --corp-def-card-title-color: 208 35% 93%;
   --corp-def-card-subtitle-color: 215 8% 53%;
+  --corp-def-image-border-width: 1.5px;
+  --corp-def-appbar-bg: rgba(0, 0, 0, 0.2);
+  --corp-def-sidebar-bg: rgba(0, 0, 0, 0.2);
   --ring-width: 2px;
   --text: 208 35% 93%;
   --text-muted: 215 8% 53%;

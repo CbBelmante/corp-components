@@ -78,6 +78,10 @@
   --corp-def-card-title-color: #050914;
   --corp-def-card-subtitle-color: #64748b;
   --corp-def-card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --corp-def-image-border-width: 1.5px;
+  --corp-def-image-border-color: transparent;
+  --corp-def-appbar-bg: rgba(0, 0, 0, 0.2);
+  --corp-def-sidebar-bg: rgba(0, 0, 0, 0.2);
   --ring-width: 2px;
   --text: #050914;
   --text-muted: #64748b;
@@ -240,6 +244,10 @@
   --corp-def-card-title-color: #e6edf3;
   --corp-def-card-subtitle-color: #7d8590;
   --corp-def-card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --corp-def-image-border-width: 1.5px;
+  --corp-def-image-border-color: transparent;
+  --corp-def-appbar-bg: rgba(0, 0, 0, 0.2);
+  --corp-def-sidebar-bg: rgba(0, 0, 0, 0.2);
   --ring-width: 2px;
   --text: #e6edf3;
   --text-muted: #7d8590;

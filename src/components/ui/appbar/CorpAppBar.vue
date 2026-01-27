@@ -14,6 +14,8 @@ import type {
   IAppBarMenuItem,
   IAppBarDropdownConfig,
 } from '@/components/ui/types/menu';
+import { appBarVariants } from '.';
+import { resolveColor } from '@/utils/CorpColorUtils';
 
 // Re-export types
 export type { IMenuItem, IAppBarMenuItem, IAppBarDropdownConfig };
@@ -43,13 +45,19 @@ const props = defineProps({
     default: 0,
     validator: (v: number) => v >= 0 && v <= 24,
   },
-  color: {
-    type: String,
-    default: 'bg-background',
-  },
   flat: {
     type: Boolean,
     default: false,
+  },
+
+  // Custom color overrides
+  bgColor: {
+    type: String,
+    default: undefined,
+  },
+  textColor: {
+    type: String,
+    default: undefined,
   },
   userName: {
     type: String,
@@ -89,6 +97,10 @@ const props = defineProps({
   mobileStartFromTop: {
     type: Boolean,
     default: false,
+  },
+  showLogo: {
+    type: Boolean,
+    default: true,
   },
 });
 
@@ -148,6 +160,23 @@ const elevationClass = computed(() => {
   );
 
   return shadowMap[closestElevation] || 'shadow';
+});
+
+// Custom color styles
+const customColorStyle = computed(() => {
+  const styles: Record<string, string> = {};
+
+  // bgColor sobrescreve background
+  if (props.bgColor) {
+    styles.backgroundColor = resolveColor(props.bgColor);
+  }
+
+  // textColor sobrescreve cor do texto
+  if (props.textColor) {
+    styles.color = resolveColor(props.textColor);
+  }
+
+  return styles;
 });
 
 const menuStyleClass = computed(() => {
@@ -403,16 +432,24 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <nav
-    class="flex items-center justify-between px-6 border-b border-border transition-all duration-200"
-    :class="[positionClasses, color, elevationClass]"
-    :style="{
-      height: appBarHeight,
-      '--appbar-height': appBarHeight,
-    }"
-  >
+  <div>
+    <!-- Spacer: ocupa o espaço no fluxo quando AppBar está fixed/absolute -->
+    <div
+      v-if="placement === 'fixed' || placement === 'absolute'"
+      :style="{ height: appBarHeight }"
+      aria-hidden="true"
+    />
+
+    <nav
+      :class="[appBarVariants(), positionClasses, elevationClass]"
+      :style="{
+        height: appBarHeight,
+        '--appbar-height': appBarHeight,
+        ...customColorStyle,
+      }"
+    >
     <!-- Logo Section -->
-    <div class="flex items-center gap-3 flex-shrink-0">
+    <div v-if="showLogo" class="flex items-center gap-3 flex-shrink-0">
       <button type="button" class="flex items-center" @click="handleLogoClick">
         <slot name="logo">
           <div
@@ -806,6 +843,7 @@ onUnmounted(() => {
       </div>
     </div>
   </nav>
+  </div>
 </template>
 
 <style scoped>
@@ -1418,7 +1456,7 @@ onUnmounted(() => {
   background-color: hsl(var(--destructive) / 0.1);
 }
 
-/* Mobile Popover Content (CorpPopover mode) - Estilo VLComponents */
+/* Mobile Popover Content (CorpPopover mode) */
 .mobilePopoverContent {
   width: 280px;
   max-width: 100%;

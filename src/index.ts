@@ -4,6 +4,9 @@
  * @packageDocumentation
  */
 
+// Import generated theme CSS
+import './generated/theme.css';
+
 // Components
 export * from './components';
 

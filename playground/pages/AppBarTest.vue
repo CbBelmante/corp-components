@@ -143,8 +143,7 @@ const handleNavigate8 = ({ path }: { path: string }) => {
         AppBar - Barra de Navegação
       </h1>
       <p class="text-muted-foreground">
-        AppBar nativa com 4 estilos de menu (Vuetify-like +
-        VLComponents-inspired)
+        AppBar nativa com 4 estilos de menu (Vuetify-like + customizável)
       </p>
     </div>
 
@@ -624,7 +623,7 @@ const handleNavigate8 = ({ path }: { path: string }) => {
           9. Mobile Mode: Popover (Dropdown Absoluto 280px)
         </h2>
         <p class="text-sm text-muted-foreground">
-          Popover absoluto que desce do header, estilo VLComponents
+          Popover absoluto que desce do header, compacto e moderno
         </p>
       </div>
 
@@ -657,7 +656,7 @@ const handleNavigate8 = ({ path }: { path: string }) => {
           <ul class="list-disc list-inside space-y-1 text-sm">
             <li>280px de largura fixa</li>
             <li>Desce do header (position: absolute)</li>
-            <li>Popover compacto estilo VLComponents</li>
+            <li>Popover compacto compacto e moderno</li>
             <li>SEM backdrop (clique fora para fechar)</li>
             <li>Mais leve que drawer</li>
           </ul>

@@ -230,7 +230,7 @@ const handleNavigate6 = ({ path }: { path: string }) => {
             app-name="Corp Health"
             app-subtitle="Sistema de Saúde"
             user-name="Dr. Silva"
-            background="bg-card"
+            bg-color="card"
             placement="in-flow"
             @navigate="handleNavigate1"
           />
@@ -266,10 +266,10 @@ const handleNavigate6 = ({ path }: { path: string }) => {
           <CorpSidebar
             :items="submenuItems"
             :current-path="currentPath2"
-            app-name="Mnesis"
+            app-name="Corp App"
             app-subtitle="Prontuário Eletrônico"
             user-name="Dr. Fábio"
-            background="bg-muted"
+            bg-color="#1a1a2e"
             placement="in-flow"
             @navigate="handleNavigate2"
           />
@@ -313,7 +313,7 @@ const handleNavigate6 = ({ path }: { path: string }) => {
             app-name="Clínica Multi"
             app-subtitle="Especialidades Médicas"
             user-name="Dr. Carlos"
-            background="bg-secondary/10"
+            bg-color="rgb(30, 58, 95)"
             placement="in-flow"
             @navigate="handleNavigate3"
           />
@@ -366,7 +366,7 @@ const handleNavigate6 = ({ path }: { path: string }) => {
           <CorpSidebar
             :items="basicMenuItems"
             :current-path="currentPath4"
-            background="bg-primary/5"
+            bg-color="var(--card)"
             placement="in-flow"
             @navigate="handleNavigate4"
           >
@@ -392,14 +392,15 @@ const handleNavigate6 = ({ path }: { path: string }) => {
             <!-- Custom Footer -->
             <template #footer="{ isCollapsed }">
               <div
-                class="flex items-center gap-3 p-3 hover:bg-sidebar-accent rounded-lg cursor-pointer transition-colors"
+                class="flex items-center gap-3 p-2 hover:bg-sidebar-accent rounded-lg cursor-pointer transition-colors w-full"
+                :class="{ 'justify-center': isCollapsed }"
               >
                 <div
-                  class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center"
+                  class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0"
                 >
                   <span class="text-xs font-bold text-white">DS</span>
                 </div>
-                <div v-if="!isCollapsed" class="flex-1">
+                <div v-if="!isCollapsed" class="flex-1 text-left">
                   <p class="text-sm font-medium">Dr. Silva</p>
                   <p class="text-xs text-muted-foreground">silva@medtech.com</p>
                 </div>
@@ -434,14 +435,14 @@ const handleNavigate6 = ({ path }: { path: string }) => {
       </div>
     </section>
 
-    <!-- EXEMPLO 5: Header e Footer Customizados (Props) -->
+    <!-- EXEMPLO 5: Cores Semânticas (Props) -->
     <section class="space-y-4">
       <div>
         <h2 class="text-lg font-semibold text-foreground">
-          5. Header e Footer com Cores Customizadas
+          5. Cores Semânticas do Theme
         </h2>
         <p class="text-sm text-muted-foreground">
-          Use headerBackground e footerBackground para cores específicas
+          Use nomes semânticos do theme: primary, secondary, muted, card, etc
         </p>
       </div>
 
@@ -455,35 +456,32 @@ const handleNavigate6 = ({ path }: { path: string }) => {
             app-name="Corp System"
             app-subtitle="Admin Panel"
             user-name="Admin User"
-            background="bg-card"
-            header-background="bg-primary"
-            footer-background="bg-secondary"
+            bg-color="secondary"
+            text-color="secondary-foreground"
             placement="in-flow"
             @navigate="handleNavigate5"
           />
           <div class="flex-1 overflow-auto p-6">
-            <h3 class="text-lg font-semibold mb-4">Cores Customizadas</h3>
+            <h3 class="text-lg font-semibold mb-4">Cores Semânticas</h3>
             <div class="space-y-2 text-sm text-muted-foreground">
               <p>
                 ✅
                 <code class="px-1 bg-muted rounded">
-                  headerBackground="bg-primary"
+                  bg-color="secondary"
                 </code>
-                - Header com fundo primary
+                - Usa cor secondary do theme
               </p>
               <p>
                 ✅
                 <code class="px-1 bg-muted rounded">
-                  footerBackground="bg-secondary"
+                  text-color="secondary-foreground"
                 </code>
-                - Footer com fundo secondary (destaque visual)
+                - Texto com contraste automático
               </p>
               <p>
-                ✅
-                <code class="px-1 bg-muted rounded">background="bg-card"</code>
-                - Conteúdo com fundo card
+                💡 Valores semânticos disponíveis: primary, secondary, muted, card, accent, destructive
               </p>
-              <p>💡 Combine com opacity e blur para efeitos glassmorphism</p>
+              <p>🎨 Combine com opacity e blur props para glassmorphism</p>
             </div>
             <p class="text-sm text-primary font-medium mt-4">
               Página atual: {{ currentPath5 }}
@@ -524,11 +522,67 @@ const handleNavigate6 = ({ path }: { path: string }) => {
             app-name="Right Panel"
             app-subtitle="Tools & Settings"
             user-name="Admin"
-            background="bg-muted"
+            bg-color="rgba(100, 50, 150, 0.2)"
             placement="in-flow"
             location="right"
             @navigate="handleNavigate6"
           />
+        </div>
+      </div>
+    </section>
+
+    <!-- EXEMPLO 7: Header e Footer Backgrounds -->
+    <section class="space-y-4">
+      <div>
+        <h2 class="text-lg font-semibold text-foreground">
+          7. Header e Footer com Backgrounds Específicos
+        </h2>
+        <p class="text-sm text-muted-foreground">
+          Use headerBackground e footerBackground para colorir áreas específicas
+        </p>
+      </div>
+
+      <div
+        class="h-[500px] border border-border rounded-lg overflow-hidden relative"
+      >
+        <div class="flex h-full w-full">
+          <CorpSidebar
+            :items="basicMenuItems"
+            :current-path="currentPath1"
+            app-name="Corp Admin"
+            app-subtitle="Painel de Controle"
+            user-name="Administrador"
+            bg-color="card"
+            header-background="bg-primary"
+            footer-background="bg-secondary"
+            placement="in-flow"
+            @navigate="handleNavigate1"
+          />
+          <div class="flex-1 overflow-auto p-6">
+            <h3 class="text-lg font-semibold mb-4">Header/Footer Coloridos</h3>
+            <div class="space-y-2 text-sm text-muted-foreground">
+              <p>
+                ✅
+                <code class="px-1 bg-muted rounded">
+                  header-background="bg-primary"
+                </code>
+                - Header com fundo primary
+              </p>
+              <p>
+                ✅
+                <code class="px-1 bg-muted rounded">
+                  footer-background="bg-secondary"
+                </code>
+                - Footer com fundo secondary
+              </p>
+              <p>
+                ✅
+                <code class="px-1 bg-muted rounded">bg-color="card"</code>
+                - Conteúdo mantém cor neutra
+              </p>
+              <p>🎨 Aceita classes Tailwind (bg-primary, bg-muted, etc)</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -564,14 +618,25 @@ const handleNavigate6 = ({ path }: { path: string }) => {
         </p>
         <p>
           ✅
-          <strong>background props</strong>
-          : Use
-          <code class="px-1 bg-muted rounded">background</code>
-          (global),
-          <code class="px-1 bg-muted rounded">headerBackground</code>
+          <strong>bgColor / textColor</strong>
+          : Aceita valores semânticos
+          <code class="px-1 bg-muted rounded">"primary"</code>
           ,
-          <code class="px-1 bg-muted rounded">footerBackground</code>
-          para cores específicas
+          <code class="px-1 bg-muted rounded">"#ff0000"</code>
+          (hex),
+          <code class="px-1 bg-muted rounded">"rgb(255,0,0)"</code>
+          ,
+          <code class="px-1 bg-muted rounded">"var(--card)"</code>
+          - NÃO aceita classes Tailwind
+        </p>
+        <p>
+          ✅
+          <strong>headerBackground / footerBackground</strong>
+          : Aceita classes Tailwind
+          <code class="px-1 bg-muted rounded">"bg-primary"</code>
+          ,
+          <code class="px-1 bg-muted rounded">"bg-muted"</code>
+          - para colorir áreas específicas
         </p>
         <p>
           ✅

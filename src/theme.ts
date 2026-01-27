@@ -430,6 +430,32 @@ export const themeDefinition = {
     type: THEME_COLOR_TYPES.ONLY_THEME,
   },
 
+  // ============== CORP IMAGE ==============
+  'corp-def-image-border-width': {
+    light: BASE_STYLES.borderWidthNormal,
+    dark: BASE_STYLES.borderWidthNormal,
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+  'corp-def-image-border-color': {
+    light: 'transparent',
+    dark: 'transparent',
+    type: THEME_COLOR_TYPES.ONLY_THEME,
+  },
+
+  // ============== CORP APPBAR ==============
+  'corp-def-appbar-bg': {
+    light: 'rgba(0, 0, 0, 0.2)',
+    dark: 'rgba(0, 0, 0, 0.2)',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+
+  // ============== CORP SIDEBAR ==============
+  'corp-def-sidebar-bg': {
+    light: 'rgba(0, 0, 0, 0.2)',
+    dark: 'rgba(0, 0, 0, 0.2)',
+    type: THEME_COLOR_TYPES.BOTH,
+  },
+
   // Shared
   'ring-width': { light: '2px', dark: '2px', type: THEME_COLOR_TYPES.BOTH },
 

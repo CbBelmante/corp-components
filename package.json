@@ -12,7 +12,8 @@
       "import": "./dist/corp-components.js",
       "require": "./dist/corp-components.umd.cjs"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": "./dist/corp-components.css",
+    "./dist/corp-components.css": "./dist/corp-components.css"
   },
   "files": [
     "dist"
@@ -23,7 +24,8 @@
     "devPlayground": "tsx scripts/devPlayground.ts",
     "generateTheme": "bun run scripts/generateTheme.ts",
     "syncAliases": "tsx scripts/syncAliases.ts",
-    "build": "bun run syncAliases && bun run generateTheme && vite build && vue-tsc --emitDeclarationOnly",
+    "build": "bun run syncAliases && bun run generateTheme && vite build --config vite.config.lib.ts && vue-tsc -p tsconfig.lib.json",
+    "buildToElas": "tsx scripts/buildToElas.ts",
     "buildDocs": "vitepress build docs/public",
     "preview": "vitepress preview docs/public",
     "typecheck": "vue-tsc --noEmit",

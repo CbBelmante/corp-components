@@ -138,7 +138,7 @@ const handleSelect = (item: ICommand) => {
 };
 
 /**
- * Floating: Detecta "/" e controla abertura (estilo mnesis)
+ * Floating: Detecta "/" e controla abertura
  *
  * Lógica customizável de abertura:
  * - Abre quando input começa com "/"

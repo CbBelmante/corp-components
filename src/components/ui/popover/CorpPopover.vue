@@ -535,7 +535,7 @@ defineExpose({
   transform: scale(1);
 }
 
-/* Animação dropdown (mnesis-style) */
+/* Animação dropdown */
 .corp-anim-dropdown {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }

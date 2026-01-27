@@ -23,22 +23,10 @@ export default defineConfig(async () => {
       alias: aliases,
     },
 
-    // Build em library mode
+    // Build do playground (não usado para library)
     build: {
-      lib: {
-        entry: resolve(__dirname, 'src/index.ts'),
-        name: config.build.libName,
-        fileName: config.build.libFileName,
-      },
-      rollupOptions: {
-        // Dependências externas (não incluir no bundle)
-        external: ['vue'],
-        output: {
-          globals: {
-            vue: 'Vue',
-          },
-        },
-      },
+      outDir: resolve(__dirname, 'dist/playground'),
+      emptyOutDir: true,
     },
   };
 });

@@ -290,7 +290,7 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 
 ### Mapeamento de Componentes
 
-#### 🎯 Escopo v1.0 (25 componentes públicos)
+#### 🎯 Escopo v1.0 (26 componentes públicos)
 
 | CbAdmin | corp-components | Release | Status |
 |---------|---------------|---------|--------|
@@ -308,19 +308,20 @@ Migrar componentes de CbAdmin para corp-components, renomeando prefixo `Cb` → 
 | N/A | **CorpPopover.vue** | 1.0 | ✅ Completo (Jan 2026) |
 | N/A | **CorpSidebar.vue** | 1.0 | ✅ Completo (Jan 2026) |
 | N/A | **CorpAppBar.vue** | 1.0 | ✅ Completo (Jan 2026) |
-| N/A | **CorpCard.vue** | 1.0 | ⬜ Pendente (🟢 Fácil) |
-| CbButtonGroup.vue | **CorpButtonGroup.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
-| N/A | **CorpTooltip.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
+| N/A | **CorpCommand.vue** | 1.0 | ✅ Completo (shadcn) |
+| N/A | **CorpCollapsible.vue** | 1.0 | ✅ Completo (shadcn - usado no AppBar) |
+| N/A | **CorpImage.vue** | 1.0 | ✅ Completo (Jan 2026 - 100% nativo) |
+| N/A | **CorpCard.vue** | 1.0 | ⬜ Pendente (🟢 Fácil) ⭐ ESSENCIAL |
+| N/A | **CorpDialog.vue** | 1.0 | ⬜ Pendente (🟠 Médio) ⭐ ESSENCIAL |
+| N/A | **CorpTooltip.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) ⭐ ESSENCIAL |
+| N/A | **CorpAutocomplete.vue** | 1.0 | ⬜ Pendente (🔴 Difícil) ⭐ ESSENCIAL |
 | N/A | **CorpTabs.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
 | N/A | **CorpAccordion.vue** | 1.0 | ⬜ Pendente (🟠 Médio) |
-| N/A | **CorpDialog.vue** | 1.0 | ⬜ Pendente (🟠 Médio) |
 | N/A | **CorpSlider.vue** | 1.0 | ⬜ Pendente (🟠 Médio-Difícil) |
-| N/A | **CorpAutocomplete.vue** | 1.0 | ⬜ Pendente (🔴 Difícil) |
-| N/A | **CorpCollapsible.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
-| N/A | **CorpCommand.vue** | 1.0 | ⬜ Pendente (🟠 Médio) |
+| CbButtonGroup.vue | **CorpButtonGroup.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
 | N/A | **CorpDropdownMenu.vue** | 1.0 | ⬜ Pendente (🟡 Médio-Fácil) |
 
-**v1.0 Status:** 14/25 completos (56%)
+**v1.0 Status:** 17/26 completos (65%) | ⭐ 4 ESSENCIAIS faltando
 
 #### 🔧 Componentes Internos (não exportados)
 
